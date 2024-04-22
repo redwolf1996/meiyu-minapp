@@ -1,0 +1,20 @@
+{
+  "recommendations": [
+    "EditorConfig.EditorConfig",
+    "mikestead.dotenv",
+    "tamasfe.even-better-toml",
+    "YoavBls.pretty-ts-errors",
+    "antfu.iconify",
+    "antfu.unocss",
+    "antfu.goto-alias",
+    "dbaeumer.vscode-eslint",
+    "vue.volar",
+    "uni-helper.uni-helper-vscode",
+    "evils.uniapp-vscode",
+    "mrmaoddxxaa.create-uniapp-view",
+    "lokalise.i18n-ally",
+    "atdow.vue-jumper",
+    "streetsidesoftware.code-spell-checker",
+    "uni-helper.uni-highlight-vscode"
+  ]
+}
