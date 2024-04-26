@@ -1,13 +1,19 @@
 <route lang="yaml">
   layout: default
   style:
-    navigationBarTitleText: 登录-商家端
+    navigationBarTitleText: 添加店铺信息
+    navigationStyle: custom
   </route>
 
 <script lang="ts" setup>
-
 </script>
 
 <template>
-  第一步
+  <StepNav :step="1" />
+  <view fs-40 mt-10px tc>
+    请填写您的门店信息
+  </view>
+  <view mt-8px tc>
+    方便客户找到您的门店
+  </view>
 </template>

@@ -1,13 +1,19 @@
 <route lang="yaml">
   layout: default
   style:
-    navigationBarTitleText: 登录-商家端
+    navigationBarTitleText: 添加服务
+    navigationStyle: custom
   </route>
 
 <script lang="ts" setup>
-
 </script>
 
 <template>
-  第一步
+  <StepNav :step="2" />
 </template>
+
+<style scoped>
+.custom-nav {
+  background-color: #f6f6fd;
+}
+</style>

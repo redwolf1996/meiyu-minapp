@@ -36,7 +36,8 @@
       "type": "page",
       "layout": "default",
       "style": {
-        "navigationBarTitleText": "登录-商家端"
+        "navigationBarTitleText": "添加店铺信息",
+        "navigationStyle": "custom"
       }
     },
     {
@@ -44,7 +45,8 @@
       "type": "page",
       "layout": "default",
       "style": {
-        "navigationBarTitleText": "登录-商家端"
+        "navigationBarTitleText": "添加服务",
+        "navigationStyle": "custom"
       }
     },
     {
@@ -52,7 +54,8 @@
       "type": "page",
       "layout": "default",
       "style": {
-        "navigationBarTitleText": "登录-商家端"
+        "navigationBarTitleText": "添加卡项",
+        "navigationStyle": "custom"
       }
     },
     {
@@ -60,7 +63,8 @@
       "type": "page",
       "layout": "default",
       "style": {
-        "navigationBarTitleText": "登录-商家端"
+        "navigationBarTitleText": "添加产品",
+        "navigationStyle": "custom"
       }
     },
     {
@@ -68,7 +72,8 @@
       "type": "page",
       "layout": "default",
       "style": {
-        "navigationBarTitleText": "登录-商家端"
+        "navigationBarTitleText": "添加员工",
+        "navigationStyle": "custom"
       }
     }
   ],
