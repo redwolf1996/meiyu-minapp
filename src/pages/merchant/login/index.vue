@@ -6,7 +6,7 @@ style:
 
 <script lang="ts" setup>
 const checked = ref(false)
-function select(e: any) {
+function select(e: UniHelper.CheckboxGroupOnChangeEvent) {
   checked.value = !!e.detail.value.includes('cb')
 }
 </script>
