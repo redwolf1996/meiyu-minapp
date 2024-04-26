@@ -11,6 +11,14 @@ export default antfu(
     ],
   },
   {
+    files: ['**/*.vue'],
+    rules: {
+      'vue/operator-linebreak': ['error', 'before'],
+      'vue/attribute-hyphenation': ['off'],
+      'vue/valid-attribute-name': ['off'],
+    },
+  },
+  {
     rules: {
       'style/semi': ['error', 'never'],
       'no-console': ['off'],
