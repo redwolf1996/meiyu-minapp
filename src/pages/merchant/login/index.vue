@@ -1,7 +1,7 @@
 <route lang="yaml">
-  layout: default
-  style:
-    navigationBarTitleText: 登录-商家端
+layout: default
+style:
+  navigationBarTitleText: 登录-商家端
 </route>
 
 <script lang="ts" setup>
@@ -17,12 +17,16 @@ function select(e: any) {
       欢迎来到美预预约
     </div>
     <div mt-80rpx>
-      <div h-144rpx w-144rpx bg-blue ma />
+      <wd-img
+        :width="72"
+        :height="72"
+        :src="`${IMG_BASE}/logo@3x.png`"
+      />
     </div>
     <div mt-80rpx>
       走近千家万户，共享轻松生活
     </div>
-    <div mx-40rpx mt-112rpx color-white>
+    <div mx-60rpx mt-112rpx color-white>
       <wd-button :disabled="!checked" size="large" custom-class="theme-bg" block>
         <div flex flex-cc>
           <span i-tdesign-logo-wechat font-size-36rpx />
@@ -41,7 +45,6 @@ function select(e: any) {
             :checked="checked"
           />
         </checkbox-group>
-
         <span>登录代表同意</span>
         <span theme-color>《服务协议》</span>
         <span>及</span>
