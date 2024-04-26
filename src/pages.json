@@ -22,6 +22,54 @@
       "style": {
         "navigationBarTitleText": "登录-商家端"
       }
+    },
+    {
+      "path": "pages/merchant/init/steps/index",
+      "type": "page",
+      "layout": "default",
+      "style": {
+        "navigationBarTitleText": "欢迎来到美预预约"
+      }
+    },
+    {
+      "path": "pages/merchant/init/steps/step1",
+      "type": "page",
+      "layout": "default",
+      "style": {
+        "navigationBarTitleText": "登录-商家端"
+      }
+    },
+    {
+      "path": "pages/merchant/init/steps/step2",
+      "type": "page",
+      "layout": "default",
+      "style": {
+        "navigationBarTitleText": "登录-商家端"
+      }
+    },
+    {
+      "path": "pages/merchant/init/steps/step3",
+      "type": "page",
+      "layout": "default",
+      "style": {
+        "navigationBarTitleText": "登录-商家端"
+      }
+    },
+    {
+      "path": "pages/merchant/init/steps/step4",
+      "type": "page",
+      "layout": "default",
+      "style": {
+        "navigationBarTitleText": "登录-商家端"
+      }
+    },
+    {
+      "path": "pages/merchant/init/steps/step5",
+      "type": "page",
+      "layout": "default",
+      "style": {
+        "navigationBarTitleText": "登录-商家端"
+      }
     }
   ],
   "globalStyle": {
