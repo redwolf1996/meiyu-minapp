@@ -6,7 +6,7 @@
     "dev": "uni -p mp-weixin",
     "build": "uni build -p mp-weixin",
     "type-check": "vue-tsc --noEmit",
-    "postinstall": "npx simple-git-hooks",
+    // "postinstall": "simple-git-hooks",
     "lint": "eslint .",
     "fix": "eslint . --fix",
     "taze": "taze major -I"
@@ -77,9 +77,9 @@
     "vite-plugin-env-parse": "^1.0.13",
     "vue-tsc": "^2.0.13"
   },
-  "simple-git-hooks": {
-    "pre-commit": "pnpm lint-staged"
-  },
+  // "simple-git-hooks": {
+  //   "pre-commit": "pnpm lint-staged"
+  // },
   "lint-staged": {
     "*": "eslint --fix"
   }
