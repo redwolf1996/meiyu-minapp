@@ -1,8 +1,7 @@
 <route lang="yaml">
-  layout: default
-  style:
-    navigationBarTitleText: 欢迎来到美预预约
-  </route>
+style:
+  navigationBarTitleText: 欢迎来到美预预约
+</route>
 
 <script lang="ts" setup>
 type Status = 0 | 1 | 2 // 0 未添加 1 已添加 2 稍后添加

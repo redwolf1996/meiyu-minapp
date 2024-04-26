@@ -1,9 +1,8 @@
 <route lang="yaml">
-  layout: default
   style:
     navigationBarTitleText: 添加服务
     navigationStyle: custom
-  </route>
+</route>
 
 <script lang="ts" setup>
 </script>

@@ -20,7 +20,6 @@ export default defineConfig(({ mode }) => {
       UniHelperManifest(), // https://github.com/uni-helper/vite-plugin-uni-manifest
       UniHelperPages({ // https://github.com/uni-helper/vite-plugin-uni-pages
         dts: 'src/uni-pages.d.ts',
-        routeBlockLang: 'yaml',
         subPackages: ['src/pagesA', 'src/pagesB'],
       }),
       UniHelperLayouts(), // https://github.com/uni-helper/vite-plugin-uni-layouts
