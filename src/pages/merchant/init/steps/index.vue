@@ -68,7 +68,7 @@ const arr = ref([
       :src="`${IMG_BASE}/decorator@4x.png`"
     />
   </view>
-  <view mx-40rpx>
+  <view fs-28 mx-40rpx>
     <view v-for="(item, index) in arr" :key="index" mb-30rpx>
       <view mb-16rpx color-999>
         第{{ item.step }}步
@@ -90,5 +90,4 @@ const arr = ref([
     </view>
   </view>
   <view h-50rpx />
-  </viewmx-40rpx>
 </template>
