@@ -8,11 +8,19 @@
       }
     },
     {
-      "path": "pages/dashboard/index",
+      "path": "pages/merchant/dashboard/index",
       "type": "page",
       "layout": "home",
       "style": {
         "navigationBarTitleText": "工作台"
+      }
+    },
+    {
+      "path": "pages/merchant/login/index",
+      "type": "page",
+      "layout": "default",
+      "style": {
+        "navigationBarTitleText": "登录-商家端"
       }
     }
   ],

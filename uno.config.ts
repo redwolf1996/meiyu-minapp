@@ -52,6 +52,8 @@ export default defineConfig({
     ['br8', { 'border-radius': '8px' }],
     ['color-main', { color: '#333' }],
     ['color-sub', { color: '#666' }],
+    ['theme-bg', { background: '#1A66FF' }],
+    ['theme-color', { color: '#1A66FF' }],
     ['hide', { color: 'transparent', background: 'transparent' }],
     ['flex-y', { 'flex-direction': 'column' }],
     ['flex-bt', { 'justify-content': 'space-between' }],

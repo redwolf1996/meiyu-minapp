@@ -5,7 +5,8 @@
 
 interface NavigateToOptions {
   url: "/pages/index" |
-       "/pages/dashboard/index" |
+       "/pages/merchant/dashboard/index" |
+       "/pages/merchant/login/index" |
        "/pagesA/index" |
        "/pagesB/index";
 }

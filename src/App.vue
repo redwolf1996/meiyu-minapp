@@ -6,5 +6,8 @@ onShow(() => {})
 onHide(() => {})
 </script>
 
-<style>
+<style lang="scss">
+:deep(.theme-bg) {
+  background-color: #1a66ff !important;
+}
 </style>
