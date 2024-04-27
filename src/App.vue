@@ -16,7 +16,6 @@ page {
 view,
 text {
   box-sizing: border-box;
-  font-size: 28rpx;
 }
 .custom-nav {
   background-color: #f6f6fd !important;
