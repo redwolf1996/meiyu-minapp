@@ -9,7 +9,7 @@
 
 <template>
   <StepNav :step="1" />
-  <view fs-40 mt-10px tc>
+  <view mt-10px tc fs-40>
     请填写您的门店信息
   </view>
   <view mt-8px tc>
