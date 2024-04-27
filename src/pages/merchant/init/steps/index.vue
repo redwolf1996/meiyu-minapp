@@ -75,7 +75,7 @@ const arr = ref<Step[]>([
       :height="16"
       :src="`${IMG_BASE}/decorator@4x.png`"
     />
-    <text fs-32 fb>
+    <text fb fs-32>
       &nbsp;&nbsp;完成以下5步，即可接单赚钱了&nbsp; &nbsp;
     </text>
     <wd-img
@@ -84,14 +84,14 @@ const arr = ref<Step[]>([
       :src="`${IMG_BASE}/decorator@4x.png`"
     />
   </view>
-  <view fs-28 mx-40rpx>
+  <view mx-40rpx fs-28>
     <view v-for="(item, index) in arr" :key="index" mb-30rpx>
       <view mb-16rpx color-999>
         第{{ item.step }}步
       </view>
       <view flex bg-white p-40rpx flex-bt>
         <view flex flex-cc>
-          <i fs-40 mr-20rpx pr :class="[item.icon, item.color]" />
+          <i mr-20rpx pr fs-40 :class="[item.icon, item.color]" />
           <view fb>
             {{ item.name }}
           </view>
@@ -108,7 +108,7 @@ const arr = ref<Step[]>([
           <view v-if="item.status === 2" pr-10rpx color-#FA483C>
             稍后添加
           </view>
-          <i i-material-symbols-light-chevron-right fs-40 fn color-999 style="transform: translateY(2rpx);" />
+          <i i-material-symbols-light-chevron-right fn fs-40 color-999 style="transform: translateY(2rpx);" />
         </view>
       </view>
     </view>
