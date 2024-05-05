@@ -25,7 +25,7 @@ function handleChange(e: any) {
     <view fb>
       门店logo
     </view>
-    <view flex flex-ac>
+    <view flex-ac flex>
       <wd-upload :file-list="fileList" :limit="1" action="https://ftf.jd.com/api/uploadImg" @change="handleChange">
         <!-- <i i-material-symbols-light-chevron-right fn fs-40 color-999 style="transform: translateY(2rpx);" /> -->
       </wd-upload>
