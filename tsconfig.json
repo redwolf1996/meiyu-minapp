@@ -15,6 +15,7 @@
       "@uni-helper/uni-cloud-types",
       "wot-design-uni/global.d.ts"
     ],
+    "noImplicitAny": false,
     "sourceMap": true
   },
   "vueCompilerOptions": {

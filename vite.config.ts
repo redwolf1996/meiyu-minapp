@@ -29,7 +29,14 @@ export default defineConfig(({ mode }) => {
       }),
       Uni(),
       AutoImport({ // https://github.com/antfu/unplugin-auto-import
-        imports: ['vue', '@vueuse/core', 'uni-app'],
+        imports: [
+          'vue',
+          '@vueuse/core',
+          'uni-app',
+          {
+            'wot-design-uni': ['useToast', 'toast'],
+          },
+        ],
         dts: 'src/auto-imports.d.ts',
         dirs: ['src/composables', 'src/stores', 'src/utils'],
         vueTemplate: true,

@@ -23,6 +23,13 @@
       }
     },
     {
+      "path": "pages/merchant/login/info",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "完善信息"
+      }
+    },
+    {
       "path": "pages/merchant/init/steps/index",
       "type": "page",
       "style": {

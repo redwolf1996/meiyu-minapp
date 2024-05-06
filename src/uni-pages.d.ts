@@ -7,6 +7,7 @@ interface NavigateToOptions {
   url: "/pages/index" |
        "/pages/merchant/dashboard/index" |
        "/pages/merchant/login/index" |
+       "/pages/merchant/login/info" |
        "/pages/merchant/init/steps/index" |
        "/pages/merchant/init/steps/step1" |
        "/pages/merchant/init/steps/step2" |
