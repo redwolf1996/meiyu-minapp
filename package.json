@@ -34,7 +34,7 @@
     "qs": "^6.12.1",
     "vue": "^3.4.21",
     "vue-i18n": "^9.13.0",
-    "wot-design-uni": "^1.2.15"
+    "wot-design-uni": "^1.2.19"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.13.3",
