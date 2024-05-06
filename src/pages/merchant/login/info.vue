@@ -28,6 +28,7 @@ function handleSubmit() {
 </script>
 
 <template>
+  <view h-10px />
   <wd-form ref="form" :model="model">
     <wd-cell-group border>
       <wd-input
@@ -38,6 +39,26 @@ function handleSubmit() {
         clearable
         placeholder="请输入用户名"
         :rules="[{ required: true, message: '请填写用户名' }]"
+      />
+      <wd-input
+        v-model="model.value2"
+        label="密码"
+        label-width="100px"
+        prop="value2"
+        show-password
+        clearable
+        placeholder="请输入密码"
+        :rules="[{ required: true, message: '请填写密码' }]"
+      />
+      <wd-input
+        v-model="model.value2"
+        label="密码"
+        label-width="100px"
+        prop="value2"
+        show-password
+        clearable
+        placeholder="请输入密码"
+        :rules="[{ required: true, message: '请填写密码' }]"
       />
       <wd-input
         v-model="model.value2"
