@@ -13,13 +13,13 @@ const model = reactive<{
 })
 
 const form = ref()
-useToast().error('校验通过')
+toast().error('校验通过')
 function handleSubmit() {
   form.value
     .validate()
     .then(({ valid }) => {
       if (valid)
-        toast.success('校验通过')
+        toast().success('校验通过')
     })
     .catch((error) => {
       console.log(error, 'error')

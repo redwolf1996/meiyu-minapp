@@ -34,7 +34,9 @@ export default defineConfig(({ mode }) => {
           '@vueuse/core',
           'uni-app',
           {
-            'wot-design-uni': ['useToast', 'toast'],
+            'wot-design-uni': [
+              ['useToast', 'toast'],
+            ],
           },
         ],
         dts: 'src/auto-imports.d.ts',
