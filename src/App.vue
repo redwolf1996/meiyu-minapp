@@ -20,9 +20,4 @@ text {
 .custom-nav {
   background-color: #f6f6fd !important;
 }
-// .wd-input__label.is-required::after {
-//   position: relative !important;
-//   left: 4px !important;
-//   top: 5px !important;
-// }
 </style>
