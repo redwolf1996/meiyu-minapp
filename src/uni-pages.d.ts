@@ -5,15 +5,15 @@
 
 interface NavigateToOptions {
   url: "/pages/index" |
-       "/pages/merchant/dashboard/index" |
-       "/pages/merchant/login/index" |
-       "/pages/merchant/login/info" |
-       "/pages/merchant/init/steps/index" |
-       "/pages/merchant/init/steps/step1" |
-       "/pages/merchant/init/steps/step2" |
-       "/pages/merchant/init/steps/step3" |
-       "/pages/merchant/init/steps/step4" |
-       "/pages/merchant/init/steps/step5" |
+       "/pages/business/dashboard/index" |
+       "/pages/business/login/index" |
+       "/pages/business/login/info" |
+       "/pages/business/init/steps/index" |
+       "/pages/business/init/steps/step1" |
+       "/pages/business/init/steps/step2" |
+       "/pages/business/init/steps/step3" |
+       "/pages/business/init/steps/step4" |
+       "/pages/business/init/steps/step5" |
        "/pagesA/index" |
        "/pagesB/index";
 }

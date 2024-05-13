@@ -8,7 +8,7 @@
       }
     },
     {
-      "path": "pages/merchant/dashboard/index",
+      "path": "pages/business/dashboard/index",
       "type": "page",
       "layout": "home",
       "style": {
@@ -16,28 +16,28 @@
       }
     },
     {
-      "path": "pages/merchant/login/index",
+      "path": "pages/business/login/index",
       "type": "page",
       "style": {
         "navigationBarTitleText": "登录-商家端"
       }
     },
     {
-      "path": "pages/merchant/login/info",
+      "path": "pages/business/login/info",
       "type": "page",
       "style": {
         "navigationBarTitleText": "完善信息"
       }
     },
     {
-      "path": "pages/merchant/init/steps/index",
+      "path": "pages/business/init/steps/index",
       "type": "page",
       "style": {
         "navigationBarTitleText": "欢迎来到美预预约"
       }
     },
     {
-      "path": "pages/merchant/init/steps/step1",
+      "path": "pages/business/init/steps/step1",
       "type": "page",
       "style": {
         "navigationBarTitleText": "添加店铺信息",
@@ -45,7 +45,7 @@
       }
     },
     {
-      "path": "pages/merchant/init/steps/step2",
+      "path": "pages/business/init/steps/step2",
       "type": "page",
       "style": {
         "navigationBarTitleText": "添加服务",
@@ -53,7 +53,7 @@
       }
     },
     {
-      "path": "pages/merchant/init/steps/step3",
+      "path": "pages/business/init/steps/step3",
       "type": "page",
       "style": {
         "navigationBarTitleText": "添加卡项",
@@ -61,7 +61,7 @@
       }
     },
     {
-      "path": "pages/merchant/init/steps/step4",
+      "path": "pages/business/init/steps/step4",
       "type": "page",
       "style": {
         "navigationBarTitleText": "添加产品",
@@ -69,7 +69,7 @@
       }
     },
     {
-      "path": "pages/merchant/init/steps/step5",
+      "path": "pages/business/init/steps/step5",
       "type": "page",
       "style": {
         "navigationBarTitleText": "添加员工",
