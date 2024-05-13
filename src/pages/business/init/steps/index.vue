@@ -22,7 +22,7 @@ const arr = ref<Step[]>([
     color: 'color-#ff6619',
     status: 0,
     count: 0,
-    path: '/pages/merchant/init/steps/step1',
+    path: '/pages/business/init/steps/step1',
   },
   {
     step: '二',
@@ -31,7 +31,7 @@ const arr = ref<Step[]>([
     color: 'color-#1a66ff',
     status: 1,
     count: 1,
-    path: '/pages/merchant/init/steps/step2',
+    path: '/pages/business/init/steps/step2',
   },
   {
     step: '三',
@@ -40,7 +40,7 @@ const arr = ref<Step[]>([
     color: 'color-#1a66ff',
     status: 2,
     count: 0,
-    path: '/pages/merchant/init/steps/step3',
+    path: '/pages/business/init/steps/step3',
   },
   {
     step: '四',
@@ -49,7 +49,7 @@ const arr = ref<Step[]>([
     color: 'color-#1a66ff',
     status: 1,
     count: 0,
-    path: '/pages/merchant/init/steps/step4',
+    path: '/pages/business/init/steps/step4',
   },
   {
     step: '五',
@@ -58,7 +58,7 @@ const arr = ref<Step[]>([
     color: 'color-#1a66ff',
     status: 1,
     count: 0,
-    path: '/pages/merchant/init/steps/step5',
+    path: '/pages/business/init/steps/step5',
   },
 ])
 </script>

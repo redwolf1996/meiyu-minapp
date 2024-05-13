@@ -1,25 +1,24 @@
 import { defineStore } from 'pinia'
 
 export const useMerchantStore = defineStore(
-  'merchant',
+  'business',
   () => {
-    const merchantInfo = ref(null)
+    const businessInfo = ref(null)
 
-    function setMerchantInfo(val: any) {
-      merchantInfo.value = val
+    function setBusinessInfo(val: any) {
+      businessInfo.value = val
     }
-    function clearMerchantInfo() {
-      merchantInfo.value = null
+    function clearBusinessInfo() {
+      businessInfo.value = null
     }
 
     return {
-      merchantInfo,
-      setMerchantInfo,
-      clearMerchantInfo,
+      businessInfo,
+      setBusinessInfo,
+      clearBusinessInfo,
     }
   },
   {
-    // 小程序端配置
     persist: {
       storage: {
         getItem(key) {
@@ -30,7 +29,5 @@ export const useMerchantStore = defineStore(
         },
       },
     },
-    // 网页端配置
-    // persist: true,
   },
 )

@@ -25,7 +25,7 @@ export const useUserStore = defineStore(
     }
   },
   {
-    persist: { // 小程序端配置
+    persist: {
       storage: {
         getItem(key) {
           return uni.getStorageSync(key)
@@ -35,6 +35,5 @@ export const useUserStore = defineStore(
         },
       },
     },
-    // persist: true, // 网页端配置
   },
 )
