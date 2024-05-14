@@ -1,6 +1,6 @@
 <route lang="yaml">
-  style:
-    navigationBarTitleText: 完善登录信息
+style:
+  navigationBarTitleText: 完善登录信息
 </route>
 
 <script lang="ts" setup>

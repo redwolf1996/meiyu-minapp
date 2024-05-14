@@ -1,7 +1,7 @@
 <route lang="yaml">
-  style:
-    navigationBarTitleText: 添加店铺信息
-    navigationStyle: custom
+style:
+  navigationBarTitleText: 添加店铺信息
+  navigationStyle: custom
 </route>
 
 <script lang="ts" setup>
