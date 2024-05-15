@@ -6,6 +6,7 @@ style:
 
 <script lang="ts" setup>
 const value = ref()
+const value1 = ref()
 const fileList = ref<any[]>([
   { url: 'https://img12.360buyimg.com//n0/jfs/t1/29118/6/4823/55969/5c35c16bE7c262192/c9fdecec4b419355.jpg' },
 ])
@@ -45,10 +46,11 @@ function handleChange(e: any) {
       </text>
     </view>
     <view bg-white px-40rpx py-24rpx>
-      <wd-textarea
+      <wd-input
         v-model="value"
+        :no-border="true"
         placeholderStyle="font-size: 14px;color:#C9CDD4;"
-        placeholder="请填写门店名称" :maxlength="20" auto-height clearable show-word-limit
+        placeholder="请填写门店名称" :maxlength="20" clearable show-word-limit
       />
     </view>
   </view>
@@ -61,10 +63,12 @@ function handleChange(e: any) {
       </text>
     </view>
     <view bg-white px-40rpx py-24rpx>
-      <wd-textarea
-        v-model="value"
+      <wd-input
+        v-model="value1"
+        :no-border="true"
+        type="number"
         placeholderStyle="font-size: 14px;color:#C9CDD4;"
-        placeholder="请填写联系电话" :maxlength="20" auto-height clearable show-word-limit
+        placeholder="请填写联系电话" :maxlength="11" clearable show-word-limit
       />
     </view>
   </view>
@@ -80,7 +84,7 @@ function handleChange(e: any) {
       <wd-textarea
         v-model="value"
         placeholderStyle="font-size: 14px;color:#C9CDD4;"
-        placeholder="请填写门店名称" :maxlength="50" auto-height clearable show-word-limit
+        placeholder="请填写门店地址" :maxlength="50" auto-height clearable show-word-limit
       />
     </view>
   </view>
@@ -113,6 +117,7 @@ function handleChange(e: any) {
       </view>
     </wd-button>
   </view>
+  <view h-60rpx />
 </template>
 
 <style>
