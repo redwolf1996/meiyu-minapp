@@ -6,7 +6,6 @@ style:
 
 <script lang="ts" setup>
 const value = ref()
-const value1 = ref()
 const fileList = ref<any[]>([
   { url: 'https://img12.360buyimg.com//n0/jfs/t1/29118/6/4823/55969/5c35c16bE7c262192/c9fdecec4b419355.jpg' },
 ])
@@ -57,9 +56,6 @@ const sources = [
 
 function handleChange(e: any) {
   console.log(e)
-}
-function doIt() {
-  console.log('xxx')
 }
 </script>
 
@@ -143,7 +139,7 @@ function doIt() {
         <text>网店展示 {{ form.val }}</text>
       </view>
       <view h-28rpx />
-      <GridTagSelect v-model="form.val" :sources="sources" />
+      <GridTagSelect :sources="sources" @update:model-value="$event => (form.val = $event)" />
     </view>
 
     <view h-24rpx />

@@ -8,6 +8,7 @@ const props = withDefaults(defineProps<{
   columns: 2,
 })
 
+const emit = defineEmits(['update:modelValue'])
 type Mode = 'single' | 'multiple'
 interface Source {
   label: string
@@ -15,7 +16,6 @@ interface Source {
   isActive: boolean
 }
 
-const modelVal = defineModel()
 const sources = ref<Source[]>(props.sources)
 const columns = ref(props.columns)
 const mode = ref<Mode>(props.mode)
@@ -27,7 +27,7 @@ function onClickTag(item: Source, index: number) {
       if (i !== index)
         e.isActive = false
       else
-        modelVal.value = e.value
+        emit('update:modelValue', e.value)
     })
   }
 }
