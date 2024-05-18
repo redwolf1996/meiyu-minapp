@@ -26,7 +26,7 @@ function select(e: UniHelper.CheckboxGroupOnChangeEvent) {
       走近千家万户，共享轻松生活
     </view>
     <view mx-60rpx mt-112rpx color-white>
-      <wd-button :disabled="!checked" size="large" custom-class="theme-bg" block>
+      <wd-button :disabled="!checked" size="large" block>
         <view flex flex-cc>
           <text i-tdesign-logo-wechat font-size-36rpx />
           <text>&nbsp;微信一键登录</text>

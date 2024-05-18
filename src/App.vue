@@ -12,6 +12,7 @@ page {
   background-color: #f6f6fd;
   --wot-input-icon-margin: 5px;
   --wot-input-icon-color: rgba(0, 0, 0, 0.25);
+  --wot-button-primary-bg-color: #1a66ff;
 }
 
 :deep(.theme-bg) {
