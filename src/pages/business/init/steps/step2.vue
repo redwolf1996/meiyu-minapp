@@ -21,7 +21,28 @@ const model = reactive<{
   value3: '',
 })
 
-const form = ref()
+const form: any = reactive({
+  val: '123',
+})
+
+const sources = [
+  {
+    label: '付啊可是来得及啊看来',
+    value: 1,
+    isActive: false,
+  },
+  {
+    label: '付全款2',
+    value: 2,
+    isActive: false,
+  },
+  {
+    label: '付全款3',
+    value: 3,
+    isActive: false,
+  },
+]
+
 // function handleSubmit() {
 //   form.value
 //     .validate()
@@ -72,86 +93,70 @@ function doIt() {
         :rules="[{ required: true, message: '请选择服务时长' }]"
       />
     </wd-cell-group>
+
+    <view mt-24rpx bg-white p-40rpx>
+      <view class="form-item-title required">
+        <text>服务图片</text>
+      </view>
+      <view color-999 f12 mt-10rpx>
+        <text>建议尺寸：800*800像素，最多上传5张</text>
+      </view>
+      <view flex-ac flex mt-20rpx>
+        <wd-upload :file-list="fileList" :limit="5" action="https://ftf.jd.com/api/uploadImg" @change="handleChange" />
+      </view>
+    </view>
+
+    <view h-24rpx />
+    <wd-cell-group :border="true">
+      <wd-input
+        v-model="model.value1"
+        label="原价"
+        prop="value1"
+        placeholder="请输入"
+        suffix-icon="arrow-right"
+        :rules="[{ required: true, message: '请填写原价' }]"
+      />
+      <wd-input
+        v-model="model.value2"
+        label="促销价"
+        prop="value23232"
+        placeholder="若不填写，客户则按原价购买"
+        suffix-icon="arrow-right"
+      />
+    </wd-cell-group>
+
+    <view h-24rpx />
+    <view bg-white px-40rpx py-24rpx>
+      <view mb-20rpx class="form-item-title">
+        <text>服务说明</text>
+      </view>
+      <wd-textarea
+        v-model="value"
+        placeholderStyle="font-size: 14px;color:#C9CDD4;"
+        placeholder="请输入服务说明" :maxlength="500" auto-height clearable show-word-limit
+      />
+    </view>
+
+    <view h-24rpx />
+    <view bg-white px-40rpx py-24rpx>
+      <view class="form-item-title">
+        <text>网店展示 {{ form.val }}</text>
+      </view>
+      <view h-28rpx />
+      <GridTagSelect v-model="form.val" :sources="sources" />
+    </view>
+
+    <view h-24rpx />
+    <view bg-white px-40rpx py-24rpx>
+      <view class="form-item-title">
+        <text>预约支付</text>
+      </view>
+      <view f12 color-999>
+        <text>设置客户线上预约时是否需要支付</text>
+      </view>
+      xxxxxxxxx
+    </view>
   </wd-form>
-
-  <view mt-40rpx flex bg-white px-40rpx py-24rpx flex-bt flex-ac>
-    <view>
-      <view fb>
-        门店logo
-      </view>
-      <view color-666 f12 mt-10rpx>
-        建议上传门店logo
-      </view>
-    </view>
-    <view flex-ac flex>
-      <wd-upload :file-list="fileList" :limit="1" action="https://ftf.jd.com/api/uploadImg" @change="handleChange" />
-      <!-- <i i-material-symbols-light-chevron-right fn fs-40 color-999 style="transform: translateY(2rpx);" /> -->
-    </view>
-  </view>
-
-  <view mt-40rpx>
-    <view px-40rpx mb-20rpx color-999 f14>
-      <text>门店名称</text>
-      <text color-red>
-        *
-      </text>
-    </view>
-    <view bg-white px-40rpx py-24rpx>
-      <wd-input
-        v-model="value"
-        :no-border="true"
-        placeholderStyle="font-size: 14px;color:#C9CDD4;"
-        placeholder="请填写门店名称" :maxlength="20" clearable show-word-limit
-      />
-    </view>
-  </view>
-
-  <view mt-40rpx>
-    <view px-40rpx mb-20rpx color-999 f14>
-      <text>联系电话</text>
-      <text color-red>
-        *
-      </text>
-    </view>
-    <view bg-white px-40rpx py-24rpx>
-      <wd-input
-        v-model="value1"
-        :no-border="true"
-        type="number"
-        placeholderStyle="font-size: 14px;color:#C9CDD4;"
-        placeholder="请填写联系电话" :maxlength="11" clearable show-word-limit
-      />
-    </view>
-  </view>
-
-  <view mt-40rpx>
-    <view px-40rpx mb-20rpx color-999 f14>
-      <text>门店地址</text>
-      <text color-red>
-        *
-      </text>
-    </view>
-    <view bg-white px-40rpx py-24rpx>
-      <wd-textarea
-        v-model="value"
-        placeholderStyle="font-size: 14px;color:#C9CDD4;"
-        placeholder="请填写门店地址" :maxlength="50" auto-height clearable show-word-limit
-      />
-    </view>
-  </view>
-
-  <view mt-40rpx>
-    <view px-40rpx mb-20rpx color-999 f14>
-      <text>门店简介</text>
-    </view>
-    <view bg-white px-40rpx py-24rpx>
-      <wd-textarea
-        v-model="value"
-        placeholderStyle="font-size: 14px;color:#C9CDD4;"
-        placeholder="请输入不少于10个字的描述" :maxlength="100" auto-height clearable show-word-limit
-      />
-    </view>
-  </view>
 
   <view mx-40rpx mt-64rpx color-white>
     <wd-button size="large" custom-class="theme-bg" block>
@@ -161,17 +166,26 @@ function doIt() {
     </wd-button>
   </view>
 
-  <view mx-40rpx mt-40rpx color-white>
-    <wd-button size="large" custom-class="theme-bg" block>
-      <view flex flex-cc>
-        <text>保存并下一步</text>
+  <view mx-40rpx color-white>
+    <wd-button size="large" type="text" block>
+      <view flex flex-cc color-333>
+        <text>跳过</text>
       </view>
     </wd-button>
   </view>
   <view h-60rpx />
 </template>
 
-<style>
+<style lang='scss' scoped>
+.grid-tag-select {
+  display: grid;
+  grid-gap: 20rpx;
+  grid-template-columns: repeat(2, 1fr);
+  > view {
+    height: 20px;
+    border: 1px solid blue;
+  }
+}
 :deep(.wd-upload__evoke) {
   margin-bottom: 0 !important;
 }

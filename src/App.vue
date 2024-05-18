@@ -18,6 +18,9 @@ page {
 :deep(.theme-bg) {
   background-color: #1a66ff !important;
 }
+:deep(.color-black) {
+  color: #5a5a5a;
+}
 view,
 text {
   box-sizing: border-box;
@@ -47,6 +50,25 @@ text {
     position: relative !important;
     left: 4px !important;
     top: 5px !important;
+  }
+  .wd-input__label-inner,
+  .wd-picker__label-inner {
+    color: #303030;
+  }
+}
+.form-item-title {
+  font-size: 28rpx;
+  color: #303030;
+  &.required {
+    &::after {
+      position: relative;
+      left: 4px;
+      top: 5px;
+      content: '*';
+      font-size: var(--wot-cell-required-size, 18px);
+      line-height: 1.1;
+      color: var(--wot-cell-required-color, var(--wot-color-danger, #fa4350));
+    }
   }
 }
 </style>

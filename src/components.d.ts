@@ -9,6 +9,7 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    GridTagSelect: typeof import('./components/GridTagSelect.vue')['default']
     StepNav: typeof import('./components/StepNav.vue')['default']
     StripDot: typeof import('./components/StripDot.vue')['default']
   }

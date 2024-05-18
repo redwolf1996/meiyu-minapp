@@ -3,5 +3,5 @@
 </script>
 
 <template>
-  自定义头部的布局
+  <view>自定义头部的布局</view>
 </template>

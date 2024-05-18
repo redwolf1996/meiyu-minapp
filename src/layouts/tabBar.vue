@@ -3,5 +3,5 @@
 </script>
 
 <template>
-  这是tabBar布局组件
+  <view>这是tabBar布局组件</view>
 </template>
