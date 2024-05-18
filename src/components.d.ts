@@ -11,6 +11,5 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     StepNav: typeof import('./components/StepNav.vue')['default']
     StripDot: typeof import('./components/StripDot.vue')['default']
-    Test: typeof import('./components/Test.vue')['default']
   }
 }
