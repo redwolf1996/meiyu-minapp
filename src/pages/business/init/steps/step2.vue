@@ -62,17 +62,7 @@ function doIt() {
         suffix-icon="arrow-right"
         :rules="[{ required: true, message: '请填写服务名称' }]"
       />
-      <wd-input
-        v-model="model.value2"
-        label="服务分类"
-        prop="value23232"
-        placeholder="请选择"
-        suffix-icon="arrow-right"
-        readonly
-        :rules="[{ required: true, message: '请选择服务分类' }]"
-        @click="doIt"
-      />
-      <wd-picker v-model="value" :rules="[{ required: true, message: '请选择服务分类' }]" label="单列选项" align-right :columns="columns" />
+      <wd-picker v-model="value" :rules="[{ required: true, message: '请选择服务分类' }]" label="服务分类" align-right :columns="columns" />
       <wd-input
         v-model="model.value2"
         label="服务时长"
