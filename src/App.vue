@@ -7,9 +7,13 @@ onHide(() => {})
 </script>
 
 <style lang="scss">
+:root,
 page {
   background-color: #f6f6fd;
+  --wot-input-icon-margin: 5px;
+  --wot-input-icon-color: rgba(0, 0, 0, 0.25);
 }
+
 :deep(.theme-bg) {
   background-color: #1a66ff !important;
 }
@@ -19,6 +23,9 @@ text {
 }
 .custom-nav {
   background-color: #f6f6fd !important;
+}
+.wd-input__placeholder {
+  color: #b6bdbd !important;
 }
 .wd-button.is-large {
   border-radius: 0 !important;
@@ -30,10 +37,12 @@ text {
   .wd-input__inner {
     text-align: right !important;
   }
-  .wd-input__label {
+  .wd-input__label,
+  .wd-picker__label {
     padding-left: 5px !important;
   }
-  .wd-input__label.is-required::after {
+  .wd-input__label.is-required::after,
+  .wd-picker__label.is-required::after {
     position: relative !important;
     left: 4px !important;
     top: 5px !important;
