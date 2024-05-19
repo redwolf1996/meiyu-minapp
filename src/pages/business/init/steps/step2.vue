@@ -139,7 +139,7 @@ function handleChange(e: any) {
         <text>网店展示 {{ form.val }}</text>
       </view>
       <view h-28rpx />
-      <GridTagSelect :sources="sources" @update:model-value="$event => (form.val = $event)" />
+      <GridTagSelect v-model="form.val" :sources="sources" />
     </view>
 
     <view h-24rpx />

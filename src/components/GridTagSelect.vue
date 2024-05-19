@@ -9,6 +9,7 @@ const props = withDefaults(defineProps<{
 })
 
 const emit = defineEmits(['update:modelValue'])
+
 type Mode = 'single' | 'multiple'
 interface Source {
   label: string
