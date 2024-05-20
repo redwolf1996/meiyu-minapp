@@ -14,9 +14,9 @@ const model = reactive<{
   value3: '',
 })
 
-const form = ref()
+const formRef = ref()
 function handleSubmit() {
-  form.value
+  formRef.value
     .validate()
     .then(({ valid }) => {
       if (valid)
@@ -30,7 +30,7 @@ function handleSubmit() {
 
 <template>
   <view h-10px />
-  <wd-form ref="form" :model="model">
+  <wd-form ref="formRef" :model="model">
     <wd-cell-group :border="true">
       <wd-input
         v-model="model.value1"
@@ -43,7 +43,7 @@ function handleSubmit() {
       <wd-input
         v-model="model.value2"
         label="手机号"
-        prop="value23232"
+        prop="value2"
         placeholder="请输入"
         suffix-icon="arrow-right"
         :rules="[{ required: true, message: '请填写手机号' }]"
@@ -71,8 +71,15 @@ function handleSubmit() {
       </view>
     </view>
     <view p-20px>
-      <wd-button
+      <!-- <wd-button
         :disabled="!model.value1 || !model.value2"
+        custom-class="theme-bg"
+        :round="false" type="primary" size="large" block
+        @click="handleSubmit"
+      >
+        保存
+      </wd-button> -->
+      <wd-button
         custom-class="theme-bg"
         :round="false" type="primary" size="large" block
         @click="handleSubmit"

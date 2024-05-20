@@ -9,6 +9,7 @@ const value = ref()
 const fileList = ref<any[]>([
   { url: 'https://img12.360buyimg.com//n0/jfs/t1/29118/6/4823/55969/5c35c16bE7c262192/c9fdecec4b419355.jpg' },
 ])
+const formRef = ref(null)
 const columns = ref(['选项1', '选项2', '选项3', '选项4', '选项5', '选项6', '选项7'])
 const showDrawer = ref(false)
 const model = reactive<{
@@ -67,7 +68,7 @@ function handleClose() {}
   </view>
 
   <view h-24rpx />
-  <wd-form :model="model">
+  <wd-form ref="formRef" :model="model">
     <wd-cell-group :border="true">
       <wd-input
         v-model="model.value1"
@@ -139,8 +140,10 @@ function handleClose() {}
       />
     </view>
 
-    <wd-popup v-model="showDrawer" :z-index="9999" position="right" :closable="true" custom-style="width: 100%;" @close="handleClose">
-      XXXXXXXXXXXXXXX
+    <wd-popup v-model="showDrawer" :z-index="9999" position="bottom" :closable="true" custom-style="width: 100%;height:100%" @close="handleClose">
+      <view style="height: 100%;background-color: #fff;">
+        xxxxxxxxxx
+      </view>
     </wd-popup>
 
     <view h-24rpx />
