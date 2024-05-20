@@ -22,22 +22,31 @@ const model = reactive<{
 
 const form: any = reactive({
   val: '123',
+  val1: 'sdsd',
 })
 
-const sources = [
+const sources: any = [
   {
-    label: '付啊可是来得及啊看来',
+    label: '展示',
     value: 1,
     isActive: false,
   },
   {
-    label: '付全款2',
-    value: 2,
+    label: '不展示',
+    value: 0,
+    isActive: false,
+  },
+]
+
+const sources2: any = [
+  {
+    label: '付全款',
+    value: 1,
     isActive: false,
   },
   {
-    label: '付全款3',
-    value: 3,
+    label: '到店付',
+    value: 0,
     isActive: false,
   },
 ]
@@ -135,8 +144,8 @@ function handleChange(e: any) {
 
     <view h-24rpx />
     <view bg-white px-40rpx py-24rpx>
-      <view class="form-item-title">
-        <text>网店展示 {{ form.val }}</text>
+      <view class="form-item-title required">
+        <text>网店展示</text>
       </view>
       <view h-28rpx />
       <GridTagSelect v-model="form.val" :sources="sources" />
@@ -144,13 +153,14 @@ function handleChange(e: any) {
 
     <view h-24rpx />
     <view bg-white px-40rpx py-24rpx>
-      <view class="form-item-title">
+      <view class="form-item-title required">
         <text>预约支付</text>
       </view>
       <view f12 color-999>
         <text>设置客户线上预约时是否需要支付</text>
       </view>
-      xxxxxxxxx
+      <view h-28rpx />
+      <GridTagSelect v-model="form.val1" :sources="sources2" />
     </view>
   </wd-form>
 
