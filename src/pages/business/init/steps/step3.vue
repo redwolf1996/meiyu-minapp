@@ -5,6 +5,8 @@ style:
 </route>
 
 <script lang="ts" setup>
+import piaoyiEditor from '@/uni_modules/piaoyi-editor/components/piaoyi-editor/piaoyi-editor.vue'
+
 const value = ref()
 const fileList = ref<any[]>([
   { url: 'https://img12.360buyimg.com//n0/jfs/t1/29118/6/4823/55969/5c35c16bE7c262192/c9fdecec4b419355.jpg' },
@@ -22,23 +24,34 @@ const model = reactive<{
   value3: '',
 })
 
-// const form: any = reactive({
-//   val: '123',
-//   val1: 'sdsd',
-// })
+const readOnly = ref(false)
+const photoUrl = ref('http://test.com')
+const api = ref('api')
+const txt = ref('')
+const name = ref('file')
+const values = ref('')
 
-// const sources: any = [
-//   {
-//     label: '支持',
-//     value: 1,
-//     isActive: false,
-//   },
-//   {
-//     label: '不支持',
-//     value: 0,
-//     isActive: false,
-//   },
-// ]
+function setContents(e) {
+  txt.value = e.html
+}
+
+const form: any = reactive({
+  val: '123',
+  val1: 'sdsd',
+})
+
+const sources: any = [
+  {
+    label: '支持',
+    value: 1,
+    isActive: false,
+  },
+  {
+    label: '不支持',
+    value: 0,
+    isActive: false,
+  },
+]
 
 // function handleSubmit() {
 //   form.value
@@ -131,18 +144,46 @@ function handleClose() {}
       <view mb-20rpx class="form-item-title">
         <text>产品说明</text>
       </view>
+      <rich-text v-if="txt" :nodes="txt" />
       <wd-textarea
+        v-else
         v-model="value"
         readonly
         placeholderStyle="font-size: 14px;color:#C9CDD4;"
-        placeholder="请输入服务说明"
+        placeholder="请输入产品说明"
         :maxlength="500" auto-height clearable show-word-limit
       />
     </view>
 
-    <wd-popup v-model="showDrawer" :z-index="9999" position="bottom" :closable="true" custom-style="width: 100%;height:100%" @close="handleClose">
+    <wd-popup
+      v-model="showDrawer" :z-index="9999" position="bottom"
+      :closable="true" custom-style="width: 100%;height:90%"
+      @close="handleClose"
+    >
       <view style="height: 100%;background-color: #fff;">
-        xxxxxxxxxx
+        <view p-10px tc fb>
+          产品说明
+        </view>
+        <view class="richtext">
+          <piaoyiEditor
+            fontsize="13px"
+            :values="values"
+            :maxlength="3000"
+            :readOnly="readOnly"
+            :photoUrl="photoUrl"
+            :api="api"
+            :name="name"
+            @changes="setContents"
+          />
+          <view class="">
+            {{ txt }}
+          </view>
+          <!-- <view flex flex-bt mt-20rpx>
+            <wd-button @click="showDrawer = false">
+              保存
+            </wd-button>
+          </view> -->
+        </view>
       </view>
     </wd-popup>
 
@@ -152,7 +193,7 @@ function handleClose() {}
         <text>网店售卖</text>
       </view>
       <view h-28rpx />
-      <!-- <GridTagSelect v-model="form.val" :sources="sources" /> -->
+      <GridTagSelect v-model="form.val" :sources="sources" />
     </view>
   </wd-form>
 
@@ -175,6 +216,20 @@ function handleClose() {}
 </template>
 
 <style lang='scss' scoped>
+// .richtext {
+//   height: calc(100% - 50px);
+// }
+:deep(.ql-container) {
+  box-sizing: border-box;
+  padding: 0 10px 10px 10px;
+  width: 100%;
+  // min-height: 60vh;
+  // height: 60vh;
+  min-height: 20vh;
+  height: 20vh;
+  font-size: 13px;
+  line-height: 1.5;
+}
 .grid-tag-select {
   display: grid;
   grid-gap: 20rpx;
