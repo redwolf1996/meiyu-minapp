@@ -72,7 +72,7 @@
       "path": "pages/business/init/steps/step3-3",
       "type": "page",
       "style": {
-        "navigationBarTitleText": "折扣卡",
+        "navigationBarTitleText": "充值卡",
         "navigationStyle": "custom"
       }
     },

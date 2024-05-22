@@ -1,6 +1,6 @@
 <route lang="yaml">
 style:
-  navigationBarTitleText: 折扣卡
+  navigationBarTitleText: 充值卡
   navigationStyle: custom
 </route>
 
@@ -8,6 +8,7 @@ style:
 import piaoyiEditor from '@/uni_modules/piaoyi-editor/components/piaoyi-editor/piaoyi-editor.vue'
 
 const value = ref<number>(1)
+const columns = ref(['选项1', '选项2', '选项3', '选项4', '选项5', '选项6', '选项7'])
 const showDrawer = ref(false)
 const form: any = reactive({
   val: 1,
@@ -21,23 +22,6 @@ const model = reactive<{
   value2: '',
   value3: '',
 })
-const sources: any = [
-  {
-    label: '有限次卡',
-    value: 1,
-    isActive: true,
-  },
-  {
-    label: '不限次卡',
-    value: 2,
-    isActive: false,
-  },
-  {
-    label: '通卡',
-    value: 3,
-    isActive: false,
-  },
-]
 
 const sources2: any = [
   {
@@ -73,7 +57,7 @@ function handleClose() {}
 <template>
   <StepNav :step="3" />
   <view mt-10px tc fs-40>
-    添加折扣卡
+    添加充值卡
   </view>
   <view mt-8px tc>
     也可跳过稍后在【工作台-产品管理】中添加
@@ -81,13 +65,37 @@ function handleClose() {}
 
   <wd-form ref="form" :model="model">
     <view h-24rpx />
-    <view bg-white p-40rpx>
-      <view class="form-item-title required">
-        <text>选择次卡类型</text>
-      </view>
-      <view h-28rpx />
-      <GridTagSelect v-model="form.val" :sources="sources" :columns="3" />
-    </view>
+    <wd-cell-group :border="true">
+      <wd-input
+        v-model="model.value1"
+        label="卡名称"
+        prop="value1"
+        placeholder="请输入"
+        suffix-icon="arrow-right"
+        :rules="[{ required: true, message: '请填写卡名称' }]"
+      />
+      <wd-picker
+        v-model="value"
+        :rules="[{ required: true, message: '请选择服务分类' }]"
+        label="卡分类"
+        align-right :columns="columns"
+      />
+      <wd-input
+        v-model="model.value2"
+        label="充值金额"
+        prop="value23232"
+        placeholder="请输入"
+        suffix-icon="arrow-right"
+        :rules="[{ required: true, message: '请填写充值金额' }]"
+      />
+      <wd-input
+        v-model="model.value2"
+        label="赠送金额"
+        prop="value23232"
+        placeholder="请输入"
+        suffix-icon="arrow-right"
+      />
+    </wd-cell-group>
 
     <view h-24rpx />
     <wd-cell-group :border="true">
@@ -105,28 +113,31 @@ function handleClose() {}
         <view wp-50>
           产品名称1asdasdasdas
         </view>
-        <view wp-20 theme-red>
+        <view wp-10 theme-red>
           ¥499
         </view>
-        <view wp-30 flex flex-xr>
-          <wd-input-number v-if="form.val === 1" v-model="value" />
-          <view v-else>
-            不限次
+        <view wp-40 flex flex-xr>
+          <view flex flex-ac>
+            <wd-input-number v-model="value" />
+            <text pl-10px>
+              折
+            </text>
           </view>
         </view>
       </view>
-
       <view flex flex-bt flex-ac f13 h-96rpx px-40rpx>
         <view wp-50>
-          产品名称1
+          产品名asdas
         </view>
-        <view wp-20 theme-red>
+        <view wp-10 theme-red>
           ¥499
         </view>
-        <view wp-30 flex flex-xr>
-          <wd-input-number v-if="form.val === 1" v-model="value" />
-          <view v-else>
-            不限次
+        <view wp-40 flex flex-xr>
+          <view flex flex-ac>
+            <wd-input-number v-model="value" />
+            <text pl-10px>
+              折
+            </text>
           </view>
         </view>
       </view>
@@ -174,20 +185,20 @@ function handleClose() {}
         <image
           style="width: 630rpx;height: 368rpx;"
           mode="aspectFit"
-          :src="`${IMG_BASE}/bg_ck.png`"
+          :src="`${IMG_BASE}/bg_czk.png`"
         />
         <view
           pa color-white
           style="width: 630rpx;height: 368rpx;padding: 25px;
-            top: 0;left: 50%;text-align: left;
-            transform: translateX(-50%);"
+              top: 0;left: 50%;text-align: left;
+              transform: translateX(-50%);"
         >
           <view flex flex-bt flex-ac>
             <view f14 style="color: rgba(255, 255, 255, 0.7);">
               硕园美甲美睫
             </view>
-            <view text-20rpx w-88rpx h-40rpx lh-40rpx tc style="background: #FF5F00;border-radius: 32rpx;">
-              次卡
+            <view text-20rpx py-8rpx px-20rpx tc style="background: #FF5F00;border-radius: 32rpx;">
+              充值卡
             </view>
           </view>
           <view text-48rpx pt-56rpx>
@@ -251,10 +262,10 @@ function handleClose() {}
             {{ txt }}
           </view>
           <!-- <view flex flex-bt mt-20rpx>
-                <wd-button @click="showDrawer = false">
-                  保存
-                </wd-button>
-              </view> -->
+                  <wd-button @click="showDrawer = false">
+                    保存
+                  </wd-button>
+                </view> -->
         </view>
       </view>
     </wd-popup>
@@ -277,8 +288,8 @@ function handleClose() {}
   <view h-60rpx />
 </template>
 
-  <style lang='scss' scoped>
-  .ipt {
+<style lang='scss' scoped>
+.ipt {
   width: 100px !important;
 }
 // .wd-form {
