@@ -11,6 +11,9 @@ interface NavigateToOptions {
        "/pages/business/init/steps/index" |
        "/pages/business/init/steps/step1" |
        "/pages/business/init/steps/step2" |
+       "/pages/business/init/steps/step3-1" |
+       "/pages/business/init/steps/step3-2" |
+       "/pages/business/init/steps/step3-3" |
        "/pages/business/init/steps/step3" |
        "/pages/business/init/steps/step4" |
        "/pages/business/init/steps/step5" |

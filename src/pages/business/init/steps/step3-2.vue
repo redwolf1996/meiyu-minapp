@@ -1,6 +1,6 @@
 <route lang="yaml">
 style:
-  navigationBarTitleText: 添加卡项
+  navigationBarTitleText: 添加折扣卡
   navigationStyle: custom
 </route>
 

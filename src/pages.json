@@ -53,6 +53,30 @@
       }
     },
     {
+      "path": "pages/business/init/steps/step3-1",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "添加次卡",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/business/init/steps/step3-2",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "添加折扣卡",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/business/init/steps/step3-3",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "添加充值卡",
+        "navigationStyle": "custom"
+      }
+    },
+    {
       "path": "pages/business/init/steps/step3",
       "type": "page",
       "style": {
@@ -64,7 +88,7 @@
       "path": "pages/business/init/steps/step4",
       "type": "page",
       "style": {
-        "navigationBarTitleText": "添加产品",
+        "navigationBarTitleText": "添加卡项",
         "navigationStyle": "custom"
       }
     },
