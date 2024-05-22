@@ -99,24 +99,46 @@ function test() {
         :rules="[{ required: true, message: '请选择商品或服务' }]"
         @click="test"
       />
-      <view flex flex-bt flex-ac f13 style="padding:10px 20px;">
-        <view>产品名称1</view>
-        <view theme-red>
+      <view flex flex-bt flex-ac f13 h-96rpx px-40rpx>
+        <view wp-50>
+          产品名称1asdasdasdas
+        </view>
+        <view wp-20 theme-red>
           ¥499
         </view>
-        <view>
-          <wd-input-number v-model="value" />
+        <view wp-30 flex flex-xr>
+          <wd-input-number v-if="form.val === 1" v-model="value" />
+          <view v-else>
+            不限次
+          </view>
         </view>
       </view>
-      <view flex flex-bt flex-ac f13 style="padding:10px 20px;">
-        <view>产品名称1</view>
-        <view theme-red>
+
+      <view flex flex-bt flex-ac f13 h-96rpx px-40rpx>
+        <view wp-50>
+          产品名称1
+        </view>
+        <view wp-20 theme-red>
           ¥499
         </view>
-        <view>
-          <wd-input-number v-model="value" />
+        <view wp-30 flex flex-xr>
+          <wd-input-number v-if="form.val === 1" v-model="value" />
+          <view v-else>
+            不限次
+          </view>
         </view>
       </view>
+      <wd-input
+        v-if="form.val === 3"
+        v-model="model.value1"
+        label="可使用次数"
+        disabled
+        prop="value1"
+        placeholder="请输入"
+        suffix-icon="arrow-right"
+        :rules="[{ required: true, message: '请输入可使用次数' }]"
+        @click="test"
+      />
       <view h-10rpx />
     </wd-cell-group>
   </wd-form>
