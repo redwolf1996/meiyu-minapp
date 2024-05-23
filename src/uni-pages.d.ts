@@ -8,6 +8,9 @@ interface NavigateToOptions {
        "/pages/business/dashboard/index" |
        "/pages/business/login/index" |
        "/pages/business/login/info" |
+       "/pages/business/msg/detail-expire" |
+       "/pages/business/msg/detail-renew" |
+       "/pages/business/msg/list" |
        "/pages/business/init/steps/done" |
        "/pages/business/init/steps/index" |
        "/pages/business/init/steps/step1" |

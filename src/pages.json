@@ -30,6 +30,27 @@
       }
     },
     {
+      "path": "pages/business/msg/detail-expire",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "消息"
+      }
+    },
+    {
+      "path": "pages/business/msg/detail-renew",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "消息"
+      }
+    },
+    {
+      "path": "pages/business/msg/list",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "消息"
+      }
+    },
+    {
       "path": "pages/business/init/steps/done",
       "type": "page",
       "style": {
