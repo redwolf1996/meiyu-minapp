@@ -8,6 +8,7 @@ interface NavigateToOptions {
        "/pages/business/dashboard/index" |
        "/pages/business/login/index" |
        "/pages/business/login/info" |
+       "/pages/business/init/steps/done" |
        "/pages/business/init/steps/index" |
        "/pages/business/init/steps/step1" |
        "/pages/business/init/steps/step2" |

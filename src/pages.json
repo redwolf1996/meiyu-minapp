@@ -30,6 +30,13 @@
       }
     },
     {
+      "path": "pages/business/init/steps/done",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "完成基础设置"
+      }
+    },
+    {
       "path": "pages/business/init/steps/index",
       "type": "page",
       "style": {
