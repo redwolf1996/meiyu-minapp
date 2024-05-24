@@ -50,7 +50,7 @@ onLoad(() => {
       <view fb font-size-64rpx mt-12px>
         26237.23
       </view>
-      <view flex mt-20px gap-20px>
+      <view flex mt-20px gap-40px>
         <view wp-33.3333>
           <view f12 style="opacity: .6;">
             今日收入
@@ -69,7 +69,7 @@ onLoad(() => {
         </view>
         <view wp-33.3333>
           <view f12 style="opacity: .6;">
-            本月消耗金额
+            本月开卡充值
           </view>
           <view f16 mt-12rpx>
             3233
