@@ -28,6 +28,9 @@ text {
 .custom-nav {
   background-color: #f6f6fd !important;
 }
+.wd-navbar__title {
+  max-width: 100% !important;
+}
 .wd-input__placeholder {
   color: #b6bdbd !important;
 }

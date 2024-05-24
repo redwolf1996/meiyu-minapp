@@ -16,6 +16,41 @@ export default defineUniPages({
       '^wd-(.*)': 'wot-design-uni/components/wd-$1/wd-$1.vue',
     },
   },
+
+  tabBar: {
+    color: '#999999',
+    selectedColor: '#1A66FF',
+    borderStyle: 'black',
+    height: '52px',
+    backgroundColor: '#ffffff',
+    list: [
+      {
+        pagePath: 'pages/business/dashboard/index',
+        iconPath: 'static/tabs/dashboard.png',
+        selectedIconPath: 'static/tabs/dashboard-active.png',
+        text: '工作台',
+      },
+      {
+        pagePath: 'pages/business/booking/index',
+        iconPath: 'static/tabs/order.png',
+        selectedIconPath: 'static/tabs/order-active.png',
+        text: '预约',
+      },
+      {
+        pagePath: 'pages/business/customer/index',
+        iconPath: 'static/tabs/customer.png',
+        selectedIconPath: 'static/tabs/customer-active.png',
+        text: '客户',
+      },
+      {
+        pagePath: 'pages/business/my/index',
+        iconPath: 'static/tabs/my.png',
+        selectedIconPath: 'static/tabs/my-active.png',
+        text: '我的',
+      },
+    ],
+  },
+
   // tabBar: {
   //   color: '#999999',
   //   selectedColor: '#018d71',

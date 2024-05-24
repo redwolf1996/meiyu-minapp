@@ -5,12 +5,15 @@
 
 interface NavigateToOptions {
   url: "/pages/index" |
+       "/pages/business/booking/index" |
+       "/pages/business/customer/index" |
        "/pages/business/dashboard/index" |
        "/pages/business/login/index" |
        "/pages/business/login/info" |
        "/pages/business/msg/detail-expire" |
        "/pages/business/msg/detail-renew" |
        "/pages/business/msg/list" |
+       "/pages/business/my/index" |
        "/pages/business/init/steps/done" |
        "/pages/business/init/steps/index" |
        "/pages/business/init/steps/step1" |
@@ -27,7 +30,7 @@ interface NavigateToOptions {
 interface RedirectToOptions extends NavigateToOptions {}
 
 interface SwitchTabOptions {
-  
+  url: "/pages/business/dashboard/index" | "/pages/business/booking/index" | "/pages/business/customer/index" | "/pages/business/my/index"
 }
 
 type ReLaunchOptions = NavigateToOptions | SwitchTabOptions;

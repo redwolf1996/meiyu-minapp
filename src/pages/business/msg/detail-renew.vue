@@ -29,4 +29,10 @@ style:
   </view>
 </template>
 
+<style>
+page {
+  background-color: #fff;
+}
+</style>
+
 <style lang='scss' scoped></style>

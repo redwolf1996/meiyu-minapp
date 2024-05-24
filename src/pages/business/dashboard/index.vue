@@ -1,17 +1,24 @@
-<script lang="ts" setup>
-</script>
-
 <route lang="yaml">
 layout: home
 style:
   navigationBarTitleText: 工作台
+  navigationStyle: custom
 </route>
 
 <script lang="ts" setup></script>
 
 <template>
-  <view>xxxxx</view>
+  <wd-navbar :safeAreaInsetTop="true" :bordered="false">
+    <template #title>
+      <view text-left w-full>
+        asd
+      </view>
+    </template>
+  </wd-navbar>
 </template>
 
-<style lang="scss" scoped>
+<style>
+page {
+  background-color: #fff;
+}
 </style>

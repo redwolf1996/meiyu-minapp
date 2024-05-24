@@ -8,11 +8,26 @@
       }
     },
     {
+      "path": "pages/business/booking/index",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "预约"
+      }
+    },
+    {
+      "path": "pages/business/customer/index",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "客户"
+      }
+    },
+    {
       "path": "pages/business/dashboard/index",
       "type": "page",
       "layout": "home",
       "style": {
-        "navigationBarTitleText": "工作台"
+        "navigationBarTitleText": "工作台",
+        "navigationStyle": "custom"
       }
     },
     {
@@ -48,6 +63,13 @@
       "type": "page",
       "style": {
         "navigationBarTitleText": "消息"
+      }
+    },
+    {
+      "path": "pages/business/my/index",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "我的"
       }
     },
     {
@@ -142,6 +164,39 @@
       "^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue",
       "^wd-(.*)": "wot-design-uni/components/wd-$1/wd-$1.vue"
     }
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#1A66FF",
+    "borderStyle": "black",
+    "height": "52px",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/business/dashboard/index",
+        "iconPath": "static/tabs/dashboard.png",
+        "selectedIconPath": "static/tabs/dashboard-active.png",
+        "text": "工作台"
+      },
+      {
+        "pagePath": "pages/business/booking/index",
+        "iconPath": "static/tabs/order.png",
+        "selectedIconPath": "static/tabs/order-active.png",
+        "text": "预约"
+      },
+      {
+        "pagePath": "pages/business/customer/index",
+        "iconPath": "static/tabs/customer.png",
+        "selectedIconPath": "static/tabs/customer-active.png",
+        "text": "客户"
+      },
+      {
+        "pagePath": "pages/business/my/index",
+        "iconPath": "static/tabs/my.png",
+        "selectedIconPath": "static/tabs/my-active.png",
+        "text": "我的"
+      }
+    ]
   },
   "subPackages": [
     {
