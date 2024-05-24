@@ -19,7 +19,7 @@ function select(e: UniHelper.CheckboxGroupOnChangeEvent) {
       <wd-img
         :width="72"
         :height="72"
-        :src="`${IMG_BASE}/logo@3x.png`"
+        :src="`${IMG_BASE}/logo.png`"
       />
     </view>
     <view mt-80rpx>
