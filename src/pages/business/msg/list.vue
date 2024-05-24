@@ -18,20 +18,16 @@ const tabs = [{
 </script>
 
 <template>
-  <wd-tabs v-model="tab" :swipeable="true" :sticky="true" style="position: sticky;top: 0;">
+  <wd-tabs v-model="tab" :swipeable="true">
     <block v-for="item in tabs" :key="item">
       <wd-tab :title="item.label" />
     </block>
   </wd-tabs>
-  <view class="content">
-    xxxx
+  <view p-32rpx>
+    <MsgClock />
+    <MsgRing />
   </view>
 </template>
 
 <style lang='scss' scoped>
-.content {
-  line-height: 120px;
-  text-align: center;
-  height: 2000px;
-}
 </style>

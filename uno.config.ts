@@ -56,6 +56,7 @@ export default defineConfig({
     [/^fs-([\.\d]+)$/, ([_, num]) => ({ 'font-size': `${num}rpx` })],
     ['br4', { 'border-radius': '4px' }],
     ['br8', { 'border-radius': '8px' }],
+    ['round', { 'border-radius': '50%' }],
     ['color-333', { color: '#333' }],
     ['color-666', { color: '#666' }],
     ['color-999', { color: '#999' }],
