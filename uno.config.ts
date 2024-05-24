@@ -48,6 +48,7 @@ export default defineConfig({
     ['dib', { display: 'inline-block' }],
     ['fb', { 'font-weight': 'bold' }],
     ['fn', { 'font-weight': 'normal' }],
+    ['f10', { 'font-size': '20rpx' }],
     ['f12', { 'font-size': '24rpx' }],
     ['f13', { 'font-size': '26rpx' }],
     ['f14', { 'font-size': '28rpx' }],

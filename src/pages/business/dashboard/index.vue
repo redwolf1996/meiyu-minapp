@@ -38,7 +38,7 @@ onLoad(() => {
     </template>
   </wd-navbar>
 
-  <view class="conitaner" mt-20rpx>
+  <view class="conitaner">
     <view
       p-40rpx color-white pr
       style="background-size: cover;"
@@ -78,12 +78,12 @@ onLoad(() => {
       </view>
       <view
         class="wallet"
-        px-12px py-10px color-white pa flex flex-ac right-0 top-20px
+        px-16px py-8px color-white pa flex flex-ac right-0 top-20px
         style="background-color: rgba(255,255,255,0.2);border-radius: 31px 0px 0px 31px;"
       >
         <wd-img
-          :width="25"
-          :height="22"
+          :width="16"
+          :height="16"
           :src="`${IMG_BASE}/icon-wallet.png`"
         />
         <text f14 pl-8px>
@@ -91,17 +91,79 @@ onLoad(() => {
         </text>
       </view>
     </view>
-    <view>222</view>
+
+    <view pr mt-20px bg-white flex flex-ac tc flex-bt py-22rpx style="box-shadow: 0px 4px 8px 0px rgba(48, 48, 48, 0.1005);">
+      <view pa abs-cc flex class="total">
+        <view class="bd-r" />
+        <view class="bd-r" />
+        <view class="bd-r" />
+        <view />
+      </view>
+      <view wp-25>
+        <view fb f18>
+          0
+        </view>
+        <view f12 color-#646466 mt-2px>
+          普通客户
+        </view>
+      </view>
+      <view wp-25>
+        <view fb f18>
+          0
+        </view>
+        <view f12 color-#646466 mt-2px>
+          VIP
+        </view>
+      </view>
+      <view wp-25>
+        <view fb f18>
+          0
+        </view>
+        <view f12 color-#646466 mt-2px>
+          本月预约
+        </view>
+      </view>
+      <view wp-25>
+        <view fb f18>
+          0
+        </view>
+        <view f12 color-#646466 mt-2px>
+          待服务
+        </view>
+      </view>
+    </view>
+
+    <view mt-30px>
+      <view class="title">
+        今日预约(4)
+      </view>
+      <view>
+        <scroll-view :scrollX="true" style="white-space: nowrap;">
+          <DashboardCard dib />
+          <DashboardCard dib />
+          <DashboardCard dib />
+        </scroll-view>
+      </view>
+    </view>
   </view>
 </template>
 
-<style>
-page {
-  background-color: #fff;
+<style lang="scss" scoped>
+.title {
+  color: #141414;
+  font-weight: bold;
+  font-size: 36rpx;
 }
-</style>
-
-<style scoped>
+.total {
+  height: 64rpx;
+  width: 100%;
+  > view {
+    width: 25%;
+  }
+  .bd-r {
+    border-right: 1px solid #edeef2;
+  }
+}
 .bg {
   position: absolute;
   width: 100%;

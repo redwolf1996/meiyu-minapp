@@ -9,6 +9,7 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    DashboardCard: typeof import('./components/DashboardCard.vue')['default']
     GridTagSelect: typeof import('./components/GridTagSelect.vue')['default']
     MsgClock: typeof import('./components/MsgClock.vue')['default']
     MsgRing: typeof import('./components/MsgRing.vue')['default']
