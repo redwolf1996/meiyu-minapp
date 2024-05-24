@@ -62,7 +62,7 @@
   border-radius: 30rpx;
   margin: 10px;
   box-shadow: 0 6rpx 16rpx 0 rgba(11, 73, 128, 0.2);
-  border: 1px solid #eee;
+  background-color: #fff;
 }
 .btn {
   width: 130rpx;

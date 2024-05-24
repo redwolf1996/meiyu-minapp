@@ -139,16 +139,45 @@ onLoad(() => {
       </view>
       <view>
         <scroll-view :scrollX="true" style="white-space: nowrap;">
-          <DashboardCard dib />
-          <DashboardCard dib />
-          <DashboardCard dib />
+          <DashboardCard />
+          <DashboardCard />
+          <DashboardCard />
         </scroll-view>
       </view>
     </view>
+
+    <view mt-30px>
+      <view class="title">
+        常用工具
+      </view>
+      <view h-12px />
+      <wd-grid :column="3">
+        <wd-grid-item v-for="index in 6" :key="index" :use-icon-slot="true" text="文字">
+          <template #icon>
+            <wd-img
+              :width="(index === 5 || index === 6) ? 30 : 24"
+              :height="(index === 5 || index === 6) ? 30 : 24"
+              :src="`${IMG_BASE}/icon-tool-${index}.png`"
+            />
+          </template>
+        </wd-grid-item>
+      </wd-grid>
+    </view>
+
+    <view h-50px />
   </view>
 </template>
 
 <style lang="scss" scoped>
+.slot-img {
+  height: 36px;
+  width: 36px;
+  border-radius: 4px;
+}
+.text {
+  color: #ffb300;
+  margin-top: 8px;
+}
 .title {
   color: #141414;
   font-weight: bold;
