@@ -1,6 +1,5 @@
 <template>
-  <view class="px-10 py-20 text-center">
+  <view class="px-24rpx">
     <slot />
-    asdasjdsadkasd
   </view>
 </template>
