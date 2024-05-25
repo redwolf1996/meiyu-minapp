@@ -16,7 +16,7 @@ onLoad(() => {
 </script>
 
 <template>
-  <wd-navbar :safeAreaInsetTop="true" :bordered="false">
+  <wd-navbar custom-class="ps" :safeAreaInsetTop="true" :bordered="false">
     <template #title>
       <view flex flex-ac flex-bt text-left :style="{ width: `calc(100% - ${menuButtonWidth}px)` }">
         <view>美婷美甲美睫</view>
@@ -150,25 +150,62 @@ onLoad(() => {
       <view class="title">
         常用工具
       </view>
-      <view h-12px />
-      <wd-grid :column="3">
-        <wd-grid-item v-for="index in 6" :key="index" :use-icon-slot="true" text="文字">
-          <template #icon>
-            <wd-img
-              :width="(index === 5 || index === 6) ? 30 : 24"
-              :height="(index === 5 || index === 6) ? 30 : 24"
-              :src="`${IMG_BASE}/icon-tool-${index}.png`"
-            />
-          </template>
-        </wd-grid-item>
-      </wd-grid>
+      <view h-20px />
+      <view class="grid">
+        <view>
+          <i i-ant-design-user-add-outlined fs-64 style="color:#1563ff;" />
+          <text>添加客户</text>
+        </view>
+        <view>
+          <i i-material-symbols-add-notes-outline fs-64 style="color:#1563ff;" />
+          <text>新增预约</text>
+        </view>
+        <view>
+          <i i-mdi-credit-card-check-outline fs-64 style="color:#1563ff;" />
+          <text>开单收银</text>
+        </view>
+        <view>
+          <i i-mdi-order-bool-ascending fs-64 style="color:#1563ff;" />
+          <text>订单列表</text>
+        </view>
+        <view>
+          <i i-tabler-address-book fs-64 style="color:#1563ff;" />
+          <text>预约列表</text>
+        </view>
+        <view>
+          <i i-mingcute-shop-line fs-64 style="color:#1563ff;" />
+          <text>店务管理</text>
+        </view>
+      </view>
     </view>
-
     <view h-50px />
   </view>
 </template>
 
 <style lang="scss" scoped>
+.ps {
+  position: sticky;
+  top: 0;
+}
+.grid {
+  display: grid;
+  grid-gap: 16px;
+  grid-template-columns: repeat(3, 1fr);
+  > view {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    > i {
+      color: #1563ff !important;
+    }
+    text {
+      font-size: 24rpx;
+      padding-top: 20rpx;
+    }
+  }
+}
 .slot-img {
   height: 36px;
   width: 36px;
