@@ -39,6 +39,13 @@
       }
     },
     {
+      "path": "pages/business/dashboard/wallet",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "我的钱包"
+      }
+    },
+    {
       "path": "pages/business/login/index",
       "type": "page",
       "style": {

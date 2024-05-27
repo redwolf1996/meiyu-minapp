@@ -9,6 +9,7 @@ interface NavigateToOptions {
        "/pages/business/customer/index" |
        "/pages/business/dashboard/index" |
        "/pages/business/dashboard/store" |
+       "/pages/business/dashboard/wallet" |
        "/pages/business/login/index" |
        "/pages/business/login/info" |
        "/pages/business/msg/detail-expire" |
