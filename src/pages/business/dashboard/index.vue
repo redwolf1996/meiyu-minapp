@@ -154,27 +154,27 @@ onLoad(() => {
         <view h-20px />
         <view class="grid">
           <view>
-            <i i-ant-design-user-add-outlined fs-64 style="color:#1563ff;" />
+            <i i-ant-design-user-add-outlined fs-64 c-1563ff />
             <text>添加客户</text>
           </view>
           <view>
-            <i i-material-symbols-add-notes-outline fs-64 style="color:#1563ff;" />
+            <i i-material-symbols-add-notes-outline fs-64 c-1563ff />
             <text>新增预约</text>
           </view>
           <view>
-            <i i-mdi-credit-card-check-outline fs-64 style="color:#1563ff;" />
+            <i i-mdi-credit-card-check-outline fs-64 c-1563ff />
             <text>开单收银</text>
           </view>
           <view>
-            <i i-mdi-order-bool-ascending fs-64 style="color:#1563ff;" />
+            <i i-mdi-order-bool-ascending fs-64 c-1563ff />
             <text>订单列表</text>
           </view>
           <view>
-            <i i-tabler-address-book fs-64 style="color:#1563ff;" />
+            <i i-tabler-address-book fs-64 c-1563ff />
             <text>预约列表</text>
           </view>
           <view>
-            <i i-mingcute-shop-line fs-64 style="color:#1563ff;" />
+            <i i-mingcute-shop-line fs-64 c-1563ff />
             <text>店务管理</text>
           </view>
         </view>
@@ -227,7 +227,6 @@ onLoad(() => {
   margin-top: 8px;
 }
 .title {
-  color: #141414;
   font-weight: bold;
   font-size: 36rpx;
 }
