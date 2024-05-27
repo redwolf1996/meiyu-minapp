@@ -147,6 +147,25 @@ onLoad(() => {
         </view>
       </view>
 
+      <view mt-30px class="renew" flex flex-bt flex-ac gap-24rpx>
+        <wd-img
+          :width="23"
+          :height="23"
+          :src="`${IMG_BASE}/icon-expire.png`"
+        />
+        <view w-320rpx>
+          <view fb f14>
+            服务已到期
+          </view>
+          <view f10>
+            您的服务已于2024年10月6日到期，历史数据仍可正常查询，请尽快续费以享受完整服务。
+          </view>
+        </view>
+        <view class="renew-btn">
+          立即续费
+        </view>
+      </view>
+
       <view mt-30px>
         <view class="title">
           常用工具
@@ -194,6 +213,23 @@ onLoad(() => {
 </template>
 
 <style lang="scss" scoped>
+.renew-btn {
+  width: 144rpx;
+  height: 48rpx;
+  line-height: 48rpx;
+  text-align: center;
+  color: #fff;
+  font-size: 24rpx;
+  background-color: #e3c377;
+  border-radius: 26rpx;
+  box-shadow: 2.66px 2.66px 10.66px 0px rgba(0, 11, 222, 0.24);
+}
+.renew {
+  background: linear-gradient(129deg, #e01b3f 41%, #f04c6a 81%);
+  padding: 32rpx 40rpx;
+  border-radius: 26rpx;
+  color: #fff;
+}
 .ps {
   position: sticky;
   top: 0;
