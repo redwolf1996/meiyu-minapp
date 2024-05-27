@@ -1,5 +1,5 @@
 <template>
-  <view px-24rpx>
+  <view>
     <slot />
   </view>
 </template>
