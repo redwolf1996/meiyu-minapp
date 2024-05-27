@@ -33,6 +33,7 @@
     {
       "path": "pages/business/dashboard/store",
       "type": "page",
+      "layout": "pure",
       "style": {
         "navigationBarTitleText": "店务管理"
       }
