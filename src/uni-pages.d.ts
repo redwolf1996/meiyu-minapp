@@ -8,6 +8,7 @@ interface NavigateToOptions {
        "/pages/business/booking/index" |
        "/pages/business/customer/index" |
        "/pages/business/dashboard/index" |
+       "/pages/business/dashboard/store" |
        "/pages/business/login/index" |
        "/pages/business/login/info" |
        "/pages/business/msg/detail-expire" |

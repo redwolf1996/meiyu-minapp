@@ -31,6 +31,13 @@
       }
     },
     {
+      "path": "pages/business/dashboard/store",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "店务管理"
+      }
+    },
+    {
       "path": "pages/business/login/index",
       "type": "page",
       "style": {
