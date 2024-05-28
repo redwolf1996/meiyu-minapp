@@ -7,6 +7,8 @@ interface NavigateToOptions {
   url: "/pages/index" |
        "/pages/business/booking/index" |
        "/pages/business/customer/index" |
+       "/pages/business/dashboard/cashing-records" |
+       "/pages/business/dashboard/income-detail" |
        "/pages/business/dashboard/index" |
        "/pages/business/dashboard/store" |
        "/pages/business/dashboard/wallet" |

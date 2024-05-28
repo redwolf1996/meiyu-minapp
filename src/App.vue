@@ -39,6 +39,9 @@ text {
 .wd-button.is-disabled {
   background: #d5d5d5 !important;
 }
+.wd-drop-menu__item {
+  text-align: left !important;
+}
 .wd-form {
   .wd-input__inner {
     text-align: right !important;

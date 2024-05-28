@@ -22,6 +22,20 @@
       }
     },
     {
+      "path": "pages/business/dashboard/cashing-records",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "提现记录"
+      }
+    },
+    {
+      "path": "pages/business/dashboard/income-detail",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "收支明细"
+      }
+    },
+    {
       "path": "pages/business/dashboard/index",
       "type": "page",
       "layout": "home",
