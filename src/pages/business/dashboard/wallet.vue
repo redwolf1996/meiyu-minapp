@@ -64,6 +64,42 @@ const show = ref(false)
       </view>
     </view>
   </view>
+
+  <view py-26rpx px-40rpx style="border-bottom: 1px solid #EBEEF1;">
+    <view flex flex-bt>
+      <view flex flex-cc gap-26rpx>
+        <wd-img
+          :width="16"
+          :height="16"
+          :src="`${IMG_BASE}/icon-shouzhi.png`"
+        />
+        <view fs-30>
+          我的收支明细
+        </view>
+      </view>
+      <view flex tc flex-cc>
+        <i i-material-symbols-light-chevron-right fn fs-40 color-999 style="transform: translateY(2rpx);" />
+      </view>
+    </view>
+  </view>
+
+  <view p-26rpx px-40rpx style="border-bottom: 1px solid #EBEEF1;">
+    <view flex flex-bt>
+      <view flex flex-cc gap-26rpx>
+        <wd-img
+          :width="16"
+          :height="16"
+          :src="`${IMG_BASE}/icon-tixian.png`"
+        />
+        <view fs-30>
+          我的提现记录
+        </view>
+      </view>
+      <view flex tc flex-cc>
+        <i i-material-symbols-light-chevron-right fn fs-40 color-999 style="transform: translateY(2rpx);" />
+      </view>
+    </view>
+  </view>
 </template>
 
 <style lang='scss' scoped>
