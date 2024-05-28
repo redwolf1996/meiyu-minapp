@@ -71,17 +71,9 @@ function handleSubmit() {
       </view>
     </view>
     <view p-20px>
-      <!-- <wd-button
-        :disabled="!model.value1 || !model.value2"
-        custom-class="theme-bg"
-        :round="false" type="primary" size="large" block
-        @click="handleSubmit"
-      >
-        保存
-      </wd-button> -->
       <wd-button
         custom-class="theme-bg"
-        :round="false" type="primary" size="large" block
+        :round="false" type="primary" size="large" :block="true"
         @click="handleSubmit"
       >
         保存

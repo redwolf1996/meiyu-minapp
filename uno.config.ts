@@ -13,6 +13,8 @@ export default defineConfig({
       attributify: {
         ignoreAttributes: [
           'color',
+          'size',
+          'block',
         ],
       },
     }),
