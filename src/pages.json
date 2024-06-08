@@ -8,6 +8,48 @@
       }
     },
     {
+      "path": "pages/business/billing/billing",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "开单明细"
+      }
+    },
+    {
+      "path": "pages/business/billing/customer-list",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "选择客户"
+      }
+    },
+    {
+      "path": "pages/business/billing/goods-list",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "服务产品列表"
+      }
+    },
+    {
+      "path": "pages/business/billing/index",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "开单"
+      }
+    },
+    {
+      "path": "pages/business/billing/pay-success",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "支付成功"
+      }
+    },
+    {
+      "path": "pages/business/billing/pay",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "支付"
+      }
+    },
+    {
       "path": "pages/business/booking/d2dTime",
       "type": "page",
       "style": {

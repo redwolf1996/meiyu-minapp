@@ -5,6 +5,12 @@
 
 interface NavigateToOptions {
   url: "/pages/index" |
+       "/pages/business/billing/billing" |
+       "/pages/business/billing/customer-list" |
+       "/pages/business/billing/goods-list" |
+       "/pages/business/billing/index" |
+       "/pages/business/billing/pay-success" |
+       "/pages/business/billing/pay" |
        "/pages/business/booking/d2dTime" |
        "/pages/business/booking/index" |
        "/pages/business/booking/share" |
