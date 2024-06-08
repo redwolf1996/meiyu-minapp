@@ -39,6 +39,10 @@ interface NavigateToOptions {
        "/pages/business/service/cat" |
        "/pages/business/service/list" |
        "/pages/business/service/share" |
+       "/pages/business/staff/add" |
+       "/pages/business/staff/detail" |
+       "/pages/business/staff/list" |
+       "/pages/business/staff/work-time" |
        "/pages/business/init/steps/done" |
        "/pages/business/init/steps/index" |
        "/pages/business/init/steps/step1" |

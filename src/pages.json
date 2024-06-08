@@ -249,6 +249,34 @@
       }
     },
     {
+      "path": "pages/business/staff/add",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "添加员工"
+      }
+    },
+    {
+      "path": "pages/business/staff/detail",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "员工详情"
+      }
+    },
+    {
+      "path": "pages/business/staff/list",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "员工列表"
+      }
+    },
+    {
+      "path": "pages/business/staff/work-time",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "工作时间"
+      }
+    },
+    {
       "path": "pages/business/init/steps/done",
       "type": "page",
       "style": {
