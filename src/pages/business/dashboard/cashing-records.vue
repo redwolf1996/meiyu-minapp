@@ -17,11 +17,6 @@ const option1 = ref<Record<string, any>[]>([
 function handleChange1() {
 
 }
-function getList() {
-  api.getStudioList({ id: 100, name: 'syx' }).then((res) => {
-    console.log(res)
-  })
-}
 </script>
 
 <template>
