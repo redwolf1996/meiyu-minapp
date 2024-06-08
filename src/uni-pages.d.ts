@@ -11,12 +11,19 @@ interface NavigateToOptions {
        "/pages/business/billing/index" |
        "/pages/business/billing/pay-success" |
        "/pages/business/billing/pay" |
+       "/pages/business/book/add" |
+       "/pages/business/book/detail" |
+       "/pages/business/book/index" |
+       "/pages/business/book/list" |
+       "/pages/business/book/time" |
        "/pages/business/booking/d2dTime" |
        "/pages/business/booking/index" |
        "/pages/business/booking/share" |
        "/pages/business/booking/storeTime" |
        "/pages/business/card/list" |
        "/pages/business/card/share" |
+       "/pages/business/customer/add" |
+       "/pages/business/customer/detail" |
        "/pages/business/customer/index" |
        "/pages/business/dashboard/cash-apply" |
        "/pages/business/dashboard/cashing-records" |
@@ -31,6 +38,9 @@ interface NavigateToOptions {
        "/pages/business/msg/detail-renew" |
        "/pages/business/msg/list" |
        "/pages/business/my/index" |
+       "/pages/business/my/store" |
+       "/pages/business/order/detail" |
+       "/pages/business/order/index" |
        "/pages/business/product/add" |
        "/pages/business/product/cat" |
        "/pages/business/product/list" |

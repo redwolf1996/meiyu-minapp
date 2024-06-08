@@ -1,12 +1,12 @@
 <route lang="yaml">
 style:
-  navigationBarTitleText: 客户
+  navigationBarTitleText: 添加客户
 </route>
 
 <script lang="ts" setup></script>
 
 <template>
-  <view>客户列表</view>
+  <view>添加客户</view>
 </template>
 
 <style lang='scss' scoped></style>

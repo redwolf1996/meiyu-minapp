@@ -50,6 +50,41 @@
       }
     },
     {
+      "path": "pages/business/book/add",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "添加预约"
+      }
+    },
+    {
+      "path": "pages/business/book/detail",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "预约详情"
+      }
+    },
+    {
+      "path": "pages/business/book/index",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "预约"
+      }
+    },
+    {
+      "path": "pages/business/book/list",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "预约列表"
+      }
+    },
+    {
+      "path": "pages/business/book/time",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "预约时间"
+      }
+    },
+    {
       "path": "pages/business/booking/d2dTime",
       "type": "page",
       "style": {
@@ -89,6 +124,20 @@
       "type": "page",
       "style": {
         "navigationBarTitleText": "分享卡项"
+      }
+    },
+    {
+      "path": "pages/business/customer/add",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "添加客户"
+      }
+    },
+    {
+      "path": "pages/business/customer/detail",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "客户详情"
       }
     },
     {
@@ -190,6 +239,27 @@
       "type": "page",
       "style": {
         "navigationBarTitleText": "我的"
+      }
+    },
+    {
+      "path": "pages/business/my/store",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "店铺信息"
+      }
+    },
+    {
+      "path": "pages/business/order/detail",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "订单详情"
+      }
+    },
+    {
+      "path": "pages/business/order/index",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "订单列表"
       }
     },
     {

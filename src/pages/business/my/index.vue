@@ -8,7 +8,7 @@ style:
 <template>
   <wd-navbar custom-class="custom-nav" :safeAreaInsetTop="true">
     <template #title>
-      xxxxxxxxxxxxx
+      我的
     </template>
   </wd-navbar>
 </template>
