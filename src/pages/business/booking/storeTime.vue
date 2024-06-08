@@ -1,12 +1,12 @@
 <route lang="yaml">
 style:
-  navigationBarTitleText: 预约管理
+  navigationBarTitleText: 门店营业时间
 </route>
 
 <script lang="ts" setup></script>
 
 <template>
-  <view>预约管理</view>
+  <view>门店营业时间</view>
 </template>
 
 <style lang='scss' scoped></style>

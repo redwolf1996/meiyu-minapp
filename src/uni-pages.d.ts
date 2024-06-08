@@ -5,7 +5,10 @@
 
 interface NavigateToOptions {
   url: "/pages/index" |
+       "/pages/business/booking/d2dTime" |
        "/pages/business/booking/index" |
+       "/pages/business/booking/share" |
+       "/pages/business/booking/storeTime" |
        "/pages/business/card/list" |
        "/pages/business/card/share" |
        "/pages/business/customer/index" |

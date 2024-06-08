@@ -8,10 +8,31 @@
       }
     },
     {
+      "path": "pages/business/booking/d2dTime",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "上门服务时间"
+      }
+    },
+    {
       "path": "pages/business/booking/index",
       "type": "page",
       "style": {
-        "navigationBarTitleText": "预约"
+        "navigationBarTitleText": "预约管理"
+      }
+    },
+    {
+      "path": "pages/business/booking/share",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "店铺二维码"
+      }
+    },
+    {
+      "path": "pages/business/booking/storeTime",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "门店营业时间"
       }
     },
     {
