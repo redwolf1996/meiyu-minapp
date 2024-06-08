@@ -15,6 +15,20 @@
       }
     },
     {
+      "path": "pages/business/card/list",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "卡项管理"
+      }
+    },
+    {
+      "path": "pages/business/card/share",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "分享卡项"
+      }
+    },
+    {
       "path": "pages/business/customer/index",
       "type": "page",
       "style": {
@@ -113,6 +127,62 @@
       "type": "page",
       "style": {
         "navigationBarTitleText": "我的"
+      }
+    },
+    {
+      "path": "pages/business/product/add",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "添加产品"
+      }
+    },
+    {
+      "path": "pages/business/product/cat",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "选择产品分类"
+      }
+    },
+    {
+      "path": "pages/business/product/list",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "产品管理"
+      }
+    },
+    {
+      "path": "pages/business/product/share",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "分享产品"
+      }
+    },
+    {
+      "path": "pages/business/service/add",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "添加服务"
+      }
+    },
+    {
+      "path": "pages/business/service/cat",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "选择服务分类"
+      }
+    },
+    {
+      "path": "pages/business/service/list",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "服务管理"
+      }
+    },
+    {
+      "path": "pages/business/service/share",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "分享服务"
       }
     },
     {

@@ -6,6 +6,8 @@
 interface NavigateToOptions {
   url: "/pages/index" |
        "/pages/business/booking/index" |
+       "/pages/business/card/list" |
+       "/pages/business/card/share" |
        "/pages/business/customer/index" |
        "/pages/business/dashboard/cash-apply" |
        "/pages/business/dashboard/cashing-records" |
@@ -20,6 +22,14 @@ interface NavigateToOptions {
        "/pages/business/msg/detail-renew" |
        "/pages/business/msg/list" |
        "/pages/business/my/index" |
+       "/pages/business/product/add" |
+       "/pages/business/product/cat" |
+       "/pages/business/product/list" |
+       "/pages/business/product/share" |
+       "/pages/business/service/add" |
+       "/pages/business/service/cat" |
+       "/pages/business/service/list" |
+       "/pages/business/service/share" |
        "/pages/business/init/steps/done" |
        "/pages/business/init/steps/index" |
        "/pages/business/init/steps/step1" |
