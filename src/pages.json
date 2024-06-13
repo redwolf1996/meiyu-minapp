@@ -305,7 +305,7 @@
       }
     },
     {
-      "path": "pages/business/service/list",
+      "path": "pages/business/service/index",
       "type": "page",
       "style": {
         "navigationBarTitleText": "服务管理"

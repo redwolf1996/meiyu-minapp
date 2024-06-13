@@ -47,7 +47,7 @@ interface NavigateToOptions {
        "/pages/business/product/share" |
        "/pages/business/service/add" |
        "/pages/business/service/cat" |
-       "/pages/business/service/list" |
+       "/pages/business/service/index" |
        "/pages/business/service/share" |
        "/pages/business/staff/add" |
        "/pages/business/staff/detail" |
