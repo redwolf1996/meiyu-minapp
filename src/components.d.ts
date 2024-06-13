@@ -15,5 +15,6 @@ declare module '@vue/runtime-core' {
     MsgRing: typeof import('./components/MsgRing.vue')['default']
     StepNav: typeof import('./components/StepNav.vue')['default']
     StripDot: typeof import('./components/StripDot.vue')['default']
+    TopSearch: typeof import('./components/TopSearch.vue')['default']
   }
 }
