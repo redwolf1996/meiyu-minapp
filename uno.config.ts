@@ -15,6 +15,7 @@ export default defineConfig({
           'color',
           'size',
           'block',
+          'mode',
         ],
       },
     }),
