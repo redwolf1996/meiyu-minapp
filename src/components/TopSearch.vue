@@ -13,14 +13,21 @@ function onChangeInput(e: HTMLInputElement) {
 }
 </script>
 
+<script lang="ts">
+export default {
+  options: {
+    styleIsolation: 'shared',
+  },
+}
+</script>
+
 <template>
   <view class="search">
     <view class="inner">
       <wd-input
         v-model="txt"
         :placeholder="props.placeholder"
-        custom-input-class="inp-inner"
-        custom-class="inp-out"
+        custom-class="cus-input"
         :no-border="true"
         size="small"
         clearable
@@ -36,15 +43,17 @@ function onChangeInput(e: HTMLInputElement) {
 </template>
 
 <style>
-.inp-out {
+:deep(.cus-input) {
   width: calc(100% - 46px);
-}
-.inp-inner {
-  background-color: #fbfbfb !important;
+  background: #fbfbfb !important;
 }
 </style>
 
 <style lang='scss' scoped>
+.inp-out {
+  width: calc(100% - 46px);
+  background: #fbfbfb !important;
+}
 .search {
   padding: 12px 16px;
   background: #fff;

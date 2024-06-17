@@ -16,6 +16,8 @@ export default defineConfig({
           'size',
           'block',
           'mode',
+          'custom-class',
+          'custom-input-class',
         ],
       },
     }),

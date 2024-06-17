@@ -20,6 +20,10 @@ page {
 :deep(.color-black) {
   color: #5a5a5a;
 }
+// :deep(.cus-input) {
+//   width: calc(100% - 46px);
+//   background: #fbfbfb !important;
+// }
 view,
 text {
   box-sizing: border-box;
