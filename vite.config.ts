@@ -10,7 +10,8 @@ import UnoCSS from 'unocss/vite'
 
 // 注意插件的加载顺序，unihelper的相关插件要放在uni前面
 export default defineConfig(({ mode }) => {
-  console.log(parseLoadedEnv(loadEnv(mode, './')))
+  const envInfo = parseLoadedEnv(loadEnv(mode, './'))
+  console.log(envInfo)
   return {
     plugins: [
       envParse({ // https://github.com/yue1123/vite-plugin-env-parse
