@@ -53,18 +53,6 @@ const sources: any = [
   },
 ]
 
-// function handleSubmit() {
-//   form.value
-//     .validate()
-//     .then(({ valid }) => {
-//       if (valid)
-//         toast().success('校验通过')
-//     })
-//     .catch((error) => {
-//       toast().error(error)
-//     })
-// }
-
 function handleChange(e: any) {
   console.log(e)
 }
@@ -215,16 +203,11 @@ function handleClose() {}
   <view h-60rpx />
 </template>
 
-  <style lang='scss' scoped>
-  // .richtext {
-//   height: calc(100% - 50px);
-// }
+<style lang='scss' scoped>
 :deep(.ql-container) {
   box-sizing: border-box;
   padding: 0 10px 10px 10px;
   width: 100%;
-  // min-height: 60vh;
-  // height: 60vh;
   min-height: 20vh;
   height: 20vh;
   font-size: 13px;
