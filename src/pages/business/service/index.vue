@@ -5,10 +5,20 @@ style:
 
 <script lang="ts" setup>
 const searchText = ref('')
+const showAddList = ref(false)
+const addList = [
+  { content: '次卡', value: 1 },
+  { content: '折扣卡', value: 2 },
+  { content: '充值卡', value: 3 },
+]
 
 watch(() => searchText.value, (newVal) => {
   console.log(newVal)
 })
+
+function clickAdd({ item }) {
+  console.log(item)
+}
 </script>
 
 <template>
@@ -27,14 +37,16 @@ watch(() => searchText.value, (newVal) => {
           </span>
         </view>
         <view class="plus">
-          <wd-img
-            :width="14"
-            :height="14"
-            :src="`${IMG_BASE}/icon-plus.png`"
-          />
+          <wd-popover v-model="showAddList" :visible-arrow="false" placement="left-start" mode="menu" :content="addList" @menuclick="clickAdd">
+            <wd-img
+              :width="14"
+              :height="14"
+              :src="`${IMG_BASE}/icon-plus.png`"
+            />
+          </wd-popover>
         </view>
       </view>
-      <div mt-12px flex flex-bt flex-ac gap-40rpx pb-10px style="border-bottom: 1px solid #EFEFEF;">
+      <div mt-12px flex flex-bt flex-ac gap-40rpx pb-10px style="border-bottom: 1px solid #EFEFEF;" @click="showAddList = false">
         <wd-img
           :width="100"
           :height="100"
