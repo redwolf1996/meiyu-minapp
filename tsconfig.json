@@ -19,7 +19,8 @@
     "sourceMap": true
   },
   "vueCompilerOptions": {
-    "target": 3
+    "target": 3,
+    "plugins": ["@uni-helper/uni-app-types/volar-plugin"]
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "env.d.ts"]
 }

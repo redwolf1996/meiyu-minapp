@@ -31,7 +31,7 @@ export default defineUniPages({
         text: '工作台',
       },
       {
-        pagePath: 'pages/business/booking/index',
+        pagePath: 'pages/business/book/index',
         iconPath: 'static/tabs/order.png',
         selectedIconPath: 'static/tabs/order-active.png',
         text: '预约',

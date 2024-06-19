@@ -69,7 +69,7 @@ interface NavigateToOptions {
 interface RedirectToOptions extends NavigateToOptions {}
 
 interface SwitchTabOptions {
-  url: "/pages/business/dashboard/index" | "/pages/business/booking/index" | "/pages/business/customer/index" | "/pages/business/my/index"
+  url: "/pages/business/dashboard/index" | "/pages/business/book/index" | "/pages/business/customer/index" | "/pages/business/my/index"
 }
 
 type ReLaunchOptions = NavigateToOptions | SwitchTabOptions;
