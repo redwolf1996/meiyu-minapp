@@ -13,6 +13,8 @@ declare module '@vue/runtime-core' {
     GridTagSelect: typeof import('./components/GridTagSelect.vue')['default']
     MsgClock: typeof import('./components/MsgClock.vue')['default']
     MsgRing: typeof import('./components/MsgRing.vue')['default']
+    MyCell: typeof import('./components/MyCell.vue')['default']
+    MyCellGroup: typeof import('./components/MyCellGroup.vue')['default']
     StepNav: typeof import('./components/StepNav.vue')['default']
     StripDot: typeof import('./components/StripDot.vue')['default']
     TopSearch: typeof import('./components/TopSearch.vue')['default']

@@ -4,41 +4,35 @@ style:
 </route>
 
 <script lang="ts" setup>
-const value = ref(0)
+const toast = useToast()
 const form = ref()
 const model: any = reactive({})
+
+function test() {
+  toast.show('世界你好')
+}
 </script>
 
 <template>
   <view>
     <wd-form ref="form" :model="model">
-      <view h-24rpx />
-      <wd-cell-group :border="true">
-        <wd-input
-          v-model="value"
-          label="卡名称"
-          prop="value1"
-          placeholder="请输入"
-          suffix-icon="arrow-right"
-        />
-        <wd-input
-          v-model="model.value2"
-          label="充值金额"
-          prop="value23232"
-          placeholder="请输入"
-          suffix-icon="arrow-right"
-          :rules="[{ required: true, message: '请填写充值金额' }]"
-        />
-        <wd-input
-          v-model="model.value2"
-          label="赠送金额"
-          prop="value23232"
-          placeholder="请输入"
-          suffix-icon="arrow-right"
-        />
-      </wd-cell-group>
+      <MyCellGroup>
+        <MyCell label="门店营业状态" @click="test">
+          <view>世界你好</view>
+        </MyCell>
+        <MyCell label="门店营业时间" @click="test">
+          <view>世界你好</view>
+        </MyCell>
+        <MyCell label="上门服务时间" no-border @click="test">
+          <view>世界你好</view>
+        </MyCell>
+      </MyCellGroup>
     </wd-form>
   </view>
 </template>
 
-<style lang='scss' scoped></style>
+<style lang='scss' scoped>
+.cell {
+  border-bottom: 1px solid #ebeef1;
+}
+</style>

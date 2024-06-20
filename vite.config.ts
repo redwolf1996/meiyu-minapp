@@ -36,12 +36,12 @@ export default defineConfig(({ mode }) => {
           'uni-app',
           {
             'wot-design-uni': [
-              ['useToast', 'toast'],
+              'useToast',
             ],
           },
         ],
         dts: 'src/auto-imports.d.ts',
-        dirs: ['src/composables', 'src/stores', 'src/utils'],
+        dirs: ['src/composables', 'src/stores', 'src/utils', 'src/components/**/*'],
         vueTemplate: true,
       }),
       UnoCSS(),
