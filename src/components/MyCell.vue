@@ -17,10 +17,10 @@ const emits = defineEmits(['click'])
     :class="{ 'no-border': props.noBorder }"
     @click="emits('click', $event)"
   >
-    <view c-#3B3D3D fw-500>
+    <view c-#3B3D3D fw-500 f14 fb>
       {{ props.label }}
     </view>
-    <view flex flex-ac>
+    <view flex flex-ac gap-6px>
       <slot />
       <wd-icon name="arrow-right" size="16px" color="#979797" />
     </view>
