@@ -40,6 +40,21 @@ function test() {
           </view>
         </MyCell>
       </MyCellGroup>
+
+      <view mt-22px mb-11px pl-20px f14 c-#969699>
+        开店
+      </view>
+
+      <MyCellGroup>
+        <MyCell label="店铺主页" />
+        <MyCell label="店铺二维码" @click="test">
+          <wd-img
+            :width="20"
+            :height="20"
+            :src="`${IMG_BASE}/icon-qrcode.png`"
+          />
+        </MyCell>
+      </MyCellGroup>
     </wd-form>
   </view>
 </template>
