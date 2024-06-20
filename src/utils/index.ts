@@ -15,3 +15,5 @@ export function getMenuButtonInfo() {
     barWidth,
   }
 }
+
+export const themeColor = '#1a66ff'

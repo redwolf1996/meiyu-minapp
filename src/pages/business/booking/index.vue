@@ -19,7 +19,7 @@ function test() {
     <wd-form ref="form" :model="model">
       <MyCellGroup>
         <MyCell label="门店营业状态">
-          <wd-switch v-model="checked" />
+          <wd-switch v-model="checked" :active-color="themeColor" />
         </MyCell>
         <MyCell label="门店营业时间" @click="test">
           <view f12 c-#3B3D3D tr>
