@@ -47,7 +47,7 @@ function test() {
 
       <MyCellGroup>
         <MyCell label="店铺主页" />
-        <MyCell label="店铺二维码" @click="test">
+        <MyCell label="店铺二维码" no-border @click="test">
           <wd-img
             :width="20"
             :height="20"
