@@ -10,8 +10,10 @@ import { getMenuButtonInfo } from '@/utils/index'
 
 const menuButtonWidth = ref(0)
 onLoad(() => {
+  // #ifdef MP-WEIXIN
   const menuButtonInfo = getMenuButtonInfo()
   menuButtonWidth.value = menuButtonInfo.barWidth
+  // #endif
 })
 </script>
 

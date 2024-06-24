@@ -49,5 +49,10 @@ export default defineConfig(({ mode }) => {
     build: {
       sourcemap: true,
     },
+    server: {
+      host: '0.0.0.0',
+      port: '7788',
+      https: false,
+    },
   }
 })
