@@ -61,7 +61,6 @@
     "@uni-helper/vite-plugin-uni-layouts": "^0.1.10",
     "@uni-helper/vite-plugin-uni-manifest": "^0.2.6",
     "@uni-helper/vite-plugin-uni-pages": "^0.2.24",
-    "@uni-helper/volar-service-uni-pages": "^0.2.18",
     "@unocss/eslint-plugin": "^0.59.3",
     "@vue/runtime-core": "^3.4.29",
     "@vue/tsconfig": "^0.5.1",
@@ -75,7 +74,7 @@
     "unocss": "^0.58.9",
     "unocss-applet": "^0.7.8",
     "unplugin-auto-import": "^0.17.6",
-    "vite": "^5.3.1",
+    "vite": "^5.2.8",
     "vite-plugin-env-parse": "^1.0.13",
     "vue-tsc": "^2.0.21"
   },
