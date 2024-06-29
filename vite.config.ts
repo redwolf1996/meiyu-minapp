@@ -1,4 +1,7 @@
+/// <reference types="vite/client" />
+
 import { defineConfig, loadEnv } from 'vite'
+import type { ConfigEnv } from 'vite'
 import Uni from '@dcloudio/vite-plugin-uni'
 import UniHelperManifest from '@uni-helper/vite-plugin-uni-manifest'
 import UniHelperPages from '@uni-helper/vite-plugin-uni-pages'
@@ -9,7 +12,7 @@ import { envParse, parseLoadedEnv } from 'vite-plugin-env-parse'
 import UnoCSS from 'unocss/vite'
 
 // 注意插件的加载顺序，unihelper的相关插件要放在uni前面
-export default defineConfig(({ mode }) => {
+export default defineConfig(async ({ mode }) => {
   const envInfo = parseLoadedEnv(loadEnv(mode, './'))
   console.log(envInfo)
   return {
@@ -51,7 +54,7 @@ export default defineConfig(({ mode }) => {
     },
     server: {
       host: '0.0.0.0',
-      port: '7788',
+      port: 7788,
       https: false,
     },
   }

@@ -1,9 +1,9 @@
 {
   "extends": "@vue/tsconfig/tsconfig.json",
   "compilerOptions": {
-    "ignoreDeprecations": "5.0",
     "lib": ["esnext", "dom"],
     "baseUrl": ".",
+    "ignoreDeprecations": "5.0",
     "paths": {
       "@/*": ["./src/*"]
     },
