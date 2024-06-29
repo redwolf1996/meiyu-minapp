@@ -51,6 +51,10 @@ const sources2: any = [
   },
 ]
 
+watchEffect(() => {
+  // console.log(form.val)
+})
+
 // function handleSubmit() {
 //   form.value
 //     .validate()
@@ -64,7 +68,6 @@ const sources2: any = [
 // }
 
 function handleChange(e: any) {
-  console.log(e)
 }
 </script>
 
