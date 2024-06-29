@@ -20,10 +20,7 @@ const model = reactive<{
   value3: '',
 })
 
-const formData: any = reactive({
-  val: '123',
-  val1: 'sdsd',
-})
+const form = ref()
 const wd = ref(0)
 
 const sources: any = [
