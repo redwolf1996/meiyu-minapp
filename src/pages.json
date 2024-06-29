@@ -66,6 +66,7 @@
     {
       "path": "pages/business/book/index",
       "type": "page",
+      "layout": "home",
       "style": {
         "navigationBarTitleText": "预约",
         "navigationStyle": "custom"

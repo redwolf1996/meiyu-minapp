@@ -31,6 +31,9 @@ text {
 .custom-nav {
   background-color: #f6f6fd !important;
 }
+.bg-white {
+  background-color: #ffffff !important;
+}
 .wd-navbar__title {
   max-width: 100% !important;
 }
