@@ -335,7 +335,7 @@
       }
     },
     {
-      "path": "pages/business/staff/list",
+      "path": "pages/business/staff/index",
       "type": "page",
       "style": {
         "navigationBarTitleText": "员工列表"

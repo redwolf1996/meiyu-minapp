@@ -51,7 +51,7 @@ interface NavigateToOptions {
        "/pages/business/service/share" |
        "/pages/business/staff/add" |
        "/pages/business/staff/detail" |
-       "/pages/business/staff/list" |
+       "/pages/business/staff/index" |
        "/pages/business/staff/work-time" |
        "/pages/business/init/steps/done" |
        "/pages/business/init/steps/index" |
