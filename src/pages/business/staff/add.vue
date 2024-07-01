@@ -15,7 +15,7 @@ const model: any = ref({
 
 <template>
   <MyCellGroup>
-    <MyCell label="门店营业状态">
+    <MyCell label="员工头像">
       <wd-upload :limit="1" action="https://ftf.jd.com/api/uploadImg" />
     </MyCell>
   </MyCellGroup>
@@ -24,20 +24,25 @@ const model: any = ref({
       <view>
         <wd-input
           v-model="model.value1"
-          label="服务名称"
+          label="姓名"
           prop="value1"
           placeholder="请输入"
           suffix-icon="arrow-right"
-          :rules="[{ required: true, message: '请填写服务名称' }]"
+          :rules="[{ required: true, message: '姓名必填' }]"
         />
+        <wd-cell title="标题文字" center>
+          <wd-button custom-class="custom-value" size="small" plain>
+            按钮
+          </wd-button>
+        </wd-cell>
         <!-- <wd-picker v-model="value1" :rules="[{ required: true, message: '请选择服务分类' }]" label="服务分类" align-right :columns="columns" /> -->
         <wd-input
           v-model="model.value1"
-          label="服务时长"
+          label="联系电话"
           prop="value23232"
-          placeholder="请选择"
+          placeholder="请输入"
           suffix-icon="arrow-right"
-          :rules="[{ required: true, message: '请选择服务时长' }]"
+          :rules="[{ required: true, message: '联系电话必填' }]"
         />
       </view>
     </wd-cell-group>

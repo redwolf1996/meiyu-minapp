@@ -30,6 +30,9 @@ page {
   width: calc(100% - 80rpx) !important;
   left: 40rpx !important;
 }
+.wd-cell.is-border .wd-cell__wrapper::after {
+  width: calc(100% - 40rpx) !important;
+}
 
 view,
 text {
