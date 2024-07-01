@@ -12,7 +12,7 @@ const emits = defineEmits(['click'])
 
 <template>
   <view
-    h-48px
+    py-28rpx
     flex flex-bt flex-ac class="cell"
     :class="{ 'no-border': props.noBorder }"
     @click="emits('click', $event)"

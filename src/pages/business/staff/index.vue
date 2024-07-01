@@ -39,7 +39,9 @@ style:
             <wd-icon name="star-filled" size="10px" color="#FFC960" />
             <text>店铺拥有者</text>
             <view w-6rpx h-6rpx round style="background-color: #91919F;" />
-            <text>店长</text>
+            <text c-#91919F>
+              店长
+            </text>
           </view>
         </view>
       </view>
