@@ -13,6 +13,7 @@ page {
   --wot-input-icon-margin: 5px;
   --wot-input-icon-color: rgba(0, 0, 0, 0.25);
   --wot-button-primary-bg-color: #1a66ff;
+  --wot-upload-size: 120rpx;
 }
 :deep(.theme-bg) {
   background-color: #1a66ff !important;

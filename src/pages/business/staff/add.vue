@@ -17,15 +17,15 @@ const fileList = ref<any[]>([
   </MyCellGroup>
 </template>
 
-<style lang='scss' scoped>
-:deep(.wd-upload) {
-  width: 40px;
-  height: 40px;
+<style>
+:root {
+  --wot-upload-size: 80rpx;
 }
+</style>
+
+<style lang='scss' scoped>
 :deep(.wd-upload__evoke) {
   margin-bottom: 0 !important;
-  width: 40px !important;
-  height: 40px !important;
 }
 :deep(.wd-upload__evoke-num) {
   display: none;
