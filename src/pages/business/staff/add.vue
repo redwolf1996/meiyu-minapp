@@ -7,6 +7,10 @@ style:
 const fileList = ref<any[]>([
   { url: 'https://img12.360buyimg.com//n0/jfs/t1/29118/6/4823/55969/5c35c16bE7c262192/c9fdecec4b419355.jpg' },
 ])
+const form = ref()
+const model: any = ref({
+  value1: 0,
+})
 </script>
 
 <template>
@@ -15,6 +19,29 @@ const fileList = ref<any[]>([
       <wd-upload :limit="1" action="https://ftf.jd.com/api/uploadImg" />
     </MyCell>
   </MyCellGroup>
+  <wd-form ref="form" :model="model">
+    <wd-cell-group :border="true">
+      <view>
+        <wd-input
+          v-model="model.value1"
+          label="服务名称"
+          prop="value1"
+          placeholder="请输入"
+          suffix-icon="arrow-right"
+          :rules="[{ required: true, message: '请填写服务名称' }]"
+        />
+        <!-- <wd-picker v-model="value1" :rules="[{ required: true, message: '请选择服务分类' }]" label="服务分类" align-right :columns="columns" /> -->
+        <wd-input
+          v-model="model.value1"
+          label="服务时长"
+          prop="value23232"
+          placeholder="请选择"
+          suffix-icon="arrow-right"
+          :rules="[{ required: true, message: '请选择服务时长' }]"
+        />
+      </view>
+    </wd-cell-group>
+  </wd-form>
 </template>
 
 <style>

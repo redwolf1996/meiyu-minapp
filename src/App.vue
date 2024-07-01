@@ -14,6 +14,7 @@ page {
   --wot-input-icon-color: rgba(0, 0, 0, 0.25);
   --wot-button-primary-bg-color: #1a66ff;
   --wot-upload-size: 120rpx;
+  --wot-size-side-padding: 40rpx;
 }
 :deep(.theme-bg) {
   background-color: #1a66ff !important;
@@ -21,10 +22,15 @@ page {
 :deep(.color-black) {
   color: #5a5a5a;
 }
-// :deep(.cus-input) {
-//   width: calc(100% - 46px);
-//   background: #fbfbfb !important;
-// }
+
+.wd-picker.is-border .wd-picker__cell::after {
+  width: calc(100% - 80rpx) !important;
+}
+.wd-input.is-cell.is-border::after {
+  width: calc(100% - 80rpx) !important;
+  left: 40rpx !important;
+}
+
 view,
 text {
   box-sizing: border-box;
@@ -56,7 +62,7 @@ text {
   }
   .wd-input__label,
   .wd-picker__label {
-    padding-left: 5px !important;
+    padding-left: 0px !important;
   }
   .wd-input__label.is-required::after,
   .wd-picker__label.is-required::after {

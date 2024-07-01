@@ -22,7 +22,7 @@ const emits = defineEmits(['click'])
     </view>
     <view flex flex-ac gap-6px>
       <slot />
-      <wd-icon name="arrow-right" size="16px" color="#979797" />
+      <wd-icon name="arrow-right" size="16px" color="#bfbfbf" />
     </view>
   </view>
 </template>
