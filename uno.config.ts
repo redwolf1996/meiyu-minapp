@@ -19,6 +19,7 @@ export default defineConfig({
           'custom-class',
           'custom-input-class',
           'active-color',
+          'inline',
         ],
       },
     }),
