@@ -3,7 +3,8 @@ style:
   navigationBarTitleText: 员工详情
 </route>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+</script>
 
 <template>
   <view f14 flex flex-xr gap-40rpx px-50rpx pb-50rpx pt-20rpx>
