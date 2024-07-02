@@ -22,11 +22,11 @@ const columnsList = ref<WeekTime[]>(columns)
     <view h-40rpx />
     <view flex flex-bt flex-y gap-20rpx>
       <view v-for="(item, index) in columnsList" :key="`c-${index}`" flex flex-bt>
-        <view class="week" :class="{ active: item.active }">
+        <view class="week" :class="{ active: item.active }" @click="item.active = !item.active">
           {{ item.weekName }}
         </view>
         <view flex flex-ac>
-          <view c-#3B3D3D>
+          <view c-#3B3D3D pr-10rpx>
             {{ item.start }}-{{ item.end }}
           </view>
           <wd-icon name="arrow-right" size="16px" color="#bfbfbf" />
