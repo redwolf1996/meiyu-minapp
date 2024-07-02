@@ -30,7 +30,7 @@ const model: any = ref({
           suffix-icon="arrow-right"
           :rules="[{ required: true, message: '姓名必填' }]"
         />
-        <wd-cell title="标题文字" center>
+        <wd-cell :rules="[{ required: true, message: '姓名必填' }]" title="标题文字" center>
           <wd-button custom-class="custom-value" size="small" plain>
             按钮
           </wd-button>

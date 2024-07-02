@@ -63,10 +63,15 @@ text {
   .wd-input__inner {
     text-align: right !important;
   }
+  .wd-cell__left {
+    flex: none !important;
+  }
+  .wd-cell__left,
   .wd-input__label,
   .wd-picker__label {
     padding-left: 0px !important;
   }
+  .wd-cell__left.is-required::after,
   .wd-input__label.is-required::after,
   .wd-picker__label.is-required::after {
     position: relative !important;
