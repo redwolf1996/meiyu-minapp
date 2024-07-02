@@ -8,7 +8,8 @@ const props = withDefaults(defineProps<{
   columns: 2,
 })
 
-const emit = defineEmits(['update:modelValue'])
+const model = defineModel()
+// const emit = defineEmits(['update:modelValue'])
 
 type Mode = 'single' | 'multiple'
 interface Source {
@@ -25,11 +26,20 @@ function onClickTag(item: Source, index: number) {
   item.isActive = !item.isActive
   if (mode.value === 'single') {
     sources.value.forEach((e: Source, i: number) => {
-      if (i !== index)
+      if (i !== index) {
+        model.value = null
         e.isActive = false
-      else
-        emit('update:modelValue', e.value)
+      }
+      else {
+        model.value = e.value
+        // emit('update:modelValue', e.value)
+      }
     })
+  }
+  else {
+    model.value = sources.value
+      .filter((e: Source) => e.isActive)
+      .map((e: Source) => e.value)
   }
 }
 </script>
@@ -39,6 +49,7 @@ function onClickTag(item: Source, index: number) {
     <view
       v-for="(item, index) in sources"
       :key="`grid-${index}`"
+      class="item"
       :class="{ active: item.isActive }"
       @click="onClickTag(item, index)"
     >
@@ -52,7 +63,7 @@ function onClickTag(item: Source, index: number) {
   display: grid;
   grid-gap: 20rpx;
   grid-template-columns: repeat(v-bind(columns), 1fr); // css in js
-  > view {
+  > .item {
     height: 72rpx;
     line-height: 72rpx;
     font-size: 28rpx;

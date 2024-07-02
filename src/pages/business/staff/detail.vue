@@ -31,7 +31,7 @@ style:
     <view mt-20rpx fb fs-40>
       麦子欢
     </view>
-    <view mt-20rpx flex flex-cc gap-20rpx>
+    <view mt-20rpx flex flex-cc gap-10rpx>
       <text c-#95969D f12>
         店铺拥有者
       </text>

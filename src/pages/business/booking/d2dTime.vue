@@ -22,7 +22,7 @@ const sources: any = [
   </view>
   <view p-20px bg-#fff my-10px>
     <view c-#141414 f16 fb mb-16px>
-      选择每周可服务的天数
+      选择每周可服务的天数 {{ val }}
     </view>
     <GridTagSelect v-model="val" :sources="sources" :columns="3" mode="multiple" />
   </view>
