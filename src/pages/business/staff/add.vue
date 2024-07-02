@@ -8,9 +8,11 @@ style:
 //   { url: 'https://img12.360buyimg.com//n0/jfs/t1/29118/6/4823/55969/5c35c16bE7c262192/c9fdecec4b419355.jpg' },
 // ])
 const form = ref()
+const columns = ref(['选项1', '选项2', '选项3'])
 const model: any = ref({
   value1: 0,
 })
+const value = ref()
 </script>
 
 <template>
@@ -30,7 +32,6 @@ const model: any = ref({
           suffix-icon="arrow-right"
           :rules="[{ required: true, message: '姓名必填' }]"
         />
-        <!-- <wd-picker v-model="value1" :rules="[{ required: true, message: '请选择服务分类' }]" label="服务分类" align-right :columns="columns" /> -->
         <wd-input
           v-model="model.value1"
           label="联系电话"
@@ -51,10 +52,10 @@ const model: any = ref({
             <wd-icon name="arrow-right" size="16px" color="#bfbfbf" />
             <wd-radio-group modelValue="1" inline shape="dot">
               <wd-radio value="1">
-                男
+                女
               </wd-radio>
               <wd-radio value="2">
-                女
+                男
               </wd-radio>
               <wd-radio value="3">
                 未知
@@ -62,8 +63,46 @@ const model: any = ref({
             </wd-radio-group>
           </view>
         </wd-cell>
+        <wd-picker
+          v-model="model.value1"
+          :rules="[{ required: true, message: '请选择职位' }]"
+          label="选择职位" align-right :columns="columns"
+        />
+        <wd-picker
+          v-model="model.value1"
+          label="选择角色" align-right :columns="columns"
+        />
       </view>
     </wd-cell-group>
+
+    <view h-24rpx />
+    <view bg-white px-40rpx py-24rpx>
+      <wd-textarea
+        v-model="value"
+        placeholderStyle="font-size: 14px;color:#C9CDD4;"
+        placeholder="请输入员工备注" :maxlength="200" auto-height clearable show-word-limit
+      />
+    </view>
+
+    <view h-24rpx />
+    <wd-cell-group :border="true">
+      <wd-picker
+        v-model="model.value1"
+        label="工作时间" align-right :columns="columns"
+      />
+      <wd-picker
+        v-model="model.value1"
+        label="服务分类" align-right :columns="columns"
+      />
+    </wd-cell-group>
+
+    <view mx-40rpx mt-48rpx color-white>
+      <wd-button size="large" custom-class="theme-bg" block>
+        <view flex flex-cc>
+          <text>保存</text>
+        </view>
+      </wd-button>
+    </view>
   </wd-form>
 </template>
 
