@@ -1,4 +1,11 @@
 <script lang="ts" setup>
+type Mode = 'single' | 'multiple'
+interface Source {
+  label: string
+  value: number
+  isActive: boolean
+}
+
 const props = withDefaults(defineProps<{
   sources: Source[] // 数据源列表
   mode?: Mode // 单选还是多选
@@ -7,17 +14,7 @@ const props = withDefaults(defineProps<{
   mode: 'single',
   columns: 2,
 })
-
 const model = defineModel()
-// const emit = defineEmits(['update:modelValue'])
-
-type Mode = 'single' | 'multiple'
-interface Source {
-  label: string
-  value: number
-  isActive: boolean
-}
-
 const sources = ref<Source[]>(props.sources)
 const columns = ref(props.columns)
 const mode = ref<Mode>(props.mode)
@@ -32,7 +29,6 @@ function onClickTag(item: Source, index: number) {
       }
       else {
         model.value = e.value
-        // emit('update:modelValue', e.value)
       }
     })
   }
