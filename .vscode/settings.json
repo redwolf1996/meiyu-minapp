@@ -50,5 +50,6 @@
     "yaml",
     "yml",
     "toml"
-  ]
+  ],
+  "unot.switchMagic": true
 }

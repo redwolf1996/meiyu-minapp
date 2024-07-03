@@ -1,7 +1,7 @@
 <route lang="yaml">
 layout: home
 style:
-  navigationBarTitleText: 预约
+  navigationBarTitleText: 预约看板
   navigationStyle: "custom"
 </route>
 
@@ -19,9 +19,7 @@ function handleClickList() {
       <wd-icon name="list" size="22px" color="#8EA0B6" />
     </template>
     <template #title>
-      <text c-#364250>
-        11月10日
-      </text>
+      预约看板
     </template>
   </wd-navbar>
   <view :style="{ height: `${restHeight}px` }" bd>
