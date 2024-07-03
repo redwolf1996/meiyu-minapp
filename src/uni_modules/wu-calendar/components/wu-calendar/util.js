@@ -347,7 +347,7 @@ class Calendar {
 	/**
 	 * 比较时间是否相等
 	 */
-	dateEqual(before, after) {
+	dateEqual(before = '', after = '') {
 		// 计算截止时间
 		before = new Date(before.replace('-', '/').replace('-', '/'))
 		// 计算详细项的截止时间

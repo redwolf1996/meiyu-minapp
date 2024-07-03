@@ -7,7 +7,7 @@
 		<view class="wu-calendar__weeks" v-for="(item,weekIndex) in weeks" :key="weekIndex">
 			<view class="wu-calendar__weeks-item" v-for="(weeks, weeksIndex) in item" :key="weeksIndex" :style="[weekItemStyle]">
 				<wu-calendar-item v-if="!monthShowCurrentMonth || !weeks.empty" class="wu-calendar-item--hook" :weeks="weeks" :calendar="calendar"
-					:selected="selected" :lunar="lunar" @change="choiceDate" :color="color"
+					:selected="selected" :lunar="lunar" @change="choiceDate" :color="color" :actBadgeColor="actBadgeColor"
 					:startText="startText" :endText="endText" :itemHeight="itemHeight - defaultMargin"></wu-calendar-item>
 			</view>
 		</view>

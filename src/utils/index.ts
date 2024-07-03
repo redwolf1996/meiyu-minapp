@@ -8,13 +8,15 @@ export function getMenuButtonInfo() {
   // 获取导航栏高度
   const barHeight = menuButtonInfo.height + (menuButtonInfo.top - barTop) * 2
   const barWidth = menuButtonInfo.width
-  const restHeight = wx.getSystemInfoSync().windowHeight - barHeight - 52
+  const windowHeight = wx.getSystemInfoSync().windowHeight
+  const restHeight = wx.getSystemInfoSync().windowHeight - barHeight - barTop - 52
 
   return {
     barHeight,
     barTop,
     barWidth,
     restHeight,
+    windowHeight,
   }
 }
 

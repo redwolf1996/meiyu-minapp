@@ -54,6 +54,10 @@ export default {
 		monthShowCurrentMonth: {
 			type: Boolean,
 			default: false
-		}
+		},
+		actBadgeColor: {
+			type: String,
+			default: '#fff'
+		},
 	}
 }

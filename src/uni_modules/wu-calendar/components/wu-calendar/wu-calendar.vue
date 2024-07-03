@@ -4,14 +4,17 @@
 			@click="clean"></view>
 		<view v-if="insert || show" class="wu-calendar__content"
 			:class="{'wu-calendar--fixed':!insert, 'wu-calendar--ani-show':aniMaskShow}">
-			<view v-if="!insert" class="wu-calendar__header wu-calendar--fixed-top">
-				<view class="wu-calendar__header-btn-box" @click="close">
-					<text class="wu-calendar__header-text wu-calendar--fixed-width">{{cancelText}}</text>
+			<!-- 弹窗日历取消与确认按钮位置 -->
+			<slot name="operation" v-if="operationPosition == 'top'">
+				<view v-if="!insert" class="wu-calendar__header wu-calendar--fixed-top">
+					<view class="wu-calendar__header-btn-box" @click="cancel">
+						<text class="wu-calendar__header-text wu-calendar--fixed-width" :style="[{color: cancelColor}]">{{cancelText}}</text>
+					</view>
+					<view class="wu-calendar__header-btn-box" @click="confirm">
+						<text class="wu-calendar__header-text wu-calendar--fixed-width" :style="[{color: confirmColor}]">{{okText}}</text>
+					</view>
 				</view>
-				<view class="wu-calendar__header-btn-box" @click="confirm">
-					<text class="wu-calendar__header-text wu-calendar--fixed-width">{{okText}}</text>
-				</view>
-			</view>
+			</slot>
 			<!-- 日历头部 -->
 			<slot name="header" :nowDate="nowDate">
 				<view class="wu-calendar__header">
@@ -78,21 +81,21 @@
 					<template v-if="type === 'month' || type === 'week'">
 						<swiper-item>
 							<wu-calendar-block :weeks="preWeeks" :calendar="calendar" :selected="selected"
-								:lunar="lunar" @change="choiceDate" :color="color" :startText="startText"
+								:lunar="lunar" @change="choiceDate" :color="color" :actBadgeColor="actBadgeColor" :startText="startText"
 								:endText="endText" :month="preWeeksMonth" :FoldStatus="FoldStatus"
 								:monthShowCurrentMonth="monthShowCurrentMonth" :showMonth="showMonth"
 								:itemHeight="itemHeight"></wu-calendar-block>
 						</swiper-item>
 						<swiper-item>
 							<wu-calendar-block :weeks="weeks" :calendar="calendar" :selected="selected" :lunar="lunar"
-								@change="choiceDate" :color="color" :startText="startText" :endText="endText"
+								@change="choiceDate" :color="color" :actBadgeColor="actBadgeColor" :startText="startText" :endText="endText"
 								:monthShowCurrentMonth="monthShowCurrentMonth" :month="weeksMonth"
 								:FoldStatus="FoldStatus" :showMonth="showMonth"
 								:itemHeight="itemHeight"></wu-calendar-block>
 						</swiper-item>
 						<swiper-item>
 							<wu-calendar-block :weeks="nextWeeks" :calendar="calendar" :selected="selected"
-								:lunar="lunar" @change="choiceDate" :color="color" :startText="startText"
+								:lunar="lunar" @change="choiceDate" :color="color" :actBadgeColor="actBadgeColor" :startText="startText"
 								:endText="endText" :month="nextWeeksMonth" :FoldStatus="FoldStatus"
 								:monthShowCurrentMonth="monthShowCurrentMonth" :showMonth="showMonth"
 								:itemHeight="itemHeight"></wu-calendar-block>
@@ -104,7 +107,7 @@
 					<!-- 月或周日历 -->
 					<wu-calendar-block class="wu-calendar__weeks_container" :style="[calendarContentStyle]"
 						:weeks="weeks" :calendar="calendar" :selected="selected" :lunar="lunar" @change="choiceDate"
-						:color="color" :startText="startText" :endText="endText" :month="nowDate.month"
+						:color="color" :actBadgeColor="actBadgeColor" :startText="startText" :endText="endText" :month="nowDate.month"
 						:FoldStatus="FoldStatus" :monthShowCurrentMonth="monthShowCurrentMonth" :showMonth="showMonth"
 						:itemHeight="itemHeight"></wu-calendar-block>
 				</template>
@@ -113,6 +116,17 @@
 				<wu-icon v-if="FoldStatus == 'open'" name="arrow-up" bold size="18"></wu-icon>
 				<wu-icon v-else-if="FoldStatus == 'close'" name="arrow-down" bold size="18"></wu-icon>
 			</view>
+			<!-- 弹窗日历取消与确认按钮位置 -->
+			<slot name="operation" v-if="operationPosition == 'bottom'">
+				<view v-if="!insert" class="wu-calendar__header wu-calendar--fixed-top">
+					<view class="wu-calendar__header-btn-box" @click="cancel">
+						<text class="wu-calendar__header-text wu-calendar--fixed-width" :style="[{color: cancelColor}]">{{cancelText}}</text>
+					</view>
+					<view class="wu-calendar__header-btn-box" @click="confirm">
+						<text class="wu-calendar__header-text wu-calendar--fixed-width" :style="[{color: confirmColor}]">{{okText}}</text>
+					</view>
+				</view>
+			</slot>
 			<wu-safe-bottom v-if="!insert && show"></wu-safe-bottom>
 		</view>
 	</view>
@@ -135,7 +149,7 @@
 	/**
 	 * Calendar 日历
 	 * @description 日历组件，多模式选择（单日期、多日期、范围日期选择），多日历类型（周、月日历），动态计算滑动。常用场景如：酒店日期预订、火车机票选择购买日期、上下班打卡等
-	 * @tutorial https://wu.geeks.ink/zh-CN/components/calendar.html
+	 * @tutorial https://wuui.cn/zh-CN/components/calendar.html
 	 * @property {String} date 自定义当前时间，默认为今天
 	 * @property {String} type 日历类型(默认为month)
 	 *  @value month 月日历 
@@ -174,16 +188,20 @@
 	 * @property {Boolean} showMonth 是否选择月份为背景(默认true)
 	 * @property {Boolean} maskClick 是否点击遮罩层关闭(默认false)
 	 * @property {Boolean} disabledChoice 是否禁止点击日历(默认false)
-	 * @event {Function} close 关闭弹窗日期，`insert :false` 时生效
+	 * @property {String} actBadgeColor 当通过 `selected` 属性设置某个日期 `badgeColor`后，如果该日期被选择且主题色与 `badgeColor` 一致时，徽标会显示本颜色
+	 * @property {String} operationPosition 弹窗日历取消和确认按钮的显示位置
+	 * @property {Boolean} confirmFullDate 弹窗日历点击确认时是否需要选择完整日期
+	 * @event {Function} close 日历弹窗点击遮罩层关闭，`insert :false` 时生效
 	 * @event {Function} change 日期改变，`insert :ture` 时生效
 	 * @event {Function} confirm 确认选择，`insert :false` 时生效
+	 * @event {Function} cancel 点击取消按钮，`insert :false` 时生效
 	 * @event {Function} monthSwitch 切换月份时触发
 	 * @event {Function} foldSwitch 切换折叠状态时触发，`type: month | week` & `fold: true` 时生效
 	 * @example <wu-calendar :insert="true":lunar="true" start-date="2022-5-20" end-date="2023-5-20"@change="change" />
 	 */
 	export default {
 		mixins: [mpMixin, mixin, props],
-		emits: ['close', 'confirm', 'change', 'monthSwitch', 'foldSwitch'],
+		emits: ['close', 'cancel', 'confirm', 'change', 'monthSwitch', 'foldSwitch'],
 		data() {
 			return {
 				show: false,
@@ -334,7 +352,10 @@
 		methods: {
 			// 取消穿透
 			clean() {
-				if (this.maskClick) this.close();
+				if (this.maskClick) {
+					this.$emit('close')
+					this.close()
+				}
 			},
 			bindDateChange(e) {
 				const value = e.detail.value + '-1'
@@ -347,7 +368,8 @@
 				} = this.cale.getDate(value)
 				this.$emit('monthSwitch', {
 					year,
-					month
+					month: Number(month),
+					fullDate: `${year}-${`${month}`.padStart(2, '0')}`
 				})
 			},
 			/**
@@ -398,7 +420,7 @@
 				}
 
 				// 渲染
-				this.updateWeeks(false);
+				this.updateWeeks(false, true);
 			},
 			/**
 			 * 打开日历弹窗
@@ -422,25 +444,66 @@
 				this.$nextTick(() => {
 					setTimeout(() => {
 						this.show = false
-						this.$emit('close')
 						// #ifdef H5
 						if (!this.insert) document.body.style = 'overflow: visible'
 						// #endif
 						// 为弹窗模式且需要清理数据
 						if (this.clearDate && !this.insert) {
-							this.cale.cleanRange()
-							this.cale.cleanMultiple()
-							this.swiperCurrent = 1;
-							this.init(this.date);
+							this.reset()
 						}
 					}, 300)
 				})
 			},
 			/**
+			 * 重置
+			 */
+			reset() {
+				this.cale.cleanRange()
+				this.cale.cleanMultiple()
+				this.swiperCurrent = 1;
+				this.init(this.date);
+			},
+			/**
 			 * 确认按钮
 			 */
 			confirm() {
+				if(this.confirmFullDate) {
+					if(this.mode == 'single' && !this.calendar.fullDate) {
+						return uni.showToast({
+							icon: 'none',
+							title: '请选择日期',
+							duration: 600
+						});
+					} else if(this.mode == 'multiple' && !this.cale.multiple.length) {
+						return uni.showToast({
+							icon: 'none',
+							title: '请至少选择一个日期',
+							duration: 600
+						});
+					} else if(this.mode == 'range') {
+						if(!this.cale.rangeStatus.before) {
+							return uni.showToast({
+								icon: 'none',
+								title: '请选择开始日期',
+								duration: 600
+							}); 
+						} else if(!this.cale.rangeStatus.after) {
+							return uni.showToast({
+								icon: 'none',
+								title: '请选择结束日期',
+								duration: 600
+							}); 
+						}
+					}
+				}
 				this.setEmit('confirm')
+				this.close()
+			},
+			/**
+			 * 取消按钮
+			 */
+			cancel() {
+				this.$emit('cancel')
 				this.close()
 			},
 			/**
@@ -457,10 +520,11 @@
 				let {
 					year,
 					month
-				} = this.nowDate
+				} = this.nowDate;
 				this.$emit('monthSwitch', {
 					year,
-					month: Number(month)
+					month: Number(month),
+					fullDate: `${year}-${`${month}`.padStart(2, '0')}`
 				})
 			},
 			/**
@@ -649,7 +713,7 @@
 			 * 更新weeks
 			 * @param {Boolean} isChange 是否使当前的weeks发生变化
 			 */
-			updateWeeks(isChange = true) {
+			updateWeeks(isChange = true, isInt = false) {
 				let newFullDate = ''
 				// 是否变动日期信息
 				if (isChange) {
@@ -661,7 +725,9 @@
 				}
 				this.setDate(newFullDate)
 				this.swiperCurrentChangeWeeks();
-				this.monthSwitch();
+				if(!isInt) {
+					this.monthSwitch();
+				}
 			},
 			/**
 			 * swiperCurrent改变需要改动的weeks
