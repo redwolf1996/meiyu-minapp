@@ -51,25 +51,25 @@
 					<view class="wu-calendar__weeks-day" v-if="startWeek === 'sun'">
 						<text class="wu-calendar__weeks-day-text">周{{SUNText}}</text>
 					</view>
-					<view class="wu-calendar__weeks-day">
+					<view class="wu-calendar__weeks-day" :class="{active: nowWeek === 1}">
 						<text class="wu-calendar__weeks-day-text">周{{monText}}</text>
 					</view>
-					<view class="wu-calendar__weeks-day">
+					<view class="wu-calendar__weeks-day" :class="{active: nowWeek === 2}">
 						<text class="wu-calendar__weeks-day-text">周{{TUEText}}</text>
 					</view>
-					<view class="wu-calendar__weeks-day">
+					<view class="wu-calendar__weeks-day" :class="{active: nowWeek === 3}">
 						<text class="wu-calendar__weeks-day-text">周{{WEDText}}</text>
 					</view>
-					<view class="wu-calendar__weeks-day">
+					<view class="wu-calendar__weeks-day" :class="{active: nowWeek === 4}">
 						<text class="wu-calendar__weeks-day-text">周{{THUText}}</text>
 					</view>
-					<view class="wu-calendar__weeks-day">
+					<view class="wu-calendar__weeks-day" :class="{active: nowWeek === 5}">
 						<text class="wu-calendar__weeks-day-text">周{{FRIText}}</text>
 					</view>
-					<view class="wu-calendar__weeks-day">
+					<view class="wu-calendar__weeks-day" :class="{active: nowWeek === 6}">
 						<text class="wu-calendar__weeks-day-text">周{{SATText}}</text>
 					</view>
-					<view class="wu-calendar__weeks-day" v-if="startWeek === 'mon'">
+					<view class="wu-calendar__weeks-day" :class="{active: nowWeek === 7}" v-if="startWeek === 'mon'">
 						<text class="wu-calendar__weeks-day-text">周{{SUNText}}</text>
 					</view>
 				</view>
@@ -220,6 +220,7 @@
 				Fold: null,
 				FoldStatus: null,
 				weekContentStyle: {},
+        nowWeek: +new Date().getDay() ? +new Date().getDay() : 7
 			}
 		},
 		computed: {
@@ -567,6 +568,7 @@
 			 * @param {Object} weeks
 			 */
 			choiceDate(weeks) {
+        this.nowWeek = weeks.lunar.nWeek
 				// 如果为禁用 或者 空数据 或者 禁止点击日期
 				if (weeks.disable || weeks.empty || this.disabledChoice) return;
 
@@ -1015,9 +1017,13 @@
 		justify-content: center;
 		align-items: center;
 		height: 90rpx;
+    color:#C8D2E3;
 		border-bottom-color: #F5F5F5;
 		border-bottom-style: solid;
 		border-bottom-width: 2rpx;
+    &.active{
+      color: #364250;
+    }
 	}
 
 	.wu-calendar__weeks-day-text {

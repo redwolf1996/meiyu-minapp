@@ -19,7 +19,7 @@ function selectMode(m: number) {
 }
 
 function calendarChange(e) {
-  console.log(e)
+  // console.log(e)
 }
 </script>
 
