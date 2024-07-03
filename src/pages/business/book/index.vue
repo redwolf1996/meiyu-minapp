@@ -8,13 +8,14 @@ style:
 <script lang="ts" setup>
 const { windowHeight } = getMenuButtonInfo()
 const dropMenu = ref()
-const mode = ref(1) // 1预约看板 2预约列表
+const mode = ref(0) // 0预约看板 1预约列表
 function handleClickList() {
 
 }
 
-function handleOpened() {
-  slider.value?.initSlider()
+function selectMode(m: number) {
+  mode.value = m
+  dropMenu.value.close()
 }
 </script>
 
@@ -23,34 +24,38 @@ function handleOpened() {
     <view>
       <wd-navbar title="标题" :safeAreaInsetTop="true" @click-left="handleClickList">
         <template #left>
-          <wd-img
-            v-if="mode === 2"
-            :width="20"
-            :height="20"
-            :src="`${IMG_BASE}/icon-funnel.png`"
-          />
+          <view transform-translate-y-4px>
+            <wd-img
+              v-if="mode === 1"
+              :width="20"
+              :height="20"
+              :src="`${IMG_BASE}/icon-funnel.png`"
+            />
+          </view>
         </template>
         <template #title>
           <wd-drop-menu>
-            <wd-drop-menu-item ref="dropMenu" title="预约看板">
+            <wd-drop-menu-item ref="dropMenu" :title="!mode ? '预约看版' : '预约列表'">
               <view py-30rpx flex flex-cc gap-60rpx>
-                <view class="pannel" :class="{ active: mode === 1 }">
+                <view class="pannel" :class="{ active: mode === 0 }" @click="selectMode(0)">
                   <wd-img
-                    v-if="mode === 2"
                     :width="32"
                     :height="32"
-                    :src="`${IMG_BASE}/icon-yykb.svg`"
+                    :src="`${IMG_BASE}/icon-kb${!mode ? '-act' : ''}.png`"
                   />
-                  <view>预约看板</view>
+                  <text class="title">
+                    预约看板
+                  </text>
                 </view>
-                <view class="pannel" :class="{ active: mode === 2 }">
+                <view class="pannel" :class="{ active: mode === 1 }" @click="selectMode(1)">
                   <wd-img
-                    v-if="mode === 2"
                     :width="32"
                     :height="32"
-                    :src="`${IMG_BASE}/icon-yylb.svg`"
+                    :src="`${IMG_BASE}/icon-lb${mode ? '-act' : ''}.png`"
                   />
-                  <view>预约列表</view>
+                  <text class="title">
+                    预约列表
+                  </text>
                 </view>
               </view>
             </wd-drop-menu-item>
@@ -71,9 +76,13 @@ function handleOpened() {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 10rpx;
+  gap: 20rpx;
   background: #e8e9eb;
   color: #3d3d3d;
+  .title {
+    font-size: 28rpx;
+    line-height: 28rpx;
+  }
   &.active {
     background: #e3ecfc;
     color: #1a66ff;
