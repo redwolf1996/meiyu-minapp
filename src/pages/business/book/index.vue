@@ -96,6 +96,13 @@ function calendarChange(e) {
     color: #1a66ff;
   }
 }
+:deep(.wu-calendar__weeks-day) {
+  height: 70rpx !important;
+  border: none !important;
+}
+:deep(.wu-calendar__header) {
+  border: none !important;
+}
 :deep(.wu-calendar-item__weeks-lunar-text) {
   display: none;
 }

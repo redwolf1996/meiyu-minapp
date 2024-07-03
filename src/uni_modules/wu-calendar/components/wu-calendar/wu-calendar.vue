@@ -49,28 +49,28 @@
 			<view class="wu-calendar__box">
 				<view class="wu-calendar__weeks">
 					<view class="wu-calendar__weeks-day" v-if="startWeek === 'sun'">
-						<text class="wu-calendar__weeks-day-text">{{SUNText}}</text>
+						<text class="wu-calendar__weeks-day-text">周{{SUNText}}</text>
 					</view>
 					<view class="wu-calendar__weeks-day">
-						<text class="wu-calendar__weeks-day-text">{{monText}}</text>
+						<text class="wu-calendar__weeks-day-text">周{{monText}}</text>
 					</view>
 					<view class="wu-calendar__weeks-day">
-						<text class="wu-calendar__weeks-day-text">{{TUEText}}</text>
+						<text class="wu-calendar__weeks-day-text">周{{TUEText}}</text>
 					</view>
 					<view class="wu-calendar__weeks-day">
-						<text class="wu-calendar__weeks-day-text">{{WEDText}}</text>
+						<text class="wu-calendar__weeks-day-text">周{{WEDText}}</text>
 					</view>
 					<view class="wu-calendar__weeks-day">
-						<text class="wu-calendar__weeks-day-text">{{THUText}}</text>
+						<text class="wu-calendar__weeks-day-text">周{{THUText}}</text>
 					</view>
 					<view class="wu-calendar__weeks-day">
-						<text class="wu-calendar__weeks-day-text">{{FRIText}}</text>
+						<text class="wu-calendar__weeks-day-text">周{{FRIText}}</text>
 					</view>
 					<view class="wu-calendar__weeks-day">
-						<text class="wu-calendar__weeks-day-text">{{SATText}}</text>
+						<text class="wu-calendar__weeks-day-text">周{{SATText}}</text>
 					</view>
 					<view class="wu-calendar__weeks-day" v-if="startWeek === 'mon'">
-						<text class="wu-calendar__weeks-day-text">{{SUNText}}</text>
+						<text class="wu-calendar__weeks-day-text">周{{SUNText}}</text>
 					</view>
 				</view>
 				<!-- 滑动切换 -->
@@ -152,7 +152,7 @@
 	 * @tutorial https://wuui.cn/zh-CN/components/calendar.html
 	 * @property {String} date 自定义当前时间，默认为今天
 	 * @property {String} type 日历类型(默认为month)
-	 *  @value month 月日历 
+	 *  @value month 月日历
 	 *  @value week 周日历
 	 * @property {Boolean} fold 是否支持折叠(默认值 month: true, week: false)
 	 * @property {Boolean} useToday 是否使用默认日期(今天，默认为true)
@@ -361,7 +361,7 @@
 				const value = e.detail.value + '-1'
 				this.setDate(value)
 				this.swiperCurrentChangeWeeks();
-				
+
 				const {
 					year,
 					month
@@ -486,13 +486,13 @@
 								icon: 'none',
 								title: '请选择开始日期',
 								duration: 600
-							}); 
+							});
 						} else if(!this.cale.rangeStatus.after) {
 							return uni.showToast({
 								icon: 'none',
 								title: '请选择结束日期',
 								duration: 600
-							}); 
+							});
 						}
 					}
 				}
@@ -577,7 +577,7 @@
 				this.cale.setRange(this.calendar.fullDate);
 				// 设置多选
 				this.cale.setMultiple(this.calendar.fullDate);
-				
+
 				// 如果启用滑动切换 且当前模式为范围选择时则重新计算上月与下月
 				if (this.slideSwitchMode !== 'none') {
 					let weekName = '';
@@ -643,7 +643,7 @@
 
 				// 设置日期
 				this.setDate(this.cale.date.fullDate);
-				// swiperCurrent改变需要改动的weeks 
+				// swiperCurrent改变需要改动的weeks
 				this.swiperCurrentChangeWeeks();
 				// 改变事件
 				this.change()
