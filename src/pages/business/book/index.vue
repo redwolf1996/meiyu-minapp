@@ -71,6 +71,7 @@ function calendarChange(e) {
       color="#2F4BEC" :itemHeight="50" startWeek="mon"
       :fold="false" type="week" :insert="true" @change="calendarChange"
     />
+    <view bg-white h-20rpx />
   </view>
 </template>
 
@@ -111,7 +112,7 @@ function calendarChange(e) {
   border-radius: 50% !important;
 }
 :deep(.wu-calendar__header-btn-box.horizontal) {
-  height: 60rpx !important;
+  height: 50rpx !important;
 }
 :deep(.wu-calendar__header-btn-box .wu-calendar__header-btn) {
   display: none !important;
