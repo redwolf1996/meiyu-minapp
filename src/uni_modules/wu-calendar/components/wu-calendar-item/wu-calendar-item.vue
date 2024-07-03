@@ -5,7 +5,7 @@
 			borderTopRightRadius: weeks.afterRange ? '12rpx' : '',
 			borderBottomRightRadius: weeks.afterRange ? '12rpx' : '',
 		}]" @click="choiceDate(weeks)">
-		<view class="wu-calendar-item__weeks-box-item" :style="[actMultipleStyle, {height: itemHeight + 'px'}]">
+		<view class="wu-calendar-item__weeks-box-item" :style="[toDayBgColor, actMultipleStyle, {height: itemHeight + 'px'}]">
 			<!-- 自定义打点上方信息 -->
 			<text v-if="weeks.extraInfo && weeks.extraInfo.topInfo" class="wu-calendar-item__weeks-lunar-text" :style="[{color: weeks.extraInfo.topInfoColor || '#e43d33'}, calendarItemStyle, actMultipleStyle]">{{weeks.extraInfo.topInfo}}</text>
 			<!-- 徽标 -->
@@ -58,7 +58,8 @@
 				};
 				// 今天的日期样式
 				if (this.weeks.isDay) {
-					style.color = color;
+					// style.color = color;
+          // style.backgroundColor = '#F3F6FF'
 				}
 				// 禁用的日期样式
 				if(this.weeks.disable) {
@@ -69,6 +70,13 @@
 				}
 				return style;
 			},
+      toDayBgColor(){
+        let style = {};
+        if(this.weeks.isDay){
+          style.backgroundColor = '#F3F6FF'
+        }
+        return style
+      },
 			// 选中的日期样式
 			actMultipleStyle() {
 				if ((this.weeks.beforeRange || this.weeks.afterRange || this.weeks.multiples || (this.calendar.fullDate === this.weeks
@@ -101,7 +109,7 @@
 						style.width = this.weeks.extraInfo.badgeSize
 						style.height = this.weeks.extraInfo.badgeSize
 					}
-					
+
 					if(!this.weeks.extraInfo.badgePosition) {
 						style.right = '10rpx';
 						style.top = '10rpx';
@@ -125,7 +133,7 @@
 						style.right = '10rpx';
 					}
 				}
-				
+
 				return style
 			},
 			// 日期文字
@@ -151,7 +159,7 @@
 					text = this.endText
 				} else if (this.weeks.beforeRange) {
 					text = this.startText
-				} 
+				}
 				return text;
 			}
 		},

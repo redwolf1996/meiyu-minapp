@@ -17,6 +17,10 @@ function selectMode(m: number) {
   mode.value = m
   dropMenu.value.close()
 }
+
+function calendarChange(e) {
+  console.log(e)
+}
 </script>
 
 <template>
@@ -63,6 +67,10 @@ function selectMode(m: number) {
         </template>
       </wd-navbar>
     </view>
+    <wu-calendar
+      color="#2F4BEC" :itemHeight="50" startWeek="mon"
+      :fold="false" type="week" :insert="true" @change="calendarChange"
+    />
   </view>
 </template>
 
@@ -87,6 +95,22 @@ function selectMode(m: number) {
     background: #e3ecfc;
     color: #1a66ff;
   }
+}
+:deep(.wu-calendar-item__weeks-lunar-text) {
+  display: none;
+}
+:deep(.wu-calendar-item__weeks-box-item) {
+  width: 42px !important;
+  border-radius: 50% !important;
+}
+:deep(.wu-calendar__header-btn-box.horizontal) {
+  height: 60rpx !important;
+}
+:deep(.wu-calendar__header-btn-box .wu-calendar__header-btn) {
+  display: none !important;
+}
+:deep(.wu-calendar__backtoday) {
+  display: none !important;
 }
 :deep(.wd-navbar__title) {
   font-weight: normal;
