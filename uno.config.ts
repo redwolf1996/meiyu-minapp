@@ -84,6 +84,7 @@ export default defineConfig({
     ['flex-xr', { 'flex-direction': 'row-reverse' }],
     ['flex-y', { 'flex-direction': 'column' }],
     ['flex-bt', { 'justify-content': 'space-between' }],
+    ['flex-rd', { 'justify-content': 'space-around' }],
     ['flex-ac', { 'align-items': 'center' }],
     ['flex-cc', { 'justify-content': 'center', 'align-items': 'center' }],
     ['abs-cc', { position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }],

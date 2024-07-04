@@ -25,57 +25,84 @@ function calendarChange(e) {
 
 <template>
   <view oa-y :style="{ height: `${windowHeight}px` }">
-    <view>
-      <wd-navbar title="标题" :safeAreaInsetTop="true" @click-left="handleClickList">
-        <template #left>
-          <view transform-translate-y-4px>
-            <wd-img
-              v-if="mode === 1"
-              :width="20"
-              :height="20"
-              :src="`${IMG_BASE}/icon-funnel.png`"
-            />
-          </view>
-        </template>
-        <template #title>
-          <wd-drop-menu>
-            <wd-drop-menu-item ref="dropMenu" :title="!mode ? '预约看版' : '预约列表'">
-              <view py-30rpx flex flex-cc gap-60rpx>
-                <view class="pannel" :class="{ active: mode === 0 }" @click="selectMode(0)">
-                  <wd-img
-                    :width="32"
-                    :height="32"
-                    :src="`${IMG_BASE}/icon-kb${!mode ? '-act' : ''}.png`"
-                  />
-                  <text class="title">
-                    预约看板
-                  </text>
+    <view class="fixed-board">
+      <view>
+        <wd-navbar title="标题" :safeAreaInsetTop="true" @click-left="handleClickList">
+          <template #left>
+            <view transform-translate-y-4px>
+              <wd-img
+                v-if="mode === 1"
+                :width="20"
+                :height="20"
+                :src="`${IMG_BASE}/icon-funnel.png`"
+              />
+            </view>
+          </template>
+          <template #title>
+            <wd-drop-menu>
+              <wd-drop-menu-item ref="dropMenu" :title="!mode ? '预约看版' : '预约列表'">
+                <view py-30rpx flex flex-cc gap-60rpx>
+                  <view class="pannel" :class="{ active: mode === 0 }" @click="selectMode(0)">
+                    <wd-img
+                      :width="32"
+                      :height="32"
+                      :src="`${IMG_BASE}/icon-kb${!mode ? '-act' : ''}.png`"
+                    />
+                    <text class="title">
+                      预约看板
+                    </text>
+                  </view>
+                  <view class="pannel" :class="{ active: mode === 1 }" @click="selectMode(1)">
+                    <wd-img
+                      :width="32"
+                      :height="32"
+                      :src="`${IMG_BASE}/icon-lb${mode ? '-act' : ''}.png`"
+                    />
+                    <text class="title">
+                      预约列表
+                    </text>
+                  </view>
                 </view>
-                <view class="pannel" :class="{ active: mode === 1 }" @click="selectMode(1)">
-                  <wd-img
-                    :width="32"
-                    :height="32"
-                    :src="`${IMG_BASE}/icon-lb${mode ? '-act' : ''}.png`"
-                  />
-                  <text class="title">
-                    预约列表
-                  </text>
-                </view>
-              </view>
-            </wd-drop-menu-item>
-          </wd-drop-menu>
-        </template>
-      </wd-navbar>
+              </wd-drop-menu-item>
+            </wd-drop-menu>
+          </template>
+        </wd-navbar>
+      </view>
+      <wu-calendar
+        color="#2F4BEC" :itemHeight="50" startWeek="mon"
+        :fold="false" type="week" :insert="true" @change="calendarChange"
+      />
+      <view bg-white h-20rpx />
+      <view flex flex-ac flex-cc gap-100rpx flex-rd f12 h-54rpx lh-54rpx bg-white class="status">
+        <view flex flex-ac>
+          <MySquare color="#FFCBE2" />
+          <text lh-24rpx pl-8rpx>
+            待服务(1)
+          </text>
+        </view>
+        <view flex flex-ac>
+          <MySquare color="#FEE7D7" />
+          <text lh-24rpx pl-8rpx>
+            服务中(2)
+          </text>
+        </view>
+        <view flex flex-ac>
+          <MySquare color="#D4D4D6" />
+          <text lh-24rpx pl-8rpx>
+            已完成(3)
+          </text>
+        </view>
+      </view>
     </view>
-    <wu-calendar
-      color="#2F4BEC" :itemHeight="50" startWeek="mon"
-      :fold="false" type="week" :insert="true" @change="calendarChange"
-    />
-    <view bg-white h-20rpx />
   </view>
 </template>
 
 <style lang='scss' scoped>
+.status {
+  border-top: 1px solid #e4e8ef;
+  border-bottom: 1px solid #e4e8ef;
+  color: #3d3d3d;
+}
 .pannel {
   width: 192rpx;
   height: 192rpx;

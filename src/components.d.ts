@@ -15,6 +15,7 @@ declare module '@vue/runtime-core' {
     MsgRing: typeof import('./components/MsgRing.vue')['default']
     MyCell: typeof import('./components/MyCell.vue')['default']
     MyCellGroup: typeof import('./components/MyCellGroup.vue')['default']
+    MySquare: typeof import('./components/MySquare.vue')['default']
     StepNav: typeof import('./components/StepNav.vue')['default']
     StripDot: typeof import('./components/StripDot.vue')['default']
     TopSearch: typeof import('./components/TopSearch.vue')['default']
