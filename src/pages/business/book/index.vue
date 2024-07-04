@@ -1,5 +1,5 @@
 <route lang="yaml">
-layout: none
+layout: false
 style:
   navigationBarTitleText: 预约看板
   navigationStyle: "custom"
@@ -50,6 +50,7 @@ function calendarChange() {
 function showSearch() {
   visableSearch.value = true
 }
+function createOrder() {}
 </script>
 
 <template>
@@ -177,15 +178,60 @@ function showSearch() {
         </view>
       </view>
     </view>
-    <view class="content" bd>
-      111\r]
-    </view>
+    <scroll-view
+      :scroll-x="true"
+      :scroll-y="true"
+      class="content pr" :style="{
+        height: `${windowHeight - headHeight}px`,
+      }"
+    >
+      <!-- <view h-100%> -->
+      <view table word-spacing-0 pr z-100>
+        <view sticky left-0 dib w-80rpx hp100 z-200>
+          <view h-64rpx sticky left-0 top-0 bg-blue z-300 />
+          <view bg-#F3F6FF flex flex-y flex-ac>
+            <view v-for="item in 24" :key="`i${item}`" h-200rpx>
+              {{ item - 1 }}
+            </view>
+          </view>
+        </view>
+        <view dib w-1000px hp100 bg-white pr z-150>
+          <view h-64rpx lh-64rpx bg-white sticky top-0 z-180>
+            asdas
+          </view>
+          <view h-4800rpx>
+            xxx
+          </view>
+        </view>
+      </view>
+      <!-- </view> -->
+      <view class="plus" @click="createOrder()">
+        <view class="abs-cc">
+          +
+        </view>
+      </view>
+    </scroll-view>
   </view>
 </template>
 
 <style lang='scss' scoped>
+.plus {
+  position: fixed;
+  right: 10rpx;
+  bottom: 10rpx;
+  width: 112rpx;
+  height: 112rpx;
+  background: #3a82fb;
+  border-radius: 50%;
+  box-shadow: 0rpx 10rpx 20rpx 0rpx rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  color: #fff;
+  font-size: 48rpx;
+  z-index: 100;
+}
 .content {
-  height: calc(100% - v-bind(headHeight) px);
+  white-space: nowrap;
 }
 :deep(.cus-input) {
   background: #f6f6fb !important;

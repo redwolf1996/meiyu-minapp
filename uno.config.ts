@@ -46,6 +46,7 @@ export default defineConfig({
     [/^fs-([.\d]+)$/, ([_, num]) => ({ 'font-size': `${num}rpx` })],
     [/^c-([0-9a-zA-Z]+)$/, ([_, hex]) => ({ color: `#${hex} !important` })],
     ['bd', { border: '1px solid blue' }],
+    ['bd-red', { border: '1px solid red' }],
     ['tc', { 'text-align': 'center' }],
     ['tl', { 'text-align': 'left' }],
     ['tr', { 'text-align': 'right' }],
