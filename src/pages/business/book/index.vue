@@ -8,10 +8,10 @@ style:
 <script lang="ts" setup>
 const { windowHeight } = getMenuButtonInfo()
 const dropMenu = ref()
-const mode = ref(1) // 0预约看板 1预约列表
-const visableSearch = ref(true)
+const mode = ref(0) // 0预约看板 1预约列表
+const visableSearch = ref(false)
+const headHeight = ref(0)
 const txt = ref('xxx')
-
 const val = ref()
 const sources: any = [
   { label: '全部', value: 1, isActive: true },
@@ -25,6 +25,14 @@ const sources2: any = [
   { label: '阿月', value: 3, isActive: false },
   { label: '小美', value: 3, isActive: false },
 ]
+
+onMounted(() => {
+  const theNode = uni.createSelectorQuery().select('#head')
+  theNode.boundingClientRect((data: any) => {
+    headHeight.value = data.height
+    console.log(headHeight.value)
+  }).exec()
+})
 
 function handleClickList() {
 
@@ -54,7 +62,7 @@ function showSearch() {
     >
       <wd-navbar :safeAreaInsetTop="true">
         <template #title>
-          <view fb f14>
+          <view fb f16 tl px-30rpx>
             预约筛选
           </view>
         </template>
@@ -99,7 +107,7 @@ function showSearch() {
         <MyButton>确定</MyButton>
       </view>
     </wd-popup>
-    <view class="fixed-board">
+    <view id="head">
       <view>
         <wd-navbar title="标题" :safeAreaInsetTop="true" @click-left="handleClickList">
           <template #left>
@@ -169,10 +177,16 @@ function showSearch() {
         </view>
       </view>
     </view>
+    <view class="content" bd>
+      111\r]
+    </view>
   </view>
 </template>
 
 <style lang='scss' scoped>
+.content {
+  height: calc(100% - v-bind(headHeight) px);
+}
 :deep(.cus-input) {
   background: #f6f6fb !important;
   padding: 15rpx 20rpx;

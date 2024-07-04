@@ -12,12 +12,10 @@ const props = withDefaults(defineProps<{
   borderWidth: 1,
   rd: '0rpx',
 })
-console.log(props)
 </script>
 
 <template>
   <view
-    style="box-sizing: border-box"
     :style="{
       color: props.color,
       backgroundColor: props.bgColor,
