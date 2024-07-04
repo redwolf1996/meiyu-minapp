@@ -50,10 +50,6 @@ export default {
 </style>
 
 <style lang='scss' scoped>
-.inp-out {
-  width: calc(100% - 46px);
-  background: #fbfbfb !important;
-}
 .search {
   padding: 12px 16px;
   background: #fff;

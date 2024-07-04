@@ -1,5 +1,5 @@
 <route lang="yaml">
-layout: home
+layout: none
 style:
   navigationBarTitleText: 预约看板
   navigationStyle: "custom"
@@ -8,7 +8,24 @@ style:
 <script lang="ts" setup>
 const { windowHeight } = getMenuButtonInfo()
 const dropMenu = ref()
-const mode = ref(0) // 0预约看板 1预约列表
+const mode = ref(1) // 0预约看板 1预约列表
+const visableSearch = ref(true)
+const txt = ref('xxx')
+
+const val = ref()
+const sources: any = [
+  { label: '全部', value: 1, isActive: true },
+  { label: '今天', value: 2, isActive: false },
+  { label: '明天', value: 3, isActive: false },
+]
+const sources2: any = [
+  { label: '全部', value: 1, isActive: true },
+  { label: '未分配', value: 2, isActive: false },
+  { label: '刘小明', value: 3, isActive: false },
+  { label: '阿月', value: 3, isActive: false },
+  { label: '小美', value: 3, isActive: false },
+]
+
 function handleClickList() {
 
 }
@@ -18,13 +35,70 @@ function selectMode(m: number) {
   dropMenu.value.close()
 }
 
-function calendarChange(e) {
+function calendarChange() {
   // console.log(e)
+}
+
+function showSearch() {
+  visableSearch.value = true
 }
 </script>
 
 <template>
+  <!-- 禁止滚动穿透 https://wot-design-uni.cn/component/popup.html -->
+  <page-meta :page-style="`overflow:${visableSearch ? 'hidden' : 'visible'};`" />
   <view oa-y :style="{ height: `${windowHeight}px` }">
+    <wd-popup
+      v-model="visableSearch" :z-index="999" lock-scroll :safe-area-inset-bottom="true" position="right"
+      custom-style="height: 100vh;width: 80%;background: #F9F9F9;"
+    >
+      <wd-navbar :safeAreaInsetTop="true">
+        <template #title>
+          <view fb f14>
+            预约筛选
+          </view>
+        </template>
+      </wd-navbar>
+      <view px-30rpx py-40rpx>
+        <view bg-white px-32rpx py-25rpx rd-20rpx mb-24rpx>
+          <view fb f14 lh-28rpx pb-32rpx>
+            客户
+          </view>
+          <view>
+            <wd-input
+              v-model="txt"
+              placeholder="请输入预约人姓名或手机号"
+              custom-class="cus-input"
+              :no-border="true"
+              size="small"
+              :clearable="true"
+            />
+          </view>
+        </view>
+        <view bg-white px-32rpx py-25rpx rd-20rpx mb-24rpx>
+          <view fb f14 lh-28rpx pb-32rpx>
+            服务时间
+          </view>
+          <view>
+            <GridTagSelect v-model="val" :sources="sources" :columns="3" />
+          </view>
+        </view>
+        <view bg-white px-32rpx py-25rpx rd-20rpx mb-24rpx>
+          <view fb f14 lh-28rpx pb-32rpx>
+            手艺人
+          </view>
+          <view>
+            <GridTagSelect v-model="val" :sources="sources2" :columns="3" mode="multiple" />
+          </view>
+        </view>
+      </view>
+      <view flex flex-cc gap-40rpx>
+        <MyButton bgColor="#ffffff" color="#232220" borderColor="rgba(0, 0, 0, 0.2)">
+          重置
+        </MyButton>
+        <MyButton>确定</MyButton>
+      </view>
+    </wd-popup>
     <view class="fixed-board">
       <view>
         <wd-navbar title="标题" :safeAreaInsetTop="true" @click-left="handleClickList">
@@ -35,6 +109,7 @@ function calendarChange(e) {
                 :width="20"
                 :height="20"
                 :src="`${IMG_BASE}/icon-funnel.png`"
+                @click="showSearch"
               />
             </view>
           </template>
@@ -98,6 +173,10 @@ function calendarChange(e) {
 </template>
 
 <style lang='scss' scoped>
+:deep(.cus-input) {
+  background: #f6f6fb !important;
+  padding: 15rpx 20rpx;
+}
 .status {
   border-top: 1px solid #e4e8ef;
   border-bottom: 1px solid #e4e8ef;
