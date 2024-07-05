@@ -26,12 +26,16 @@ const sources2: any = [
   { label: '小美', value: 3, isActive: false },
 ]
 const hours24h = get24Hours()
-const tableData: any = ref([
-  {
-    staff: '米娜',
-    services: [],
-  },
-])
+
+// const tableData = ['张三']
+const tableData = ['张三', '李四']
+// const tableData = ['张三', '李四', '王五']
+// const tableData = ['张三', '李四', '王五', '赵六']
+
+// const tableItemWidth = computed(()=>{
+//   if(tableData.length <=3 ) return `calc(100% - 80rpx)`
+//   return 0
+// })
 
 onMounted(() => {
   const theNode = uni.createSelectorQuery().select('#head')
@@ -192,7 +196,7 @@ function createOrder() {}
         height: `${windowHeight - headHeight}px`,
       }"
     >
-      <view table word-spacing-0 pr z-100>
+      <view flex word-spacing-0 pr z-100>
         <view sticky left-0 dib w-80rpx hp100 z-200>
           <view h-64rpx w-80rpx sticky left-0 top-0 bg-white z-300 />
           <view bg-#F3F6FF flex flex-y flex-ac>
@@ -203,14 +207,16 @@ function createOrder() {}
             </view>
           </view>
         </view>
-        <view dib w-1000px hp100 bg-white pr z-150>
-          <view h-64rpx lh-64rpx bg-white sticky top-0 z-180>
-            asdas
+        <view dib hp100 bg-white pr z-150 flex-grow-1>
+          <view h-64rpx lh-64rpx bg-white sticky top-0 z-180 flex>
+            <view v-for="item in tableData" :key="item" flex-1>
+              {{ item }}
+            </view>
           </view>
           <view h-4800rpx class="table-content" flex>
-            <view>111</view>
-            <view>222</view>
-            <view>333</view>
+            <view v-for="item in tableData" :key="`k${item}`" flex-1>
+              {{ item }}
+            </view>
           </view>
         </view>
       </view>
