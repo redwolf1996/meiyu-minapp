@@ -25,6 +25,13 @@ const sources2: any = [
   { label: '阿月', value: 3, isActive: false },
   { label: '小美', value: 3, isActive: false },
 ]
+const hours24h = get24Hours()
+const tableData: any = ref([
+  {
+    staff: '米娜',
+    services: [],
+  },
+])
 
 onMounted(() => {
   const theNode = uni.createSelectorQuery().select('#head')
@@ -185,13 +192,14 @@ function createOrder() {}
         height: `${windowHeight - headHeight}px`,
       }"
     >
-      <!-- <view h-100%> -->
       <view table word-spacing-0 pr z-100>
         <view sticky left-0 dib w-80rpx hp100 z-200>
-          <view h-64rpx sticky left-0 top-0 bg-blue z-300 />
+          <view h-64rpx w-80rpx sticky left-0 top-0 bg-white z-300 />
           <view bg-#F3F6FF flex flex-y flex-ac>
-            <view v-for="item in 24" :key="`i${item}`" h-200rpx>
-              {{ item - 1 }}
+            <view v-for="item in hours24h" :key="`i${item}`" tc w-80rpx c-#8EA0B6 h-200rpx>
+              <text f12 lh-24rpx>
+                {{ item }}
+              </text>
             </view>
           </view>
         </view>
@@ -199,12 +207,13 @@ function createOrder() {}
           <view h-64rpx lh-64rpx bg-white sticky top-0 z-180>
             asdas
           </view>
-          <view h-4800rpx>
-            xxx
+          <view h-4800rpx class="table-content" flex>
+            <view>111</view>
+            <view>222</view>
+            <view>333</view>
           </view>
         </view>
       </view>
-      <!-- </view> -->
       <view class="plus" @click="createOrder()">
         <view class="abs-cc">
           +
@@ -215,6 +224,10 @@ function createOrder() {}
 </template>
 
 <style lang='scss' scoped>
+.table-content {
+  border-top: 1px solid #e4e8ef;
+  border-bottom: 1px solid #e4e8ef;
+}
 .plus {
   position: fixed;
   right: 10rpx;

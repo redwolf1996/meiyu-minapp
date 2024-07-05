@@ -21,3 +21,12 @@ export function getMenuButtonInfo() {
 }
 
 export const themeColor = '#1a66ff'
+
+export function get24Hours() {
+  const arr: string[] = []
+  for (let i = 0; i < 24; i++) {
+    const prefix = i < 9 ? `0${i}` : i.toString()
+    arr.push(`${prefix}:00`)
+  }
+  return arr
+}
