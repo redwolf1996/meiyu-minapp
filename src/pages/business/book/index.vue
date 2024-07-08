@@ -6,13 +6,16 @@ style:
 </route>
 
 <script lang="ts" setup>
-const { windowHeight } = getMenuButtonInfo()
+import Grids96 from './Grids96.vue'
+
+const { windowHeight, windowWidth, screenWidth } = getMenuButtonInfo()
 const dropMenu = ref()
 const mode = ref(0) // 0预约看板 1预约列表
 const visableSearch = ref(false)
 const headHeight = ref(0)
 const txt = ref('xxx')
 const val = ref()
+console.log(windowWidth, screenWidth)
 const sources: any = [
   { label: '全部', value: 1, isActive: true },
   { label: '今天', value: 2, isActive: false },
@@ -28,20 +31,28 @@ const sources2: any = [
 const hours24h = get24Hours()
 
 // const tableData = ['张三']
-const tableData = ['张三', '李四']
+// const tableData = ['张三', '李四']
 // const tableData = ['张三', '李四', '王五']
-// const tableData = ['张三', '李四', '王五', '赵六']
+const tableData = ['张三', '李四', '王五', '赵六']
 
 // const tableItemWidth = computed(()=>{
 //   if(tableData.length <=3 ) return `calc(100% - 80rpx)`
 //   return 0
 // })
 
+const multipleItemWidth = computed(() => {
+  const len = tableData.length
+  if (len === 0)
+    return 0
+  if (len >= 3)
+    return (screenWidth - 40) / 3
+  return (screenWidth - 40) / len
+})
+
 onMounted(() => {
   const theNode = uni.createSelectorQuery().select('#head')
   theNode.boundingClientRect((data: any) => {
     headHeight.value = data.height
-    console.log(headHeight.value)
   }).exec()
 })
 
@@ -197,25 +208,31 @@ function createOrder() {}
       }"
     >
       <view flex word-spacing-0 pr z-100>
-        <view sticky left-0 dib w-80rpx hp100 z-200>
-          <view h-64rpx w-80rpx sticky left-0 top-0 bg-white z-300 />
+        <view sticky left-0 dib w-40px hp100 z-200>
+          <view h-32px w-40px sticky left-0 top-0 bg-white z-300 />
           <view bg-#F3F6FF flex flex-y flex-ac>
-            <view v-for="item in hours24h" :key="`i${item}`" tc w-80rpx c-#8EA0B6 h-200rpx>
+            <view v-for="item in hours24h" :key="`i${item}`" tc w-40px c-#8EA0B6 h-100px>
               <text f12 lh-24rpx>
                 {{ item }}
               </text>
             </view>
           </view>
         </view>
-        <view dib hp100 bg-white pr z-150 flex-grow-1>
-          <view h-64rpx lh-64rpx bg-white sticky top-0 z-180 flex>
-            <view v-for="item in tableData" :key="item" flex-1>
+        <view dib hp100 pr z-150 flex-grow-1>
+          <view h-32px lh-32px sticky top-0 z-180 flex f12 c-#364250>
+            <view v-for="item in tableData" :key="item" bg-white tc flex-shrink-0 :style="{ flexBasis: `${multipleItemWidth}px` }">
               {{ item }}
             </view>
           </view>
-          <view h-4800rpx class="table-content" flex>
-            <view v-for="item in tableData" :key="`k${item}`" flex-1>
-              {{ item }}
+          <view h-2400px class="table-content" flex>
+            <view v-for="item in tableData" :key="`k${item}`" pr bg-white tc flex-shrink-0 :style="{ flexBasis: `${multipleItemWidth}px` }">
+              <!-- {{ item }} -->
+              <Grids96 />
+              <view class="booking" :style="{ width: `${multipleItemWidth - 10}px` }">
+                <view>王乐乐</view>
+                <view>基础护理</view>
+                <view>8:00-8:30</view>
+              </view>
             </view>
           </view>
         </view>
@@ -230,9 +247,15 @@ function createOrder() {}
 </template>
 
 <style lang='scss' scoped>
-.table-content {
-  border-top: 1px solid #e4e8ef;
-  border-bottom: 1px solid #e4e8ef;
+.booking {
+  text-align: left;
+  position: absolute;
+  height: 150px;
+  left: 0;
+  top: 0;
+  background-color: #ffcbe2;
+  padding: 6px;
+  border-radius: 4px;
 }
 .plus {
   position: fixed;

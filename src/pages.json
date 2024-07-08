@@ -64,6 +64,10 @@
       }
     },
     {
+      "path": "pages/business/book/Grids96",
+      "type": "page"
+    },
+    {
       "path": "pages/business/book/index",
       "type": "page",
       "layout": false,

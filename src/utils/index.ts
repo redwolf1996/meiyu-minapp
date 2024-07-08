@@ -9,6 +9,8 @@ export function getMenuButtonInfo() {
   const barHeight = menuButtonInfo.height + (menuButtonInfo.top - barTop) * 2
   const barWidth = menuButtonInfo.width
   const windowHeight = wx.getSystemInfoSync().windowHeight
+  const windowWidth = wx.getSystemInfoSync().windowWidth
+  const screenWidth = wx.getSystemInfoSync().screenWidth
   const restHeight = wx.getSystemInfoSync().windowHeight - barHeight - barTop - 52
 
   return {
@@ -17,6 +19,8 @@ export function getMenuButtonInfo() {
     barWidth,
     restHeight,
     windowHeight,
+    windowWidth,
+    screenWidth,
   }
 }
 

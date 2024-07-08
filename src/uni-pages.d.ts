@@ -13,6 +13,7 @@ interface NavigateToOptions {
        "/pages/business/billing/pay" |
        "/pages/business/book/add" |
        "/pages/business/book/detail" |
+       "/pages/business/book/Grids96" |
        "/pages/business/book/index" |
        "/pages/business/book/list" |
        "/pages/business/book/time" |
