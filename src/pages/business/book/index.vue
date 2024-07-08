@@ -112,6 +112,9 @@ function createOrder() {}
           </view>
           <view>
             <GridTagSelect v-model="val" :sources="sources" :columns="3" />
+            <MyCell label="服务时段">
+              <span f14 c-#3B3D3D>09:00-21:00</span>
+            </MyCell>
           </view>
         </view>
         <view bg-white px-32rpx py-25rpx rd-20rpx mb-24rpx>
