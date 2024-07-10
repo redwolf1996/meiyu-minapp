@@ -76,7 +76,6 @@ function createOrder() {}
 </script>
 
 <template>
-  <!-- 禁止滚动穿透 https://wot-design-uni.cn/component/popup.html -->
   <page-meta :page-style="`overflow:${visableSearch ? 'hidden' : 'visible'};`" />
   <view oa-y :style="{ height: `${windowHeight}px` }">
     <wd-popup
@@ -214,7 +213,10 @@ function createOrder() {}
         <view sticky left-0 dib w-40px hp100 z-200>
           <view h-32px w-40px sticky left-0 top-0 bg-white z-300 />
           <view bg-#F3F6FF flex flex-y flex-ac>
-            <view v-for="item in hours24h" :key="`i${item}`" tc w-40px c-#8EA0B6 h-100px>
+            <view
+              v-for="item in hours24h" :key="`i${item}`"
+              tc w-40px c-#8EA0B6 h-100px style="border-bottom: 1px solid transparent;"
+            >
               <text f12 lh-24rpx>
                 {{ item }}
               </text>
@@ -231,11 +233,11 @@ function createOrder() {}
             <view v-for="item in tableData" :key="`k${item}`" pr bg-white tc flex-shrink-0 :style="{ flexBasis: `${multipleItemWidth}px` }">
               <!-- {{ item }} -->
               <Grids96 />
-              <view class="booking" :style="{ width: `${multipleItemWidth - 10}px` }">
+              <!-- <view class="booking" :style="{ width: `${multipleItemWidth - 10}px` }">
                 <view>王乐乐</view>
                 <view>基础护理</view>
                 <view>8:00-8:30</view>
-              </view>
+              </view> -->
             </view>
           </view>
         </view>

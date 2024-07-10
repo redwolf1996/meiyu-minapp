@@ -15,7 +15,7 @@ interface NavigateToOptions {
        "/pages/business/book/detail" |
        "/pages/business/book/Grids96" |
        "/pages/business/book/index" |
-       "/pages/business/book/list" |
+       "/pages/business/book/List" |
        "/pages/business/book/time" |
        "/pages/business/booking/d2dTime" |
        "/pages/business/booking/index" |

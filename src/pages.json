@@ -77,11 +77,8 @@
       }
     },
     {
-      "path": "pages/business/book/list",
-      "type": "page",
-      "style": {
-        "navigationBarTitleText": "预约列表"
-      }
+      "path": "pages/business/book/List",
+      "type": "page"
     },
     {
       "path": "pages/business/book/time",
