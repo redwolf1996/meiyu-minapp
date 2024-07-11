@@ -12,7 +12,7 @@ import List from './List.vue'
 const { windowHeight, screenWidth } = getMenuButtonInfo()
 // const { startTimer } = usePolling()
 const dropMenu = ref()
-const mode = ref(0) // 0预约看板 1预约列表
+const mode = ref(1) // 0预约看板 1预约列表
 const visableSearch = ref(false)
 const headHeight = ref(0)
 const titleHeight = ref(0)
@@ -55,12 +55,12 @@ const multipleItemWidth = computed(() => {
 onMounted(() => {
   const theNode = uni.createSelectorQuery().select('#head')
   theNode.boundingClientRect((data: any) => {
-    headHeight.value = data.height
+    headHeight.value = data?.height
   }).exec()
 
   const theNode2 = uni.createSelectorQuery().select('#title')
   theNode2.boundingClientRect((data: any) => {
-    titleHeight.value = data.height
+    titleHeight.value = data?.height
   }).exec()
 })
 
@@ -193,7 +193,7 @@ function scrollView(e: any) {
         </template>
       </wd-navbar>
     </view>
-    <view v-show="mode === 0" id="head">
+    <view v-if="mode === 0" id="head">
       <wu-calendar
         color="#2F4BEC" :itemHeight="50" startWeek="mon"
         :fold="false" type="week" :insert="true" @change="calendarChange"
@@ -221,7 +221,7 @@ function scrollView(e: any) {
       </view>
     </view>
     <scroll-view
-      v-show="mode === 0"
+      v-if="mode === 0"
       :scroll-x="true"
       :scroll-y="true"
       :scroll-top="800"
@@ -270,7 +270,7 @@ function scrollView(e: any) {
         </view>
       </view>
     </scroll-view>
-    <List v-show="mode === 1" />
+    <List v-if="mode === 1" />
   </view>
 </template>
 
