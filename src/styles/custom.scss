@@ -30,7 +30,7 @@
   width: 76px;
   font-size: 14px;
   height: 32px;
-  line-height: 28px;
+  line-height: 29px;
   display: inline-block;
   border-radius: 2px;
   &.complete {
@@ -71,4 +71,12 @@
     color: #a6a6b0;
     background-color: #f5f5fa;
   }
+}
+
+button::after{
+  border: none !important;
+  content: '' !important;
+  width: 0 !important;
+  height: 0 !important;
+  transform: scale(0) !important;
 }
