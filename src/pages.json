@@ -174,7 +174,6 @@
     {
       "path": "pages/business/dashboard/index",
       "type": "page",
-      "layout": "home",
       "style": {
         "navigationBarTitleText": "工作台",
         "navigationStyle": "custom"
@@ -190,7 +189,6 @@
     {
       "path": "pages/business/dashboard/store",
       "type": "page",
-      "layout": "pure",
       "style": {
         "navigationBarTitleText": "店务管理"
       }

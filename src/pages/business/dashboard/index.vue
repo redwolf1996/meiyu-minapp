@@ -1,5 +1,4 @@
 <route lang="yaml">
-layout: home
 style:
   navigationBarTitleText: 工作台
   navigationStyle: custom

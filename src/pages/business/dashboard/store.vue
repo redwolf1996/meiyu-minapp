@@ -1,5 +1,4 @@
 <route lang="yaml">
-layout: pure
 style:
   navigationBarTitleText: 店务管理
 </route>

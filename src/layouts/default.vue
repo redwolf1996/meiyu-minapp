@@ -1,7 +1,3 @@
 <template>
-  <view>
-    <wd-toast />
-    <slot />
-    <wu-safe-bottom />
-  </view>
+  <slot />
 </template>
