@@ -247,11 +247,11 @@ function scrollView(e: any) {
             <view v-for="item in tableData" :key="`k${item}`" pr bg-white tc flex-shrink-0 :style="{ flexBasis: `${multipleItemWidth}px` }">
               <!-- {{ item }} -->
               <Grids96 />
-              <!-- <view class="booking" :style="{ width: `${multipleItemWidth - 10}px` }">
+              <view class="booking" :style="{ width: `${multipleItemWidth - 10}px` }">
                 <view>王乐乐</view>
                 <view>基础护理</view>
                 <view>8:00-8:30</view>
-              </view> -->
+              </view>
             </view>
           </view>
         </view>
