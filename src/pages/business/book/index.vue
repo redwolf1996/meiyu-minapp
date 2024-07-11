@@ -14,6 +14,7 @@ const dropMenu = ref()
 const mode = ref(0) // 0预约看板 1预约列表
 const visableSearch = ref(false)
 const headHeight = ref(0)
+const scrollTop = ref(800)
 const txt = ref('xxx')
 const val = ref()
 const sources: any = [
@@ -79,6 +80,10 @@ function showSearch() {
   visableSearch.value = true
 }
 function createOrder() {}
+
+function scrollView(e: any) {
+  scrollTop.value = e.detail.scrollTop
+}
 </script>
 
 <template>
@@ -211,16 +216,19 @@ function createOrder() {}
     <scroll-view
       :scroll-x="true"
       :scroll-y="true"
-      class="content pr" :style="{
+      :scroll-top="800"
+      class="content pr"
+      :style="{
         height: `${windowHeight - headHeight}px`,
-      }"
+      }" @scroll="scrollView"
     >
       <view flex word-spacing-0 pr z-100>
         <view sticky left-0 dib w-40px hp100 z-200>
           <view h-32px w-40px sticky left-0 top-0 bg-white z-300 />
           <view bg-#F3F6FF flex flex-y flex-ac>
             <view
-              v-for="item in hours24h" :key="`i${item}`"
+              v-for="(item, index) in hours24h" :key="`i${item}`"
+              :class="{ 'active-time': Math.floor((scrollTop + 200) / 100) === index }"
               tc w-40px c-#8EA0B6 h-100px style="border-bottom: 1px solid transparent;"
             >
               <text f12 lh-24rpx>
@@ -258,6 +266,9 @@ function createOrder() {}
 </template>
 
 <style lang='scss' scoped>
+.active-time {
+  color: #364250 !important;
+}
 .booking {
   text-align: left;
   position: absolute;
