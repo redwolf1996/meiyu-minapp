@@ -7,6 +7,7 @@ style:
 
 <script lang="ts" setup>
 import Grids96 from './Grids96.vue'
+import List from './List.vue'
 
 const { windowHeight, screenWidth } = getMenuButtonInfo()
 // const { startTimer } = usePolling()
@@ -14,6 +15,7 @@ const dropMenu = ref()
 const mode = ref(0) // 0预约看板 1预约列表
 const visableSearch = ref(false)
 const headHeight = ref(0)
+const titleHeight = ref(0)
 const scrollTop = ref(800)
 const txt = ref('xxx')
 const val = ref()
@@ -55,6 +57,11 @@ onMounted(() => {
   theNode.boundingClientRect((data: any) => {
     headHeight.value = data.height
   }).exec()
+
+  const theNode2 = uni.createSelectorQuery().select('#title')
+  theNode2.boundingClientRect((data: any) => {
+    titleHeight.value = data.height
+  }).exec()
 })
 
 onShow(() => {
@@ -88,7 +95,7 @@ function scrollView(e: any) {
 
 <template>
   <page-meta :page-style="`overflow:${visableSearch ? 'hidden' : 'visible'};`" />
-  <view oa-y :style="{ height: `${windowHeight}px` }">
+  <view :style="{ height: `${windowHeight}px` }">
     <wd-popup
       v-model="visableSearch" :z-index="999" lock-scroll :safe-area-inset-bottom="true" position="right"
       custom-style="height: 100vh;width: 80%;background: #F9F9F9;"
@@ -143,50 +150,50 @@ function scrollView(e: any) {
         <MyButton>确定</MyButton>
       </view>
     </wd-popup>
-    <view id="head">
-      <view>
-        <wd-navbar title="标题" :safeAreaInsetTop="true" @click-left="handleClickList">
-          <template #left>
-            <view transform-translate-y-4px>
-              <wd-img
-                v-if="mode === 1"
-                :width="20"
-                :height="20"
-                :src="`${IMG_BASE}/icon-funnel.png`"
-                @click="showSearch"
-              />
-            </view>
-          </template>
-          <template #title>
-            <wd-drop-menu>
-              <wd-drop-menu-item ref="dropMenu" :title="!mode ? '预约看版' : '预约列表'">
-                <view py-30rpx flex flex-cc gap-60rpx>
-                  <view class="pannel" :class="{ active: mode === 0 }" @click="selectMode(0)">
-                    <wd-img
-                      :width="32"
-                      :height="32"
-                      :src="`${IMG_BASE}/icon-kb${!mode ? '-act' : ''}.png`"
-                    />
-                    <text class="title">
-                      预约看板
-                    </text>
-                  </view>
-                  <view class="pannel" :class="{ active: mode === 1 }" @click="selectMode(1)">
-                    <wd-img
-                      :width="32"
-                      :height="32"
-                      :src="`${IMG_BASE}/icon-lb${mode ? '-act' : ''}.png`"
-                    />
-                    <text class="title">
-                      预约列表
-                    </text>
-                  </view>
+    <view id="title">
+      <wd-navbar title="标题" :safeAreaInsetTop="true" @click-left="handleClickList">
+        <template #left>
+          <view transform-translate-y-4px>
+            <wd-img
+              v-if="mode === 1"
+              :width="20"
+              :height="20"
+              :src="`${IMG_BASE}/icon-funnel.png`"
+              @click="showSearch"
+            />
+          </view>
+        </template>
+        <template #title>
+          <wd-drop-menu>
+            <wd-drop-menu-item ref="dropMenu" :title="!mode ? '预约看版' : '预约列表'">
+              <view py-30rpx flex flex-cc gap-60rpx>
+                <view class="pannel" :class="{ active: mode === 0 }" @click="selectMode(0)">
+                  <wd-img
+                    :width="32"
+                    :height="32"
+                    :src="`${IMG_BASE}/icon-kb${!mode ? '-act' : ''}.png`"
+                  />
+                  <text class="title">
+                    预约看板
+                  </text>
                 </view>
-              </wd-drop-menu-item>
-            </wd-drop-menu>
-          </template>
-        </wd-navbar>
-      </view>
+                <view class="pannel" :class="{ active: mode === 1 }" @click="selectMode(1)">
+                  <wd-img
+                    :width="32"
+                    :height="32"
+                    :src="`${IMG_BASE}/icon-lb${mode ? '-act' : ''}.png`"
+                  />
+                  <text class="title">
+                    预约列表
+                  </text>
+                </view>
+              </view>
+            </wd-drop-menu-item>
+          </wd-drop-menu>
+        </template>
+      </wd-navbar>
+    </view>
+    <view v-show="mode === 0" id="head">
       <wu-calendar
         color="#2F4BEC" :itemHeight="50" startWeek="mon"
         :fold="false" type="week" :insert="true" @change="calendarChange"
@@ -214,12 +221,13 @@ function scrollView(e: any) {
       </view>
     </view>
     <scroll-view
+      v-show="mode === 0"
       :scroll-x="true"
       :scroll-y="true"
       :scroll-top="800"
       class="content pr"
       :style="{
-        height: `${windowHeight - headHeight}px`,
+        height: `${windowHeight - headHeight - titleHeight}px`,
       }" @scroll="scrollView"
     >
       <view flex word-spacing-0 pr z-100>
@@ -262,6 +270,7 @@ function scrollView(e: any) {
         </view>
       </view>
     </scroll-view>
+    <List v-show="mode === 1" />
   </view>
 </template>
 

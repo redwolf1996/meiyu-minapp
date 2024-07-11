@@ -1,8 +1,6 @@
 <template>
   <view class="container">
-    <view v-for="item in 96" :key="`grid${item}`" class="item">
-      <!-- {{ item }} -->
-    </view>
+    <view v-for="item in 96" :key="`grid${item}`" class="item" />
   </view>
 </template>
 
