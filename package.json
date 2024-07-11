@@ -4,6 +4,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "uni -p mp-weixin",
+    "dev-tools": "uni -p mp-weixin --devtools",
     "build": "uni build -p mp-weixin",
     "dev:h5": "uni",
     "build:h5": "uni build",
