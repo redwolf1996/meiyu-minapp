@@ -9,7 +9,7 @@ style:
 import Grids96 from './Grids96.vue'
 
 const { windowHeight, screenWidth } = getMenuButtonInfo()
-const { startTimer, stopTimer } = usePolling()
+const { startTimer } = usePolling()
 const dropMenu = ref()
 const mode = ref(0) // 0预约看板 1预约列表
 const visableSearch = ref(false)
@@ -57,17 +57,7 @@ onMounted(() => {
 })
 
 onShow(() => {
-  startTimer(test1)
 })
-
-onHide(() => {
-  console.log('onHide')
-  stopTimer()
-})
-
-function test() {
-  console.log('onMounted')
-}
 
 function test1() {
   console.log('onShow')

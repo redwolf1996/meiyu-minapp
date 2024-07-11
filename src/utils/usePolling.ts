@@ -18,6 +18,10 @@ export function usePolling() {
     }, delay)
   }
 
+  onHide(() => {
+    stopTimer()
+  })
+
   return {
     timer,
     startTimer,
