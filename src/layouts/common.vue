@@ -1,4 +1,5 @@
 <template>
-  <slot />
   <wd-toast />
+  <slot />
+  <wu-safe-bottom />
 </template>
