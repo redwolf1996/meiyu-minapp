@@ -1,4 +1,3 @@
 <template>
   <slot />
-  <wd-toast />
 </template>
