@@ -7,5 +7,5 @@ onHide(() => {})
 </script>
 
 <style lang="scss">
-@import './custom.scss';
+@import './styles/index.scss';
 </style>
