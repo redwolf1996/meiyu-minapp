@@ -1,5 +1,5 @@
 export function usePolling() {
-  const timer: any = ref(null)
+  const timer = ref<number>()
 
   function startTimer(func: Function, delay: number = 1000) {
     stopTimer()
@@ -8,7 +8,7 @@ export function usePolling() {
 
   function stopTimer() {
     clearTimeout(timer.value)
-    timer.value = null
+    timer.value = undefined
   }
 
   function myInterval(func: Function, delay: number) {

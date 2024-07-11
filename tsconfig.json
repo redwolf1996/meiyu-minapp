@@ -16,6 +16,9 @@
       "wot-design-uni/global.d.ts"
     ],
     "noImplicitAny": false,
+    "noImplicitThis": true,
+    "importHelpers": true,
+    "newLine": "LF",
     "sourceMap": true
   },
   "vueCompilerOptions": {
