@@ -8,14 +8,14 @@ style:
 <script lang="ts" setup>
 import Grids96 from './Grids96.vue'
 
-const { windowHeight, windowWidth, screenWidth } = getMenuButtonInfo()
+const { windowHeight, screenWidth } = getMenuButtonInfo()
+const { startTimer, stopTimer } = usePolling()
 const dropMenu = ref()
 const mode = ref(0) // 0预约看板 1预约列表
 const visableSearch = ref(false)
 const headHeight = ref(0)
 const txt = ref('xxx')
 const val = ref()
-console.log(windowWidth, screenWidth)
 const sources: any = [
   { label: '全部', value: 1, isActive: true },
   { label: '今天', value: 2, isActive: false },
@@ -55,6 +55,23 @@ onMounted(() => {
     headHeight.value = data.height
   }).exec()
 })
+
+onShow(() => {
+  startTimer(test1)
+})
+
+onHide(() => {
+  console.log('onHide')
+  stopTimer()
+})
+
+function test() {
+  console.log('onMounted')
+}
+
+function test1() {
+  console.log('onShow')
+}
 
 function handleClickList() {
 
