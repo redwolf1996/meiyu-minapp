@@ -12,7 +12,7 @@ import List from './List.vue'
 const { windowHeight, screenWidth } = getMenuButtonInfo()
 // const { startTimer } = usePolling()
 const dropMenu = ref()
-const mode = ref(1) // 0预约看板 1预约列表
+const mode = ref(0) // 0预约看板 1预约列表
 const visableSearch = ref(false)
 const headHeight = ref(0)
 const titleHeight = ref(0)
