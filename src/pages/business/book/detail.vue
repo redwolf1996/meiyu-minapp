@@ -1,4 +1,5 @@
 <route lang="yaml">
+layout: common
 style:
   navigationBarTitleText: 预约详情
 </route>
@@ -6,7 +7,7 @@ style:
 <script lang="ts" setup></script>
 
 <template>
-  <view px-32rpx py-16rpx>
+  <view p-32rpx>
     <view bg-white px-34rpx py-40rpx>
       <view flex flex-ac gap-20rpx>
         <wd-img
@@ -103,6 +104,83 @@ style:
       <view f14 tc mt-10px>
         核销码&#12288;1780012312312
       </view>
+    </view>
+    <view bg-white px-34rpx py-40rpx mt-16px>
+      <view flex flex-ac gap-20rpx>
+        <wd-img
+          :width="18"
+          :height="18"
+          :src="`${IMG_BASE}/icon-book.png`"
+        />
+        <text fs-34>
+          预约服务
+        </text>
+      </view>
+      <view f14 c-#1E1E1E mt-40rpx mb-20rpx>
+        元素美容美甲店
+      </view>
+      <view flex flex-ac gap-12px>
+        <wd-img
+          :width="72"
+          :height="72"
+          radius="10"
+          :src="`${IMG_BASE}/cat.png`"
+        />
+        <view flex-1 flex flex-y flex-bt h-72px>
+          <view>
+            <view c-#3B3D3D f14>
+              面部清洁补水
+            </view>
+            <view c-#7C7C7C fs-22 mt-8rpx>
+              服务时长：60分钟
+            </view>
+          </view>
+          <view flex flex-ac flex-bt>
+            <view c-#FF1919 f18 lh-18px>
+              ¥198
+            </view>
+            <view c-#7C7C7C f12 lh-12px>
+              x1
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view bg-white px-34rpx py-40rpx mt-16px>
+      <view flex flex-ac flex-bt>
+        <view flex flex-ac gap-20rpx>
+          <wd-img
+            :width="18"
+            :height="18"
+            :src="`${IMG_BASE}/icon-book.png`"
+          />
+          <text fs-34>
+            服务记录
+          </text>
+        </view>
+        <view class="my-status-tag to-service">
+          待服务
+        </view>
+      </view>
+      <view class="h-20px" />
+      <wd-steps :active="1" vertical>
+        <wd-step description="注册1个账号" />
+        <wd-step description="登录账号并绑定手机" />
+        <wd-step description="完善个人信息" />
+      </wd-steps>
+    </view>
+
+    <view flex flex-cc mt-16px px-60rpx>
+      <button class="my-btn cancel">
+        取消
+      </button>
+      <button class="my-btn complete">
+        修改
+      </button>
+      <button class="my-btn complete">
+        查看订单
+      </button>
     </view>
   </view>
 </template>
