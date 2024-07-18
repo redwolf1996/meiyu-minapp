@@ -148,7 +148,8 @@
       "path": "pages/business/customer/index",
       "type": "page",
       "style": {
-        "navigationBarTitleText": "客户"
+        "navigationBarTitleText": "客户",
+        "navigationBarBackgroundColor": "#ffffff"
       }
     },
     {
