@@ -4,10 +4,20 @@ style:
   navigationBarBackgroundColor: "#ffffff"
 </route>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+const filter = ref()
+const value1 = ref(0)
+const option1 = [
+  { label: '全部', value: 0 },
+  { label: '会员', value: 1 },
+  { label: '非会员', value: 2 },
+]
+
+function handleChange1() {}
+</script>
 
 <template>
-  <view py-28rpx px-32rpx>
+  <view py-12rpx px-32rpx>
     <view flex flex-bt flex-ac gap-32rpx>
       <view flex-1 pr>
         <input placeholder="搜索姓名/手机号" placeholder-class="cus-input" px-40px bg-#F2F3F5 h-36px lh-36px rd-4px type="text">
@@ -18,6 +28,12 @@ style:
         +
       </view>
     </view>
+    <wd-drop-menu>
+      <wd-drop-menu-item v-model="value1" :options="option1" @change="handleChange1" />
+      <wd-drop-menu-item ref="filter" title="筛选">
+        11111
+      </wd-drop-menu-item>
+    </wd-drop-menu>
   </view>
 </template>
 
