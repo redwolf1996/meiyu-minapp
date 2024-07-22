@@ -23,6 +23,14 @@ const sources2: any = [
   { label: '本月', value: 4, isActive: false },
   { label: '上月', value: 5, isActive: true },
 ]
+const sources3: any = [
+  { label: '折扣卡', value: 1, isActive: true },
+  { label: '充值卡', value: 2, isActive: false },
+  { label: '通卡', value: 3, isActive: true },
+  { label: '有限次卡', value: 4, isActive: false },
+  { label: '不限次卡', value: 5, isActive: true },
+]
+const show = ref(false)
 
 function handleChange1() {}
 </script>
@@ -83,7 +91,7 @@ function handleChange1() {}
               <label f12><radio style="transform:scale(0.7)" value="2" color="#1a66ff" />指定卡项</label>
               <label f12><radio style="transform:scale(0.7)" value="3" color="#1a66ff" />指定类型卡</label>
             </radio-group>
-            <MyCell label="请选择" noBorder>
+            <MyCell label="请选择" noBorder @click="show = true">
               <span f14 c-#3B3D3D>09:00-21:00</span>
             </MyCell>
             <view flex flex-wrap gap-20rpx>
@@ -95,6 +103,15 @@ function handleChange1() {}
               </view>
             </view>
           </view>
+
+          <wd-action-sheet v-model="show" title="标题" @close="show = false">
+            <view p-40rpx>
+              <GridTagSelect v-model="value1" :sources="sources3" :columns="3" />
+              <button class="my-btn theme" wp100 mt-30px>
+                确定
+              </button>
+            </view>
+          </wd-action-sheet>
 
           <view flex tc flex-cc mt-24rpx px-112rpx gap-40px>
             <button class="my-btn normal" w-220rpx>
