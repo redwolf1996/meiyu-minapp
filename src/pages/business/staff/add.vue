@@ -1,4 +1,5 @@
 <route lang="yaml">
+layout: common
 style:
   navigationBarTitleText: 添加员工
 </route>
@@ -104,6 +105,8 @@ const value = ref()
       </wd-button>
     </view>
   </wd-form>
+
+  <view h-50px />
 </template>
 
 <style>

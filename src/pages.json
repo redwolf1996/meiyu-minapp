@@ -133,6 +133,7 @@
     {
       "path": "pages/business/customer/add",
       "type": "page",
+      "layout": "common",
       "style": {
         "navigationBarTitleText": "添加客户"
       }
@@ -324,6 +325,7 @@
     {
       "path": "pages/business/staff/add",
       "type": "page",
+      "layout": "common",
       "style": {
         "navigationBarTitleText": "添加员工"
       }
