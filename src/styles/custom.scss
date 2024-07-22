@@ -45,6 +45,15 @@
     border: 1px solid #a6a6b0;
     color: #a6a6b0;
   }
+  &.normal{
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    color: #232220;
+  }
+  &.theme{
+    border: 1px solid #1A66FF;
+    color:#fff;
+    background-color: #1A66FF;
+  }
 }
 .my-status-tag {
   height: 32px;
