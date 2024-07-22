@@ -31,6 +31,7 @@ const sources3: any = [
   { label: '不限次卡', value: 5, isActive: true },
 ]
 const show = ref(false)
+const show2 = ref(false)
 
 function handleChange1() {}
 </script>
@@ -91,7 +92,7 @@ function handleChange1() {}
               <label f12><radio style="transform:scale(0.7)" value="2" color="#1a66ff" />指定卡项</label>
               <label f12><radio style="transform:scale(0.7)" value="3" color="#1a66ff" />指定类型卡</label>
             </radio-group>
-            <MyCell label="请选择" noBorder @click="show = true">
+            <MyCell label="请选择" noBorder @click="show2 = true">
               <span f14 c-#3B3D3D>09:00-21:00</span>
             </MyCell>
             <view flex flex-wrap gap-20rpx>
@@ -104,9 +105,73 @@ function handleChange1() {}
             </view>
           </view>
 
-          <wd-action-sheet v-model="show" title="标题" @close="show = false">
+          <wd-action-sheet v-model="show" title="选择卡类型" @close="show = false">
             <view p-40rpx>
               <GridTagSelect v-model="value1" :sources="sources3" :columns="3" />
+              <button class="my-btn theme" wp100 mt-30px>
+                确定
+              </button>
+            </view>
+          </wd-action-sheet>
+
+          <wd-action-sheet v-model="show2" title="选择卡项" @close="show = false">
+            <view p-40rpx>
+              <view class="my-item">
+                <wd-img
+                  :width="86"
+                  :height="75"
+                  :src="`${IMG_BASE}/img-cika.png`"
+                />
+                <view flex flex-y flex-bt gap-12rpx flex-1>
+                  <view flex flex-ac>
+                    <wd-img
+                      :width="16"
+                      :height="16"
+                      :src="`${IMG_BASE}/icon-star2.png`"
+                    />
+                    <text f12 pl-10rpx>
+                      30次
+                    </text>
+                  </view>
+                  <view flex flex-ac flex-bt>
+                    <text f16 fb>
+                      7980面部精雕30次
+                    </text>
+                    <radio style="transform:scale(0.7)" value="3" color="#1a66ff" />
+                  </view>
+                  <view f12 c-#9A9FA5>
+                    永久有效
+                  </view>
+                </view>
+              </view>
+              <view class="my-item">
+                <wd-img
+                  :width="86"
+                  :height="75"
+                  :src="`${IMG_BASE}/img-cika.png`"
+                />
+                <view flex flex-y flex-bt gap-12rpx flex-1>
+                  <view flex flex-ac>
+                    <wd-img
+                      :width="16"
+                      :height="16"
+                      :src="`${IMG_BASE}/icon-star2.png`"
+                    />
+                    <text f12 pl-10rpx>
+                      30次
+                    </text>
+                  </view>
+                  <view flex flex-ac flex-bt>
+                    <text f16 fb>
+                      7980面部精雕30次
+                    </text>
+                    <radio style="transform:scale(0.7)" value="3" color="#1a66ff" />
+                  </view>
+                  <view f12 c-#9A9FA5>
+                    永久有效
+                  </view>
+                </view>
+              </view>
               <button class="my-btn theme" wp100 mt-30px>
                 确定
               </button>
@@ -124,10 +189,141 @@ function handleChange1() {}
         </view>
       </wd-drop-menu-item>
     </wd-drop-menu>
+    <view py-8rpx>
+      <view px-40rpx py-26rpx bg-white rd-16rpx>
+        <view flex flex-ac gap-32rpx>
+          <wd-img
+            :round="true"
+            :width="48"
+            :height="48"
+            :src="`${IMG_BASE}/cat.png`"
+          />
+          <view>
+            <view flex flex-ac gap-4rpx>
+              <text f16>
+                Jane Cooper
+              </text>
+              <wd-img
+                :round="true"
+                :width="18"
+                :height="18"
+                :src="`${IMG_BASE}/icon-v1.png`"
+              />
+            </view>
+            <view c-#929292 f12 mt-10px>
+              138****6578
+            </view>
+          </view>
+        </view>
+        <view grid grid-cols-2 f12 mt-10px>
+          <view>
+            <text c-#929292>
+              余额：
+            </text>
+            <text c-#00BB00>
+              1200.00
+            </text>
+          </view>
+          <view>
+            <text c-#929292>
+              上次消费：
+            </text>
+            <text c-#00BB00>
+              2024.1.12
+            </text>
+          </view>
+          <view>
+            <text c-#929292>
+              手艺人：
+            </text>
+            <text c-#00BB00>
+              王诗晴
+            </text>
+          </view>
+          <view>
+            <text c-#929292>
+              营销顾问：
+            </text>
+            <text c-#00BB00>
+              张倩
+            </text>
+          </view>
+        </view>
+      </view>
+      <view px-40rpx py-26rpx bg-#F0F0F0 rd-16rpx>
+        <view flex flex-ac gap-32rpx>
+          <wd-img
+            :round="true"
+            :width="48"
+            :height="48"
+            :src="`${IMG_BASE}/cat.png`"
+          />
+          <view>
+            <view flex flex-ac gap-4rpx>
+              <text f16>
+                Jane Cooper
+              </text>
+              <wd-img
+                :round="true"
+                :width="18"
+                :height="18"
+                :src="`${IMG_BASE}/icon-v1.png`"
+              />
+            </view>
+            <view c-#929292 f12 mt-10px>
+              138****6578
+            </view>
+          </view>
+        </view>
+        <view grid grid-cols-2 f12 mt-10px>
+          <view>
+            <text c-#929292>
+              余额：
+            </text>
+            <text c-#00BB00>
+              1200.00
+            </text>
+          </view>
+          <view>
+            <text c-#929292>
+              上次消费：
+            </text>
+            <text c-#00BB00>
+              2024.1.12
+            </text>
+          </view>
+          <view>
+            <text c-#929292>
+              手艺人：
+            </text>
+            <text c-#00BB00>
+              王诗晴
+            </text>
+          </view>
+          <view>
+            <text c-#929292>
+              营销顾问：
+            </text>
+            <text c-#00BB00>
+              张倩
+            </text>
+          </view>
+        </view>
+      </view>
+    </view>
   </view>
 </template>
 
 <style lang='scss' scoped>
+.my-item {
+  border-bottom: 1px solid #efefef;
+  display: flex;
+  gap: 40rpx;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 24rpx;
+  margin-bottom: 24rpx;
+}
 label {
   padding: 0 !important;
 }
