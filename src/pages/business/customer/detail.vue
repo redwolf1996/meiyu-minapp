@@ -4,9 +4,22 @@ style:
 </route>
 
 <script lang="ts" setup>
-import List from '../book/List.vue';
+import List from '../book/List.vue'
 
-const tab = ref<number>(0)
+const showCard = ref(false)
+const cardValue = ref(1)
+const value = ref(0)
+const sources: any = [
+  { label: '充值', value: 1, isActive: false },
+]
+const sources3: any = [
+  { label: '折扣卡', value: 1, isActive: true },
+  { label: '充值卡', value: 2, isActive: false },
+  { label: '通卡', value: 3, isActive: true },
+  { label: '有限次卡', value: 4, isActive: false },
+  { label: '不限次卡', value: 5, isActive: true },
+]
+const tab = ref<number>(2)
 const tabs = [{
   label: '订单记录',
   value: 0,
@@ -103,7 +116,7 @@ const tabs = [{
   <!-- 内容区 -->
   <view>
     <!-- 订单记录 -->
-    <view v-if="tab === 0">
+    <template v-if="tab === 0">
       <view bg-white grid grid-cols-3 tc px-30px py-16px>
         <view>
           <view f14 mb10rpx>
@@ -196,22 +209,99 @@ const tabs = [{
           </view>
         </view>
       </view>
-    </view>
+    </template>
     <!-- 预约记录 -->
-    <view v-if="tab === 1">
+    <template v-if="tab === 1">
       <List :showTabs="false" />
-    </view>
+    </template>
     <!-- 会员档案 -->
-    <view v-if="tab === 2">
-      22
-    </view>
+    <template v-if="tab === 2">
+      <view p16px>
+        <view py20px px16px bg-white>
+          <view flex flex-ac flex-bt mb16px>
+            <view>基本档案</view>
+            <view flex flex-ac>
+              <text theme-color f14 lh-14px transform-translate-y--1px>
+                编辑
+              </text>
+              <wd-img
+                :width="16"
+                :height="16"
+                :src="`${IMG_BASE}/icon-arrow-right2.png`"
+              />
+            </view>
+          </view>
+          <view c-#434343 flex flex-ac flex-bt mb16px f14>
+            <view>姓名：</view>
+            <view>麦子欢</view>
+          </view>
+          <view c-#434343 flex flex-ac flex-bt mb16px f14>
+            <view>备注名：</view>
+            <view>麦子欢</view>
+          </view>
+          <view c-#434343 flex flex-ac flex-bt mb16px f14>
+            <view>手机号：</view>
+            <view>麦子欢</view>
+          </view>
+          <view c-#434343 flex flex-ac flex-bt mb16px f14>
+            <view>客户来源：</view>
+            <view>麦子欢</view>
+          </view>
+          <view c-#434343 flex flex-ac flex-bt mb16px f14>
+            <view>性别：</view>
+            <view>麦子欢</view>
+          </view>
+          <view c-#434343 flex flex-ac flex-bt mb16px f14>
+            <view>生日：</view>
+            <view>麦子欢</view>
+          </view>
+          <view c-#434343 flex flex-ac flex-bt mb16px f14>
+            <view>微信：</view>
+            <view>麦子欢</view>
+          </view>
+          <view c-#434343 flex flex-ac flex-bt mb16px f14>
+            <view>地址：</view>
+            <view>麦子欢</view>
+          </view>
+          <view c-#434343 flex flex-ac flex-bt mb16px f14>
+            <view>详细地址：</view>
+            <view>麦子欢</view>
+          </view>
+          <view c-#434343 flex flex-ac flex-bt mb16px f14>
+            <view>营销顾问：</view>
+            <view>麦子欢</view>
+          </view>
+          <view c-#434343 flex flex-ac flex-bt f14>
+            <view>客户备注：</view>
+            <view>麦子欢</view>
+          </view>
+        </view>
+      </view>
+    </template>
   </view>
   <view h-100px />
+
+  <wd-action-sheet v-model="showCard" title="选择开卡/充值类型" @close="showCard = false">
+    <view p-40rpx>
+      <view mb20px>
+        开卡
+      </view>
+      <GridTagSelect v-model="cardValue" :sources="sources3" :columns="3" />
+      <view class="h20px" />
+      <view mb20px>
+        充值
+      </view>
+      <GridTagSelect v-model="value" :sources="sources" :columns="3" />
+      <button class="my-btn theme" wp100 mt-30px>
+        确定
+      </button>
+    </view>
+  </wd-action-sheet>
 
   <view pf bottom-0 wp100 style="border-top: 1px solid #eee">
     <!-- <view h32rpx bg-#F5F5FA /> -->
     <view p-40rpx grid grid-cols-3 grid-gap-10px bg-white>
-      <view class="my-btn theme-out rd0">
+      <view class="my-btn theme-out rd0" @click="showCard = true">
         开卡充值
       </view>
       <view class="my-btn theme-out rd0">
@@ -223,6 +313,15 @@ const tabs = [{
     </view>
   </view>
 </template>
+
+<style>
+:deep(.wd-action-sheet__popup) {
+  z-index: 12000 !important;
+  box-shadow:
+    -1px -1px 16px rgba(0, 0, 0, 0.2),
+    4px 4px 8px rgba(0, 0, 0, 0.2) !important;
+}
+</style>
 
 <style lang='scss' scoped>
 .bs {
