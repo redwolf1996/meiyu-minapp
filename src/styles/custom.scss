@@ -31,8 +31,12 @@
   font-size: 14px;
   height: 32px;
   line-height: 29px;
-  display: inline-block;
   border-radius: 2px;
+  text-align: center;
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: 0;
+  margin-right: 0;
   &.complete {
     border: 1px solid #1a66ff;
     color: #1a66ff;
@@ -53,6 +57,14 @@
     border: 1px solid #1A66FF;
     color:#fff;
     background-color: #1A66FF;
+  }
+  &.theme-out{
+    border: 1px solid #1A66FF;
+    color:#1A66FF;
+    background-color: #fff;
+  }
+  &.rd0{
+    border-radius: 0;
   }
 }
 .my-status-tag {
