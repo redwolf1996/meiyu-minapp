@@ -17,8 +17,9 @@ const emits = defineEmits(['click'])
     :class="{ 'no-border': props.noBorder }"
     @click="emits('click', $event)"
   >
-    <view c-#3B3D3D fw-500 f14>
-      {{ props.label }}
+    <view c-#3B3D3D fw-500 f14 flex flex-ac gap8px>
+      <slot name="icon" />
+      <text>{{ props.label }}</text>
     </view>
     <view flex flex-ac gap-6px>
       <slot />
