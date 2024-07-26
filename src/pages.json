@@ -249,7 +249,7 @@
       "path": "pages/business/my/store",
       "type": "page",
       "style": {
-        "navigationBarTitleText": "店铺信息"
+        "navigationBarTitleText": "门店信息"
       }
     },
     {
