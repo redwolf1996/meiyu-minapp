@@ -68,6 +68,13 @@ const value = ref()
       <wd-textarea v-model="value" :auto-height="true" placeholderStyle="font-size: 14px;color:#bfbfbf;" :maxlength="100" show-word-limit :no-border="true" />
     </view>
   </view>
+  <view mx-40rpx mt-64rpx color-white>
+    <wd-button size="large" custom-class="theme-bg" block>
+      <view flex flex-cc>
+        <text>保存</text>
+      </view>
+    </wd-button>
+  </view>
   <view h50px />
 </template>
 
