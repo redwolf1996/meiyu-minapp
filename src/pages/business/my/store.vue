@@ -21,7 +21,7 @@ const value = ref()
     </view>
     <view flex flex-ac gap-6px>
       <wd-upload :limit="1" action="https://ftf.jd.com/api/uploadImg" />
-      <wd-icon name="arrow-right" size="16px" color="#bfbfbf" />
+      <!-- <wd-icon name="arrow-right" size="16px" color="#bfbfbf" /> -->
     </view>
   </view>
   <view h-12px />
@@ -45,8 +45,11 @@ const value = ref()
     <view c-#969699 f14 mb-12px pl20px>
       所在地区
     </view>
-    <view px40rpx py12px bg-white>
-      <wd-input v-model="value" :maxlength="20" show-word-limit :no-border="true" />
+    <view px40rpx py12px bg-white flex flex-ac flex-bt>
+      <text f14 c-#C9CDD4>
+        请选择省市区县、乡镇等
+      </text>
+      <wd-icon name="arrow-right" size="16px" color="#bfbfbf" />
     </view>
   </view>
   <view mb12px>
@@ -69,6 +72,9 @@ const value = ref()
 </template>
 
 <style lang='scss' scoped>
+:deep(.wd-textarea.is-no-border::after) {
+  display: none !important;
+}
 :deep(.wd-radio-group) {
   line-height: 32 !important;
 }
