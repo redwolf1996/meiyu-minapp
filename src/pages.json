@@ -275,6 +275,20 @@
       }
     },
     {
+      "path": "pages/business/my/qiwei",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "企业微信"
+      }
+    },
+    {
+      "path": "pages/business/my/service",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "联系客服"
+      }
+    },
+    {
       "path": "pages/business/my/settings",
       "type": "page",
       "style": {

@@ -43,6 +43,8 @@ interface NavigateToOptions {
        "/pages/business/my/invite" |
        "/pages/business/my/my-invite" |
        "/pages/business/my/protocal" |
+       "/pages/business/my/qiwei" |
+       "/pages/business/my/service" |
        "/pages/business/my/settings" |
        "/pages/business/my/store-info" |
        "/pages/business/my/store" |
