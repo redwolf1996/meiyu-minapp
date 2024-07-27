@@ -254,6 +254,13 @@
       }
     },
     {
+      "path": "pages/business/my/my-invite",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "我的邀请"
+      }
+    },
+    {
       "path": "pages/business/my/protocal",
       "type": "page",
       "style": {

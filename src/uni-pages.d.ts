@@ -40,6 +40,7 @@ interface NavigateToOptions {
        "/pages/business/msg/list" |
        "/pages/business/my/index" |
        "/pages/business/my/invite" |
+       "/pages/business/my/my-invite" |
        "/pages/business/my/protocal" |
        "/pages/business/my/settings" |
        "/pages/business/my/store-info" |
