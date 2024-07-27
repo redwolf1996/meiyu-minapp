@@ -42,6 +42,7 @@ interface NavigateToOptions {
        "/pages/business/my/index" |
        "/pages/business/my/invite" |
        "/pages/business/my/my-invite" |
+       "/pages/business/my/new-store" |
        "/pages/business/my/protocal" |
        "/pages/business/my/qiwei" |
        "/pages/business/my/service" |
