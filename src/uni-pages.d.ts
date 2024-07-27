@@ -38,6 +38,7 @@ interface NavigateToOptions {
        "/pages/business/msg/detail-expire" |
        "/pages/business/msg/detail-renew" |
        "/pages/business/msg/list" |
+       "/pages/business/my/about" |
        "/pages/business/my/index" |
        "/pages/business/my/invite" |
        "/pages/business/my/my-invite" |

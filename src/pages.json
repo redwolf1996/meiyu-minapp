@@ -239,6 +239,13 @@
       }
     },
     {
+      "path": "pages/business/my/about",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "关于我们"
+      }
+    },
+    {
       "path": "pages/business/my/index",
       "type": "page",
       "style": {
