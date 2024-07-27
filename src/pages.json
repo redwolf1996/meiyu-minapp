@@ -246,6 +246,28 @@
       }
     },
     {
+      "path": "pages/business/my/invite",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "邀请朋友",
+        "navigationBarBackgroundColor": "#fff9e6"
+      }
+    },
+    {
+      "path": "pages/business/my/protocal",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "隐私协议"
+      }
+    },
+    {
+      "path": "pages/business/my/settings",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "设置"
+      }
+    },
+    {
       "path": "pages/business/my/store",
       "type": "page",
       "style": {
