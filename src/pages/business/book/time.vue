@@ -52,6 +52,7 @@ function calendarChange() {
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 12px;
   }
 }
 .active-time {
