@@ -1,4 +1,5 @@
 <route lang="yaml">
+layout: common
 style:
   navigationBarTitleText: 预约时间
 </route>
@@ -34,6 +35,24 @@ function calendarChange() {
         </view>
       </template>
     </view>
+    <view tc mt20px>
+      <wd-img
+        :height="20"
+        mode="heightFix"
+        :src="`${IMG_BASE}/book-status.png`"
+      />
+    </view>
+    <view tc mt20px c-#FFAB2D f14>
+      已选：2023/11/11 16:00-16:40
+    </view>
+  </view>
+
+  <view mx-40rpx mt-48rpx color-white>
+    <wd-button size="large" custom-class="theme-bg" block>
+      <view flex flex-cc>
+        <text>保存</text>
+      </view>
+    </wd-button>
   </view>
 </template>
 

@@ -84,6 +84,7 @@
     {
       "path": "pages/business/book/time",
       "type": "page",
+      "layout": "common",
       "style": {
         "navigationBarTitleText": "预约时间"
       }
