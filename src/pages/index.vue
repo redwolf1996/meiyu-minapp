@@ -7,7 +7,7 @@ function doRequest() {
   })
 }
 function toDashboard() {
-  uni.navigateTo({ url: '/pages/dashboard/index' })
+  uni.navigateTo({ url: '/pages/business/dashboard/index' })
 }
 function setStore() {
   const s = useUserStore()
@@ -22,10 +22,16 @@ function toPagesA() {
 function toPagesB() {
   uni.navigateTo({ url: '/pagesB/index' })
 }
+function toLogin() {
+  uni.navigateTo({ url: '/pages/business/login/index' })
+}
 </script>
 
 <template>
   <view>
+    <wd-button @click="toLogin">
+      跳转到登录页
+    </wd-button>
     <wd-button @click="toDashboard">
       跳转到工作台
     </wd-button>
