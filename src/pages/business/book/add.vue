@@ -31,7 +31,7 @@ function toSelectStaff() {
     <view tc mt20px>
       选择手艺人
     </view>
-    <view>
+    <view mt10px>
       <view flex flex-ac flex-bt bg-white px40rpx py20rpx style="border-bottom: 1px solid #DFDFDF">
         <view>
           <view f14 c-#313131>
