@@ -16,9 +16,62 @@ const model = reactive<{
   value2: '',
   value3: '',
 })
+const visibleStaff = ref(true)
+
+function toSelectStaff() {
+  visibleStaff.value = true
+}
 </script>
 
 <template>
+  <wd-popup
+    v-model="visibleStaff" :z-index="999" lock-scroll :safe-area-inset-bottom="true" position="right"
+    custom-style="height: 100vh;width: 80%;background: #F9F9F9;"
+  >
+    <view tc mt20px>
+      选择手艺人
+    </view>
+    <view>
+      <view flex flex-ac flex-bt bg-white px40rpx py20rpx style="border-bottom: 1px solid #DFDFDF">
+        <view>
+          <view f14 c-#313131>
+            轻言轻语
+          </view>
+          <view f12 c-#777777 mt6px>
+            13299999999
+          </view>
+        </view>
+        <wd-img
+          :width="26"
+          :height="19"
+          :src="`${IMG_BASE}/icon-correct.png`"
+        />
+      </view>
+      <view flex flex-ac flex-bt bg-white px40rpx py20rpx style="border-bottom: 1px solid #DFDFDF">
+        <view>
+          <view f14 c-#313131>
+            轻言轻语
+          </view>
+          <view f12 c-#777777 mt6px>
+            13299999999
+          </view>
+        </view>
+        <wd-img
+          :width="26"
+          :height="19"
+          :src="`${IMG_BASE}/icon-correct.png`"
+        />
+      </view>
+    </view>
+
+    <view mx-40rpx mt-48rpx color-white pf bottom-40rpx>
+      <wd-button size="large" custom-class="theme-bg" block>
+        <view flex flex-cc>
+          <text>确定</text>
+        </view>
+      </wd-button>
+    </view>
+  </wd-popup>
   <wd-form ref="form" :model="model">
     <wd-cell-group :border="true">
       <wd-input
@@ -39,8 +92,13 @@ const model = reactive<{
       />
       <wd-picker v-model="value" :rules="[{ required: true, message: '请选择服务方式' }]" label="服务方式" align-right :columns="columns" />
       <wd-picker v-model="value" :rules="[{ required: true, message: '请选择服务时间' }]" label="服务时间" align-right :columns="columns" />
-      <wd-picker v-model="value" :rules="[{ required: true, message: '请选择手艺人' }]" label="手艺人" align-right :columns="columns" />
+      <!-- <wd-picker v-model="value" :rules="[{ required: true, message: '请选择手艺人' }]" label="手艺人" align-right :columns="columns" /> -->
     </wd-cell-group>
+    <MyCellGroup>
+      <MyCell label="手艺人" required noBorder borderTop @click="toSelectStaff">
+        <span f14 c-#B6BDBD pr4px>请选择手艺人</span>
+      </MyCell>
+    </MyCellGroup>
   </wd-form>
   <view>
     <view flex flex-ac flex-bt f12 px20px py12px>

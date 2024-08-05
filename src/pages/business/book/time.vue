@@ -50,7 +50,7 @@ function calendarChange() {
   <view mx-40rpx mt-48rpx color-white>
     <wd-button size="large" custom-class="theme-bg" block>
       <view flex flex-cc>
-        <text>保存</text>
+        <text>确定</text>
       </view>
     </wd-button>
   </view>

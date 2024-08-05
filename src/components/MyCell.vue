@@ -2,11 +2,14 @@
 const props = withDefaults(defineProps<{
   label: string
   noBorder?: boolean
+  borderTop?: boolean
   required?: boolean
 }>(), {
   label: '请输入标题',
   noBorder: false,
+  borderTop: false,
   required: false,
+
 })
 
 const emits = defineEmits(['click'])
@@ -14,9 +17,9 @@ const emits = defineEmits(['click'])
 
 <template>
   <view
-    py-28rpx
+    py-20rpx
     flex flex-bt flex-ac class="cell"
-    :class="{ 'no-border': props.noBorder }"
+    :class="{ 'no-border': props.noBorder, 'border-top': props.borderTop }"
     @click="emits('click', $event)"
   >
     <view c-#3B3D3D fw-500 f14 flex flex-ac gap8px>
@@ -44,6 +47,9 @@ const emits = defineEmits(['click'])
 }
 .cell {
   border-bottom: 1px solid #ebeef1;
+}
+.border-top {
+  border-top: 1px solid #ebeef1;
 }
 .no-border {
   border-bottom: 1px solid transparent;
