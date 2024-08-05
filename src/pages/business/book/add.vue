@@ -16,10 +16,31 @@ const model = reactive<{
   value2: '',
   value3: '',
 })
+const list = ref([
+  {
+    active: false,
+  },
+  {
+    active: false,
+  },
+  {
+    active: false,
+  },
+  {
+    active: false,
+  },
+])
 const visibleStaff = ref(true)
 
 function toSelectStaff() {
   visibleStaff.value = true
+}
+
+function clickItem(item: any) {
+  list.value.forEach((val: any) => {
+    val.active = false
+  })
+  item.active = !item.active
 }
 </script>
 
@@ -32,7 +53,23 @@ function toSelectStaff() {
       选择手艺人
     </view>
     <view mt10px>
-      <view flex flex-ac flex-bt bg-white px40rpx py20rpx style="border-bottom: 1px solid #DFDFDF">
+      <view v-for="(item, index) in list" :key="`sd-${index}`" flex flex-ac flex-bt bg-white px40rpx py20rpx style="border-bottom: 1px solid #DFDFDF" @click="clickItem(item)">
+        <view>
+          <view f14 c-#313131>
+            轻言轻语
+          </view>
+          <view f12 c-#777777 mt6px>
+            13299999999
+          </view>
+        </view>
+        <wd-img
+          v-if="item.active"
+          :width="26"
+          :height="19"
+          :src="`${IMG_BASE}/icon-correct.png`"
+        />
+      </view>
+      <!-- <view flex flex-ac flex-bt bg-white px40rpx py20rpx style="border-bottom: 1px solid #DFDFDF">
         <view>
           <view f14 c-#313131>
             轻言轻语
@@ -46,22 +83,7 @@ function toSelectStaff() {
           :height="19"
           :src="`${IMG_BASE}/icon-correct.png`"
         />
-      </view>
-      <view flex flex-ac flex-bt bg-white px40rpx py20rpx style="border-bottom: 1px solid #DFDFDF">
-        <view>
-          <view f14 c-#313131>
-            轻言轻语
-          </view>
-          <view f12 c-#777777 mt6px>
-            13299999999
-          </view>
-        </view>
-        <wd-img
-          :width="26"
-          :height="19"
-          :src="`${IMG_BASE}/icon-correct.png`"
-        />
-      </view>
+      </view> -->
     </view>
 
     <view mx-40rpx mt-48rpx color-white pf bottom-40rpx>
