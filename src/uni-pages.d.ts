@@ -52,6 +52,8 @@ interface NavigateToOptions {
        "/pages/business/my/store" |
        "/pages/business/order/detail" |
        "/pages/business/order/index" |
+       "/pages/business/order/refund-detail" |
+       "/pages/business/order/refund" |
        "/pages/business/product/add" |
        "/pages/business/product/cat" |
        "/pages/business/product/list" |

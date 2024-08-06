@@ -342,6 +342,20 @@
       }
     },
     {
+      "path": "pages/business/order/refund-detail",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "退款详情"
+      }
+    },
+    {
+      "path": "pages/business/order/refund",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "主动退款"
+      }
+    },
+    {
       "path": "pages/business/product/add",
       "type": "page",
       "style": {
