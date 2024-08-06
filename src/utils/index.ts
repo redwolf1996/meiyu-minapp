@@ -46,3 +46,7 @@ export function get24HoursHalf() {
   }
   return times
 }
+
+export function safeBottom() {
+  return uni.getSystemInfoSync().safeAreaInsets?.bottom
+}
