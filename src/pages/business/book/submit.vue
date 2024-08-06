@@ -134,7 +134,7 @@ style:
     </view>
   </view>
 
-  <view :class="[safeBottom() ? 'py20px' : 'py10px']" bg-white px20px py10px flex flex-bt flex-ac pf wp100 bottom-0px>
+  <view :class="[safeBottom() ? 'py20px' : 'py10px']" bg-white px20px flex flex-bt flex-ac pf wp100 bottom-0px>
     <view f12 c-#1A66FF>
       明天10:30到店
     </view>
