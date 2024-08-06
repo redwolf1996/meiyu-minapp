@@ -5,12 +5,14 @@ const props = withDefaults(defineProps<{
   borderColor?: string
   borderWidth?: number
   rd?: string
+  width?: string
 }>(), {
   color: '#fff',
   bgColor: '#1A66FF',
   border: 'none',
   borderWidth: 1,
   rd: '0rpx',
+  width: '222rpx',
 })
 </script>
 
@@ -21,7 +23,7 @@ const props = withDefaults(defineProps<{
       backgroundColor: props.bgColor,
       border: `${$props.borderWidth}px solid ${$props.borderColor}`,
       borderRadius: props.rd,
-      width: '222rpx',
+      width: props.width,
       height: '72rpx',
       lineHeight: '72rpx',
       fontSize: '30rpx',

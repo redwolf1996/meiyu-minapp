@@ -52,6 +52,7 @@
     {
       "path": "pages/business/book/add",
       "type": "page",
+      "layout": false,
       "style": {
         "navigationBarTitleText": "添加预约"
       }
