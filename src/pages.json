@@ -83,6 +83,13 @@
       "type": "page"
     },
     {
+      "path": "pages/business/book/submit",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "预约服务"
+      }
+    },
+    {
       "path": "pages/business/book/time",
       "type": "page",
       "layout": "common",
