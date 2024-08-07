@@ -43,7 +43,7 @@ const items = [{
         <wd-img
           :width="40"
           :height="40"
-          radius="8"
+          :radius="8"
           :src="`${IMG_BASE}/cat.png`"
         />
         <view h40px flex flex-y flex-bt flex-1>
