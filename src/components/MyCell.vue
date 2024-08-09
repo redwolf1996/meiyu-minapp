@@ -4,12 +4,13 @@ const props = withDefaults(defineProps<{
   noBorder?: boolean
   borderTop?: boolean
   required?: boolean
+  showArrow?: boolean
 }>(), {
   label: '请输入标题',
   noBorder: false,
   borderTop: false,
   required: false,
-
+  showArrow: true,
 })
 
 const emits = defineEmits(['click'])
@@ -31,7 +32,7 @@ const emits = defineEmits(['click'])
     </view>
     <view flex flex-ac gap-6px>
       <slot />
-      <wd-icon name="arrow-right" size="16px" color="#bfbfbf" />
+      <wd-icon v-if="props.showArrow" name="arrow-right" size="16px" color="#bfbfbf" />
     </view>
   </view>
 </template>
