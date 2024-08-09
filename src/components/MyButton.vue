@@ -4,32 +4,43 @@ const props = withDefaults(defineProps<{
   bgColor?: string
   borderColor?: string
   borderWidth?: number
-  rd?: string
+  radius?: string
   width?: string
+  fontSize?: string
 }>(), {
   color: '#fff',
   bgColor: '#1A66FF',
   border: 'none',
   borderWidth: 1,
-  rd: '0rpx',
+  radius: '0rpx',
   width: '222rpx',
+  fontSize: '30rpx',
 })
 </script>
 
 <template>
   <view
+    class="btn"
     :style="{
       color: props.color,
       backgroundColor: props.bgColor,
       border: `${$props.borderWidth}px solid ${$props.borderColor}`,
-      borderRadius: props.rd,
+      borderRadius: props.radius,
       width: props.width,
       height: '72rpx',
       lineHeight: '72rpx',
-      fontSize: '30rpx',
+      fontSize: props.fontSize,
       textAlign: 'center',
     }"
   >
     <slot />
   </view>
 </template>
+
+<style scoped>
+.btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+</style>
