@@ -1,30 +1,40 @@
-<script lang="ts" setup>
-import api from '@/apis/index'
+<route lang="yaml">
+style:
+  navigationBarTitleText: "首页"
+</route>
 
-function doRequest() {
-  api.getStudioList({ id: 100, name: 'syx' }).then((res) => {
-    console.log(res)
-  })
-}
+<script lang="ts" setup>
+// import api from '@/api/index'
+
+// function doRequest() {
+//   api.getStudioList({ id: 100, name: 'syx' }).then((res) => {
+//     console.log(res)
+//   })
+// }
+
+const userInfo = useUserStore().userInfo
+console.log(`user:${userInfo.name}`)
+
 function toDashboard() {
   uni.navigateTo({ url: '/pages/business/dashboard/index' })
 }
-function setStore() {
-  const s = useUserStore()
-  s.setUserInfo({
-    name: 'syx',
-    token: Math.random(),
-  })
-}
-function toPagesA() {
-  uni.navigateTo({ url: '/pagesA/index' })
-}
-function toPagesB() {
-  uni.navigateTo({ url: '/pagesB/index' })
-}
+
 function toLogin() {
   uni.navigateTo({ url: '/pages/business/login/index' })
 }
+// function setStore() {
+//   const s = useUserStore()
+//   s.setUserInfo({
+//     name: 'syx',
+//     token: Math.random(),
+//   })
+// }
+// function toPagesA() {
+//   uni.navigateTo({ url: '/pagesA/index' })
+// }
+// function toPagesB() {
+//   uni.navigateTo({ url: '/pagesB/index' })
+// }
 </script>
 
 <template>
@@ -35,7 +45,7 @@ function toLogin() {
     <wd-button @click="toDashboard">
       跳转到工作台
     </wd-button>
-    <wd-button @click="doRequest">
+    <!-- <wd-button @click="doRequest">
       请求数据
     </wd-button>
     <wd-button @click="setStore">
@@ -46,11 +56,6 @@ function toLogin() {
     </wd-button>
     <wd-button @click="toPagesB">
       去分包B首页
-    </wd-button>
+    </wd-button> -->
   </view>
 </template>
-
-<route lang="yaml">
-style:
-  navigationBarTitleText: "首页"
-</route>

@@ -4,8 +4,6 @@ style:
 </route>
 
 <script lang="ts" setup>
-import api from '@/apis/index'
-
 const value1 = ref(1)
 const option1 = ref<Record<string, any>[]>([
   { label: '全部', value: 0 },

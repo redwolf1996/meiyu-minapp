@@ -4,7 +4,7 @@ export const useUserStore = defineStore(
   'user',
   () => {
     const userInfo = ref({
-      name: '',
+      name: null,
       token: null,
     })
 
@@ -13,7 +13,7 @@ export const useUserStore = defineStore(
     }
     function clearUserInfo() {
       userInfo.value = {
-        name: '',
+        name: null,
         token: null,
       }
     }
