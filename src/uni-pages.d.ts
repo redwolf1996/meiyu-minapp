@@ -36,6 +36,7 @@ interface NavigateToOptions {
        "/pages/business/dashboard/wallet" |
        "/pages/business/login/index" |
        "/pages/business/login/info" |
+       "/pages/business/login/role-select" |
        "/pages/business/msg/detail-expire" |
        "/pages/business/msg/detail-renew" |
        "/pages/business/msg/list" |

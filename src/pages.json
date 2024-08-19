@@ -227,6 +227,13 @@
       }
     },
     {
+      "path": "pages/business/login/role-select",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "角色选择"
+      }
+    },
+    {
       "path": "pages/business/msg/detail-expire",
       "type": "page",
       "style": {
