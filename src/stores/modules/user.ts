@@ -6,16 +6,16 @@ export const useUserStore = defineStore(
     const userInfo = ref({
       name: null,
       token: null,
+      isRegister: 0,
     })
 
     function setUserInfo(val: any) {
-      userInfo.value = val
+      userInfo.value = Object.assign(userInfo.value, val)
     }
     function clearUserInfo() {
-      userInfo.value = {
-        name: null,
+      userInfo.value = Object.assign(userInfo.value, {
         token: null,
-      }
+      })
     }
 
     return {

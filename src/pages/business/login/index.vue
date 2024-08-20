@@ -4,6 +4,8 @@ style:
 </route>
 
 <script lang="ts" setup>
+import api from '@/api/business'
+
 const checked = ref(false)
 const code = ref('')
 function select(e: UniHelper.CheckboxGroupOnChangeEvent) {
@@ -12,28 +14,18 @@ function select(e: UniHelper.CheckboxGroupOnChangeEvent) {
 
 function wxlogin() {
   wx.login({
-    success(res) {
+    async success(res) {
       code.value = res.code
       if (res.code) {
-        // api.kiviLogin({
-        //   code: res.code,
-        //   client_type: 1 // 管理端登录
-        // }).then((res) => {
-        //   store.setToken(res.api_token)
-        //   store.setUserInfo(res)
-        //   uni.setStorageSync('client_type', 1)
-        //   uni.setStorageSync('token', res.api_token)
-        //   uni.setStorageSync('userInfo', JSON.stringify(res))
-        //   if (res.user_id == 0) {
-        //     uni.navigateTo({
-        //       url: '/pages/business/login/login-info'
-        //     })
-        //   } else {
-        //     uni.switchTab({
-        //       url: '/pages/business/dashboard/index'
-        //     })
-        //   }
-        // })
+        const { token, isRegister } = (await api.login({ code: res.code })).data
+        const user = useUserStore()
+        user.setUserInfo({ token, isRegister })
+        if (isRegister) {
+          uni.switchTab({ url: '/pages/business/dashboard/index' })
+        }
+        else {
+          uni.navigateTo({ url: '/pages/business/login/role-select' })
+        }
       }
       else {
         uni.showToast({
@@ -69,9 +61,9 @@ function wxlogin() {
           <text>&nbsp;微信一键登录</text>
         </view>
       </wd-button>
-      <text c-#333333 :selectable="true" :user-select="true">
+      <!-- <text c-#333333 :selectable="true" :user-select="true">
         code：{{ code }}
-      </text>
+      </text> -->
     </view>
     <view mt120rpx>
       切换为用户端登录

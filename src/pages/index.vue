@@ -4,8 +4,6 @@ style:
 </route>
 
 <script lang="ts" setup>
-// import api from '@/api/index'
-
 // function doRequest() {
 //   api.getStudioList({ id: 100, name: 'syx' }).then((res) => {
 //     console.log(res)
@@ -13,10 +11,15 @@ style:
 // }
 
 const userInfo = useUserStore().userInfo
-console.log(`user:${userInfo.name}`)
+if (userInfo.token && userInfo.isRegister) {
+  toDashboard()
+}
+else {
+  toLogin()
+}
 
 function toDashboard() {
-  uni.navigateTo({ url: '/pages/business/dashboard/index' })
+  uni.switchTab({ url: '/pages/business/dashboard/index' })
 }
 
 function toLogin() {
@@ -39,12 +42,12 @@ function toLogin() {
 
 <template>
   <view>
-    <wd-button @click="toLogin">
+    <!-- <wd-button @click="toLogin">
       跳转到登录页
     </wd-button>
     <wd-button @click="toDashboard">
       跳转到工作台
-    </wd-button>
+    </wd-button> -->
     <!-- <wd-button @click="doRequest">
       请求数据
     </wd-button>

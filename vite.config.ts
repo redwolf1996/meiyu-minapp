@@ -1,14 +1,14 @@
 /// <reference types="vite/client" />
 
-import { defineConfig, loadEnv } from 'vite'
 import Uni from '@dcloudio/vite-plugin-uni'
+import UniHelperComponents from '@uni-helper/vite-plugin-uni-components'
+import UniHelperLayouts from '@uni-helper/vite-plugin-uni-layouts'
 import UniHelperManifest from '@uni-helper/vite-plugin-uni-manifest'
 import UniHelperPages from '@uni-helper/vite-plugin-uni-pages'
-import UniHelperLayouts from '@uni-helper/vite-plugin-uni-layouts'
-import UniHelperComponents from '@uni-helper/vite-plugin-uni-components'
-import AutoImport from 'unplugin-auto-import/vite'
-import { envParse } from 'vite-plugin-env-parse'
 import UnoCSS from 'unocss/vite'
+import AutoImport from 'unplugin-auto-import/vite'
+import { defineConfig } from 'vite'
+import { envParse } from 'vite-plugin-env-parse'
 
 // 注意插件的加载顺序，unihelper的相关插件要放在uni前面
 export default defineConfig({
