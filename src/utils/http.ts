@@ -8,6 +8,7 @@ const httpInterceptor = {
     options.header = {
       ...options?.header,
       client: 'minapp',
+      // 'X-API-TOKEN': userStore.userInfo.token,
     }
     const token = userStore.userInfo?.token
     if (token)

@@ -18,8 +18,7 @@ function wxlogin() {
       code.value = res.code
       if (res.code) {
         const { token, isRegister } = (await api.login({ code: res.code })).data
-        const userStore = useUserStore()
-        userStore.setUserInfo({ token, isRegister })
+        useUserStore().setUserInfo({ token, isRegister })
         if (isRegister) {
           uni.switchTab({ url: '/pages/business/dashboard/index' })
         }
@@ -61,13 +60,11 @@ function wxlogin() {
           <text>&nbsp;微信一键登录</text>
         </view>
       </wd-button>
-      <!-- <text c-#333333 :selectable="true" :user-select="true">
-        code：{{ code }}
-      </text> -->
     </view>
-    <view mt120rpx>
+    <!-- TODO:开发完用户端后打开 -->
+    <!-- <view mt120rpx>
       切换为用户端登录
-    </view>
+    </view> -->
     <view bottom-160rpx w-full color-gray-6 pf>
       <view flex flex-cc>
         <checkbox-group @change="select">
