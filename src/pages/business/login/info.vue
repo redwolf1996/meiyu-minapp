@@ -4,23 +4,33 @@ style:
 </route>
 
 <script lang="ts" setup>
-const model = reactive<{
-  value1: string
-  value2: string
-  value3: string
+const role = ref<'business' | 'staff'>('business')
+const form = reactive<{
+  userName: string
+  phone: string
+  othersInviteCode: string
 }>({
-  value1: '',
-  value2: '',
-  value3: '',
+  userName: '',
+  phone: '',
+  othersInviteCode: '',
+})
+
+onLoad((payload) => {
+  role.value = payload?.role
 })
 
 const formRef = ref()
 function handleSubmit() {
   formRef.value
     .validate()
-    .then(({ valid }) => {
-      if (valid)
-        toast().success('校验通过')
+    .then(async ({ valid }) => {
+      if (valid) {
+        const url = role.value === 'business' ? '/business/info' : '/business/staff-info'
+        const res = await request.post<{ token: string, isRegister: number }>(url, form)
+        const { token, isRegister } = res.data
+        useUserStore().setUserInfo({ token, isRegister })
+        uni.switchTab({ url: '/pages/business/dashboard/index' })
+      }
     })
     .catch((error) => {
       toast().error(error)
@@ -30,27 +40,30 @@ function handleSubmit() {
 
 <template>
   <view h-10px />
-  <wd-form ref="formRef" :model="model">
+  <wd-form ref="formRef" :model="form">
     <wd-cell-group :border="true">
       <wd-input
-        v-model="model.value1"
+        v-model="form.userName"
         label="姓名"
-        prop="value1"
+        prop="userName"
         placeholder="请输入"
         suffix-icon="arrow-right"
         :rules="[{ required: true, message: '请填写用户名' }]"
       />
       <wd-input
-        v-model="model.value2"
+        v-model="form.phone"
         label="手机号"
-        prop="value2"
+        prop="phone"
         placeholder="请输入"
         suffix-icon="arrow-right"
+        type="number"
+        :maxlength="11"
         :rules="[{ required: true, message: '请填写手机号' }]"
       />
       <wd-input
-        v-model="model.value2"
+        v-model="form.othersInviteCode"
         label="邀请码"
+        :maxlength="11"
         suffix-icon="arrow-right"
         placeholder="请输入"
       />

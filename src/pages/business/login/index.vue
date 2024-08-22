@@ -18,8 +18,8 @@ function wxlogin() {
       code.value = res.code
       if (res.code) {
         const { token, isRegister } = (await api.login({ code: res.code })).data
-        const user = useUserStore()
-        user.setUserInfo({ token, isRegister })
+        const userStore = useUserStore()
+        userStore.setUserInfo({ token, isRegister })
         if (isRegister) {
           uni.switchTab({ url: '/pages/business/dashboard/index' })
         }

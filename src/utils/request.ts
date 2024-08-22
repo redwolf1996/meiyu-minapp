@@ -1,7 +1,7 @@
 import qs from 'qs'
 import { http } from './http'
 
-const request = {
+export const request = {
   get<T>(url: string, params?: any) {
     return http<T>({
       method: 'GET',

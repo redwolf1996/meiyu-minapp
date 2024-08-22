@@ -3,7 +3,15 @@ style:
   navigationBarTitleText: 角色选择
 </route>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+function toBusinessRegister() {
+  uni.navigateTo({ url: '/pages/business/login/info?role=business' })
+}
+
+function toStaffRegister() {
+  uni.navigateTo({ url: '/pages/business/login/info?role=staff' })
+}
+</script>
 
 <template>
   <view p16px>
@@ -17,11 +25,13 @@ style:
         :height="184"
         width="50%"
         :src="`${IMG_BASE}/login_s2.png`"
+        @click="toBusinessRegister()"
       />
       <wd-img
         :height="184"
         width="50%"
         :src="`${IMG_BASE}/login_s3.png`"
+        @click="toStaffRegister()"
       />
     </view>
   </view>
