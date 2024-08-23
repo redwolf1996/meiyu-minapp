@@ -3,7 +3,11 @@ style:
   navigationBarTitleText: 我的
 </route>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+function toRenew() {
+  my.navigateTo('/pages/business/my/index')
+}
+</script>
 
 <template>
   <view p20px bg-white>
@@ -60,7 +64,7 @@ style:
           最低60/月，也可积分抵扣
         </view>
       </view>
-      <view class="xf">
+      <view class="xf" @click="toRenew">
         立即续费
       </view>
     </view>

@@ -50,3 +50,21 @@ export function get24HoursHalf() {
 export function safeBottom() {
   return uni.getSystemInfoSync().safeAreaInsets?.bottom
 }
+
+export const my = {
+  navigateTo(url: string) { // 保留当前页面，跳转到应用内的某个页面，使用uni.navigateBack可以返回到原页面。
+    uni.navigateTo({ url })
+  },
+  switchTab(url: string) { // 保留当前页面，跳转到应用内的某个页面，使用uni.navigateBack可以返回到原页面。
+    uni.switchTab({ url })
+  },
+  redirectTo(url: string) { // 关闭当前页面，跳转到应用内的某个页面。
+    uni.redirectTo({ url })
+  },
+  reLaunch(url: string) { // 关闭所有页面，打开到应用内的某个页面。
+    uni.reLaunch({ url })
+  },
+  navigateBack() { // 关闭当前页面，返回上一页面或多级页面。可通过 getCurrentPages() 获取当前的页面栈，决定需要返回几层。
+    uni.navigateBack()
+  },
+}
