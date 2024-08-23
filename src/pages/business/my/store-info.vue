@@ -1,7 +1,7 @@
 <route lang="yaml">
 layout: common
 style:
-  navigationBarTitleText: 门店信息
+  navigationBarTitleText: 续费
 </route>
 
 <script lang="ts" setup>
@@ -10,39 +10,55 @@ const sources = ref<any>([
   { isActive: false },
   { isActive: false },
 ])
+const vipList = ref<any>([])
+const curItem = ref()
 function clickItem(item: any, index: any) {
-  sources.value.forEach((e: any, i: number) => {
-    if (i !== index)
+  vipList.value.forEach((e: any, i: number) => {
+    if (i !== index) {
       e.isActive = false
-    else
+    }
+    else {
       e.isActive = true
+      curItem.value = item
+    }
   })
 }
+
+onMounted(async () => {
+  const res = await request.get<any>('/business/get-vip-list')
+  vipList.value = res.data.map((v) => {
+    return {
+      ...v,
+      isActive: false,
+    }
+  })
+})
 </script>
 
 <template>
   <view h15px />
   <view px20px py14px>
     <view
-      v-for="(item, index) in sources"
+      v-for="(item, index) in vipList"
       :key="`k-${index}`" class="item"
       :class="{ active: item.isActive }" @click="clickItem(item, index)"
     >
       <view flex flex-bt>
         <view flex flex-ac gap8px>
           <view f18 class="time">
-            一个月
+            {{ item.title ?? '--' }}
           </view>
           <view class="discount">
-            9折
+            {{ item.discount }}折
           </view>
         </view>
         <view f18 class="price">
-          ￥90
+          ￥{{ item.price }}
         </view>
       </view>
       <view class="scope" f12 mt8px>
-        3个月¥255，¥85/月
+        {{ item.subTitle }}
+        <!-- {{ item.duration }}个月¥{{ item.price2 }}， -->
       </view>
     </view>
     <view font-size-24px mt5px mb8px>
@@ -59,7 +75,8 @@ function clickItem(item: any, index: any) {
     <view flex flex-ac flex-bt>
       <view>
         <view f18 c-#FF6B03>
-          一个月&nbsp;￥80
+          <!-- 一个月&nbsp;￥80 -->
+          ￥{{ curItem?.price ?? '--' }}
         </view>
         <view>
           <radio style="transform:scale(0.7) translate(-10px, 0)" value="3" color="#1a66ff" />

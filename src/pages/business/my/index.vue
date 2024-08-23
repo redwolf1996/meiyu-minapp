@@ -64,7 +64,7 @@ function toRenew() {
           最低60/月，也可积分抵扣
         </view>
       </view>
-      <view class="xf" @click="toRenew">
+      <view class="xf" @click="toRenew()">
         立即续费
       </view>
     </view>
