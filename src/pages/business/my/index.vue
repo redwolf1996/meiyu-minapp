@@ -5,7 +5,7 @@ style:
 
 <script lang="ts" setup>
 function toRenew() {
-  my.navigateTo('/pages/business/my/index')
+  my.navigateTo('/pages/business/my/store-info')
 }
 </script>
 

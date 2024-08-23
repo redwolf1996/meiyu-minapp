@@ -5,11 +5,6 @@ style:
 </route>
 
 <script lang="ts" setup>
-const sources = ref<any>([
-  { isActive: false },
-  { isActive: false },
-  { isActive: false },
-])
 const vipList = ref<any>([])
 const curItem = ref()
 function clickItem(item: any, index: any) {
@@ -33,6 +28,27 @@ onMounted(async () => {
     }
   })
 })
+
+async function renew() {
+  const res = await request.post<any>('/business/renew', {
+    vipPackageId: curItem.value.id,
+    payType: 3,
+    amount: 0.01,
+  })
+  wx.requestPayment({
+    timeStamp: res.data.timestamp,
+    nonceStr: res.data.nonceStr,
+    package: res.data.packageVal,
+    signType: res.data.signType,
+    paySign: res.data.paySign,
+    success(res) {
+      console.log(res)
+    },
+    fail(res) {
+      console.log(res)
+    },
+  })
+}
 </script>
 
 <template>
@@ -85,7 +101,7 @@ onMounted(async () => {
           </text>
         </view>
       </view>
-      <view class="btn">
+      <view class="btn" @click="renew()">
         立即购买
       </view>
     </view>
