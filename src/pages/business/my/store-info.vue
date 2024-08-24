@@ -1,7 +1,7 @@
 <route lang="yaml">
 layout: common
 style:
-  navigationBarTitleText: 续费
+  navigationBarTitleText: 会员续费
 </route>
 
 <script lang="ts" setup>
@@ -21,12 +21,13 @@ function clickItem(item: any, index: any) {
 
 onMounted(async () => {
   const res = await request.get<any>('/business/get-vip-list')
-  vipList.value = res.data.map((v) => {
+  vipList.value = res.data.map((v, i) => {
     return {
       ...v,
-      isActive: false,
+      isActive: i === 0,
     }
   })
+  curItem.value = vipList.value[0]
 })
 
 async function renew() {
