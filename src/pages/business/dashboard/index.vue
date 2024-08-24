@@ -14,14 +14,17 @@ onLoad(() => {
   menuButtonWidth.value = menuButtonInfo.barWidth
   // #endif
 })
+const h = getMenuButtonInfo()
 </script>
 
 <template>
   <view px-24rpx>
-    <wd-navbar custom-class="ps" :safeAreaInsetTop="true" :bordered="false">
+    <wd-navbar :fixed="true" :safeAreaInsetTop="true" :bordered="false">
       <template #title>
-        <view flex flex-ac flex-bt text-left :style="{ width: `calc(100% - ${menuButtonWidth}px)` }">
-          <view>美婷美甲美睫</view>
+        <view flex flex-ac flex-bt :style="{ width: `calc(100% - ${menuButtonWidth}px)` }">
+          <view px-24rpx>
+            美婷美甲美睫
+          </view>
           <view flex flex-y flex-cc pr-20rpx pr>
             <wd-img
               :width="28"
@@ -41,6 +44,7 @@ onLoad(() => {
     </wd-navbar>
 
     <view class="conitaner" pr>
+      <view bd :style="{ height: `${h.barHeight + h.barTop}px` }" />
       <view
         p-40rpx color-white pr
         style="background-size: cover;"
@@ -230,10 +234,6 @@ onLoad(() => {
   padding: 32rpx 40rpx;
   border-radius: 26rpx;
   color: #fff;
-}
-.ps {
-  position: sticky;
-  top: 0;
 }
 .grid {
   display: grid;
