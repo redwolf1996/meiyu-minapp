@@ -465,8 +465,7 @@
       "path": "pages/business/init/steps/step1",
       "type": "page",
       "style": {
-        "navigationBarTitleText": "添加店铺信息",
-        "navigationStyle": "custom"
+        "navigationBarTitleText": "添加店铺信息"
       }
     },
     {

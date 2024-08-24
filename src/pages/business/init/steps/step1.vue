@@ -1,7 +1,7 @@
 <route lang="yaml">
 style:
   navigationBarTitleText: 添加店铺信息
-  navigationStyle: custom
+  # navigationStyle: custom
 </route>
 
 <script lang="ts" setup>
@@ -16,7 +16,7 @@ function handleChange(e: any) {
 </script>
 
 <template>
-  <StepNav :step="1" />
+  <!-- <StepNav :step="1" /> -->
   <view mt-10px tc fs-40>
     请填写您的门店信息
   </view>
@@ -110,13 +110,6 @@ function handleChange(e: any) {
     </wd-button>
   </view>
 
-  <view mx-40rpx mt-40rpx color-white>
-    <wd-button size="large" custom-class="theme-bg" block>
-      <view flex flex-cc>
-        <text>保存并下一步</text>
-      </view>
-    </wd-button>
-  </view>
   <view h-60rpx />
 </template>
 

@@ -9,12 +9,23 @@ import { getMenuButtonInfo } from '@/utils/index'
 
 const menuButtonWidth = ref(0)
 onLoad(() => {
+  initStore()
   // #ifdef MP-WEIXIN
   const menuButtonInfo = getMenuButtonInfo()
   menuButtonWidth.value = menuButtonInfo.barWidth
   // #endif
 })
 const h = getMenuButtonInfo()
+
+// 店铺初始化
+async function initStore() {
+  const res = await request.get<any>('/business/info')
+  if (res.data.orgInfo) { // 如果是商家
+    if (!res.data.orgInfo.storeCount) { // 如果还没有创建店铺
+      my.navigateTo('/pages/business/init/steps/step1')
+    }
+  }
+}
 </script>
 
 <template>
