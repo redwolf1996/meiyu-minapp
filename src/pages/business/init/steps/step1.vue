@@ -10,9 +10,20 @@ const value1 = ref()
 const fileList = ref<any[]>([
   { url: 'https://img12.360buyimg.com//n0/jfs/t1/29118/6/4823/55969/5c35c16bE7c262192/c9fdecec4b419355.jpg' },
 ])
+
 function handleChange(e: any) {
   console.log(e)
 }
+function select(e) {
+  console.log('选择文件：', e)
+}
+
+// 上传成功
+function	success(e) {
+  console.log(e)
+}
+
+const imageValue = ref([])
 </script>
 
 <template>
@@ -32,10 +43,19 @@ function handleChange(e: any) {
         建议上传门店logo
       </view>
     </view>
-    <view flex-ac flex>
-      <wd-upload :file-list="fileList" :limit="1" action="https://ftf.jd.com/api/uploadImg" @change="handleChange" />
-      <!-- <i i-material-symbols-light-chevron-right fn fs-40 color-999 style="transform: translateY(2rpx);" /> -->
-    </view>
+
+    <uni-file-picker
+      v-model="imageValue"
+      fileMediatype="image"
+      mode="grid"
+      @select="select"
+      @success="success"
+    />
+
+    <!-- <view flex-ac flex> -->
+    <!-- <wd-upload :file-list="fileList" :limit="1" action="host" @change="handleChange" /> -->
+    <!-- <i i-material-symbols-light-chevron-right fn fs-40 color-999 style="transform: translateY(2rpx);" /> -->
+    <!-- </view> -->
   </view>
 
   <view mt-40rpx>
