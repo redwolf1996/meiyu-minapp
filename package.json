@@ -30,6 +30,7 @@
     "@dcloudio/uni-mp-xhs": "3.0.0-alpha-4020620240822002",
     "@dcloudio/uni-quickapp-webview": "3.0.0-alpha-4020620240822002",
     "@dcloudio/uni-ui": "^1.5.5",
+    "@vant/area-data": "^1.5.2",
     "@vueuse/core": "^10.11.0",
     "dayjs": "^1.11.11",
     "lodash-es": "^4.17.21",

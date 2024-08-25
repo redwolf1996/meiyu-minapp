@@ -7,23 +7,27 @@ style:
 <script lang="ts" setup>
 const value = ref()
 const value1 = ref()
-const fileList = ref<any[]>([
-  { url: 'https://img12.360buyimg.com//n0/jfs/t1/29118/6/4823/55969/5c35c16bE7c262192/c9fdecec4b419355.jpg' },
-])
+const imageValue = ref([])
 
-function handleChange(e: any) {
-  console.log(e)
-}
+const form: any = reactive({
+  storeName: '',
+  logo: computed(() => imageValue.value[0]),
+  phone: '',
+  address: '',
+  desc: '',
+  province: '',
+  city: '',
+  county: '',
+})
+
 function select(e) {
   console.log('选择文件：', e)
 }
 
 // 上传成功
-function	success(e) {
+function success(e) {
   console.log(e)
 }
-
-const imageValue = ref([])
 </script>
 
 <template>
@@ -48,6 +52,7 @@ const imageValue = ref([])
       v-model="imageValue"
       fileMediatype="image"
       mode="grid"
+      :limit="1"
       @select="select"
       @success="success"
     />
@@ -134,6 +139,10 @@ const imageValue = ref([])
 </template>
 
 <style>
+:deep(.uni-file-picker__container) {
+  flex-direction: row-reverse;
+}
+
 :deep(.wd-upload__evoke) {
   margin-bottom: 0 !important;
 }
