@@ -5,10 +5,8 @@ style:
 </route>
 
 <script lang="ts" setup>
-const value = ref()
-const value1 = ref()
+const { colPickerData, findChildrenByCode } = useColPickerData()
 const imageValue = ref([])
-
 const form: any = reactive({
   storeName: '',
   logo: computed(() => imageValue.value[0]),
@@ -19,12 +17,39 @@ const form: any = reactive({
   city: '',
   county: '',
 })
+const value = ref<string[]>([])
+const area = ref<any[]>([
+  colPickerData.map((item) => {
+    return {
+      value: item.value,
+      label: item.text,
+    }
+  }),
+])
 
-function select(e) {
-  console.log('选择文件：', e)
+function columnChange({ selectedItem, resolve, finish }) {
+  const areaData = findChildrenByCode(colPickerData, selectedItem.value)
+  if (areaData && areaData.length) {
+    resolve(
+      areaData.map((item) => {
+        return {
+          value: item.value,
+          label: item.text,
+        }
+      }),
+    )
+  }
+  else {
+    finish()
+  }
 }
 
-// 上传成功
+function handleConfirm({ value }) {
+  form.province = value[0]
+  form.city = value[1]
+  form.county = value[2]
+}
+
 function success(e) {
   console.log(e)
 }
@@ -53,7 +78,6 @@ function success(e) {
       fileMediatype="image"
       mode="grid"
       :limit="1"
-      @select="select"
       @success="success"
     />
 
@@ -72,7 +96,7 @@ function success(e) {
     </view>
     <view bg-white px-40rpx py-24rpx>
       <wd-input
-        v-model="value"
+        v-model="form.storeName"
         :no-border="true"
         placeholderStyle="font-size: 14px;color:#C9CDD4;"
         placeholder="请填写门店名称" :maxlength="20" clearable show-word-limit
@@ -89,7 +113,7 @@ function success(e) {
     </view>
     <view bg-white px-40rpx py-24rpx>
       <wd-input
-        v-model="value1"
+        v-model="form.phone"
         :no-border="true"
         type="number"
         placeholderStyle="font-size: 14px;color:#C9CDD4;"
@@ -100,14 +124,24 @@ function success(e) {
 
   <view mt-40rpx>
     <view px-40rpx mb-20rpx color-999 f14>
-      <text>门店地址</text>
+      <text>所在地区</text>
+      <text color-red>
+        *
+      </text>
+    </view>
+    <wd-col-picker v-model="value" label="" :columns="area" :column-change="columnChange" @confirm="handleConfirm" />
+  </view>
+
+  <view mt-40rpx>
+    <view px-40rpx mb-20rpx color-999 f14>
+      <text>详细地址</text>
       <text color-red>
         *
       </text>
     </view>
     <view bg-white px-40rpx py-24rpx>
       <wd-textarea
-        v-model="value"
+        v-model="form.address"
         placeholderStyle="font-size: 14px;color:#C9CDD4;"
         placeholder="请填写门店地址" :maxlength="50" auto-height clearable show-word-limit
       />
@@ -120,7 +154,7 @@ function success(e) {
     </view>
     <view bg-white px-40rpx py-24rpx>
       <wd-textarea
-        v-model="value"
+        v-model="form.desc"
         placeholderStyle="font-size: 14px;color:#C9CDD4;"
         placeholder="请输入不少于10个字的描述" :maxlength="100" auto-height clearable show-word-limit
       />
