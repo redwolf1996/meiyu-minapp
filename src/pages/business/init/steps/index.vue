@@ -17,15 +17,6 @@ interface Step {
 const arr = ref<Step[]>([
   {
     step: '一',
-    name: '添加门店信息',
-    desc: '打造你的专属门店，方便客户找到你',
-    icon: 'i-material-symbols-edit-square',
-    color: 'color-#1a66ff',
-    status: 0,
-    path: '/pages/business/init/steps/step1',
-  },
-  {
-    step: '二',
     name: '添加服务',
     desc: '创建你的第一个服务，方便客户预约',
     icon: 'i-material-symbols-edit-square',
@@ -34,7 +25,7 @@ const arr = ref<Step[]>([
     path: '/pages/business/init/steps/step2',
   },
   {
-    step: '三',
+    step: '二',
     name: '添加卡项',
     desc: '创建你的第一个会员卡：折扣卡、充值卡或者次卡',
     icon: 'i-material-symbols-edit-square',
@@ -43,7 +34,7 @@ const arr = ref<Step[]>([
     path: '/pages/business/init/steps/step3',
   },
   {
-    step: '四',
+    step: '三',
     name: '添加产品',
     desc: '创建你的第一个产品，方便客户购买开单',
     icon: 'i-material-symbols-edit-square',
@@ -52,7 +43,7 @@ const arr = ref<Step[]>([
     path: '/pages/business/init/steps/step4',
   },
   {
-    step: '五',
+    step: '四',
     name: '添加员工',
     desc: '创建你的第一个手艺人，方便客户预约时指定手艺人',
     icon: 'i-material-symbols-edit-square',

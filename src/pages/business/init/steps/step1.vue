@@ -6,10 +6,10 @@ style:
 
 <script lang="ts" setup>
 const { colPickerData, findChildrenByCode } = useColPickerData()
-const imageValue = ref([])
+const imageValue = ref<any>([])
 const form: any = reactive({
   storeName: '',
-  logo: computed(() => imageValue.value[0]),
+  logo: computed(() => imageValue.value[0].url),
   phone: '',
   address: '',
   desc: '',
@@ -50,8 +50,9 @@ function handleConfirm({ value }) {
   form.county = value[2]
 }
 
-function success(e) {
-  console.log(e)
+async function save() {
+  await request.post<any>('/business/store', form)
+  my.redirectTo('/pages/business/init/steps/index')
 }
 </script>
 
@@ -78,7 +79,6 @@ function success(e) {
       fileMediatype="image"
       mode="grid"
       :limit="1"
-      @success="success"
     />
 
     <!-- <view flex-ac flex> -->
@@ -162,7 +162,7 @@ function success(e) {
   </view>
 
   <view mx-40rpx mt-64rpx color-white>
-    <wd-button size="large" custom-class="theme-bg" block>
+    <wd-button size="large" custom-class="theme-bg" block @click="save()">
       <view flex flex-cc>
         <text>保存</text>
       </view>
