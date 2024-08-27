@@ -8,6 +8,9 @@ style:
 import { getMenuButtonInfo } from '@/utils/index'
 
 const menuButtonWidth = ref(0)
+const h = getMenuButtonInfo()
+const userInfo = useUserStore().userInfo
+
 onLoad(() => {
   initStore()
   // #ifdef MP-WEIXIN
@@ -15,15 +18,18 @@ onLoad(() => {
   menuButtonWidth.value = menuButtonInfo.barWidth
   // #endif
 })
-const h = getMenuButtonInfo()
 
 // 店铺初始化
 async function initStore() {
   const res = await request.get<any>('/business/info')
-  if (res.data.orgInfo) { // 如果是商家
-    if (!res.data.orgInfo.storeCount) { // 如果还没有创建店铺
-      my.navigateTo('/pages/business/init/steps/step1')
-    }
+  useUserStore().setUserInfo(res.data)
+  const org = userInfo.orgInfo
+  if (!org) { // 如果店铺未创建
+    my.navigateTo('/pages/business/init/steps/step1')
+  }
+  else if (!org.cardCountStatus || !org.staffCountStatus
+    || !org.productCountStatus || !org.serviceCountStatus) { // 如果新手引导未完成
+    my.navigateTo('/pages/business/init/steps/index')
   }
 }
 </script>

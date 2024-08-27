@@ -1,15 +1,23 @@
+import { merge } from 'lodash-es'
 import { defineStore } from 'pinia'
 
 export const useUserStore = defineStore(
   'user',
   () => {
-    const userInfo = ref<UserInfo>({} as UserInfo)
+    const userInfo = ref<Partial<UserInfo>>({
+      orgInfo: {
+        cardCountStatus: 0, // 0未添加 1已添加 2稍后添加
+        productCountStatus: 0,
+        serviceCountStatus: 0,
+        staffCountStatus: 0,
+      },
+    })
 
     function setUserInfo(val: any) {
-      userInfo.value = Object.assign(userInfo.value, val)
+      userInfo.value = merge(userInfo.value, val)
     }
     function clearUserInfo() {
-      userInfo.value = Object.assign(userInfo.value, {
+      userInfo.value = merge(userInfo.value, {
         token: null,
       })
     }
@@ -48,7 +56,7 @@ interface UserInfo {
   lastStoreId: number
   loginDate: string
   orgId: number
-  orgInfo: OrgInfo
+  orgInfo: Partial<OrgInfo>
   othersInviteCode: string // 被邀请的邀请码
   phone: string
   status: 1 | 2 // 1正常 2禁用
@@ -59,15 +67,19 @@ interface UserInfo {
 
 interface OrgInfo {
   adminId: number // 店铺所有者id
-  cardCount: number // 卡数
+  cardCount: number // 卡项数
+  cardCountStatus: 0 | 1 | 2 // 0未添加 1已添加 2稍后添加
   createTime: string
   expiresTime: string
   historyIntegration: number // 累计积分
   id: number
   integration: number // 可用积分
   productCount: number // 产品数
+  productCountStatus: 0 | 1 | 2 // 0未添加 1已添加 2稍后添加
   serviceCount: number // 服务数
+  serviceCountStatus: 0 | 1 | 2 // 0未添加 1已添加 2稍后添加
   staffCount: number // 员工数
+  staffCountStatus: 0 | 1 | 2 // 0未添加 1已添加 2稍后添加
   storeCount: number // 店铺数
 }
 

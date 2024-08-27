@@ -26,7 +26,7 @@ uni.addInterceptor('request', httpInterceptor)
 uni.addInterceptor('uploadFile', httpInterceptor)
 
 interface Data<T> {
-  code: string
+  code: number
   msg: string
   data: T
 }
@@ -35,12 +35,15 @@ export function http<T>(options: UniApp.RequestOptions) {
     uni.request({
       ...options,
       success(res) {
-        const code = res.statusCode
-        if (code >= 200 && code < 300) { resolve(res.data as Data<T>) }
-        else if (code === 401) {
-          userStore.clearUserInfo()
-          uni.navigateTo({ url: '/pages/login' })
-          reject(res)
+        const statusCode = res.statusCode
+        if (statusCode >= 200 && statusCode < 300) {
+          const data = res.data as Data<T>
+          if (data.code === 20001) {
+            userStore.clearUserInfo()
+            uni.navigateTo({ url: '/pages/business/login/index' })
+            return reject(res)
+          }
+          resolve(data)
         }
         else {
           uni.showToast({
