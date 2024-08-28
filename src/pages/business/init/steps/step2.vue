@@ -70,7 +70,7 @@ function handleChange() {
 </script>
 
 <template>
-  <StepNav :step="2" />
+  <StepNav :step="1" />
   <view mt-10px tc fs-40>
     您可以尝试添加第一个服务
   </view>

@@ -60,7 +60,7 @@ function handleClose() {}
 </script>
 
 <template>
-  <StepNav :step="4" />
+  <StepNav :step="3" />
   <view mt-10px tc fs-40>
     您可以尝试添加第一个产品
   </view>

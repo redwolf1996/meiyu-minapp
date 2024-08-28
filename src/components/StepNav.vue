@@ -6,7 +6,13 @@ function handleClickLeft() {
 </script>
 
 <template>
-  <wd-navbar custom-class="custom-nav" :safeAreaInsetTop="true" placeholder left-arrow fixed pr @click-left="handleClickLeft">
+  <wd-navbar
+    placeholder left-arrow pr
+    custom-class="custom-nav"
+    :safeAreaInsetTop="true"
+    :fixed="true"
+    @click-left="handleClickLeft"
+  >
     <template #title>
       <StripDot :step="props.step" />
     </template>

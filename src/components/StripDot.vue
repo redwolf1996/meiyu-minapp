@@ -7,7 +7,7 @@ const step = toRef(props, 'step')
 
 <template>
   <view hp-100 flex gap-8px tc flex-cc abs-cc>
-    <view v-for="i in 5" :key="i" :class="[i === step ? 'strip' : 'dot']" />
+    <view v-for="i in 4" :key="i" :class="[i === step ? 'strip' : 'dot']" />
   </view>
 </template>
 

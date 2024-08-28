@@ -9,7 +9,7 @@ style:
 </script>
 
 <template>
-  <StepNav :step="3" />
+  <StepNav :step="2" />
   <view mt-10px tc fs-40>
     您可以尝试添加第一个会员卡项
   </view>

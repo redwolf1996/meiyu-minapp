@@ -4,7 +4,8 @@ style:
 </route>
 
 <script lang="ts" setup>
-type Status = 0 | 1 | 2 // 0 未添加 1 已添加 2 稍后添加
+type Status = ComputedRef<0 | 1 | 2 | undefined>// 0 未添加 1 已添加 2 稍后添加
+const orgInfo = useUserStore().userInfo.orgInfo
 interface Step {
   step: string
   name: string
@@ -21,7 +22,7 @@ const arr = ref<Step[]>([
     desc: '创建你的第一个服务，方便客户预约',
     icon: 'i-material-symbols-edit-square',
     color: 'color-#1a66ff',
-    status: 1,
+    status: computed(() => orgInfo?.serviceCountStatus),
     path: '/pages/business/init/steps/step2',
   },
   {
@@ -30,7 +31,7 @@ const arr = ref<Step[]>([
     desc: '创建你的第一个会员卡：折扣卡、充值卡或者次卡',
     icon: 'i-material-symbols-edit-square',
     color: 'color-#1a66ff',
-    status: 2,
+    status: computed(() => orgInfo?.cardCountStatus),
     path: '/pages/business/init/steps/step3',
   },
   {
@@ -39,7 +40,7 @@ const arr = ref<Step[]>([
     desc: '创建你的第一个产品，方便客户购买开单',
     icon: 'i-material-symbols-edit-square',
     color: 'color-#1a66ff',
-    status: 1,
+    status: computed(() => orgInfo?.productCountStatus),
     path: '/pages/business/init/steps/step4',
   },
   {
@@ -48,10 +49,14 @@ const arr = ref<Step[]>([
     desc: '创建你的第一个手艺人，方便客户预约时指定手艺人',
     icon: 'i-material-symbols-edit-square',
     color: 'color-#1a66ff',
-    status: 1,
+    status: computed(() => orgInfo?.staffCountStatus),
     path: '/pages/business/init/steps/step5',
   },
 ])
+
+function toAdd(path: string) {
+  my.navigateTo(path)
+}
 </script>
 
 <template>
@@ -66,8 +71,8 @@ const arr = ref<Step[]>([
       :height="16"
       :src="`${IMG_BASE}/decorator@4x.png`"
     />
-    <text fb fs-32>
-      &nbsp;&nbsp;完成以下5步，即可接单赚钱了&nbsp; &nbsp;
+    <text fs-32>
+      &nbsp;&nbsp;完成以下4步，即可接单赚钱了&nbsp; &nbsp;
     </text>
     <wd-img
       :width="16"
@@ -89,7 +94,7 @@ const arr = ref<Step[]>([
             </view>
           </view>
           <view flex tc flex-cc>
-            <view v-if="item.status === 0" pr-10rpx theme-color>
+            <view v-if="item.status === 0" pr-10rpx theme-color @click="toAdd(item.path)">
               去添加
             </view>
             <view v-if="item.status === 1" flex pr-10rpx color-#2ecc71 flex-cc>
