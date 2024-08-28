@@ -6,9 +6,7 @@ style:
 
 <script lang="ts" setup>
 const value = ref()
-const fileList = ref<any[]>([
-  { url: 'https://img12.360buyimg.com//n0/jfs/t1/29118/6/4823/55969/5c35c16bE7c262192/c9fdecec4b419355.jpg' },
-])
+const imageValue = ref<any>([])
 const columns = ref(['选项1', '选项2', '选项3', '选项4', '选项5', '选项6', '选项7'])
 const model = reactive<{
   value1: string
@@ -64,9 +62,6 @@ watchEffect(() => {
 //       toast().error(error)
 //     })
 // }
-
-function handleChange() {
-}
 </script>
 
 <template>
@@ -108,7 +103,13 @@ function handleChange() {
         <text>建议尺寸：800*800像素，最多上传5张</text>
       </view>
       <view flex-ac flex mt-20rpx>
-        <wd-upload :file-list="fileList" :limit="5" action="https://ftf.jd.com/api/uploadImg" @change="handleChange" />
+        <uni-file-picker
+          v-model="imageValue"
+          fileMediatype="image"
+          mode="grid"
+          :limit="5"
+        />
+        <!-- <wd-upload :file-list="fileList" :limit="5" action="https://ftf.jd.com/api/uploadImg" @change="handleChange" /> -->
       </view>
     </view>
 
@@ -126,7 +127,7 @@ function handleChange() {
         v-model="model.value2"
         label="促销价"
         prop="value23232"
-        placeholder="若不填写，客户则按原价购买"
+        placeholder="若不填，则客户按原价购买"
         suffix-icon="arrow-right"
       />
     </wd-cell-group>
@@ -146,7 +147,7 @@ function handleChange() {
     <view h-24rpx />
     <view bg-white px-40rpx py-24rpx>
       <view class="form-item-title required">
-        <text>网店展示{{ wd }}</text>
+        <text>网店展示</text>
       </view>
       <view h-28rpx />
       <GridTagSelect v-model="wd" :sources="sources" />
