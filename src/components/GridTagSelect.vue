@@ -1,13 +1,9 @@
 <script lang="ts" setup>
-type Mode = 'single' | 'multiple'
-interface Source {
-  label: string
-  value: number
-  isActive: boolean
-}
+import type { GrigSelectItem } from '@/types';
 
+type Mode = 'single' | 'multiple'
 const props = withDefaults(defineProps<{
-  sources: Source[] // 数据源列表
+  sources: GrigSelectItem[] // 数据源列表
   mode?: Mode // 单选还是多选
   columns?: number // 展示几列
 }>(), {
@@ -15,14 +11,14 @@ const props = withDefaults(defineProps<{
   columns: 2,
 })
 const model = defineModel()
-const sources = ref<Source[]>(props.sources)
+const sources = ref<GrigSelectItem[]>(props.sources)
 const columns = ref(props.columns)
 const mode = ref<Mode>(props.mode)
 
-function onClickTag(item: Source, index: number) {
+function onClickTag(item: GrigSelectItem, index: number) {
   item.isActive = !item.isActive
   if (mode.value === 'single') {
-    sources.value.forEach((e: Source, i: number) => {
+    sources.value.forEach((e: GrigSelectItem, i: number) => {
       if (i !== index) {
         model.value = null
         e.isActive = false
@@ -34,8 +30,8 @@ function onClickTag(item: Source, index: number) {
   }
   else {
     model.value = sources.value
-      .filter((e: Source) => e.isActive)
-      .map((e: Source) => e.value)
+      .filter((e: GrigSelectItem) => e.isActive)
+      .map((e: GrigSelectItem) => e.value)
   }
 }
 </script>

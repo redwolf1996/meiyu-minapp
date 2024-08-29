@@ -27,6 +27,7 @@ export default antfu(
       'style/semi': ['error', 'never'],
       'no-console': ['off'],
       'eqeqeq': ['off'],
+      'import/order': ['off'],
     },
   },
 )

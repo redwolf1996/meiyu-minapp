@@ -1,4 +1,7 @@
 <script lang="ts" setup>
+import type { GrigSelectItem } from '@/types';
+import type { FormService } from './types';
+
 const props = withDefaults(defineProps<{
   showSkip?: boolean // 是否展示跳过按钮（引导页需要）
 }>(), {
@@ -18,10 +21,29 @@ const model = reactive<{
   value3: '',
 })
 
-const form = ref()
+const form = ref<FormService>(
+  {
+    storeId: 0,
+    name: '服务3',
+    categoryId: 5,
+    duration: 60,
+    durationUnit: 'minute',
+    imgs: [
+      'http://dummyimage.com/400x400',
+    ],
+    price: 23,
+    price2: 4,
+    desc: 'eiusmod enim',
+    isShow: 1,
+    payType: 1,
+    serviceColor: '#555555',
+    isToStore: 1,
+    isToDoor: 1,
+  },
+)
 const wd = ref(0)
 
-const sources: any = [
+const sources: GrigSelectItem[] = [
   {
     label: '展示',
     value: 1,
@@ -34,7 +56,20 @@ const sources: any = [
   },
 ]
 
-const sources2: any = [
+const sources3: GrigSelectItem[] = [
+  {
+    label: '上门服务',
+    value: 1,
+    isActive: false,
+  },
+  {
+    label: '到店服务',
+    value: 0,
+    isActive: false,
+  },
+]
+
+const sources2: GrigSelectItem[] = [
   {
     label: '付全款',
     value: 1,
@@ -116,7 +151,7 @@ watchEffect(() => {
       />
       <wd-input
         v-model="model.value2"
-        label="促销价"
+        label="优惠价"
         prop="value23232"
         placeholder="若不填，则客户按原价购买"
         suffix-icon="arrow-right"
@@ -147,6 +182,15 @@ watchEffect(() => {
     <view h-24rpx />
     <view bg-white px-40rpx py-24rpx>
       <view class="form-item-title required">
+        <text>服务类型</text>
+      </view>
+      <view h-28rpx />
+      <GridTagSelect v-model="wd" :sources="sources3" />
+    </view>
+
+    <view h-24rpx />
+    <view bg-white px-40rpx py-24rpx>
+      <view class="form-item-title required">
         <text>预约支付</text>
       </view>
       <view f12 color-999>
@@ -154,6 +198,18 @@ watchEffect(() => {
       </view>
       <view h-28rpx />
       <GridTagSelect v-model="wd" :sources="sources2" />
+    </view>
+
+    <view h-24rpx />
+    <view bg-white px-40rpx py-24rpx>
+      <view class="form-item-title required">
+        <text>选择颜色</text>
+      </view>
+      <view f12 color-999>
+        <text>日历中显示预约时使用，便于区分预约的服务</text>
+      </view>
+      <view h-28rpx />
+      <div class="big-color" />
     </view>
   </wd-form>
 
@@ -176,6 +232,11 @@ watchEffect(() => {
 </template>
 
 <style lang='scss' scoped>
+.big-color {
+  width: 64px;
+  height: 64px;
+  background-color: v-bind(columns);
+}
 .grid-tag-select {
   display: grid;
   grid-gap: 20rpx;
@@ -192,3 +253,4 @@ watchEffect(() => {
   margin: 0 0 0 0 !important;
 }
 </style>
+import type { GrigSelectItem } from '@/types';
