@@ -40,7 +40,7 @@ export default defineConfig({
         },
       ],
       dts: 'src/auto-imports.d.ts',
-      dirs: ['src/composables', 'src/stores', 'src/utils', 'src/components/**/*', 'src/hooks/**', 'src/types'],
+      dirs: ['src/composables', 'src/stores', 'src/utils', 'src/components/**/*', 'src/hooks/**'],
       vueTemplate: true,
     }),
     UnoCSS(),
