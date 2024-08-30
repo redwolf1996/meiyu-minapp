@@ -253,4 +253,3 @@ watchEffect(() => {
   margin: 0 0 0 0 !important;
 }
 </style>
-import type { GrigSelectItem } from '@/types';

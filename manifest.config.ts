@@ -11,6 +11,7 @@ export default defineManifestConfig({
     appid: 'wx208ed5b60f57b9bc',
     setting: { urlCheck: false },
     usingComponents: true,
+    lazyCodeLoading: 'requiredComponents',
   },
   'uniStatistics': {
     enable: false,

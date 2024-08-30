@@ -31,7 +31,6 @@ export default defineConfig({
     AutoImport({ // https://github.com/antfu/unplugin-auto-import
       imports: [
         'vue',
-        '@vueuse/core',
         'uni-app',
         {
           'wot-design-uni': [
