@@ -20,3 +20,7 @@ function toLogin() {
   uni.navigateTo({ url: '/pagesA/login/index' })
 }
 </script>
+
+<template>
+  <view />
+</template>
