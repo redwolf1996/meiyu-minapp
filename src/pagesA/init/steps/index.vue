@@ -23,7 +23,7 @@ const arr = ref<Step[]>([
     icon: 'i-material-symbols-edit-square',
     color: 'color-#1a66ff',
     status: computed(() => orgInfo?.serviceCountStatus),
-    path: '/pages/business/init/steps/step2',
+    path: '/pagesA/init/steps/step2',
   },
   {
     step: '二',
@@ -32,7 +32,7 @@ const arr = ref<Step[]>([
     icon: 'i-material-symbols-edit-square',
     color: 'color-#1a66ff',
     status: computed(() => orgInfo?.cardCountStatus),
-    path: '/pages/business/init/steps/step3',
+    path: '/pagesA/init/steps/step3',
   },
   {
     step: '三',
@@ -41,7 +41,7 @@ const arr = ref<Step[]>([
     icon: 'i-material-symbols-edit-square',
     color: 'color-#1a66ff',
     status: computed(() => orgInfo?.productCountStatus),
-    path: '/pages/business/init/steps/step4',
+    path: '/pagesA/init/steps/step4',
   },
   {
     step: '四',
@@ -50,7 +50,7 @@ const arr = ref<Step[]>([
     icon: 'i-material-symbols-edit-square',
     color: 'color-#1a66ff',
     status: computed(() => orgInfo?.staffCountStatus),
-    path: '/pages/business/init/steps/step5',
+    path: '/pagesA/init/steps/step5',
   },
 ])
 

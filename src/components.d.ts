@@ -8,7 +8,9 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     BaseDataService: typeof import('./components/base-data/Service.vue')['default']
+    BookList: typeof import('./components/BookList.vue')['default']
     DashboardCard: typeof import('./components/DashboardCard.vue')['default']
+    Grids96: typeof import('./components/Grids96.vue')['default']
     GridTagSelect: typeof import('./components/GridTagSelect.vue')['default']
     MsgClock: typeof import('./components/MsgClock.vue')['default']
     MsgRing: typeof import('./components/MsgRing.vue')['default']

@@ -6,9 +6,6 @@ style:
 </route>
 
 <script lang="ts" setup>
-import Grids96 from './Grids96.vue'
-import List from './List.vue'
-
 const { windowHeight, screenWidth } = getMenuButtonInfo()
 // const { startTimer } = usePolling()
 const dropMenu = ref()
@@ -270,7 +267,7 @@ function scrollView(e: any) {
         </view>
       </view>
     </scroll-view>
-    <List v-if="mode === 1" />
+    <BookList v-if="mode === 1" />
   </view>
 </template>
 

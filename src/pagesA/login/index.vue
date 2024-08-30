@@ -20,10 +20,10 @@ function wxlogin() {
         const { token, isRegister } = (await api.login({ code: res.code })).data
         useUserStore().setUserInfo({ token, isRegister })
         if (isRegister) {
-          uni.switchTab({ url: '/pages/business/dashboard/index' })
+          uni.switchTab({ url: '/pagesA/dashboard/index' })
         }
         else {
-          uni.navigateTo({ url: '/pages/business/login/role-select' })
+          uni.navigateTo({ url: '/pagesA/login/role-select' })
         }
       }
       else {

@@ -4,8 +4,6 @@ style:
 </route>
 
 <script lang="ts" setup>
-import List from '../book/List.vue'
-
 const showCard = ref(false)
 const cardValue = ref(1)
 const value = ref(0)
@@ -212,7 +210,7 @@ const tabs = [{
     </template>
     <!-- 预约记录 -->
     <template v-if="tab === 1">
-      <List :showTabs="false" />
+      <BookList :showTabs="false" />
     </template>
     <!-- 会员档案 -->
     <template v-if="tab === 2">

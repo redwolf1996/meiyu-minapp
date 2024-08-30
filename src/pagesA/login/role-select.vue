@@ -5,11 +5,11 @@ style:
 
 <script lang="ts" setup>
 function toBusinessRegister() {
-  uni.navigateTo({ url: '/pages/business/login/info?role=business' })
+  uni.navigateTo({ url: '/pagesA/login/info?role=business' })
 }
 
 function toStaffRegister() {
-  uni.navigateTo({ url: '/pages/business/login/info?role=staff' })
+  uni.navigateTo({ url: '/pagesA/login/info?role=staff' })
 }
 </script>
 

@@ -25,11 +25,11 @@ async function initStore() {
   useUserStore().setUserInfo(res.data)
   const org = userInfo.orgInfo
   if (!org) { // 如果店铺未创建
-    my.navigateTo('/pages/business/init/steps/step1')
+    my.navigateTo('/pagesA/init/steps/step1')
   }
   else if (!org.cardCountStatus || !org.staffCountStatus
     || !org.productCountStatus || !org.serviceCountStatus) { // 如果新手引导未完成
-    my.navigateTo('/pages/business/init/steps/index')
+    my.navigateTo('/pagesA/init/steps/index')
   }
 }
 </script>

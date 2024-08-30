@@ -29,7 +29,7 @@ function handleSubmit() {
         const res = await request.post<{ token: string, isRegister: number }>(url, form)
         const { token, isRegister } = res.data
         useUserStore().setUserInfo({ token, isRegister })
-        uni.switchTab({ url: '/pages/business/dashboard/index' })
+        uni.switchTab({ url: '/pagesA/dashboard/index' })
       }
     })
     .catch((error) => {

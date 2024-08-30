@@ -25,54 +25,29 @@ export default defineUniPages({
     backgroundColor: '#ffffff',
     list: [
       {
-        pagePath: 'pages/business/dashboard/index',
+        pagePath: 'pages/tab-business-dashboard',
         iconPath: 'static/tabs/dashboard.png',
         selectedIconPath: 'static/tabs/dashboard-active.png',
         text: '工作台',
       },
       {
-        pagePath: 'pages/business/book/index',
+        pagePath: 'pages/tab-business-book',
         iconPath: 'static/tabs/order.png',
         selectedIconPath: 'static/tabs/order-active.png',
         text: '预约',
       },
       {
-        pagePath: 'pages/business/customer/index',
+        pagePath: 'pages/tab-business-customer',
         iconPath: 'static/tabs/customer.png',
         selectedIconPath: 'static/tabs/customer-active.png',
         text: '客户',
       },
       {
-        pagePath: 'pages/business/my/index',
+        pagePath: 'pages/tab-business-my',
         iconPath: 'static/tabs/my.png',
         selectedIconPath: 'static/tabs/my-active.png',
         text: '我的',
       },
     ],
   },
-
-  // tabBar: {
-  //   color: '#999999',
-  //   selectedColor: '#018d71',
-  //   backgroundColor: '#F8F8F8',
-  //   borderStyle: 'black',
-  //   height: '50px',
-  //   fontSize: '10px',
-  //   iconWidth: '24px',
-  //   spacing: '3px',
-  //   list: [
-  //     {
-  //       iconPath: 'static/tabbar/home.png',
-  //       selectedIconPath: 'static/tabbar/homeHL.png',
-  //       pagePath: 'pages/index',
-  //       text: '首页',
-  //     },
-  //     {
-  //       iconPath: 'static/tabbar/example.png',
-  //       selectedIconPath: 'static/tabbar/exampleHL.png',
-  //       pagePath: 'pages/demo',
-  //       text: '示例',
-  //     },
-  //   ],
-  // },
 })
