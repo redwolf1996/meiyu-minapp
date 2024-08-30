@@ -73,18 +73,12 @@ async function save() {
         建议上传门店logo
       </view>
     </view>
-
     <uni-file-picker
       v-model="imageValue"
       fileMediatype="image"
       mode="grid"
       :limit="1"
     />
-
-    <!-- <view flex-ac flex> -->
-    <!-- <wd-upload :file-list="fileList" :limit="1" action="host" @change="handleChange" /> -->
-    <!-- <i i-material-symbols-light-chevron-right fn fs-40 color-999 style="transform: translateY(2rpx);" /> -->
-    <!-- </view> -->
   </view>
 
   <view mt-40rpx>
