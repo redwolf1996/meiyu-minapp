@@ -127,8 +127,8 @@ importers:
         specifier: ^0.2.9
         version: 0.2.9(@unocss/preset-mini@0.58.9)(@unocss/rule-utils@0.58.9)(@unocss/vite@0.58.9(rollup@4.21.1)(vite@5.4.2(@types/node@22.5.1)(sass@1.77.8)(terser@5.31.6)))(unocss-applet@0.7.8)(unocss@0.58.9(postcss@8.4.41)(rollup@4.21.1)(vite@5.4.2(@types/node@22.5.1)(sass@1.77.8)(terser@5.31.6)))
       '@uni-helper/vite-plugin-uni-components':
-        specifier: ^0.0.9
-        version: 0.0.9(rollup@4.21.1)
+        specifier: ^0.1.0
+        version: 0.1.0(rollup@4.21.1)
       '@uni-helper/vite-plugin-uni-layouts':
         specifier: ^0.1.10
         version: 0.1.10(rollup@4.21.1)
@@ -178,8 +178,8 @@ importers:
         specifier: ^0.7.8
         version: 0.7.8
       unplugin-auto-import:
-        specifier: ^0.17.6
-        version: 0.17.8(rollup@4.21.1)
+        specifier: ^0.18.2
+        version: 0.18.2(rollup@4.21.1)
       vite:
         specifier: ^5.4.2
         version: 5.4.2(@types/node@22.5.1)(sass@1.77.8)(terser@5.31.6)
@@ -2266,8 +2266,8 @@ packages:
       '@unocss/vite':
         optional: true
 
-  '@uni-helper/vite-plugin-uni-components@0.0.9':
-    resolution: {integrity: sha512-yomG3MCb4wYYBlyFFeepAuVArjy37xCqZk9nM5mqfTHqNEtl49jz1LZgIukkfv4EAG28M+pzNwWz34Dywi70zg==}
+  '@uni-helper/vite-plugin-uni-components@0.1.0':
+    resolution: {integrity: sha512-rqHswBjVf0sMssGQ8G2xc3BrEvW07niRBHR2YyUyoD9MCEPN3T6NIpMOXh2QHujJIIm4XwKF8GQV3RaljWRupQ==}
 
   '@uni-helper/vite-plugin-uni-layouts@0.1.10':
     resolution: {integrity: sha512-RJdGmJjZtpKNVfShiKYZrualMxdi+i8uh7zpPG+X3lzf6wyKSJgWwVAj3GUdqeE/QUEncNPmj2sqwuyeLXPxbA==}
@@ -5484,8 +5484,8 @@ packages:
       '@vueuse/core':
         optional: true
 
-  unplugin-auto-import@0.17.8:
-    resolution: {integrity: sha512-CHryj6HzJ+n4ASjzwHruD8arhbdl+UXvhuAIlHDs15Y/IMecG3wrf7FVg4pVH/DIysbq/n0phIjNHAjl7TG7Iw==}
+  unplugin-auto-import@0.18.2:
+    resolution: {integrity: sha512-Dwb3rAic75harVBrVjwiq6H24PT+nBq2dpxV5BH8NNI6sDFaTytvP+iyo4xy7prQbR3r5K6nMs4f5Wp9PE4g8A==}
     engines: {node: '>=14'}
     peerDependencies:
       '@nuxt/kit': ^3.2.2
@@ -8592,7 +8592,7 @@ snapshots:
       '@unocss/preset-mini': 0.58.9
       '@unocss/vite': 0.58.9(rollup@4.21.1)(vite@5.4.2(@types/node@22.5.1)(sass@1.77.8)(terser@5.31.6))
 
-  '@uni-helper/vite-plugin-uni-components@0.0.9(rollup@4.21.1)':
+  '@uni-helper/vite-plugin-uni-components@0.1.0(rollup@4.21.1)':
     dependencies:
       '@antfu/utils': 0.7.10
       '@rollup/pluginutils': 5.1.0(rollup@4.21.1)
@@ -12458,7 +12458,7 @@ snapshots:
     transitivePeerDependencies:
       - rollup
 
-  unplugin-auto-import@0.17.8(rollup@4.21.1):
+  unplugin-auto-import@0.18.2(rollup@4.21.1):
     dependencies:
       '@antfu/utils': 0.7.10
       '@rollup/pluginutils': 5.1.0(rollup@4.21.1)

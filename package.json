@@ -72,7 +72,7 @@
     "typescript": "^5.5.4",
     "unocss": "^0.58.9",
     "unocss-applet": "^0.7.8",
-    "unplugin-auto-import": "^0.17.6",
+    "unplugin-auto-import": "^0.18.2",
     "vite": "^5.4.2",
     "vite-plugin-env-parse": "^1.0.15",
     "vue-tsc": "^2.1.2"

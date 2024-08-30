@@ -4,6 +4,9 @@ style:
   navigationStyle: custom
 </route>
 
+<script setup lang="ts">
+</script>
+
 <template>
   <StepNav :step="1" />
   <view mt-10px tc fs-40>
