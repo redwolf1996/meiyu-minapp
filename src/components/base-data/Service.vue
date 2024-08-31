@@ -31,7 +31,7 @@ const form = reactive<FormService>({
   ],
   price: 23,
   price2: 4,
-  desc: 'eiusmod enim',
+  desc: computed(() => richData.value.content),
   isShow: 1,
   payType: 1,
   serviceColor: '#EC5428',
@@ -190,11 +190,13 @@ function toRichEdit() {
       <view mb-20rpx class="form-item-title">
         <text>服务说明</text>
       </view>
+      <rich-text v-if="richData.len" :nodes="richData.content" />
       <wd-textarea
+        v-else
         readonly
         placeholderStyle="font-size: 14px;color:#C9CDD4;"
         placeholder="请输入服务说明"
-        :maxlength="500" auto-height clearable show-word-limit
+        auto-height clearable show-word-limit
       />
     </view>
 

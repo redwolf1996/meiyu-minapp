@@ -6,7 +6,7 @@ export interface FormService {
   /**
    * 描述
    */
-  desc?: string
+  desc?: ComputedRef<string>
   /**
    * 服务时长
    */

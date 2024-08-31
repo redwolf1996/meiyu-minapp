@@ -112,6 +112,7 @@ declare global {
   const refThrottled: typeof import('@vueuse/core')['refThrottled']
   const refWithControl: typeof import('@vueuse/core')['refWithControl']
   const request: typeof import('./utils/request')['default']
+  const resetRichData: typeof import('./stores/rich-edit-data')['resetRichData']
   const resolveComponent: typeof import('vue')['resolveComponent']
   const resolveRef: typeof import('@vueuse/core')['resolveRef']
   const resolveUnref: typeof import('@vueuse/core')['resolveUnref']
@@ -400,6 +401,7 @@ declare module 'vue' {
     readonly readonly: UnwrapRef<typeof import('vue')['readonly']>
     readonly ref: UnwrapRef<typeof import('vue')['ref']>
     readonly request: UnwrapRef<typeof import('./utils/request')['default']>
+    readonly resetRichData: UnwrapRef<typeof import('./stores/rich-edit-data')['resetRichData']>
     readonly resolveComponent: UnwrapRef<typeof import('vue')['resolveComponent']>
     readonly richData: UnwrapRef<typeof import('./stores/rich-edit-data')['richData']>
     readonly safeBottom: UnwrapRef<typeof import('./utils/index')['safeBottom']>

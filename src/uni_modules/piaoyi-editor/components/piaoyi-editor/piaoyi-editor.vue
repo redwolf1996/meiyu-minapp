@@ -68,6 +68,14 @@
 
 <script>
   import PickerColor from "./color-picker.vue"
+
+  // rich-text中的Img添加class 通过class 调整图片样式tag 默认图片宽度最宽为父组件宽度
+  function richTextImg(value) {
+    if (value && value.includes('<img'))
+      return value.replace(/<img/gi, '<img class=\'richTextImg\' style=\'max-width:100%;height:auto\'')
+    return value
+  }
+
   export default {
     components: {
       PickerColor
@@ -120,7 +128,7 @@
         let maxlength = parseInt(that.maxlength);
         that.editorCtx.getContents({
           success: function (res) {
-            let html_text = res.html;
+            let html_text = richTextImg(res.html);
             let html_length = html_text.length;
             if (html_length > maxlength) {
               uni.showModal({
@@ -129,14 +137,14 @@
                 showCancel: false,
                 success(res) {
                   that.$emit("blur", {
-                    html: res.html,
+                    html: html_text,
                     length: html_length
                   });
                 }
               });
             } else {
               that.$emit("blur", {
-                html: res.html,
+                html: html_text,
                 length: html_length
               });
             }
