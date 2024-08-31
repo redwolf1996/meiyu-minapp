@@ -92,6 +92,13 @@
       "root": "pagesA",
       "pages": [
         {
+          "path": "rich-edit",
+          "type": "page",
+          "style": {
+            "navigationBarTitleText": "xxx"
+          }
+        },
+        {
           "path": "billing/billing",
           "type": "page",
           "style": {

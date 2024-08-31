@@ -21,7 +21,6 @@ const model = reactive<{
   value2: '',
   value3: '',
 })
-
 const form = reactive<FormService>({
   storeId: 0,
   name: '服务3',
@@ -118,6 +117,7 @@ function onClickColor(item: Color) {
     v.isActive = false
   })
   item.isActive = true
+  form.serviceColor = item.value
 }
 </script>
 

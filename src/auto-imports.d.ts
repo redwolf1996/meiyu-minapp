@@ -115,6 +115,8 @@ declare global {
   const resolveComponent: typeof import('vue')['resolveComponent']
   const resolveRef: typeof import('@vueuse/core')['resolveRef']
   const resolveUnref: typeof import('@vueuse/core')['resolveUnref']
+  const richData: typeof import('./stores/rich-edit-data')['richData']
+  const richEditData: typeof import('./stores/rich-edit-data')['richEditData']
   const safeBottom: typeof import('./utils/index')['safeBottom']
   const shallowReactive: typeof import('vue')['shallowReactive']
   const shallowReadonly: typeof import('vue')['shallowReadonly']
@@ -399,6 +401,7 @@ declare module 'vue' {
     readonly ref: UnwrapRef<typeof import('vue')['ref']>
     readonly request: UnwrapRef<typeof import('./utils/request')['default']>
     readonly resolveComponent: UnwrapRef<typeof import('vue')['resolveComponent']>
+    readonly richData: UnwrapRef<typeof import('./stores/rich-edit-data')['richData']>
     readonly safeBottom: UnwrapRef<typeof import('./utils/index')['safeBottom']>
     readonly shallowReactive: UnwrapRef<typeof import('vue')['shallowReactive']>
     readonly shallowReadonly: UnwrapRef<typeof import('vue')['shallowReadonly']>
