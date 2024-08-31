@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import type { GrigSelectItem } from '@/types';
-import type { FormService } from './types';
+import type { GrigSelectItem } from '@/types'
+import type { Color, FormService } from './types'
 
 const props = withDefaults(defineProps<{
   showSkip?: boolean // 是否展示跳过按钮（引导页需要）
@@ -8,6 +8,7 @@ const props = withDefaults(defineProps<{
   showSkip: false,
 })
 
+const formRef = ref()
 const value = ref()
 const imageValue = ref<any>([])
 const columns = ref(['选项1', '选项2', '选项3', '选项4', '选项5', '选项6', '选项7'])
@@ -21,26 +22,56 @@ const model = reactive<{
   value3: '',
 })
 
-const form = ref<FormService>(
-  {
-    storeId: 0,
-    name: '服务3',
-    categoryId: 5,
-    duration: 60,
-    durationUnit: 'minute',
-    imgs: [
-      'http://dummyimage.com/400x400',
-    ],
-    price: 23,
-    price2: 4,
-    desc: 'eiusmod enim',
-    isShow: 1,
-    payType: 1,
-    serviceColor: '#555555',
-    isToStore: 1,
-    isToDoor: 1,
-  },
-)
+const form = reactive<FormService>({
+  storeId: 0,
+  name: '服务3',
+  categoryId: 5,
+  duration: 60,
+  durationUnit: 'minute',
+  imgs: [
+    'http://dummyimage.com/400x400',
+  ],
+  price: 23,
+  price2: 4,
+  desc: 'eiusmod enim',
+  isShow: 1,
+  payType: 1,
+  serviceColor: '#EC5428',
+  isToStore: 1,
+  isToDoor: 1,
+})
+const colors = ref<Color[]>([{
+  value: '#EC5428',
+  isActive: true,
+}, {
+  value: '#2F4BEC',
+  isActive: false,
+}, {
+  value: '#51B7BB',
+  isActive: false,
+}, {
+  value: '#A6EA99',
+  isActive: false,
+}, {
+  value: '#5BCBCF',
+  isActive: false,
+}, {
+  value: '#409EFF',
+  isActive: false,
+}, {
+  value: '#B73082',
+  isActive: false,
+}, {
+  value: '#E77F61',
+  isActive: false,
+}, {
+  value: '#EF7F31',
+  isActive: false,
+}, {
+  value: '#F5D348',
+  isActive: false,
+}])
+
 const wd = ref(0)
 
 const sources: GrigSelectItem[] = [
@@ -82,25 +113,16 @@ const sources2: GrigSelectItem[] = [
   },
 ]
 
-watchEffect(() => {
-  // console.log(form.val)
-})
-
-// function handleSubmit() {
-//   form.value
-//     .validate()
-//     .then(({ valid }) => {
-//       if (valid)
-//         toast().success('校验通过')
-//     })
-//     .catch((error) => {
-//       toast().error(error)
-//     })
-// }
+function onClickColor(item: Color) {
+  colors.value.forEach((v) => {
+    v.isActive = false
+  })
+  item.isActive = true
+}
 </script>
 
 <template>
-  <wd-form ref="form" :model="model">
+  <wd-form ref="formRef" :model="model">
     <wd-cell-group :border="true">
       <wd-input
         v-model="model.value1"
@@ -110,7 +132,7 @@ watchEffect(() => {
         suffix-icon="arrow-right"
         :rules="[{ required: true, message: '请填写服务名称' }]"
       />
-      <wd-picker v-model="value" :rules="[{ required: true, message: '请选择服务分类' }]" label="服务分类" align-right :columns="columns" />
+      <wd-picker v-model="form.categoryId" :rules="[{ required: true, message: '请选择服务分类' }]" label="服务分类" align-right :columns="columns" />
       <wd-input
         v-model="model.value2"
         label="服务时长"
@@ -209,7 +231,16 @@ watchEffect(() => {
         <text>日历中显示预约时使用，便于区分预约的服务</text>
       </view>
       <view h-28rpx />
-      <div class="big-color" />
+      <div class="big-color" :style="{ background: form.serviceColor }" />
+      <view mt24px flex flex-bt gap-10px>
+        <view
+          v-for="item in colors"
+          :key="item.value"
+          :style="{ background: item.value, boxShadow: item.isActive ? `0 2px 12px 0 ${item.value}` : 'none' }"
+          w-25px
+          h-25px rd-3px @click="onClickColor(item)"
+        />
+      </view>
     </view>
   </wd-form>
 
@@ -235,7 +266,6 @@ watchEffect(() => {
 .big-color {
   width: 64px;
   height: 64px;
-  background-color: v-bind(columns);
 }
 .grid-tag-select {
   display: grid;

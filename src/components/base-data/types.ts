@@ -57,3 +57,8 @@ export interface FormService {
   storeId: number
   [property: string]: any
 }
+
+export interface Color {
+  value: string
+  isActive: boolean
+}
