@@ -9,7 +9,6 @@ const props = withDefaults(defineProps<{
 })
 
 const formRef = ref()
-const value = ref()
 const imageValue = ref<any>([])
 const columns = ref(['选项1', '选项2', '选项3', '选项4', '选项5', '选项6', '选项7'])
 const model = reactive<{
@@ -119,6 +118,11 @@ function onClickColor(item: Color) {
   item.isActive = true
   form.serviceColor = item.value
 }
+
+function toRichEdit() {
+  richData.value.title = '添加服务说明'
+  uni.navigateTo({ url: '/pagesA/rich-edit' })
+}
 </script>
 
 <template>
@@ -181,14 +185,15 @@ function onClickColor(item: Color) {
     </wd-cell-group>
 
     <view h-24rpx />
-    <view bg-white px-40rpx py-24rpx>
+    <view bg-white px-40rpx py-24rpx @click="toRichEdit">
       <view mb-20rpx class="form-item-title">
         <text>服务说明</text>
       </view>
       <wd-textarea
-        v-model="value"
+        readonly
         placeholderStyle="font-size: 14px;color:#C9CDD4;"
-        placeholder="请输入服务说明" :maxlength="500" auto-height clearable show-word-limit
+        placeholder="请输入服务说明"
+        :maxlength="500" auto-height clearable show-word-limit
       />
     </view>
 

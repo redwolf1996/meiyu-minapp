@@ -15,6 +15,7 @@ style:
   <view mt-8px tc>
     也可跳过稍后在【工作台-服务管理】中添加
   </view>
+
   <view h-24rpx />
   <BaseDataService showSkip />
 </template>

@@ -95,7 +95,7 @@
           "path": "rich-edit",
           "type": "page",
           "style": {
-            "navigationBarTitleText": "xxx"
+            "navigationBarTitleText": "编辑说明"
           }
         },
         {
