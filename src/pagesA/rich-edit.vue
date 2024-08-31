@@ -13,13 +13,19 @@ onMounted(() => {
 
 const name = computed(() => richData.value.key)
 const values = computed(() => richData.value.content)
+const tmp = reactive({
+  content: '',
+  len: 0,
+})
 
 function setContents(e: { html: string, length: number }) {
-  richData.value.content = e.html
-  richData.value.len = e.length
+  tmp.content = e.html
+  tmp.len = e.length
 }
 
-function goBack() {
+function save() {
+  richData.value.content = tmp.content
+  richData.value.len = tmp.len
   setTimeout(() => {
     uni.navigateBack()
   }, 100)
@@ -33,9 +39,9 @@ function goBack() {
     :maxlength="30000"
     :readOnly="false"
     :name="name"
-    @blur="setContents"
+    @input="setContents"
   />
-  <view mx-40rpx mt-24rpx color-white @click="goBack()">
+  <view mx-40rpx mt-24rpx color-white @click="save()">
     <wd-button size="large" custom-class="theme-bg" block>
       <view flex flex-cc>
         <text>保存</text>

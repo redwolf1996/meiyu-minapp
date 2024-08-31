@@ -5,9 +5,6 @@ style:
 </route>
 
 <script setup lang="ts">
-onHide(() => {
-  resetRichData()
-})
 </script>
 
 <template>

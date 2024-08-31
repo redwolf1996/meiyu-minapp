@@ -190,7 +190,9 @@ function toRichEdit() {
       <view mb-20rpx class="form-item-title">
         <text>服务说明</text>
       </view>
-      <rich-text v-if="richData.len" :nodes="richData.content" />
+      <!-- 0是初始状态 10是清空后还包含空标签 <p><br></p>的字符数 -->
+      {{ richData.len }}
+      <rich-text v-if="richData.len !== 0 && richData.len !== 11" :nodes="richData.content" />
       <wd-textarea
         v-else
         readonly
@@ -274,20 +276,5 @@ function toRichEdit() {
 .big-color {
   width: 64px;
   height: 64px;
-}
-.grid-tag-select {
-  display: grid;
-  grid-gap: 20rpx;
-  grid-template-columns: repeat(2, 1fr);
-  > view {
-    height: 20px;
-    border: 1px solid blue;
-  }
-}
-:deep(.wd-upload__evoke) {
-  margin-bottom: 0 !important;
-}
-:deep(.wd-upload__preview) {
-  margin: 0 0 0 0 !important;
 }
 </style>

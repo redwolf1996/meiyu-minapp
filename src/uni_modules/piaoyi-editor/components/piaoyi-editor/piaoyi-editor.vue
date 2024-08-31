@@ -54,10 +54,9 @@
             <view class="iconfont icon-format" @tap="clear"></view>
           </view>
           <view class="editor-wrapper">
-            <!-- @input="saveContents" input换成blur提高性能 -->
             <editor id="editor" class="editor" placeholder="开始输入..." showImgSize showImgToolbar showImgResize
               @statuschange="onStatusChange" :read-only="readOnly" @ready="onEditorReady"
-              @blur="saveContents">
+              @input="saveContents">
             </editor>
           </view>
         </view>
@@ -136,14 +135,14 @@
                 confirmText: '确定',
                 showCancel: false,
                 success(res) {
-                  that.$emit("blur", {
+                  that.$emit("input", {
                     html: html_text,
                     length: html_length
                   });
                 }
               });
             } else {
-              that.$emit("blur", {
+              that.$emit("input", {
                 html: html_text,
                 length: html_length
               });
@@ -389,11 +388,6 @@
 
   .ql-active {
     color: #ff0000;
-  }
-
-  button {
-    width: 150upx;
-    font-size: 30upx;
   }
 
   .editor-wrapper {

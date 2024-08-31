@@ -213,15 +213,6 @@ function handleClose() {}
   font-size: 13px;
   line-height: 1.5;
 }
-.grid-tag-select {
-  display: grid;
-  grid-gap: 20rpx;
-  grid-template-columns: repeat(2, 1fr);
-  > view {
-    height: 20px;
-    border: 1px solid blue;
-  }
-}
 :deep(.wd-upload__evoke) {
   margin-bottom: 0 !important;
 }

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { GrigSelectItem } from '@/types';
+import type { GrigSelectItem } from '@/types'
 
 type Mode = 'single' | 'multiple'
 const props = withDefaults(defineProps<{
