@@ -120,6 +120,7 @@ function onClickColor(item: Color) {
 }
 
 function toRichEdit() {
+  richData.value.key = 'service'
   richData.value.title = '添加服务说明'
   uni.navigateTo({ url: '/pagesA/rich-edit' })
 }

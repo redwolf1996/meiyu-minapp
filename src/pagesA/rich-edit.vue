@@ -10,13 +10,18 @@ onMounted(() => {
   uni.setNavigationBarTitle({ title: richData.value.title })
 })
 
-const photoUrl = ref('http://test.com')
-const api = ref('api')
-const name = ref('file')
-const values = ref('')
+const name = computed(() => richData.value.key)
+const values = computed(() => richData.value.content)
 
-function setContents(e) {
+function setContents(e: { html: string, length: number }) {
   richData.value.content = e.html
+  richData.value.length = e.length
+}
+
+function goBack() {
+  setTimeout(() => {
+    uni.navigateBack()
+  }, 100)
 }
 </script>
 
@@ -26,11 +31,16 @@ function setContents(e) {
     :values="values"
     :maxlength="30000"
     :readOnly="false"
-    :photoUrl="photoUrl"
-    :api="api"
     :name="name"
-    @changes="setContents"
+    @blur="setContents"
   />
+  <view mx-40rpx mt-24rpx color-white @click="goBack()">
+    <wd-button size="large" custom-class="theme-bg" block>
+      <view flex flex-cc>
+        <text>保存</text>
+      </view>
+    </wd-button>
+  </view>
 </template>
 
 <style lang='scss' scoped></style>

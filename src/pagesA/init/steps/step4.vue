@@ -208,8 +208,8 @@ function handleClose() {}
   box-sizing: border-box;
   padding: 0 10px 10px 10px;
   width: 100%;
-  min-height: 20vh;
-  height: 20vh;
+  min-height: 80vh;
+  height: 80vh;
   font-size: 13px;
   line-height: 1.5;
 }
