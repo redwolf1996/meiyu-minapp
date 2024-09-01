@@ -9,30 +9,24 @@ const props = withDefaults(defineProps<{
 })
 
 const formRef = ref()
-const imageValue = ref<any>([])
 const columns = ref(['选项1', '选项2', '选项3', '选项4', '选项5', '选项6', '选项7'])
-const serveType = ref([])
+const imageValue = ref<any>([])
 const form = reactive<FormService>({
   storeId: null,
   name: '',
   categoryId: null,
   duration: null,
   durationUnit: 'minute',
-  imgs: [
-    'http://dummyimage.com/400x400',
-  ],
-  price: 23,
-  price2: 4,
+  imgs: computed(() => {
+    return imageValue.value.map((v: any) => v.fileID)
+  }),
+  price: null,
+  price2: null,
   desc: computed(() => richData.value.content),
   isShow: -1,
   payType: -1,
   serviceColor: '#EC5428',
-  isToStore: computed(() => {
-    return serveType.value.includes(1) ? 1 : 0
-  }),
-  isToDoor: computed(() => {
-    return serveType.value.includes(2) ? 1 : 0
-  }),
+  serverToType: [],
 })
 const colors = ref<Color[]>([{
   value: '#EC5428',
@@ -120,7 +114,8 @@ function toRichEdit() {
 }
 
 function save() {
-  console.log(isShow.value)
+  console.log(imageValue.value)
+  console.log(form)
 }
 </script>
 
@@ -228,7 +223,7 @@ function save() {
         <text>设置预约服务的类型，可多选</text>
       </view>
       <view h-28rpx />
-      <GridTagSelect v-model="serveType" mode="multiple" :sources="selects2" />
+      <GridTagSelect v-model="form.serverToType" mode="multiple" :sources="selects2" />
     </view>
 
     <view h-24rpx />

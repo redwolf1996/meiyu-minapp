@@ -18,7 +18,7 @@ export interface FormService {
   /**
    * 图片地址
    */
-  imgs: string[]
+  imgs: ComputedRef<string[]>
   /**
    * 是否网店销售，0否，1是
    */
@@ -26,11 +26,15 @@ export interface FormService {
   /**
    * 是否支持上门，1支持，0不支持
    */
-  isToDoor: ComputedRef<number>
+  isToDoor?: number
   /**
    * 是否支持到店，1支持，0不支持
    */
-  isToStore: ComputedRef<number>
+  isToStore?: number
+  /**
+   * 服务类型，1上门，2到店
+   */
+  serverToType: any[]
   /**
    * 服务名
    */
