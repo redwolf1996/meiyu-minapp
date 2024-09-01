@@ -11,20 +11,12 @@ const props = withDefaults(defineProps<{
 const formRef = ref()
 const imageValue = ref<any>([])
 const columns = ref(['选项1', '选项2', '选项3', '选项4', '选项5', '选项6', '选项7'])
-const model = reactive<{
-  value1: string
-  value2: string
-  value3: string
-}>({
-  value1: '',
-  value2: '',
-  value3: '',
-})
+const serveType = ref([])
 const form = reactive<FormService>({
-  storeId: 0,
-  name: '服务3',
-  categoryId: 5,
-  duration: 60,
+  storeId: null,
+  name: '',
+  categoryId: null,
+  duration: null,
   durationUnit: 'minute',
   imgs: [
     'http://dummyimage.com/400x400',
@@ -32,11 +24,15 @@ const form = reactive<FormService>({
   price: 23,
   price2: 4,
   desc: computed(() => richData.value.content),
-  isShow: 1,
-  payType: 1,
+  isShow: -1,
+  payType: -1,
   serviceColor: '#EC5428',
-  isToStore: 1,
-  isToDoor: 1,
+  isToStore: computed(() => {
+    return serveType.value.includes(1) ? 1 : 0
+  }),
+  isToDoor: computed(() => {
+    return serveType.value.includes(2) ? 1 : 0
+  }),
 })
 const colors = ref<Color[]>([{
   value: '#EC5428',
@@ -70,9 +66,7 @@ const colors = ref<Color[]>([{
   isActive: false,
 }])
 
-const wd = ref(0)
-
-const sources: GrigSelectItem[] = [
+const selects1: GrigSelectItem[] = [
   {
     label: '展示',
     value: 1,
@@ -85,7 +79,7 @@ const sources: GrigSelectItem[] = [
   },
 ]
 
-const sources3: GrigSelectItem[] = [
+const selects2: GrigSelectItem[] = [
   {
     label: '上门服务',
     value: 1,
@@ -93,20 +87,20 @@ const sources3: GrigSelectItem[] = [
   },
   {
     label: '到店服务',
-    value: 0,
+    value: 2,
     isActive: false,
   },
 ]
 
-const sources2: GrigSelectItem[] = [
+const selects3: GrigSelectItem[] = [
   {
-    label: '付全款',
+    label: '在线支付',
     value: 1,
     isActive: false,
   },
   {
-    label: '到店付',
-    value: 0,
+    label: '到店支付',
+    value: 2,
     isActive: false,
   },
 ]
@@ -124,28 +118,39 @@ function toRichEdit() {
   richData.value.title = '添加服务说明'
   uni.navigateTo({ url: '/pagesA/rich-edit' })
 }
+
+function save() {
+  console.log(isShow.value)
+}
 </script>
 
 <template>
-  <wd-form ref="formRef" :model="model">
+  <wd-form ref="formRef" :model="form">
     <wd-cell-group :border="true">
       <wd-input
-        v-model="model.value1"
+        v-model="form.name"
         label="服务名称"
-        prop="value1"
+        prop="name"
         placeholder="请输入"
         suffix-icon="arrow-right"
         :rules="[{ required: true, message: '请填写服务名称' }]"
       />
       <wd-picker v-model="form.categoryId" :rules="[{ required: true, message: '请选择服务分类' }]" label="服务分类" align-right :columns="columns" />
       <wd-input
-        v-model="model.value2"
+        v-model="form.duration"
         label="服务时长"
-        prop="value23232"
-        placeholder="请选择"
-        suffix-icon="arrow-right"
-        :rules="[{ required: true, message: '请选择服务时长' }]"
-      />
+        prop="duration"
+        placeholder="请输入"
+        :use-suffix-slot="true"
+        type="number"
+        :rules="[{ required: true, message: '填写服务时长' }]"
+      >
+        <template #suffix>
+          <view f12 theme-color>
+            分钟
+          </view>
+        </template>
+      </wd-input>
     </wd-cell-group>
 
     <view mt-24rpx bg-white p-40rpx>
@@ -162,14 +167,14 @@ function toRichEdit() {
           mode="grid"
           :limit="5"
         />
-        <!-- <wd-upload :file-list="fileList" :limit="5" action="https://ftf.jd.com/api/uploadImg" @change="handleChange" /> -->
       </view>
     </view>
 
     <view h-24rpx />
     <wd-cell-group :border="true">
       <wd-input
-        v-model="model.value1"
+        v-model="form.price"
+        type="number"
         label="原价"
         prop="value1"
         placeholder="请输入"
@@ -177,7 +182,8 @@ function toRichEdit() {
         :rules="[{ required: true, message: '请填写原价' }]"
       />
       <wd-input
-        v-model="model.value2"
+        v-model="form.price2"
+        type="number"
         label="优惠价"
         prop="value23232"
         placeholder="若不填，则客户按原价购买"
@@ -190,8 +196,7 @@ function toRichEdit() {
       <view mb-20rpx class="form-item-title">
         <text>服务说明</text>
       </view>
-      <!-- 0是初始状态 10是清空后还包含空标签 <p><br></p>的字符数 -->
-      {{ richData.len }}
+      <!-- 0是初始状态 11是清空后还包含空标签 <p><br></p>的字符数 -->
       <rich-text v-if="richData.len !== 0 && richData.len !== 11" :nodes="richData.content" />
       <wd-textarea
         v-else
@@ -207,8 +212,11 @@ function toRichEdit() {
       <view class="form-item-title required">
         <text>网店展示</text>
       </view>
+      <view f12 color-999>
+        <text>设置是否开启网店销售</text>
+      </view>
       <view h-28rpx />
-      <GridTagSelect v-model="wd" :sources="sources" />
+      <GridTagSelect v-model="form.isShow" :sources="selects1" />
     </view>
 
     <view h-24rpx />
@@ -216,8 +224,11 @@ function toRichEdit() {
       <view class="form-item-title required">
         <text>服务类型</text>
       </view>
+      <view f12 color-999>
+        <text>设置预约服务的类型，可多选</text>
+      </view>
       <view h-28rpx />
-      <GridTagSelect v-model="wd" :sources="sources3" />
+      <GridTagSelect v-model="serveType" mode="multiple" :sources="selects2" />
     </view>
 
     <view h-24rpx />
@@ -229,7 +240,7 @@ function toRichEdit() {
         <text>设置客户线上预约时是否需要支付</text>
       </view>
       <view h-28rpx />
-      <GridTagSelect v-model="wd" :sources="sources2" />
+      <GridTagSelect v-model="form.payType" :sources="selects3" />
     </view>
 
     <view h-24rpx />
@@ -254,7 +265,7 @@ function toRichEdit() {
     </view>
   </wd-form>
 
-  <view mx-40rpx mt-64rpx color-white>
+  <view mx-40rpx mt-64rpx color-white @click="save()">
     <wd-button size="large" custom-class="theme-bg" block>
       <view flex flex-cc>
         <text>保存</text>

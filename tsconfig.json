@@ -13,6 +13,7 @@
       "@uni-helper/uni-types",
       "wot-design-uni/global.d.ts"
     ],
+    "strictNullChecks": false,
     "noImplicitAny": false,
     "noImplicitThis": true,
     "importHelpers": true,

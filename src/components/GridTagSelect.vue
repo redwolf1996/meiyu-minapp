@@ -10,7 +10,7 @@ const props = withDefaults(defineProps<{
   mode: 'single',
   columns: 2,
 })
-const model = defineModel()
+const model: any = defineModel<any>()
 const sources = ref<GrigSelectItem[]>(props.sources)
 const columns = ref(props.columns)
 const mode = ref<Mode>(props.mode)
@@ -20,7 +20,6 @@ function onClickTag(item: GrigSelectItem, index: number) {
   if (mode.value === 'single') {
     sources.value.forEach((e: GrigSelectItem, i: number) => {
       if (i !== index) {
-        model.value = null
         e.isActive = false
       }
       else {

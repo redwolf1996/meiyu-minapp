@@ -266,11 +266,15 @@
           sourceType: ['album'],
           sizeType: 'compressed',
           success: (chooseImageRes) => {
+            uni.showLoading({
+              title: '上传中'
+            })
             const tempFilePaths = chooseImageRes.tempFiles[0].tempFilePath;
             uniCloud.uploadFile({
               filePath: tempFilePaths,
               cloudPath: this.name + (+new Date()), // aaa.png
               success: (uploadFileRes) => {
+                uni.hideLoading()
                 this.img = uploadFileRes.fileID
                 this.editorCtx.insertImage({
                   src: this.img,
@@ -280,8 +284,9 @@
               },
               fail(err) {
                 console.log(err)
+                uni.hideLoading()
                 uni.showToast({
-                  title: err.errMsg,
+                  title: '上传失败',
                   icon: 'none'
                 })
               }

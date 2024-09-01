@@ -26,11 +26,11 @@ export interface FormService {
   /**
    * 是否支持上门，1支持，0不支持
    */
-  isToDoor: number
+  isToDoor: ComputedRef<number>
   /**
    * 是否支持到店，1支持，0不支持
    */
-  isToStore: number
+  isToStore: ComputedRef<number>
   /**
    * 服务名
    */
