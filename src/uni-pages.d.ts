@@ -9,6 +9,7 @@ interface NavigateToOptions {
        "/pages/tab-business-customer" |
        "/pages/tab-business-dashboard" |
        "/pages/tab-business-my" |
+       "/pagesA/cats" |
        "/pagesA/rich-edit" |
        "/pagesA/billing/billing" |
        "/pagesA/billing/customer-list" |
