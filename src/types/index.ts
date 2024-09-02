@@ -3,3 +3,25 @@ export interface GrigSelectItem {
   value: number | string
   isActive: boolean
 }
+
+/**
+ * 服务、产品、卡项分类
+ */
+export interface CatItem {
+  /**
+   * 分类id
+   */
+  id: number
+  /**
+   * 分类名
+   */
+  name: string
+  /**
+   * 门店id
+   */
+  storeId: number
+  /**
+   * 是否选中
+   */
+  checked?: boolean
+}

@@ -10,7 +10,7 @@ const httpInterceptor = {
     if (!urls.includes(options.url)) {
       options.url = baseUrl + options.url
     }
-    options.timeout = 10000
+    options.timeout = 30000
     options.header = {
       ...options?.header,
       client: 'minapp',
