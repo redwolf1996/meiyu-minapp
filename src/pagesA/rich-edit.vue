@@ -7,7 +7,6 @@ style:
 import piaoyiEditor from '@/uni_modules/piaoyi-editor/components/piaoyi-editor/piaoyi-editor.vue'
 
 onMounted(() => {
-  // 设置富文本编辑页标题
   uni.setNavigationBarTitle({ title: richData.value.title })
 })
 
