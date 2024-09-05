@@ -39,6 +39,7 @@ declare global {
   const getCurrentInstance: typeof import('vue')['getCurrentInstance']
   const getCurrentScope: typeof import('vue')['getCurrentScope']
   const getMenuButtonInfo: typeof import('./utils/index')['getMenuButtonInfo']
+  const getStoreId: typeof import('./utils/index')['getStoreId']
   const h: typeof import('vue')['h']
   const http: typeof import('./utils/http')['http']
   const ignorableWatch: typeof import('@vueuse/core')['ignorableWatch']
@@ -122,6 +123,7 @@ declare global {
   const shallowReactive: typeof import('vue')['shallowReactive']
   const shallowReadonly: typeof import('vue')['shallowReadonly']
   const shallowRef: typeof import('vue')['shallowRef']
+  const storeId: typeof import('./utils/index')['storeId']
   const stores: typeof import('./stores/index')['default']
   const syncRef: typeof import('@vueuse/core')['syncRef']
   const syncRefs: typeof import('@vueuse/core')['syncRefs']
@@ -349,6 +351,7 @@ declare module 'vue' {
     readonly getCurrentInstance: UnwrapRef<typeof import('vue')['getCurrentInstance']>
     readonly getCurrentScope: UnwrapRef<typeof import('vue')['getCurrentScope']>
     readonly getMenuButtonInfo: UnwrapRef<typeof import('./utils/index')['getMenuButtonInfo']>
+    readonly getStoreId: UnwrapRef<typeof import('./utils/index')['getStoreId']>
     readonly h: UnwrapRef<typeof import('vue')['h']>
     readonly http: UnwrapRef<typeof import('./utils/http')['http']>
     readonly inject: UnwrapRef<typeof import('vue')['inject']>
@@ -408,6 +411,7 @@ declare module 'vue' {
     readonly shallowReactive: UnwrapRef<typeof import('vue')['shallowReactive']>
     readonly shallowReadonly: UnwrapRef<typeof import('vue')['shallowReadonly']>
     readonly shallowRef: UnwrapRef<typeof import('vue')['shallowRef']>
+    readonly storeId: UnwrapRef<typeof import('./utils/index')['storeId']>
     readonly stores: UnwrapRef<typeof import('./stores/index')['default']>
     readonly themeColor: UnwrapRef<typeof import('./utils/index')['themeColor']>
     readonly toRaw: UnwrapRef<typeof import('vue')['toRaw']>

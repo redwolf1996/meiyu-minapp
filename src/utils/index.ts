@@ -1,3 +1,5 @@
+import { useUserStore } from '@/stores/modules/user'
+
 export const IMG_BASE = import.meta.env.VITE_APP_IMG_BASE
 
 export function getMenuButtonInfo() {
@@ -68,3 +70,15 @@ export const my = {
     uni.navigateBack()
   },
 }
+
+export function getStoreId() {
+  const lastStoreId = useUserStore().userInfo?.lastStoreId
+  const firstStoreId = useUserStore().userInfo?.storeList[0]?.storeId
+  if (lastStoreId !== 0)
+    return lastStoreId
+  if (firstStoreId)
+    return firstStoreId
+  return 0
+}
+
+export const storeId = getStoreId()

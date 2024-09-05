@@ -6,7 +6,12 @@ style:
 <script lang="ts" setup>
 import type { CatItem } from '@/types'
 
-const type = ref(0)
+const props = withDefaults(defineProps<{
+  type: 0 | 1 | 2
+}>(), {
+  type: 0,
+})
+const type = ref(props.type)
 const names = ['服务', '产品', '卡项']
 const urls = [
   '/business/service/category',
@@ -16,24 +21,61 @@ const urls = [
 const typeName = computed(() => names[type.value])
 const typeUrl = computed(() => urls[type.value])
 const list = ref<CatItem[]>([])
+const isAdd = ref(true)
 const inputDialogRef = ref()
+const deleteDialogRef = ref()
+const dialogKey = ref(0)
+const showDialog = ref(false)
+const curItem = ref<CatItem>(null)
 const form = reactive({
   id: null,
-  name: '',
+  name: null,
+  storeId,
 })
 
-function dialogInputConfirm() {
-  console.log(form.name)
+async function dialogInputConfirm() {
+  if (isAdd.value) {
+    await request.post<any>(typeUrl.value, form)
+  }
+  else {
+    await request.put<any>(typeUrl.value, form)
+  }
+  getList()
   inputDialogRef.value.close()
 }
 
-function openAdd() {
-  form.name = ''
+async function dialogConfirm() {
+  await request.delete<any>(`${typeUrl.value}/${curItem.value.id}`)
+  getList()
+  deleteDialogRef.value.close()
+}
+
+function openDel(item: CatItem) {
+  curItem.value = item
+  deleteDialogRef.value.open()
+}
+
+async function openEdit(item: CatItem) {
+  isAdd.value = false
+  form.id = item.id
+  form.name = item.name
+  dialogKey.value++
+  showDialog.value = true
+  await nextTick()
+  inputDialogRef.value.open()
+}
+
+async function openAdd() {
+  isAdd.value = true
+  form.name = null
+  dialogKey.value++
+  showDialog.value = true
+  await nextTick()
   inputDialogRef.value.open()
 }
 
 async function getList() {
-  const res = await request.get<CatItem[]>(`${typeUrl.value}?storeId=1`)
+  const res = await request.get<CatItem[]>(`${typeUrl.value}?storeId=${storeId}`)
   if (res.data.length) {
     list.value = res.data.map((v) => {
       return {
@@ -52,6 +94,13 @@ onMounted(() => {
   getList()
   uni.setNavigationBarTitle({ title: `选择${typeName.value}分类` })
 })
+
+function toggleCheck(item: CatItem) {
+  list.value.forEach((v) => {
+    v.checked = false
+  })
+  item.checked = true
+}
 </script>
 
 <template>
@@ -65,14 +114,14 @@ onMounted(() => {
 
     <wd-status-tip v-if="!list.length" image="content" :tip="`暂无分类，请先添加${typeName}分类`" />
     <template v-else>
-      <view flex flex-ac flex-bt h56px style="border-bottom: 1px solid #eee;">
-        <view flex flex-ac gap-5px>
-          <radio style="transform:scale(1)" value="1" color="#1a66ff" :checked="true" />
-          <text>产品分类名称1</text>
+      <view v-for="(item, index) in list" :key="`k-${index}`" flex flex-ac flex-bt h56px style="border-bottom: 1px solid #eee;">
+        <view flex flex-ac gap-5px @click="toggleCheck(item)">
+          <radio style="transform:scale(1)" value="1" color="#1a66ff" :checked="item.checked" />
+          <text>{{ item.name }}</text>
         </view>
         <view flex flex-ac gap-12px>
-          <wd-icon name="edit-1" color="#1A66FF" size="22px" />
-          <wd-icon name="delete-thin" color="#EC5428" size="22px" />
+          <wd-icon name="edit-1" color="#1A66FF" size="22px" @click="openEdit(item)" />
+          <wd-icon name="delete-thin" color="#EC5428" size="22px" @click="openDel(item)" />
         </view>
       </view>
       <view class="h50px" />
@@ -87,9 +136,22 @@ onMounted(() => {
 
     <uni-popup ref="inputDialogRef" type="dialog">
       <uni-popup-dialog
+        v-if="showDialog"
+        :key="dialogKey"
         v-model="form.name"
-        mode="input" :title="`${typeName}分类`"
-        :placeholder="`请输入${typeName}分类名称`" @confirm="dialogInputConfirm"
+        mode="input" :title="`${isAdd ? '添加' : '修改'}${typeName}分类`"
+        :placeholder="`请输入${typeName}分类名称`"
+        @close="showDialog = false"
+        @confirm="dialogInputConfirm"
+      />
+    </uni-popup>
+
+    <uni-popup ref="deleteDialogRef" type="dialog">
+      <uni-popup-dialog
+        type="warn"
+        cancelText="取消" confirmText="确定"
+        title="提示" content="删除后不可恢复，确定删除吗？"
+        @confirm="dialogConfirm"
       />
     </uni-popup>
   </view>
