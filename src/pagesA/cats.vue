@@ -92,7 +92,9 @@ function toggleCheck(item: CatItem) {
     v.checked = false
   })
   item.checked = true
-  console.log(item)
+  curClassify.value.id = item.id
+  curClassify.value.name = item.name
+  curClassify.value.storeId = storeId
 }
 
 function selCat() {

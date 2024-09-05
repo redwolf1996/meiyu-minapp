@@ -9,12 +9,11 @@ const props = withDefaults(defineProps<{
 })
 
 const formRef = ref()
-const columns = ref(['选项1', '选项2', '选项3', '选项4', '选项5', '选项6', '选项7'])
 const imageValue = ref<any>([])
 const form = reactive<FormService>({
   storeId: null,
   name: '',
-  categoryId: null,
+  categoryId: computed(() => curClassify.value.id),
   duration: null,
   durationUnit: 'minute',
   imgs: computed(() => {
@@ -28,6 +27,8 @@ const form = reactive<FormService>({
   serviceColor: '#EC5428',
   serverToType: [],
 })
+const catName = computed(() => curClassify.value.name)
+console.log(catName.value)
 const colors = ref<Color[]>([{
   value: '#EC5428',
   isActive: true,
@@ -117,6 +118,11 @@ function save() {
   console.log(imageValue.value)
   console.log(form)
 }
+
+function toCats() {
+  curClassify.value.type = 0 // 服务分类
+  uni.navigateTo({ url: '/pagesA/cats' })
+}
 </script>
 
 <template>
@@ -130,7 +136,18 @@ function save() {
         suffix-icon="arrow-right"
         :rules="[{ required: true, message: '请填写服务名称' }]"
       />
-      <wd-picker v-model="form.categoryId" :rules="[{ required: true, message: '请选择服务分类' }]" label="服务分类" align-right :columns="columns" />
+      <MyCellGroup>
+        <MyCell noBorder required label="服务分类" @click="toCats">
+          <text v-if="!catName" f14 c-#bfbfbf pr-5px>
+            请选择
+          </text>
+          <text v-else f14>
+            {{ catName }}
+          </text>
+        </MyCell>
+      </MyCellGroup>
+
+      <!-- <wd-picker v-model="form.categoryId" :rules="[{ required: true, message: '请选择服务分类' }]" label="服务分类" align-right :columns="columns" /> -->
       <wd-input
         v-model="form.duration"
         label="服务时长"

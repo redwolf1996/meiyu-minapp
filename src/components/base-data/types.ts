@@ -2,7 +2,7 @@ export interface FormService {
   /**
    * 分类id
    */
-  categoryId: number
+  categoryId: ComputedRef<number>
   /**
    * 描述
    */
