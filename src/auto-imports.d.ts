@@ -26,6 +26,7 @@ declare global {
   const createSharedComposable: typeof import('@vueuse/core')['createSharedComposable']
   const createTemplatePromise: typeof import('@vueuse/core')['createTemplatePromise']
   const createUnrefFn: typeof import('@vueuse/core')['createUnrefFn']
+  const curClassify: typeof import('./stores/classify')['curClassify']
   const customRef: typeof import('vue')['customRef']
   const debouncedRef: typeof import('@vueuse/core')['debouncedRef']
   const debouncedWatch: typeof import('@vueuse/core')['debouncedWatch']
@@ -113,6 +114,7 @@ declare global {
   const refThrottled: typeof import('@vueuse/core')['refThrottled']
   const refWithControl: typeof import('@vueuse/core')['refWithControl']
   const request: typeof import('./utils/request')['default']
+  const resetCurClassify: typeof import('./stores/classify')['resetCurClassify']
   const resetRichData: typeof import('./stores/rich-edit-data')['resetRichData']
   const resolveComponent: typeof import('vue')['resolveComponent']
   const resolveRef: typeof import('@vueuse/core')['resolveRef']
@@ -342,6 +344,7 @@ declare module 'vue' {
     readonly IMG_BASE: UnwrapRef<typeof import('./utils/index')['IMG_BASE']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
     readonly createApp: UnwrapRef<typeof import('vue')['createApp']>
+    readonly curClassify: UnwrapRef<typeof import('./stores/classify')['curClassify']>
     readonly customRef: UnwrapRef<typeof import('vue')['customRef']>
     readonly defineAsyncComponent: UnwrapRef<typeof import('vue')['defineAsyncComponent']>
     readonly defineComponent: UnwrapRef<typeof import('vue')['defineComponent']>
@@ -404,6 +407,7 @@ declare module 'vue' {
     readonly readonly: UnwrapRef<typeof import('vue')['readonly']>
     readonly ref: UnwrapRef<typeof import('vue')['ref']>
     readonly request: UnwrapRef<typeof import('./utils/request')['default']>
+    readonly resetCurClassify: UnwrapRef<typeof import('./stores/classify')['resetCurClassify']>
     readonly resetRichData: UnwrapRef<typeof import('./stores/rich-edit-data')['resetRichData']>
     readonly resolveComponent: UnwrapRef<typeof import('vue')['resolveComponent']>
     readonly richData: UnwrapRef<typeof import('./stores/rich-edit-data')['richData']>

@@ -6,12 +6,7 @@ style:
 <script lang="ts" setup>
 import type { CatItem } from '@/types'
 
-const props = withDefaults(defineProps<{
-  type: 0 | 1 | 2
-}>(), {
-  type: 0,
-})
-const type = ref(props.type)
+const type = computed(() => curClassify.value.type)
 const names = ['服务', '产品', '卡项']
 const urls = [
   '/business/service/category',
@@ -86,12 +81,9 @@ async function getList() {
   }
 }
 
-onLoad((payload) => {
-  type.value = payload?.type ?? 0
-})
-
 onMounted(() => {
   getList()
+  resetCurClassify()
   uni.setNavigationBarTitle({ title: `选择${typeName.value}分类` })
 })
 
@@ -100,6 +92,11 @@ function toggleCheck(item: CatItem) {
     v.checked = false
   })
   item.checked = true
+  console.log(item)
+}
+
+function selCat() {
+  uni.navigateBack()
 }
 </script>
 
@@ -125,7 +122,7 @@ function toggleCheck(item: CatItem) {
         </view>
       </view>
       <view class="h50px" />
-      <view color-white fixed bottom-50px style="width: calc(100% - 40px);">
+      <view color-white fixed bottom-50px style="width: calc(100% - 40px);" @click="selCat">
         <wd-button size="large" custom-class="theme-bg" block>
           <view flex flex-cc>
             <text>确定</text>
