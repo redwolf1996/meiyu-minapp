@@ -25,17 +25,17 @@ const arr = ref<Step[]>([
     status: computed(() => orgInfo?.serviceCountStatus),
     path: '/pagesA/init/steps/step2',
   },
+  // {
+  //   step: '二',
+  //   name: '添加卡项',
+  //   desc: '创建你的第一个会员卡：折扣卡、充值卡或者次卡',
+  //   icon: 'i-material-symbols-edit-square',
+  //   color: 'color-#1a66ff',
+  //   status: computed(() => orgInfo?.cardCountStatus),
+  //   path: '/pagesA/init/steps/step3',
+  // },
   {
     step: '二',
-    name: '添加卡项',
-    desc: '创建你的第一个会员卡：折扣卡、充值卡或者次卡',
-    icon: 'i-material-symbols-edit-square',
-    color: 'color-#1a66ff',
-    status: computed(() => orgInfo?.cardCountStatus),
-    path: '/pagesA/init/steps/step3',
-  },
-  {
-    step: '三',
     name: '添加产品',
     desc: '创建你的第一个产品，方便客户购买开单',
     icon: 'i-material-symbols-edit-square',
@@ -44,7 +44,7 @@ const arr = ref<Step[]>([
     path: '/pagesA/init/steps/step4',
   },
   {
-    step: '四',
+    step: '三',
     name: '添加员工',
     desc: '创建你的第一个手艺人，方便客户预约时指定手艺人',
     icon: 'i-material-symbols-edit-square',
@@ -72,7 +72,7 @@ function toAdd(path: string) {
       :src="`${IMG_BASE}/decorator@4x.png`"
     />
     <text fs-32>
-      &nbsp;&nbsp;完成以下4步，即可接单赚钱了&nbsp; &nbsp;
+      &nbsp;&nbsp;完成以下3步，即可接单赚钱了&nbsp; &nbsp;
     </text>
     <wd-img
       :width="16"

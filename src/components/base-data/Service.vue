@@ -22,13 +22,12 @@ const form = reactive<FormService>({
   price: null,
   price2: null,
   desc: computed(() => richData.value.content),
-  isShow: -1,
-  payType: -1,
+  isShow: 1,
+  payType: 1,
   serviceColor: '#EC5428',
-  serverToType: [],
+  serverToType: [2],
 })
 const catName = computed(() => curClassify.value.name)
-console.log(catName.value)
 const colors = ref<Color[]>([{
   value: '#EC5428',
   isActive: true,
@@ -65,7 +64,7 @@ const selects1: GrigSelectItem[] = [
   {
     label: '展示',
     value: 1,
-    isActive: false,
+    isActive: true,
   },
   {
     label: '不展示',
@@ -76,13 +75,13 @@ const selects1: GrigSelectItem[] = [
 
 const selects2: GrigSelectItem[] = [
   {
-    label: '上门服务',
-    value: 1,
-    isActive: false,
-  },
-  {
     label: '到店服务',
     value: 2,
+    isActive: true,
+  },
+  {
+    label: '上门服务',
+    value: 1,
     isActive: false,
   },
 ]
@@ -91,7 +90,7 @@ const selects3: GrigSelectItem[] = [
   {
     label: '在线支付',
     value: 1,
-    isActive: false,
+    isActive: true,
   },
   {
     label: '到店支付',
@@ -114,9 +113,19 @@ function toRichEdit() {
   uni.navigateTo({ url: '/pagesA/rich-edit' })
 }
 
-function save() {
-  console.log(imageValue.value)
-  console.log(form)
+async function save() {
+  await request.post<any>('/business/service', form)
+  useUserStore().setUserInfo({ orgInfo: {
+    serviceCountStatus: 1,
+  } })
+  uni.navigateBack()
+}
+
+function skip() {
+  useUserStore().setUserInfo({ orgInfo: {
+    serviceCountStatus: 2,
+  } })
+  uni.navigateBack()
 }
 
 function toCats() {
@@ -283,7 +292,7 @@ function toCats() {
     </wd-button>
   </view>
 
-  <view v-if="props.showSkip" mx-40rpx color-white>
+  <view v-if="props.showSkip" mx-40rpx color-white @click="skip()">
     <wd-button size="large" type="text" block>
       <view flex flex-cc color-333>
         <text>跳过</text>

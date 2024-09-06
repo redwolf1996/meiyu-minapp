@@ -33,7 +33,7 @@ function save() {
 
 <template>
   <piaoyiEditor
-    fontsize="13px"
+    fontsize="12px"
     :values="values"
     :maxlength="30000"
     :readOnly="false"

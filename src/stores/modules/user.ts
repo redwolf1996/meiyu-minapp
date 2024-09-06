@@ -68,7 +68,7 @@ interface UserInfo {
 interface OrgInfo {
   adminId: number // 店铺所有者id
   cardCount: number // 卡项数
-  cardCountStatus: 0 | 1 | 2 // 0未添加 1已添加 2稍后添加
+  cardCountStatus?: 0 | 1 | 2 // 0未添加 1已添加 2稍后添加
   createTime: string
   expiresTime: string
   historyIntegration: number // 累计积分

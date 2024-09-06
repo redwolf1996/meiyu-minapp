@@ -75,7 +75,7 @@ async function getList() {
     list.value = res.data.map((v) => {
       return {
         ...v,
-        checked: false,
+        checked: curClassify.value.id === v.id,
       }
     })
   }
@@ -83,7 +83,6 @@ async function getList() {
 
 onMounted(() => {
   getList()
-  resetCurClassify()
   uni.setNavigationBarTitle({ title: `选择${typeName.value}分类` })
 })
 
