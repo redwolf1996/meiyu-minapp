@@ -16,9 +16,10 @@ style:
 //   uni.switchTab({ url: '/pages/tab-business-dashboard' })
 // }
 
-// function toLogin() {
-//   uni.navigateTo({ url: '/pagesA/login/index' })
-// }
+toLogin()
+function toLogin() {
+  uni.navigateTo({ url: '/pagesA/login/index' })
+}
 </script>
 
 <template>

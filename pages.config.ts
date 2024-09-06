@@ -50,4 +50,26 @@ export default defineUniPages({
       },
     ],
   },
+  preloadRule: {
+    'pages/index': {
+      network: 'all',
+      packages: ['pagesA', 'pagesB'],
+    },
+    'pages/tab-business-dashboard': {
+      network: 'all',
+      packages: ['pagesA', 'pagesB'],
+    },
+    'pages/tab-business-book': {
+      network: 'all',
+      packages: ['pagesA', 'pagesB'],
+    },
+    'pages/tab-business-customer': {
+      network: 'all',
+      packages: ['pagesA', 'pagesB'],
+    },
+    'pages/tab-business-my': {
+      network: 'all',
+      packages: ['pagesA', 'pagesB'],
+    },
+  },
 })

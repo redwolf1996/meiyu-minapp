@@ -22,7 +22,7 @@ function wxlogin() {
         const { token, isRegister } = (await login({ code: res.code })).data
         useUserStore().setUserInfo({ token, isRegister })
         if (isRegister) {
-          uni.switchTab({ url: '/pagesA/dashboard/index' })
+          uni.switchTab({ url: '/pages/tab-business-dashboard' })
         }
         else {
           uni.navigateTo({ url: '/pagesA/login/role-select' })
