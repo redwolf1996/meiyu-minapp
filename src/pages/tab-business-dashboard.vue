@@ -9,29 +9,29 @@ import { getMenuButtonInfo } from '@/utils/index'
 
 const menuButtonWidth = ref(0)
 const h = getMenuButtonInfo()
-// const userInfo = useUserStore().userInfo
+const userInfo = useUserStore()?.userInfo
 
 onLoad(() => {
-  // initStore()
+  initStore()
   // #ifdef MP-WEIXIN
   const menuButtonInfo = getMenuButtonInfo()
-  menuButtonWidth.value = menuButtonInfo.barWidth
+  menuButtonWidth.value = menuButtonInfo?.barWidth
   // #endif
 })
 
 // 店铺初始化
-// async function initStore() {
-//   const res = await request.get<any>('/business/info')
-//   useUserStore().setUserInfo(res.data)
-//   const org = userInfo.orgInfo
-//   if (!org) { // 如果店铺未创建
-//     my.navigateTo('/pagesA/init/steps/step1')
-//   }
-//   else if (!org.cardCountStatus || !org.staffCountStatus
-//     || !org.productCountStatus || !org.serviceCountStatus) { // 如果新手引导未完成
-//     my.navigateTo('/pagesA/init/steps/index')
-//   }
-// }
+async function initStore() {
+  const res = await request.get<any>('/business/info')
+  useUserStore().setUserInfo(res.data)
+  const org = userInfo.orgInfo
+  if (!org) { // 如果店铺未创建
+    my.navigateTo('/pagesA/init/steps/step1')
+  }
+  else if (!org.cardCountStatus || !org.staffCountStatus
+    || !org.productCountStatus || !org.serviceCountStatus) { // 如果新手引导未完成
+    my.navigateTo('/pagesA/init/steps/index')
+  }
+}
 </script>
 
 <template>
