@@ -11,7 +11,7 @@ const menuButtonWidth = ref(0)
 const h = getMenuButtonInfo()
 const userInfo = useUserStore()?.userInfo
 
-onLoad(() => {
+onShow(() => {
   initStore()
   // #ifdef MP-WEIXIN
   const menuButtonInfo = getMenuButtonInfo()
