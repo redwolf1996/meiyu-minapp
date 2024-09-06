@@ -4,21 +4,21 @@ style:
 </route>
 
 <script lang="ts" setup>
-const userInfo = useUserStore().userInfo
-if (userInfo.token && userInfo.isRegister) {
-  toDashboard()
-}
-else {
-  toLogin()
-}
+// const userInfo = useUserStore().userInfo
+// if (userInfo.token && userInfo.isRegister) {
+//   toDashboard()
+// }
+// else {
+//   toLogin()
+// }
 
-function toDashboard() {
-  uni.switchTab({ url: '/pages/tab-business-dashboard' })
-}
+// function toDashboard() {
+//   uni.switchTab({ url: '/pages/tab-business-dashboard' })
+// }
 
-function toLogin() {
-  uni.navigateTo({ url: '/pagesA/login/index' })
-}
+// function toLogin() {
+//   uni.navigateTo({ url: '/pagesA/login/index' })
+// }
 </script>
 
 <template>

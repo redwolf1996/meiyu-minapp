@@ -4,12 +4,14 @@ style:
 </route>
 
 <script lang="ts" setup>
-import api from '@/api/business'
-
 const checked = ref(false)
 const code = ref('')
 function select(e: UniHelper.CheckboxGroupOnChangeEvent) {
   checked.value = !!e.detail.value.includes('cb')
+}
+
+function login(p: { code: string }) {
+  return request.post<{ token: string, isRegister: 0 | 1 }>('/business/wx-login', p)
 }
 
 function wxlogin() {
@@ -17,7 +19,7 @@ function wxlogin() {
     async success(res) {
       code.value = res.code
       if (res.code) {
-        const { token, isRegister } = (await api.login({ code: res.code })).data
+        const { token, isRegister } = (await login({ code: res.code })).data
         useUserStore().setUserInfo({ token, isRegister })
         if (isRegister) {
           uni.switchTab({ url: '/pagesA/dashboard/index' })

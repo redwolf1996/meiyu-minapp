@@ -146,8 +146,6 @@ function toCats() {
           </text>
         </MyCell>
       </MyCellGroup>
-
-      <!-- <wd-picker v-model="form.categoryId" :rules="[{ required: true, message: '请选择服务分类' }]" label="服务分类" align-right :columns="columns" /> -->
       <wd-input
         v-model="form.duration"
         label="服务时长"
