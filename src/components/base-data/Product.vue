@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { GrigSelectItem } from '@/types'
-import type { Color, FormProduct } from './types'
+import type { FormProduct } from './types'
 import { CatType } from '@/stores/classify'
 
 const props = withDefaults(defineProps<{
@@ -26,37 +26,6 @@ const form = reactive<FormProduct>({
   inventory: 0,
 })
 const catName = computed(() => curClassify.value.name)
-const colors = ref<Color[]>([{
-  value: '#EC5428',
-  isActive: true,
-}, {
-  value: '#2F4BEC',
-  isActive: false,
-}, {
-  value: '#51B7BB',
-  isActive: false,
-}, {
-  value: '#A6EA99',
-  isActive: false,
-}, {
-  value: '#5BCBCF',
-  isActive: false,
-}, {
-  value: '#409EFF',
-  isActive: false,
-}, {
-  value: '#B73082',
-  isActive: false,
-}, {
-  value: '#E77F61',
-  isActive: false,
-}, {
-  value: '#EF7F31',
-  isActive: false,
-}, {
-  value: '#F5D348',
-  isActive: false,
-}])
 
 const selects1: GrigSelectItem[] = [
   {
@@ -71,57 +40,23 @@ const selects1: GrigSelectItem[] = [
   },
 ]
 
-const selects2: GrigSelectItem[] = [
-  {
-    label: '到店服务',
-    value: 2,
-    isActive: true,
-  },
-  {
-    label: '上门服务',
-    value: 1,
-    isActive: false,
-  },
-]
-
-const selects3: GrigSelectItem[] = [
-  {
-    label: '在线支付',
-    value: 1,
-    isActive: true,
-  },
-  {
-    label: '到店支付',
-    value: 2,
-    isActive: false,
-  },
-]
-
-function onClickColor(item: Color) {
-  colors.value.forEach((v) => {
-    v.isActive = false
-  })
-  item.isActive = true
-  form.serviceColor = item.value
-}
-
 function toRichEdit() {
-  richData.value.key = 'service'
-  richData.value.title = '添加服务说明'
+  richData.value.key = 'product'
+  richData.value.title = '添加产品说明'
   uni.navigateTo({ url: '/pagesA/rich-edit' })
 }
 
 async function save() {
-  await request.post<any>('/business/service', form)
+  await request.post<any>('/business/product', form)
   useUserStore().setUserInfo({ orgInfo: {
-    serviceCountStatus: 1,
+    productCountStatus: 1,
   } })
   uni.navigateBack()
 }
 
 function skip() {
   useUserStore().setUserInfo({ orgInfo: {
-    serviceCountStatus: 2,
+    productCountStatus: 2,
   } })
   uni.navigateBack()
 }
@@ -138,24 +73,31 @@ function toCats() {
       <wd-input
         v-model="form.name"
         label="产品名称"
-        prop="value1"
         placeholder="请输入"
         suffix-icon="arrow-right"
         :rules="[{ required: true, message: '请填写产品名称' }]"
       />
-      <wd-picker v-model="value" :rules="[{ required: true, message: '请选择产品分类' }]" label="产品分类" align-right :columns="columns" />
+      <MyCellGroup>
+        <MyCell noBorder borderTop required label="产品分类" @click="toCats()">
+          <text v-if="!catName" f14 c-#bfbfbf pr-5px>
+            请选择
+          </text>
+          <text v-else f14>
+            {{ catName }}
+          </text>
+        </MyCell>
+      </MyCellGroup>
       <wd-input
-        v-model="model.value2"
+        v-model="form.unit"
         label="单位"
-        prop="value23232"
         placeholder="请填写"
         suffix-icon="arrow-right"
-        :rules="[{ required: true, message: '请填写单位' }]"
       />
-      <wd-picker
-        v-model="value"
-        :rules="[{ required: true, message: '请选择库存' }]"
-        label="库存" align-right :columns="columns"
+      <wd-input
+        v-model="form.inventory"
+        label="库存"
+        placeholder="请填写"
+        suffix-icon="arrow-right"
       />
     </wd-cell-group>
 
@@ -167,14 +109,20 @@ function toCats() {
         <text>建议尺寸：800*800像素，最多上传5张</text>
       </view>
       <view flex-ac flex mt-20rpx>
-        <wd-upload :file-list="fileList" :limit="5" action="https://ftf.jd.com/api/uploadImg" @change="handleChange" />
+        <uni-file-picker
+          v-model="imageValue"
+          fileMediatype="image"
+          mode="grid"
+          :limit="5"
+        />
       </view>
     </view>
 
     <view h-24rpx />
     <wd-cell-group :border="true">
       <wd-input
-        v-model="model.value1"
+        v-model="form.price"
+        type="number"
         label="原价"
         prop="value1"
         placeholder="请输入"
@@ -182,62 +130,30 @@ function toCats() {
         :rules="[{ required: true, message: '请填写原价' }]"
       />
       <wd-input
-        v-model="model.value2"
+        v-model="form.price2"
+        type="number"
         label="优惠价"
         prop="value23232"
-        type="number"
-        placeholder="请输入"
+        placeholder="若不填，则客户按原价购买"
         suffix-icon="arrow-right"
       />
     </wd-cell-group>
 
     <view h-24rpx />
-    <view bg-white px-40rpx py-24rpx @click="showDrawer = true">
+    <view bg-white px-40rpx py-24rpx @click="toRichEdit">
       <view mb-20rpx class="form-item-title">
         <text>产品说明</text>
       </view>
-      <rich-text v-if="txt" :nodes="txt" />
+      <!-- 0是初始状态 11是清空后还包含空标签 <p><br></p>的字符数 -->
+      <rich-text v-if="richData.len !== 0 && richData.len !== 11" :nodes="richData.content" />
       <wd-textarea
         v-else
-        v-model="value"
         readonly
         placeholderStyle="font-size: 14px;color:#C9CDD4;"
         placeholder="请输入产品说明"
-        :maxlength="500" auto-height clearable show-word-limit
+        auto-height clearable show-word-limit
       />
     </view>
-
-    <wd-popup
-      v-model="showDrawer" :z-index="9999" position="bottom"
-      :closable="true" custom-style="width: 100%;height:90%"
-      @close="handleClose"
-    >
-      <view style="height: 100%;background-color: #fff;">
-        <view p-10px tc fb>
-          产品说明
-        </view>
-        <view class="richtext">
-          <piaoyiEditor
-            fontsize="13px"
-            :values="values"
-            :maxlength="3000"
-            :readOnly="readOnly"
-            :photoUrl="photoUrl"
-            :api="api"
-            :name="name"
-            @changes="setContents"
-          />
-          <view class="">
-            {{ txt }}
-          </view>
-          <!-- <view flex flex-bt mt-20rpx>
-              <wd-button @click="showDrawer = false">
-                保存
-              </wd-button>
-            </view> -->
-        </view>
-      </view>
-    </wd-popup>
 
     <view h-24rpx />
     <view bg-white px-40rpx py-24rpx>
@@ -245,7 +161,7 @@ function toCats() {
         <text>网店售卖</text>
       </view>
       <view h-28rpx />
-      <GridTagSelect v-model="form.val" :sources="sources" />
+      <GridTagSelect v-model="form.isShow" :sources="selects1" />
     </view>
   </wd-form>
 
