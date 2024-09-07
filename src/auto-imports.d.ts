@@ -127,6 +127,7 @@ declare global {
   const shallowReactive: typeof import('vue')['shallowReactive']
   const shallowReadonly: typeof import('vue')['shallowReadonly']
   const shallowRef: typeof import('vue')['shallowRef']
+  const staffScheduling: typeof import('./stores/work-time')['staffScheduling']
   const storeId: typeof import('./utils/index')['storeId']
   const stores: typeof import('./stores/index')['default']
   const syncRef: typeof import('@vueuse/core')['syncRef']
@@ -421,6 +422,7 @@ declare module 'vue' {
     readonly shallowReactive: UnwrapRef<typeof import('vue')['shallowReactive']>
     readonly shallowReadonly: UnwrapRef<typeof import('vue')['shallowReadonly']>
     readonly shallowRef: UnwrapRef<typeof import('vue')['shallowRef']>
+    readonly staffScheduling: UnwrapRef<typeof import('./stores/work-time')['staffScheduling']>
     readonly storeId: UnwrapRef<typeof import('./utils/index')['storeId']>
     readonly stores: UnwrapRef<typeof import('./stores/index')['default']>
     readonly themeColor: UnwrapRef<typeof import('./utils/index')['themeColor']>

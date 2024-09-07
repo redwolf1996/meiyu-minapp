@@ -4,6 +4,14 @@ export interface GrigSelectItem {
   isActive: boolean
 }
 
+export interface GeneralColumn {
+  label: string
+  value: number | string | null
+  isActive?: boolean
+  disabled?: boolean
+  [property: string]: any
+}
+
 /**
  * 服务、产品、卡项分类
  */
