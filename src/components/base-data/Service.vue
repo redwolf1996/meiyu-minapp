@@ -11,7 +11,7 @@ const props = withDefaults(defineProps<{
 const formRef = ref()
 const imageValue = ref<any>([])
 const form = reactive<FormService>({
-  storeId: null,
+  storeId,
   name: '',
   categoryId: computed(() => curClassify.value.id),
   duration: null,

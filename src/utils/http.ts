@@ -14,7 +14,6 @@ const httpInterceptor = {
     options.header = {
       ...options?.header,
       client: 'minapp',
-      // 'X-API-TOKEN': userStore.userInfo.token,
     }
     const token = userStore.userInfo?.token
     if (token)
@@ -43,18 +42,27 @@ export function http<T>(options: UniApp.RequestOptions) {
             uni.navigateTo({ url: '/pagesA/login/index' })
             return reject(res)
           }
+          else if (data.code !== 200) {
+            uni.showToast({
+              icon: 'none',
+              title: (res.data as Data<T>).msg,
+              duration: 2000,
+            })
+            reject(res)
+          }
           resolve(data)
         }
         else {
           uni.showToast({
             icon: 'none',
             title: (res.data as Data<T>).msg || '请求错误',
+            duration: 2000,
           })
           reject(res)
         }
       },
       fail(err) {
-        uni.showToast({ icon: 'none', title: '网络错误' })
+        uni.showToast({ icon: 'none', title: '网络错误', duration: 2000 })
         reject(err)
       },
     })
