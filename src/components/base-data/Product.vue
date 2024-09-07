@@ -63,6 +63,7 @@ function skip() {
 
 function toCats() {
   curClassify.value.type = CatType.Product
+  curClassify.value.multiple = false
   uni.navigateTo({ url: '/pagesA/cats' })
 }
 </script>

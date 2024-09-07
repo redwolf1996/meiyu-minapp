@@ -129,7 +129,8 @@ function skip() {
 }
 
 function toCats() {
-  curClassify.value.type = 0 // 服务分类
+  curClassify.value.type = CatType.Service // 服务分类
+  curClassify.value.multiple = false
   uni.navigateTo({ url: '/pagesA/cats' })
 }
 </script>

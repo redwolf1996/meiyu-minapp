@@ -27,6 +27,7 @@ function showPicker(item: WeekTime, index: number) {
 function confirm() {
   columnsList.value[curIndex.value].startTime = value1.value
   columnsList.value[curIndex.value].endTime = value2.value
+  showPop.value = false
 }
 
 function save() {

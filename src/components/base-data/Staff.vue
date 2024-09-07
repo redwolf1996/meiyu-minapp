@@ -56,6 +56,7 @@ function skip() {
 
 function toCats() {
   curClassify.value.type = CatType.Service
+  curClassify.value.multiple = true
   uni.navigateTo({ url: '/pagesA/cats' })
 }
 
@@ -136,9 +137,14 @@ function toWorkTimes() {
       <wd-cell-group :border="true">
         <MyCellGroup>
           <MyCell noBorder borderTop required label="工作时间" @click="toWorkTimes()">
-            <text f14 c-#bfbfbf pr-5px>
+            <text v-if="!staffScheduling.length" f14 c-#bfbfbf pr-5px>
               请选择
             </text>
+            <view v-else>
+              <view v-for="(itm, idx) in staffScheduling" :key="`time-${idx}`" f14>
+                {{ `周${WeekMap[itm.weekCode]}：${itm.startTime}-${itm.endTime}` }}
+              </view>
+            </view>
           </MyCell>
           <MyCell noBorder borderTop required label="服务分类" @click="toCats()">
             <text v-if="!catName" f14 c-#bfbfbf pr-5px>

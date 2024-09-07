@@ -30,7 +30,7 @@ const emits = defineEmits(['click'])
         *
       </text>
     </view>
-    <view flex flex-ac gap-6px>
+    <view flex flex-ac gap-6px style="max-width: 60%">
       <slot />
       <wd-icon v-if="props.showArrow" name="arrow-right" size="16px" color="#bfbfbf" />
     </view>

@@ -5,10 +5,11 @@ export enum CatType {
 }
 
 interface Classify {
-  id: number
+  id: number | number[]
   storeId: number
   name: string
   type: CatType.Service | CatType.Product | CatType.Card // 1服务 2产品 3卡项
+  multiple: boolean // 是否多选
 }
 
 export const curClassify = ref<Classify>({
@@ -16,6 +17,7 @@ export const curClassify = ref<Classify>({
   storeId: null,
   name: null,
   type: 0,
+  multiple: false,
 })
 
 export function resetCurClassify() {
@@ -23,5 +25,7 @@ export function resetCurClassify() {
     id: null,
     storeId: null,
     name: null,
+    type: 0,
+    multiple: false,
   })
 }

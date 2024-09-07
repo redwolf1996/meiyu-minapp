@@ -87,12 +87,18 @@ onMounted(() => {
 })
 
 function toggleCheck(item: CatItem) {
-  list.value.forEach((v) => {
-    v.checked = false
-  })
-  item.checked = true
-  curClassify.value.id = item.id
-  curClassify.value.name = item.name
+  if (!curClassify.value.multiple) {
+    list.value.forEach((v) => {
+      v.checked = false
+    })
+    item.checked = true
+  }
+  else {
+    item.checked = !item.checked
+  }
+
+  curClassify.value.id = !curClassify.value.multiple ? item.id : list.value?.map(v => v.id)
+  curClassify.value.name = !curClassify.value.multiple ? item.name : list.value?.map(v => v.name).join('、')
   curClassify.value.storeId = storeId
 }
 

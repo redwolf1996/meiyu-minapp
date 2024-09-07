@@ -10,6 +10,7 @@ declare global {
   const EffectScope: typeof import('vue')['EffectScope']
   const IMG_BASE: typeof import('./utils/index')['IMG_BASE']
   const TopSearch: typeof import('./components/TopSearch.vue')['default']
+  const WeekMap: typeof import('./utils/consts')['WeekMap']
   const asyncComputed: typeof import('@vueuse/core')['asyncComputed']
   const autoResetRef: typeof import('@vueuse/core')['autoResetRef']
   const computed: typeof import('vue')['computed']
@@ -349,6 +350,7 @@ declare module 'vue' {
     readonly CatType: UnwrapRef<typeof import('./stores/classify')['CatType']>
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
     readonly IMG_BASE: UnwrapRef<typeof import('./utils/index')['IMG_BASE']>
+    readonly WeekMap: UnwrapRef<typeof import('./utils/consts')['WeekMap']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
     readonly createApp: UnwrapRef<typeof import('vue')['createApp']>
     readonly curClassify: UnwrapRef<typeof import('./stores/classify')['curClassify']>
