@@ -602,7 +602,7 @@
           "path": "init/steps/step4",
           "type": "page",
           "style": {
-            "navigationBarTitleText": "添加卡项",
+            "navigationBarTitleText": "添加产品",
             "navigationStyle": "custom"
           }
         },

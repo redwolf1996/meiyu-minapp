@@ -28,7 +28,7 @@ function handleChange(e: any) {
 </script>
 
 <template>
-  <StepNav :step="4" />
+  <StepNav :step="3" />
   <view mt-10px tc fs-40>
     请添加您的第一个员工
   </view>

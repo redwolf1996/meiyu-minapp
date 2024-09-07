@@ -1,6 +1,6 @@
 <route lang="yaml">
 style:
-  navigationBarTitleText: 添加卡项
+  navigationBarTitleText: 添加产品
   navigationStyle: custom
 </route>
 
@@ -60,7 +60,7 @@ function handleClose() {}
 </script>
 
 <template>
-  <StepNav :step="3" />
+  <StepNav :step="2" />
   <view mt-10px tc fs-40>
     您可以尝试添加第一个产品
   </view>

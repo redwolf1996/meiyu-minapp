@@ -146,7 +146,7 @@ function toCats() {
         :rules="[{ required: true, message: '请填写服务名称' }]"
       />
       <MyCellGroup>
-        <MyCell noBorder required label="服务分类" @click="toCats">
+        <MyCell noBorder borderTop required label="服务分类" @click="toCats">
           <text v-if="!catName" f14 c-#bfbfbf pr-5px>
             请选择
           </text>
@@ -165,7 +165,7 @@ function toCats() {
         :rules="[{ required: true, message: '填写服务时长' }]"
       >
         <template #suffix>
-          <view f12 theme-color>
+          <view fs-20 theme-color pl-1px>
             分钟
           </view>
         </template>
