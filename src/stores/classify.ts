@@ -1,8 +1,14 @@
+export enum CatType {
+  Service,
+  Product,
+  Card,
+}
+
 interface Classify {
   id: number
   storeId: number
   name: string
-  type: 0 | 1 | 2 // 1服务 2产品 3卡项
+  type: CatType.Service | CatType.Product | CatType.Card // 1服务 2产品 3卡项
 }
 
 export const curClassify = ref<Classify>({

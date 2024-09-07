@@ -59,10 +59,52 @@ export interface FormService {
    * 当前门店
    */
   storeId: number
-  [property: string]: any
 }
 
 export interface Color {
   value: string
   isActive: boolean
+}
+
+export interface FormProduct {
+  /**
+   * 分类id
+   */
+  categoryId: ComputedRef<number>
+  /**
+   * 描述
+   */
+  desc?: ComputedRef<string>
+  /**
+   * 图片地址
+   */
+  imgs: ComputedRef<string[]>
+  /**
+   * 库存
+   */
+  inventory: number
+  /**
+   * 是否网店销售，0否，1是
+   */
+  isShow: number
+  /**
+   * 服务名
+   */
+  name: string
+  /**
+   * 售价两位小数，60.00
+   */
+  price: number
+  /**
+   * 划线价两位小数
+   */
+  price2?: number
+  /**
+   * 当前门店
+   */
+  storeId: number
+  /**
+   * 单位
+   */
+  unit: string
 }
