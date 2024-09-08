@@ -35,7 +35,7 @@ const form = reactive<FormStaff>({
   roleCode: 1,
   notes: '',
   scheduling: computed(() => staffScheduling.value),
-  serviceCategory: [],
+  serviceCategory: computed(() => curClassify.value.id),
 })
 const catName = computed(() => curClassify.value.name)
 

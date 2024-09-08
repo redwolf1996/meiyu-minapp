@@ -141,7 +141,7 @@ export interface FormStaff {
   /**
    * 服务分类id
    */
-  serviceCategory: number[]
+  serviceCategory: ComputedRef<number | number[]>
   storeId: number
   /**
    * 姓名

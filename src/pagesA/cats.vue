@@ -97,8 +97,12 @@ function toggleCheck(item: CatItem) {
     item.checked = !item.checked
   }
 
-  curClassify.value.id = !curClassify.value.multiple ? item.id : list.value?.map(v => v.id)
-  curClassify.value.name = !curClassify.value.multiple ? item.name : list.value?.map(v => v.name).join('、')
+  curClassify.value.id = !curClassify.value.multiple
+    ? item.id
+    : list.value?.filter(v0 => v0.checked).map(v => v.id)
+  curClassify.value.name = !curClassify.value.multiple
+    ? item.name
+    : list.value?.filter(v0 => v0.checked).map(v => v.name).join('、')
   curClassify.value.storeId = storeId
 }
 

@@ -27,8 +27,7 @@ async function initStore() {
   if (!org) { // 如果店铺未创建
     my.navigateTo('/pagesA/init/steps/step1')
   }
-  else if (!org.cardCountStatus || !org.staffCountStatus
-    || !org.productCountStatus || !org.serviceCountStatus) { // 如果新手引导未完成
+  else if (!org.staffCountStatus || !org.productCountStatus || !org.serviceCountStatus) { // 如果新手引导未完成
     my.navigateTo('/pagesA/init/steps/index')
   }
 }

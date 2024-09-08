@@ -4,6 +4,9 @@ style:
 </route>
 
 <script lang="ts" setup>
+function toDashboard() {
+  uni.switchTab({ url: '/pages/tab-business-dashboard' })
+}
 </script>
 
 <template>
@@ -22,7 +25,7 @@ style:
     可以正常营业了
   </view>
   <view h-300rpx />
-  <view mx-40rpx mt-64rpx color-white>
+  <view mx-40rpx mt-64rpx color-white @click="toDashboard()">
     <wd-button size="large" custom-class="theme-bg" block>
       <view flex flex-cc>
         <text>进入工作台</text>
