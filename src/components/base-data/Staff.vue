@@ -31,8 +31,8 @@ const form = reactive<FormStaff>({
   userName: null,
   phone: null,
   gender: 2,
-  jobCode: -1,
-  roleCode: -1,
+  jobCode: 1,
+  roleCode: 1,
   notes: '',
   scheduling: computed(() => staffScheduling.value),
   serviceCategory: [],
@@ -136,7 +136,7 @@ function toWorkTimes() {
       </view>
       <wd-cell-group :border="true">
         <MyCellGroup>
-          <MyCell noBorder borderTop required label="工作时间" @click="toWorkTimes()">
+          <MyCell noBorder required label="工作时间" @click="toWorkTimes()">
             <text v-if="!staffScheduling.length" f14 c-#bfbfbf pr-5px>
               请选择
             </text>

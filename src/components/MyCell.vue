@@ -18,7 +18,7 @@ const emits = defineEmits(['click'])
 
 <template>
   <view
-    py-20rpx
+    py-30rpx
     flex flex-bt flex-ac class="cell"
     :class="{ 'no-border': props.noBorder, 'border-top': props.borderTop }"
     @click="emits('click', $event)"
@@ -47,10 +47,10 @@ const emits = defineEmits(['click'])
   top: 5px !important;
 }
 .cell {
-  border-bottom: 1px solid #ebeef1;
+  border-bottom: 1rpx solid var(--wot-color-border-light, #e8e8e8);
 }
 .border-top {
-  border-top: 1px solid #ebeef1;
+  border-top: 1rpx solid var(--wot-color-border-light, #e8e8e8);
 }
 .no-border {
   border-bottom: 1px solid transparent;
