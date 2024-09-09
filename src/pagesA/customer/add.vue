@@ -81,6 +81,8 @@ function openCalendar() {
         />
         <wd-input
           v-model="form.phone"
+          type="number"
+          :maxlength="11"
           label="手机号"
           placeholder="请输入"
           suffix-icon="arrow-right"

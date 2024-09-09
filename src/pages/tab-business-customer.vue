@@ -32,7 +32,9 @@ const sources3: any = [
 ]
 const show = ref(false)
 const show2 = ref(false)
-
+function toAddCustomer() {
+  uni.navigateTo({ url: '/pagesA/customer/add' })
+}
 function handleChange1() {}
 </script>
 
@@ -44,7 +46,7 @@ function handleChange1() {}
         <uni-icons style="transform: translateY(-50%);top: 50%;" pa left-24rpx type="search" color="#86909C" size="24" />
         <uni-icons style="transform: translateY(-50%);top: 50%;" pa right-24rpx type="clear" color="#86909C" size="24" />
       </view>
-      <view rd-2px w-28px h-28px lh-28px tc bg-#F2F3F5 fs-32 fb>
+      <view rd-2px w-28px h-28px lh-28px tc bg-#F2F3F5 fs-32 fb @click="toAddCustomer()">
         +
       </view>
     </view>
