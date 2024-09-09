@@ -33,6 +33,10 @@ const form = reactive<Customer>({
 })
 const staffList = ref<{ label: string, value: number }[]>([])
 
+function save() {
+  console.log(form)
+}
+
 onLoad(() => {
   setStaffList()
 })
@@ -144,7 +148,7 @@ function openCalendar() {
       />
     </view>
 
-    <view mx-40rpx mt-48rpx color-white>
+    <view mx-40rpx mt-48rpx color-white @click="save()">
       <wd-button size="large" custom-class="theme-bg" block>
         <view flex flex-cc>
           <text>保存</text>

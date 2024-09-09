@@ -163,6 +163,7 @@ declare global {
   const useActiveElement: typeof import('@vueuse/core')['useActiveElement']
   const useAjaxPolling: typeof import('./utils/usePolling')['useAjaxPolling']
   const useAnimate: typeof import('@vueuse/core')['useAnimate']
+  const useArea: typeof import('./hooks/useArea')['useArea']
   const useArrayDifference: typeof import('@vueuse/core')['useArrayDifference']
   const useArrayEvery: typeof import('@vueuse/core')['useArrayEvery']
   const useArrayFilter: typeof import('@vueuse/core')['useArrayFilter']
@@ -264,7 +265,7 @@ declare global {
   const usePointer: typeof import('@vueuse/core')['usePointer']
   const usePointerLock: typeof import('@vueuse/core')['usePointerLock']
   const usePointerSwipe: typeof import('@vueuse/core')['usePointerSwipe']
-  const usePolling: typeof import('./utils/usePolling')['usePolling']
+  const usePolling: typeof import('./hooks/usePolling')['usePolling']
   const usePreferredColorScheme: typeof import('@vueuse/core')['usePreferredColorScheme']
   const usePreferredContrast: typeof import('@vueuse/core')['usePreferredContrast']
   const usePreferredDark: typeof import('@vueuse/core')['usePreferredDark']
@@ -450,10 +451,13 @@ declare module 'vue' {
     readonly toValue: UnwrapRef<typeof import('vue')['toValue']>
     readonly triggerRef: UnwrapRef<typeof import('vue')['triggerRef']>
     readonly unref: UnwrapRef<typeof import('vue')['unref']>
+    readonly useArea: UnwrapRef<typeof import('./hooks/useArea')['useArea']>
     readonly useAttrs: UnwrapRef<typeof import('vue')['useAttrs']>
+    readonly useColPickerData: UnwrapRef<typeof import('./hooks/useColPickerData')['useColPickerData']>
     readonly useCssModule: UnwrapRef<typeof import('vue')['useCssModule']>
     readonly useCssVars: UnwrapRef<typeof import('vue')['useCssVars']>
     readonly useMerchantStore: UnwrapRef<typeof import('./stores/modules/business')['useMerchantStore']>
+    readonly usePolling: UnwrapRef<typeof import('./hooks/usePolling')['usePolling']>
     readonly useSlots: UnwrapRef<typeof import('vue')['useSlots']>
     readonly useToast: UnwrapRef<typeof import('wot-design-uni')['useToast']>
     readonly useUserStore: UnwrapRef<typeof import('./stores/modules/user')['useUserStore']>

@@ -44,6 +44,8 @@ text {
   .wd-input__label,
   .wd-picker__label {
     padding-left: 0px !important;
+    // min-width: 20% !important;
+    // max-width: 20% !important;
   }
   .wd-cell__left.is-required::after,
   .wd-input__label.is-required::after,
