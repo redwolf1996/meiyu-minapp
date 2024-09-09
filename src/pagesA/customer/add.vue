@@ -5,10 +5,26 @@
   </route>
 
 <script lang="ts" setup>
-// const fileList = ref<any[]>([
-//   { url: 'https://img12.360buyimg.com//n0/jfs/t1/29118/6/4823/55969/5c35c16bE7c262192/c9fdecec4b419355.jpg' },
-// ])
-const form = ref()
+import type { Customer } from './types'
+
+const form = reactive<Customer>({
+  storeId,
+  name: '',
+  phone: '',
+  noteName: '',
+  source: 1,
+  artisanId: null,
+  adviserId: null,
+  level: 1,
+  gender: 2,
+  birthday: '',
+  wechatCode: '',
+  province: '',
+  city: '',
+  county: '',
+  address: '',
+  notes: '',
+})
 const columns = ref(['选项1', '选项2', '选项3'])
 const model: any = ref({
   value1: 0,
