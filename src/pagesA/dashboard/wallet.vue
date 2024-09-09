@@ -4,7 +4,19 @@ style:
 </route>
 
 <script lang="ts" setup>
+import type { Wallet } from './types'
+
 const show = ref(false)
+const info = ref<Wallet>()
+
+onShow(() => {
+  getInfo()
+})
+
+async function getInfo() {
+  const res = await request.get<Wallet>(`/business/store-wallet/${storeId}`)
+  info.value = res.data
+}
 </script>
 
 <template>
@@ -20,7 +32,7 @@ const show = ref(false)
     <view flex flex-cc c-fff>
       <view v-if="show" tc>
         <text fs-64>
-          23232.23
+          {{ info.platformAmount ?? '--' }}
         </text>
       </view>
       <view v-else tc style="transform: translateY(10rpx);">
@@ -34,7 +46,7 @@ const show = ref(false)
     </view>
     <view h-40px />
     <view class="btn">
-      <text>全部提现到零钱</text>
+      <text>全部提现到微信零钱</text>
     </view>
     <view h-44px />
     <view class="cash" c-fff flex flex-cc tc p-10px>
@@ -43,15 +55,15 @@ const show = ref(false)
           累计收入(元)
         </view>
         <view f14 mt10rpx>
-          1232131
+          {{ info.totalAmount ?? '--' }}
         </view>
       </view>
       <view wp-33.3333>
         <view f12 style="opacity: 0.5;">
-          提现中收入(元)
+          可提现余额(元)
         </view>
         <view f14 mt10rpx>
-          1232131
+          {{ info.frozenAmount ?? '--' }}
         </view>
       </view>
       <view wp-33.3333>
@@ -59,7 +71,7 @@ const show = ref(false)
           已提现收入(元)
         </view>
         <view f14 mt10rpx>
-          1232131
+          {{ info.withdrawAmount ?? '--' }}
         </view>
       </view>
     </view>

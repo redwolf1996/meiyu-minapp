@@ -40,6 +40,10 @@ async function initStore() {
 
   getInfo()
 }
+
+function toWallet() {
+  uni.navigateTo({ url: '/pagesA/dashboard/wallet' })
+}
 </script>
 
 <template>
@@ -109,8 +113,9 @@ async function initStore() {
         </view>
         <view
           class="wallet"
-          px-16px py-8px color-white pa flex flex-ac right-0 top-20px
-          style="background-color: rgba(255,255,255,0.2);border-radius: 31px 0px 0px 31px;"
+          px-16px
+          py-8px color-white pa flex flex-ac right-0 top-20px style="background-color: rgba(255,255,255,0.2);border-radius: 31px 0px 0px 31px;"
+          @click="toWallet()"
         >
           <wd-img
             :width="16"
