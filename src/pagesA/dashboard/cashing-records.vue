@@ -35,7 +35,7 @@ function handleChange1() {
   </wd-drop-menu>
   <view flex flex-ac flex-bt f14 c-888888 bg-white px-30rpx pb-20rpx>
     <text>提现总金额：2866</text>
-    <text>共 {{ info.total ?? '--' }} 条记录</text>
+    <text>共 {{ info?.total ?? '--' }} 条记录</text>
   </view>
   <view mx-32rpx my-32rpx px-32rpx py-24rpx bg-#fff rd-16rpx>
     <view py-24rpx>
