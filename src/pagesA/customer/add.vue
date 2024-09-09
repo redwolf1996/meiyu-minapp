@@ -33,8 +33,9 @@ const form = reactive<Customer>({
 })
 const staffList = ref<{ label: string, value: number }[]>([])
 
-function save() {
-  console.log(form)
+async function save() {
+  await request.post<null>('/business/store-customer', form)
+  uni.switchTab({ url: '/pages/tab-business-customer' })
 }
 
 onLoad(() => {
