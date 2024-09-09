@@ -8,6 +8,7 @@ style:
 import { getMenuButtonInfo } from '@/utils/index'
 import type { DashBoardData } from './types'
 
+const toast = useToast()
 const menuButtonWidth = ref(0)
 const h = getMenuButtonInfo()
 const userInfo = useUserStore()?.userInfo
@@ -44,9 +45,28 @@ async function initStore() {
 function toWallet() {
   uni.navigateTo({ url: '/pagesA/dashboard/wallet' })
 }
+function toRenew() {
+  uni.navigateTo({ url: '/pagesA/my/renew' })
+}
+function toScanCode() {
+  toast.warning('开发中')
+}
+function toCard() {
+  toast.warning('开发中')
+}
+function toAddCustomer() {}
+function toAddBooking() {}
+function toCashing() {}
+function toOrderList() {}
+function toBookingList() {}
+function toStoreManage() {}
+function toInvite() {
+  uni.navigateTo({ url: '/pagesA/my/invite' })
+}
 </script>
 
 <template>
+  <wd-toast />
   <view px-24rpx>
     <wd-navbar :fixed="true" :safeAreaInsetTop="true" :bordered="false">
       <template #title>
@@ -196,7 +216,7 @@ function toWallet() {
             您的服务已于2024年10月6日到期，历史数据仍可正常查询，请尽快续费以享受完整服务。
           </view>
         </view>
-        <view class="renew-btn">
+        <view class="renew-btn" @click="toRenew()">
           立即续费
         </view>
       </view>
@@ -207,35 +227,35 @@ function toWallet() {
         </view>
         <view h-20px />
         <view class="grid">
-          <view>
+          <view @click="toScanCode()">
             <i i-ant-design-scan-outlined fs-64 c-1563ff />
             <text>扫码核销</text>
           </view>
-          <view>
+          <view @click="toAddCustomer()">
             <i i-ant-design-user-add-outlined fs-64 c-1563ff />
             <text>添加客户</text>
           </view>
-          <view>
+          <view @click="toAddBooking()">
             <i i-material-symbols-add-notes-outline fs-64 c-1563ff />
             <text>新增预约</text>
           </view>
-          <view>
+          <view @click="toCashing()">
             <i i-mdi-credit-card-check-outline fs-64 c-1563ff />
             <text>开单收银</text>
           </view>
-          <view>
+          <view @click="toOrderList()">
             <i i-mdi-order-bool-ascending fs-64 c-1563ff />
             <text>订单列表</text>
           </view>
-          <view>
+          <view @click="toBookingList()">
             <i i-tabler-address-book fs-64 c-1563ff />
             <text>预约列表</text>
           </view>
-          <view>
+          <view @click="toStoreManage()">
             <i i-mingcute-shop-line fs-64 c-1563ff />
             <text>店务管理</text>
           </view>
-          <view>
+          <view @click="toCard()">
             <i i-heroicons-outline-credit-card fs-64 c-1563ff />
             <text>会员卡项</text>
           </view>
@@ -246,7 +266,7 @@ function toWallet() {
     </view>
   </view>
 
-  <view wp-100 pf bottom-0 h-48px>
+  <view wp-100 pf bottom-0 h-48px @click="toInvite()">
     <wd-img
       :height="48"
       width="100%"

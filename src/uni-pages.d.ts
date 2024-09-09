@@ -50,9 +50,9 @@ interface NavigateToOptions {
        "/pagesA/my/new-store" |
        "/pagesA/my/protocal" |
        "/pagesA/my/qiwei" |
+       "/pagesA/my/renew" |
        "/pagesA/my/service" |
        "/pagesA/my/settings" |
-       "/pagesA/my/store-info" |
        "/pagesA/my/store" |
        "/pagesA/order/detail" |
        "/pagesA/order/index" |

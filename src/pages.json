@@ -396,6 +396,14 @@
           }
         },
         {
+          "path": "my/renew",
+          "type": "page",
+          "layout": "common",
+          "style": {
+            "navigationBarTitleText": "会员续费"
+          }
+        },
+        {
           "path": "my/service",
           "type": "page",
           "style": {
@@ -407,14 +415,6 @@
           "type": "page",
           "style": {
             "navigationBarTitleText": "设置"
-          }
-        },
-        {
-          "path": "my/store-info",
-          "type": "page",
-          "layout": "common",
-          "style": {
-            "navigationBarTitleText": "会员续费"
           }
         },
         {
