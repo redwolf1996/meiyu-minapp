@@ -54,7 +54,9 @@ function toScanCode() {
 function toCard() {
   toast.warning('开发中')
 }
-function toAddCustomer() {}
+function toAddCustomer() {
+  uni.navigateTo({ url: '/pagesA/customer/add' })
+}
 function toAddBooking() {}
 function toCashing() {}
 function toOrderList() {}
