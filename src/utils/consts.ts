@@ -17,7 +17,7 @@ export const CustomerSourceMap = {
   1: '线上',
   2: '线下',
   3: '转介绍',
-  4: 'Walk In',
+  4: 'walk-in',
   5: '其他',
 }
 

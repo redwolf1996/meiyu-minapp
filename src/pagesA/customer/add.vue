@@ -1,12 +1,16 @@
 <route lang="yaml">
-  layout: common
-  style:
-    navigationBarTitleText: 添加客户
-  </route>
+layout: common
+style:
+  navigationBarTitleText: 添加客户
+</route>
 
 <script lang="ts" setup>
 import type { Customer } from './types'
+import { CustomerSources, GenderSources } from './data'
+import api from '../api'
 
+const formRef = ref()
+const calendar = ref()
 const form = reactive<Customer>({
   storeId,
   name: '',
@@ -26,96 +30,107 @@ const form = reactive<Customer>({
   notes: '',
 })
 const columns = ref(['选项1', '选项2', '选项3'])
-const model: any = ref({
-  value1: 0,
+const staffList = ref<{ label: string, value: number }[]>([])
+
+onLoad(() => {
+  setStaffList()
 })
-const value = ref()
+
+async function setStaffList() {
+  const res = await api.getStaffList({ storeId })
+  staffList.value = res.data.list?.map((v) => {
+    return {
+      label: v.userName,
+      value: v.staffId,
+    }
+  })
+}
+
+function calendarConfirm(e) {
+  form.birthday = e.fulldate
+}
+
+function openCalendar() {
+  calendar.value.open()
+}
 </script>
 
 <template>
-  <wd-form ref="form" :model="model">
+  <wu-calendar ref="calendar" :insert="false" @confirm="calendarConfirm" />
+  <wd-form ref="formRef" :model="form">
     <wd-cell-group :border="true">
       <view>
         <wd-input
-          v-model="model.value1"
+          v-model="form.name"
           label="姓名"
-          prop="value1"
           placeholder="请输入"
           suffix-icon="arrow-right"
           :rules="[{ required: true, message: '姓名必填' }]"
         />
         <wd-input
-          v-model="model.value1"
+          v-model="form.noteName"
           label="备注名"
-          prop="value1"
           placeholder="请输入"
           suffix-icon="arrow-right"
-          :rules="[{ required: true, message: '备注名必填' }]"
         />
         <wd-input
-          v-model="model.value1"
+          v-model="form.phone"
           label="手机号"
-          prop="value23232"
           placeholder="请输入"
           suffix-icon="arrow-right"
           :rules="[{ required: true, message: '手机号必填' }]"
         />
         <wd-picker
-          v-model="model.value1"
-          label="客户来源" align-right :columns="columns"
+          v-model="form.source"
+          label="客户来源" align-right :columns="CustomerSources"
         />
         <wd-picker
-          v-model="model.value1"
-          label="手艺人" align-right :columns="columns"
+          v-model="form.artisanId"
+          label="手艺人" align-right :columns="staffList"
         />
         <wd-picker
-          v-model="model.value1"
-          label="营销顾问" align-right :columns="columns"
+          v-model="form.adviserId"
+          label="营销顾问" align-right :columns="staffList"
         />
       </view>
     </wd-cell-group>
 
     <view h-24rpx />
     <wd-picker
-      v-model="model.value1"
+      v-model="form.level"
       label="会员等级" align-right :columns="columns"
     />
 
     <view h-24rpx />
     <wd-cell-group :border="true">
-      <wd-cell :rules="[{ required: true, message: '性别必填' }]" title="性别" center>
-        <view class="flex flex-xr flex-ac">
-          <wd-icon name="arrow-right" size="16px" color="#bfbfbf" />
-          <wd-radio-group modelValue="1" inline shape="dot">
-            <wd-radio value="1">
-              女
-            </wd-radio>
-            <wd-radio value="2">
-              男
-            </wd-radio>
-            <wd-radio value="3">
-              未知
-            </wd-radio>
-          </wd-radio-group>
-        </view>
-      </wd-cell>
       <wd-picker
-        v-model="model.value1"
-        label="生日" align-right :columns="columns"
+        v-model="form.gender"
+        label="性别" align-right :columns="GenderSources"
       />
+
+      <view px-20px bg-white>
+        <MyCell noBorder borderTop required label="生日" @click="openCalendar()">
+          <text v-if="!form.birthday" f14 c-#bfbfbf pr-5px>
+            请选择
+          </text>
+          <text v-else f14>
+            {{ form.birthday }}
+          </text>
+        </MyCell>
+      </view>
+
       <wd-input
-        v-model="model.value1"
+        v-model="form.wechatCode"
         label="微信"
-        prop="value23232"
         placeholder="请输入"
         suffix-icon="arrow-right"
       />
       <wd-picker
-        v-model="model.value1"
+        v-model="form.noteName"
         label="地址" align-right :columns="columns"
       />
       <wd-input
-        v-model="model.value1"
+        v-model="form.address"
         label="详细地址"
         prop="value23232"
         placeholder="请输入"
@@ -126,7 +141,7 @@ const value = ref()
     <view h-24rpx />
     <view bg-white px-40rpx py-24rpx>
       <wd-textarea
-        v-model="value"
+        v-model="form.notes"
         placeholderStyle="font-size: 14px;color:#C9CDD4;"
         placeholder="请输入客户备注" :maxlength="200" auto-height clearable show-word-limit
       />
