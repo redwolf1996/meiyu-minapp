@@ -6,10 +6,12 @@ style:
 
 <script lang="ts" setup>
 import { getMenuButtonInfo } from '@/utils/index'
+import type { DashBoardData } from './types'
 
 const menuButtonWidth = ref(0)
 const h = getMenuButtonInfo()
 const userInfo = useUserStore()?.userInfo
+const info = ref<DashBoardData>()
 
 onShow(() => {
   initStore()
@@ -19,17 +21,24 @@ onShow(() => {
   // #endif
 })
 
+async function getInfo() {
+  const res = await request.get<DashBoardData>(`/business/workbench/${storeId}`)
+  info.value = res.data
+}
+
 // 店铺初始化
 async function initStore() {
   const res = await request.get<any>('/business/info')
   useUserStore().setUserInfo(res.data)
   const org = userInfo.orgInfo
   if (!org) { // 如果店铺未创建
-    my.navigateTo('/pagesA/init/steps/step1')
+    return my.navigateTo('/pagesA/init/steps/step1')
   }
   else if (!org.staffCountStatus || !org.productCountStatus || !org.serviceCountStatus) { // 如果新手引导未完成
-    my.navigateTo('/pagesA/init/steps/index')
+    return my.navigateTo('/pagesA/init/steps/index')
   }
+
+  getInfo()
 }
 </script>
 
@@ -195,6 +204,10 @@ async function initStore() {
         <view class="grid">
           <view>
             <i i-ant-design-user-add-outlined fs-64 c-1563ff />
+            <text>扫码核销</text>
+          </view>
+          <view>
+            <i i-ant-design-user-add-outlined fs-64 c-1563ff />
             <text>添加客户</text>
           </view>
           <view>
@@ -216,6 +229,10 @@ async function initStore() {
           <view>
             <i i-mingcute-shop-line fs-64 c-1563ff />
             <text>店务管理</text>
+          </view>
+          <view>
+            <i i-mingcute-shop-line fs-64 c-1563ff />
+            <text>会员卡项</text>
           </view>
         </view>
       </view>
@@ -254,7 +271,7 @@ async function initStore() {
 .grid {
   display: grid;
   grid-gap: 16px;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   > view {
     text-align: center;
     display: flex;
