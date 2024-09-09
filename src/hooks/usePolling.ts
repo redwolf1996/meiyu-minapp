@@ -3,7 +3,7 @@ export function usePolling() {
 
   const timer = ref<number>()
 
-  function startTimer(func: Function | AnonymousFunc, delay: number = 1000) {
+  function startTimer(func: AnyFunction | AnonymousFunc, delay: number = 1000) {
     stopTimer()
     myInterval(func, delay)
   }
@@ -13,7 +13,7 @@ export function usePolling() {
     timer.value = undefined
   }
 
-  function myInterval(func: Function | AnonymousFunc, delay: number) {
+  function myInterval(func: AnyFunction | AnonymousFunc, delay: number) {
     timer.value = setTimeout(() => {
       func()
       myInterval(func, delay)

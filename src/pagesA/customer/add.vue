@@ -6,9 +6,11 @@ style:
 
 <script lang="ts" setup>
 import type { Customer } from './types'
-import { CustomerSources, GenderSources } from './data'
+import { CustomerSources, GenderSources, VipSources } from './data'
 import api from '../api'
+import { useArea } from '@/hooks/useArea'
 
+const { area, addressValue, columnChange, handleConfirmAddress } = useArea()
 const formRef = ref()
 const calendar = ref()
 const form = reactive<Customer>({
@@ -17,8 +19,8 @@ const form = reactive<Customer>({
   phone: '',
   noteName: '',
   source: 1,
-  artisanId: null,
-  adviserId: null,
+  artisanId: '',
+  adviserId: '',
   level: 1,
   gender: 2,
   birthday: '',
@@ -29,7 +31,6 @@ const form = reactive<Customer>({
   address: '',
   notes: '',
 })
-const columns = ref(['选项1', '选项2', '选项3'])
 const staffList = ref<{ label: string, value: number }[]>([])
 
 onLoad(() => {
@@ -56,7 +57,7 @@ function openCalendar() {
 </script>
 
 <template>
-  <wu-calendar ref="calendar" :insert="false" @confirm="calendarConfirm" />
+  <wu-calendar ref="calendar" cancelColor="gray" :confirmColor="themeColor" :date="form.birthday || '1995-06-06'" :useToday="false" :insert="false" @confirm="calendarConfirm" />
   <wd-form ref="formRef" :model="form">
     <wd-cell-group :border="true">
       <view>
@@ -98,7 +99,7 @@ function openCalendar() {
     <view h-24rpx />
     <wd-picker
       v-model="form.level"
-      label="会员等级" align-right :columns="columns"
+      label="会员等级" align-right :columns="VipSources"
     />
 
     <view h-24rpx />
@@ -125,14 +126,10 @@ function openCalendar() {
         placeholder="请输入"
         suffix-icon="arrow-right"
       />
-      <wd-picker
-        v-model="form.noteName"
-        label="地址" align-right :columns="columns"
-      />
+      <wd-col-picker v-model="addressValue" align-right label="地址" :columns="area" :column-change="columnChange" @confirm="handleConfirmAddress(form)" />
       <wd-input
         v-model="form.address"
         label="详细地址"
-        prop="value23232"
         placeholder="请输入"
         suffix-icon="arrow-right"
       />

@@ -6,11 +6,11 @@ export interface Customer {
   /**
    * 顾问，员工列表storeStaffId
    */
-  adviserId?: number | null
+  adviserId?: number | null | ''
   /**
    * 手艺人，员工列表storeStaffId
    */
-  artisanId?: number | null
+  artisanId?: number | null | ''
   /**
    * 头像
    */

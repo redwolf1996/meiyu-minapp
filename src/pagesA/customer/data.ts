@@ -11,3 +11,8 @@ export const GenderSources = [
   { label: '男', value: 1 },
   { label: '女', value: 2 },
 ]
+
+export const VipSources = [
+  { label: '普通客户', value: 1 },
+  { label: 'VIP客户', value: 2 },
+]

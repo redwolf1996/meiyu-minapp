@@ -188,7 +188,7 @@ declare global {
   const useClipboard: typeof import('@vueuse/core')['useClipboard']
   const useClipboardItems: typeof import('@vueuse/core')['useClipboardItems']
   const useCloned: typeof import('@vueuse/core')['useCloned']
-  const useColPickerData: typeof import('./pagesA/hooks/useColPickerData')['useColPickerData']
+  const useColPickerData: typeof import('./hooks/useColPickerData')['useColPickerData']
   const useColorMode: typeof import('@vueuse/core')['useColorMode']
   const useConfirmDialog: typeof import('@vueuse/core')['useConfirmDialog']
   const useCounter: typeof import('@vueuse/core')['useCounter']
@@ -451,11 +451,9 @@ declare module 'vue' {
     readonly triggerRef: UnwrapRef<typeof import('vue')['triggerRef']>
     readonly unref: UnwrapRef<typeof import('vue')['unref']>
     readonly useAttrs: UnwrapRef<typeof import('vue')['useAttrs']>
-    readonly useColPickerData: UnwrapRef<typeof import('./pagesA/hooks/useColPickerData')['useColPickerData']>
     readonly useCssModule: UnwrapRef<typeof import('vue')['useCssModule']>
     readonly useCssVars: UnwrapRef<typeof import('vue')['useCssVars']>
     readonly useMerchantStore: UnwrapRef<typeof import('./stores/modules/business')['useMerchantStore']>
-    readonly usePolling: UnwrapRef<typeof import('./utils/usePolling')['usePolling']>
     readonly useSlots: UnwrapRef<typeof import('vue')['useSlots']>
     readonly useToast: UnwrapRef<typeof import('wot-design-uni')['useToast']>
     readonly useUserStore: UnwrapRef<typeof import('./stores/modules/user')['useUserStore']>
