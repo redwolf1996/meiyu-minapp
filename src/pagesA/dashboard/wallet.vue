@@ -17,6 +17,13 @@ async function getInfo() {
   const res = await request.get<Wallet>(`/business/store-wallet/${storeId}`)
   info.value = res.data
 }
+
+function toDetail() {
+  uni.navigateTo({ url: '/pagesA/dashboard/income-detail' })
+}
+function toRecords() {
+  uni.navigateTo({ url: '/pagesA/dashboard/cashing-records' })
+}
 </script>
 
 <template>
@@ -77,7 +84,7 @@ async function getInfo() {
     </view>
   </view>
 
-  <view py-26rpx px-40rpx style="border-bottom: 1px solid #EBEEF1;">
+  <view py-26rpx px-40rpx style="border-bottom: 1px solid #EBEEF1;" @click="toDetail()">
     <view flex flex-bt>
       <view flex flex-cc gap-26rpx>
         <wd-img
@@ -95,7 +102,7 @@ async function getInfo() {
     </view>
   </view>
 
-  <view p-26rpx px-40rpx style="border-bottom: 1px solid #EBEEF1;">
+  <view p-26rpx px-40rpx style="border-bottom: 1px solid #EBEEF1;" @click="toRecords()">
     <view flex flex-bt>
       <view flex flex-cc gap-26rpx>
         <wd-img

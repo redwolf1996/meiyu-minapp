@@ -6,6 +6,7 @@ style:
 
 <script lang="ts" setup>
 import { getMenuButtonInfo } from '@/utils/index'
+import type { BusinessInfo } from './types'
 
 const menuButtonWidth = ref(0)
 const h = getMenuButtonInfo()
@@ -21,7 +22,7 @@ onLoad(() => {
 
 // 店铺初始化
 async function initStore() {
-  const res = await request.get<any>('/business/info')
+  const res = await request.get<BusinessInfo>('/business/info')
   useUserStore().setUserInfo(res.data)
   const org = userInfo.orgInfo
   if (!org) { // 如果店铺未创建

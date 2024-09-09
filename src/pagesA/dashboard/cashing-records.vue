@@ -12,6 +12,9 @@ const option1 = ref<Record<string, any>[]>([
   { label: '近半年', value: 3 },
   { label: '近一年', value: 4 },
 ])
+onShow(() => {
+
+})
 function handleChange1() {
 
 }
