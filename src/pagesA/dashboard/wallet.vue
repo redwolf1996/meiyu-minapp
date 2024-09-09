@@ -39,7 +39,7 @@ function toRecords() {
     <view flex flex-cc c-fff>
       <view v-if="show" tc>
         <text fs-64>
-          {{ info.platformAmount ?? '--' }}
+          {{ info?.platformAmount ?? '--' }}
         </text>
       </view>
       <view v-else tc style="transform: translateY(10rpx);">
@@ -62,7 +62,7 @@ function toRecords() {
           累计收入(元)
         </view>
         <view f14 mt10rpx>
-          {{ info.totalAmount ?? '--' }}
+          {{ info?.totalAmount ?? '--' }}
         </view>
       </view>
       <view wp-33.3333>
@@ -70,7 +70,7 @@ function toRecords() {
           可提现余额(元)
         </view>
         <view f14 mt10rpx>
-          {{ info.frozenAmount ?? '--' }}
+          {{ info?.frozenAmount ?? '--' }}
         </view>
       </view>
       <view wp-33.3333>
@@ -78,7 +78,7 @@ function toRecords() {
           已提现收入(元)
         </view>
         <view f14 mt10rpx>
-          {{ info.withdrawAmount ?? '--' }}
+          {{ info?.withdrawAmount ?? '--' }}
         </view>
       </view>
     </view>

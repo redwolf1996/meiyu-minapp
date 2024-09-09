@@ -73,7 +73,7 @@ export const my = {
 
 export function getStoreId() {
   // TODO 28是有测试数据的id，开发完毕后去掉
-  return 28
+  // return 28
 
   const lastStoreId = useUserStore().userInfo?.lastStoreId
   // TODO [0]前面不加问号会导致一个大坑=》在开发者工具上不报错，到了真机调试的时候各种报错
