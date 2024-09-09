@@ -4,6 +4,8 @@ style:
 </route>
 
 <script lang="ts" setup>
+import type { CashingRecords } from './types'
+
 const value1 = ref(1)
 const option1 = ref<Record<string, any>[]>([
   { label: '全部', value: 0 },
@@ -12,8 +14,15 @@ const option1 = ref<Record<string, any>[]>([
   { label: '近半年', value: 3 },
   { label: '近一年', value: 4 },
 ])
-onShow(() => {
-
+const reqParams = reactive({
+  storeId,
+  pageNum: 1,
+  pageSize: 10,
+})
+const info = ref<CashingRecords>()
+onShow(async () => {
+  const res = await request.get<CashingRecords>('/business/store-withdraw', reqParams)
+  info.value = res.data
 })
 function handleChange1() {
 
@@ -26,7 +35,7 @@ function handleChange1() {
   </wd-drop-menu>
   <view flex flex-ac flex-bt f14 c-888888 bg-white px-30rpx pb-20rpx>
     <text>提现总金额：2866</text>
-    <text>共 7 条记录</text>
+    <text>共 {{ info.total ?? '--' }} 条记录</text>
   </view>
   <view mx-32rpx my-32rpx px-32rpx py-24rpx bg-#fff rd-16rpx>
     <view py-24rpx>

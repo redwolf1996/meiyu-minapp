@@ -25,7 +25,7 @@ export interface BusinessInfo {
   /**
    * 生日，生日
    */
-  birthday: null
+  birthday: string
   /**
    * 商户id，登录人的唯一标识
    */
@@ -181,4 +181,54 @@ export interface StoreList {
   updateBy?: number
   updateTime?: string
   [property: string]: any
+}
+
+export interface CashingRecords {
+  list: CashList[]
+  total: number
+}
+
+export interface CashList {
+  /**
+   * 提现金额
+   */
+  amount: number
+  /**
+   * 创建时间
+   */
+  createTime: string
+  /**
+   * 完成时间
+   */
+  finishTime: string
+  id: number
+  /**
+   * 审核状态，1待审核，2通过，3驳回
+   */
+  inspectRemark: number
+  inspectRemarkDesc: string
+  /**
+   * 审核时间
+   */
+  inspectTime: string
+  orgId: number
+  /**
+   * 驳回原因
+   */
+  overruleReason: string
+  /**
+   * 完成状态，：1->初始，2->进行中，3->完成
+   */
+  status: number
+  statusDesc: string
+  storeId: number
+  /**
+   * 提现方式，1银行卡，2微信零钱
+   */
+  type: number
+  typeDesc: string
+  /**
+   * 编号
+   */
+  withdrawNo: string
 }
