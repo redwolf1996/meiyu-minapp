@@ -245,14 +245,6 @@
           }
         },
         {
-          "path": "customer/index",
-          "type": "page",
-          "style": {
-            "navigationBarTitleText": "客户",
-            "navigationBarBackgroundColor": "#ffffff"
-          }
-        },
-        {
           "path": "dashboard/cash-apply",
           "type": "page",
           "style": {
@@ -271,14 +263,6 @@
           "type": "page",
           "style": {
             "navigationBarTitleText": "收支明细"
-          }
-        },
-        {
-          "path": "dashboard/index",
-          "type": "page",
-          "style": {
-            "navigationBarTitleText": "工作台",
-            "navigationStyle": "custom"
           }
         },
         {

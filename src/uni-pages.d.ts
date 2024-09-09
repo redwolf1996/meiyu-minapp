@@ -29,11 +29,9 @@ interface NavigateToOptions {
        "/pagesA/card/share" |
        "/pagesA/customer/add" |
        "/pagesA/customer/detail" |
-       "/pagesA/customer/index" |
        "/pagesA/dashboard/cash-apply" |
        "/pagesA/dashboard/cashing-records" |
        "/pagesA/dashboard/income-detail" |
-       "/pagesA/dashboard/index" |
        "/pagesA/dashboard/pay-ways" |
        "/pagesA/dashboard/store" |
        "/pagesA/dashboard/wallet" |
