@@ -5,7 +5,7 @@ style:
 
 <script lang="ts" setup>
 function toRenew() {
-  uni.navigateTo({ url: '/pagesA/my/store-info' })
+  uni.navigateTo({ url: '/pagesA/my/renew' })
 }
 </script>
 
