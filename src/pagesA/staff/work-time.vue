@@ -43,12 +43,12 @@ function save() {
 </script>
 
 <template>
-  <view px-20px py-12px f12 lh-18px c-#FF6619 bg-#FFEFE6>
+  <view px-20px py-12px f12 lh-18px c-FF6619 bg-FFEFE6>
     员工工作时间指的是员工上班的时间，该时间内客户可以预约该员工的服务项。设置正确的工作时间可以降低取消率，提高店铺业绩。
   </view>
   <view h-20rpx />
   <view p-40rpx bg-white>
-    <view c-#141414 fb f16>
+    <view c-141414 fb f16>
       选择每周工作时间
     </view>
     <view h-40rpx />
@@ -61,7 +61,7 @@ function save() {
           <wd-switch v-model="item.active" size="24px" active-color="#1A66FF" @change="changeItemActive(item)" />
         </view>
         <view flex flex-ac @click="showPicker(item, index)">
-          <view c-#3B3D3D pr-10rpx>
+          <view c-3B3D3D pr-10rpx>
             {{ item.startTime }}-{{ item.endTime }}
           </view>
           <wd-icon name="arrow-right" size="16px" color="#bfbfbf" />

@@ -73,11 +73,11 @@ function clickAdd({ item }) {
           <div fb f16>
             幻彩悦光爽肤水
           </div>
-          <div f12 color-#9A9FA5>
+          <div f12 color-9A9FA5>
             网店展示
           </div>
           <div>
-            <span fb f12 px-12rpx py-7rpx bg-#B5E4CA rd-12rpx>￥128</span>
+            <span fb f12 px-12rpx py-7rpx bg-B5E4CA rd-12rpx>￥128</span>
           </div>
         </div>
       </div>
@@ -108,11 +108,11 @@ function clickAdd({ item }) {
           <div fb f16>
             幻彩悦光爽肤水
           </div>
-          <div f12 color-#9A9FA5>
+          <div f12 color-9A9FA5>
             网店展示
           </div>
           <div>
-            <span fb f12 px-12rpx py-7rpx bg-#B5E4CA rd-12rpx>￥128</span>
+            <span fb f12 px-12rpx py-7rpx bg-B5E4CA rd-12rpx>￥128</span>
           </div>
         </div>
       </div>

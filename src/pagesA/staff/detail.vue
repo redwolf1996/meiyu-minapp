@@ -8,13 +8,13 @@ style:
 
 <template>
   <view f14 flex flex-xr gap-40rpx px-50rpx pb-50rpx pt-20rpx>
-    <text c-#1A66FF>
+    <text c-1A66FF>
       修改
     </text>
-    <text c-#1A66FF>
+    <text c-1A66FF>
       邀请登录
     </text>
-    <text c-#F96229>
+    <text c-F96229>
       删除
     </text>
   </view>
@@ -32,7 +32,7 @@ style:
       麦子欢
     </view>
     <view mt-20rpx flex flex-cc gap-10rpx>
-      <text c-#95969D f12>
+      <text c-95969D f12>
         店铺拥有者
       </text>
       <wd-img
@@ -50,7 +50,7 @@ style:
           2700
         </view>
         <view h-20rpx />
-        <view f12 fb c-#95969D>
+        <view f12 fb c-95969D>
           业绩(元)
         </view>
       </view>
@@ -59,7 +59,7 @@ style:
           19
         </view>
         <view h-20rpx />
-        <view f12 fb c-#95969D>
+        <view f12 fb c-95969D>
           客户预约
         </view>
       </view>
@@ -68,7 +68,7 @@ style:
           14
         </view>
         <view h-20rpx />
-        <view f12 fb c-#95969D>
+        <view f12 fb c-95969D>
           客户
         </view>
       </view>

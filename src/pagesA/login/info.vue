@@ -69,7 +69,7 @@ function handleSubmit() {
       />
     </wd-cell-group>
     <view px-20px pt-80px>
-      <view f14 color-#F7CD24>
+      <view f14 color-F7CD24>
         姓名填写须知
       </view>
       <view pt-10px f12 color-333>

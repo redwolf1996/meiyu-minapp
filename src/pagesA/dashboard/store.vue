@@ -9,7 +9,7 @@ style:
   <view class="container">
     <view p-30rpx bg-white rd-8px mb40rpx>
       <view mb16px flex>
-        <view h-40rpx w-3.5px bg-#A7C4FD rd-8rpx />
+        <view h-40rpx w-3.5px bg-A7C4FD rd-8rpx />
         <view f18 pl-10px lh-40rpx>
           商品管理
         </view>
@@ -56,7 +56,7 @@ style:
 
     <view p-30rpx bg-white rd-8px mb40rpx>
       <view mb16px flex>
-        <view h-40rpx w-3.5px bg-#A7C4FD rd-8rpx />
+        <view h-40rpx w-3.5px bg-A7C4FD rd-8rpx />
         <view f18 pl-10px lh-40rpx>
           店铺管理
         </view>

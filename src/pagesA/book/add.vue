@@ -81,10 +81,10 @@ function clickItem(item: any) {
     <view mt10px>
       <view v-for="(item, index) in list" :key="`sd-${index}`" flex flex-ac flex-bt bg-white px40rpx py20rpx style="border-bottom: 1px solid #DFDFDF" @click="clickItem(item)">
         <view>
-          <view f14 c-#313131>
+          <view f14 c-313131>
             轻言轻语
           </view>
-          <view f12 c-#777777 mt6px>
+          <view f12 c-777777 mt6px>
             13299999999
           </view>
         </view>
@@ -128,28 +128,28 @@ function clickItem(item: any) {
     </wd-cell-group>
     <MyCellGroup>
       <MyCell label="手艺人" required noBorder borderTop @click="toSelectStaff">
-        <span f14 c-#B6BDBD pr4px>请选择手艺人</span>
+        <span f14 c-B6BDBD pr4px>请选择手艺人</span>
       </MyCell>
     </MyCellGroup>
   </wd-form>
   <view>
     <view flex flex-ac flex-bt f12 px20px py12px>
-      <view c-#3D3D3D>
+      <view c-3D3D3D>
         预约服务
       </view>
-      <view c-#1A66FF>
+      <view c-1A66FF>
         删除
       </view>
     </view>
     <MyCellGroup>
       <MyCell label="每天可服务时段" required noBorder>
-        <span f14 c-#B6BDBD pr4px>请选择</span>
+        <span f14 c-B6BDBD pr4px>请选择</span>
       </MyCell>
-      <view f12 c-#848486 mb10px flex flex-ac flex-bt>
+      <view f12 c-848486 mb10px flex flex-ac flex-bt>
         <view>服务时长</view>
         <view>约40分钟</view>
       </view>
-      <view f12 c-#848486 flex flex-ac flex-bt>
+      <view f12 c-848486 flex flex-ac flex-bt>
         <view>价格</view>
         <view>￥100.00</view>
       </view>
@@ -158,28 +158,28 @@ function clickItem(item: any) {
   </view>
   <view>
     <view flex flex-ac flex-bt f12 px20px py12px>
-      <view c-#3D3D3D>
+      <view c-3D3D3D>
         预约服务
       </view>
-      <view c-#1A66FF>
+      <view c-1A66FF>
         删除
       </view>
     </view>
     <MyCellGroup>
       <MyCell label="每天可服务时段" required noBorder>
-        <span f14 c-#B6BDBD pr4px>请选择</span>
+        <span f14 c-B6BDBD pr4px>请选择</span>
       </MyCell>
-      <view f12 c-#848486 mb10px flex flex-ac flex-bt>
+      <view f12 c-848486 mb10px flex flex-ac flex-bt>
         <view>服务时长</view>
         <view>约40分钟</view>
       </view>
-      <view f12 c-#848486 flex flex-ac flex-bt>
+      <view f12 c-848486 flex flex-ac flex-bt>
         <view>价格</view>
         <view>￥100.00</view>
       </view>
       <view h14px />
     </MyCellGroup>
-    <view style="border-top: 1px solid #EBEEF1" bg-white f14 c-#1A66FF tc h40px lh-40px>
+    <view style="border-top: 1px solid #EBEEF1" bg-white f14 c-1A66FF tc h40px lh-40px>
       +&nbsp;添加服务
     </view>
     <view px20px py12px>

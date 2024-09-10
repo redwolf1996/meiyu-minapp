@@ -19,22 +19,22 @@ function toRenew() {
         :src="`${IMG_BASE}/cat.png`"
       />
       <view flex-1 flex flex-y flex-bt h64px pr>
-        <view c-#141414 f18>
+        <view c-141414 f18>
           Hailey
         </view>
         <view flex flex-ac gap5px>
           <text class="yy">
             营业中
           </text>
-          <text f14 c-#969699>
+          <text f14 c-969699>
             18888888888
           </text>
         </view>
-        <view c-#969699 f14>
+        <view c-969699 f14>
           店铺拥有者
         </view>
         <view tc pa right-0 top-4px>
-          <view c-#969699 fs-20 mb2px>
+          <view c-969699 fs-20 mb2px>
             积分
           </view>
           <view f18>
@@ -81,7 +81,7 @@ function toRenew() {
       <template #icon>
         <wd-icon name="home" size="18px" />
       </template>
-      <span f14 c-#3B3D3D>美婷美甲美睫</span>
+      <span f14 c-3B3D3D>美婷美甲美睫</span>
     </MyCell>
     <MyCell label="联系客服" noBorder>
       <template #icon>
@@ -92,7 +92,7 @@ function toRenew() {
       <template #icon>
         <wd-icon name="evaluation" size="18px" />
       </template>
-      <span f14 c-#B6BDBD>欢迎反馈您使用中遇到的问题</span>
+      <span f14 c-B6BDBD>欢迎反馈您使用中遇到的问题</span>
     </MyCell>
     <MyCell label="关于我们" noBorder>
       <template #icon>
@@ -108,7 +108,7 @@ function toRenew() {
       </template>
     </MyCell>
   </MyCellGroup>
-  <view c-#1A66FF mt20px tc lh-20px>
+  <view c-1A66FF mt20px tc lh-20px>
     <text style="border-bottom: 1px solid #1A66FF;">
       我要开新店
     </text>

@@ -5,12 +5,17 @@ style:
 </route>
 
 <script lang="ts" setup>
+// #ifdef MP-WEIXIN
 import { getMenuButtonInfo } from '@/utils/index'
+// #endif
+
 import type { DashBoardData } from './types'
 
 const toast = useToast()
-const menuButtonWidth = ref(0)
+const menuButtonWidth = ref(10)
+// #ifdef MP-WEIXIN
 const h = getMenuButtonInfo()
+// #endif
 const userInfo = useUserStore()?.userInfo
 const info = ref<DashBoardData>()
 
@@ -31,6 +36,16 @@ async function getInfo() {
 async function initStore() {
   const res = await request.get<any>('/business/info')
   useUserStore().setUserInfo(res.data)
+
+  // TODO H5临时用 后面去掉
+  useUserStore().setUserInfo({
+    orgInfo: {
+      cardCountStatus: 1, // 0未添加 1已添加 2稍后添加
+      productCountStatus: 1,
+      serviceCountStatus: 1,
+      staffCountStatus: 1,
+    },
+  })
   const org = userInfo.orgInfo
   if (!org) { // 如果店铺未创建
     return my.navigateTo('/pagesA/init/steps/step1')
@@ -84,8 +99,8 @@ function toInvite() {
             />
             <text
               style="right: 16rpx;top: -6rpx;"
-              pa top-0 w-30rpx h-30rpx lh-30rpx tc bg-#FE502E
-              round color-#fff font-size-20rpx
+              pa top-0 w-30rpx h-30rpx lh-30rpx tc bg-FE502E
+              round color-fff font-size-20rpx
             >
               3
             </text>
@@ -95,7 +110,9 @@ function toInvite() {
     </wd-navbar>
 
     <view class="conitaner" pr>
-      <view bd :style="{ height: `${h.barHeight + h.barTop}px` }" />
+      <!-- #ifdef MP-WEIXIN -->
+      <view :style="{ height: `${h.barHeight + h.barTop}px` }" />
+      <!-- #endif -->
       <view
         p-40rpx color-white pr
         style="background-size: cover;"
@@ -161,7 +178,7 @@ function toInvite() {
           <view fb f18>
             0
           </view>
-          <view f12 color-#646466 mt-2px>
+          <view f12 color-646466 mt-2px>
             普通客户
           </view>
         </view>
@@ -169,7 +186,7 @@ function toInvite() {
           <view fb f18>
             0
           </view>
-          <view f12 color-#646466 mt-2px>
+          <view f12 color-646466 mt-2px>
             VIP
           </view>
         </view>
@@ -177,7 +194,7 @@ function toInvite() {
           <view fb f18>
             0
           </view>
-          <view f12 color-#646466 mt-2px>
+          <view f12 color-646466 mt-2px>
             本月预约
           </view>
         </view>
@@ -185,7 +202,7 @@ function toInvite() {
           <view fb f18>
             0
           </view>
-          <view f12 color-#646466 mt-2px>
+          <view f12 color-646466 mt-2px>
             待服务
           </view>
         </view>

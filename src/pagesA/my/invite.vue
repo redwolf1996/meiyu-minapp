@@ -31,7 +31,7 @@ style:
     </view>
     <view tc pa top-120px wp100>
       <view h20px />
-      <view c-#434343 f18>
+      <view c-434343 f18>
         邀请码
       </view>
       <view fs-64 mt10px>
@@ -48,7 +48,7 @@ style:
         />
       </view>
       <view h24px />
-      <view tc c-#888888 f14>
+      <view tc c-888888 f14>
         扫码注册
       </view>
       <view mt40px flex flex-cc>
@@ -61,14 +61,14 @@ style:
         </view>
       </view>
       <view mt24px flex flex-cc tc>
-        <text fs-34 c-#1A66FF>
+        <text fs-34 c-1A66FF>
           我的邀请
         </text>
         <wd-icon name="arrow-right" size="16px" color="#1A66FF" />
       </view>
     </view>
   </view>
-  <view tl f12 c-#E66711 px-46rpx py-22rpx>
+  <view tl f12 c-E66711 px-46rpx py-22rpx>
     🎉 只需您的朋友成功激活并使用，双方即可赠送一个月免费使用特权！如此良机，切勿错过！🎁
   </view>
   <view h50px />

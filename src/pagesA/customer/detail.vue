@@ -69,7 +69,7 @@ const tabs = [{
     </view>
     <view grid grid-cols-3 p-40rpx bg-white f14>
       <view>
-        <view c-#818181>
+        <view c-818181>
           余额
         </view>
         <view mt-16rpx>
@@ -77,7 +77,7 @@ const tabs = [{
         </view>
       </view>
       <view>
-        <view c-#818181 flex flex-ac>
+        <view c-818181 flex flex-ac>
           会员卡
           <wd-img
             :width="16"
@@ -90,7 +90,7 @@ const tabs = [{
         </view>
       </view>
       <view>
-        <view c-#818181 flex flex-ac>
+        <view c-818181 flex flex-ac>
           可用积分
           <wd-img
             :width="16"
@@ -120,7 +120,7 @@ const tabs = [{
           <view f14 mb10rpx>
             ¥790
           </view>
-          <view f13 c-#818181>
+          <view f13 c-818181>
             累计消费
           </view>
         </view>
@@ -128,7 +128,7 @@ const tabs = [{
           <view f14 mb10rpx>
             6
           </view>
-          <view f13 c-#818181>
+          <view f13 c-818181>
             消费次数
           </view>
         </view>
@@ -136,7 +136,7 @@ const tabs = [{
           <view f14 mb10rpx>
             2024-05-13
           </view>
-          <view f13 c-#818181>
+          <view f13 c-818181>
             上次消费
           </view>
         </view>
@@ -161,15 +161,15 @@ const tabs = [{
                 <view>面部清洁补水</view>
                 <view>￥98</view>
               </view>
-              <view f12 c-#717171>
+              <view f12 c-717171>
                 基础版 x1
               </view>
             </view>
           </view>
-          <view h-1px bg-#EBEBF0 />
+          <view h-1px bg-EBEBF0 />
           <view flex flex-ac flex-bt pt-12px>
             <view>MY2024040910101000045</view>
-            <view c-#FF4070>
+            <view c-FF4070>
               实付：￥98
             </view>
           </view>
@@ -193,15 +193,15 @@ const tabs = [{
                 <view>面部清洁补水</view>
                 <view>￥98</view>
               </view>
-              <view f12 c-#717171>
+              <view f12 c-717171>
                 基础版 x1
               </view>
             </view>
           </view>
-          <view h-1px bg-#EBEBF0 />
+          <view h-1px bg-EBEBF0 />
           <view flex flex-ac flex-bt pt-12px>
             <view>MY2024040910101000045</view>
-            <view c-#FF4070>
+            <view c-FF4070>
               实付：￥98
             </view>
           </view>
@@ -229,47 +229,47 @@ const tabs = [{
               />
             </view>
           </view>
-          <view c-#434343 flex flex-ac flex-bt mb16px f14>
+          <view c-434343 flex flex-ac flex-bt mb16px f14>
             <view>姓名：</view>
             <view>麦子欢</view>
           </view>
-          <view c-#434343 flex flex-ac flex-bt mb16px f14>
+          <view c-434343 flex flex-ac flex-bt mb16px f14>
             <view>备注名：</view>
             <view>麦子欢</view>
           </view>
-          <view c-#434343 flex flex-ac flex-bt mb16px f14>
+          <view c-434343 flex flex-ac flex-bt mb16px f14>
             <view>手机号：</view>
             <view>麦子欢</view>
           </view>
-          <view c-#434343 flex flex-ac flex-bt mb16px f14>
+          <view c-434343 flex flex-ac flex-bt mb16px f14>
             <view>客户来源：</view>
             <view>麦子欢</view>
           </view>
-          <view c-#434343 flex flex-ac flex-bt mb16px f14>
+          <view c-434343 flex flex-ac flex-bt mb16px f14>
             <view>性别：</view>
             <view>麦子欢</view>
           </view>
-          <view c-#434343 flex flex-ac flex-bt mb16px f14>
+          <view c-434343 flex flex-ac flex-bt mb16px f14>
             <view>生日：</view>
             <view>麦子欢</view>
           </view>
-          <view c-#434343 flex flex-ac flex-bt mb16px f14>
+          <view c-434343 flex flex-ac flex-bt mb16px f14>
             <view>微信：</view>
             <view>麦子欢</view>
           </view>
-          <view c-#434343 flex flex-ac flex-bt mb16px f14>
+          <view c-434343 flex flex-ac flex-bt mb16px f14>
             <view>地址：</view>
             <view>麦子欢</view>
           </view>
-          <view c-#434343 flex flex-ac flex-bt mb16px f14>
+          <view c-434343 flex flex-ac flex-bt mb16px f14>
             <view>详细地址：</view>
             <view>麦子欢</view>
           </view>
-          <view c-#434343 flex flex-ac flex-bt mb16px f14>
+          <view c-434343 flex flex-ac flex-bt mb16px f14>
             <view>营销顾问：</view>
             <view>麦子欢</view>
           </view>
-          <view c-#434343 flex flex-ac flex-bt f14>
+          <view c-434343 flex flex-ac flex-bt f14>
             <view>客户备注：</view>
             <view>麦子欢</view>
           </view>
@@ -297,7 +297,7 @@ const tabs = [{
   </wd-action-sheet>
 
   <view pf bottom-0 wp100 style="border-top: 1px solid #eee">
-    <!-- <view h32rpx bg-#F5F5FA /> -->
+    <!-- <view h32rpx bg-F5F5FA /> -->
     <view p-40rpx grid grid-cols-3 grid-gap-10px bg-white>
       <view class="my-btn theme-out rd0" @click="showCard = true">
         开卡充值

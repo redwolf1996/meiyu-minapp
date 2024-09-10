@@ -115,7 +115,7 @@ function selCat() {
   <view px-20px h-90vh overflow-y-auto pr ma>
     <view flex flex-ac h-56px style="border-bottom: 1px solid #eee;" @click="openAdd()">
       <wd-icon name="add-circle" size="22px" color="#1A66FF" />
-      <text c-#1A66FF pl-10px>
+      <text c-1A66FF pl-10px>
         {{ `添加${typeName}分类` }}
       </text>
     </view>

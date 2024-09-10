@@ -21,7 +21,7 @@ const arr = ref<Step[]>([
     name: '添加服务',
     desc: '创建你的第一个服务，方便客户预约',
     icon: 'i-material-symbols-edit-square',
-    color: 'color-#1a66ff',
+    color: 'color-1a66ff',
     status: computed(() => orgInfo?.serviceCountStatus),
     path: '/pagesA/init/steps/step2',
   },
@@ -30,7 +30,7 @@ const arr = ref<Step[]>([
   //   name: '添加卡项',
   //   desc: '创建你的第一个会员卡：折扣卡、充值卡或者次卡',
   //   icon: 'i-material-symbols-edit-square',
-  //   color: 'color-#1a66ff',
+  //   color: 'color-1a66ff',
   //   status: computed(() => orgInfo?.cardCountStatus),
   //   path: '/pagesA/init/steps/step3',
   // },
@@ -39,7 +39,7 @@ const arr = ref<Step[]>([
     name: '添加产品',
     desc: '创建你的第一个产品，方便客户购买开单',
     icon: 'i-material-symbols-edit-square',
-    color: 'color-#1a66ff',
+    color: 'color-1a66ff',
     status: computed(() => orgInfo?.productCountStatus),
     path: '/pagesA/init/steps/step4',
   },
@@ -48,7 +48,7 @@ const arr = ref<Step[]>([
     name: '添加员工',
     desc: '创建你的第一个手艺人，方便客户预约时指定手艺人',
     icon: 'i-material-symbols-edit-square',
-    color: 'color-#1a66ff',
+    color: 'color-1a66ff',
     status: computed(() => orgInfo?.staffCountStatus),
     path: '/pagesA/init/steps/step5',
   },
@@ -105,10 +105,10 @@ function toAdd(path: string) {
             <view v-if="item.status === 0" pr-10rpx theme-color @click="toAdd(item.path)">
               去添加
             </view>
-            <view v-if="item.status === 1" flex pr-10rpx color-#2ecc71 flex-cc>
+            <view v-if="item.status === 1" flex pr-10rpx color-2ecc71 flex-cc>
               <i i-tdesign-check-circle-filled fs-50 />
             </view>
-            <view v-if="item.status === 2" pr-10rpx color-#FA483C>
+            <view v-if="item.status === 2" pr-10rpx color-FA483C>
               稍后添加
             </view>
             <i i-material-symbols-light-chevron-right fn fs-40 color-999 style="transform: translateY(2rpx);" />

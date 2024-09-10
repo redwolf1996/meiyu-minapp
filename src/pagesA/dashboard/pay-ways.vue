@@ -9,7 +9,7 @@ style:
   <view px-20px py-30px>
     <view mb-20px>
       <view mb16px flex>
-        <view h-40rpx w-3.5px bg-#A7C4FD rd-8rpx />
+        <view h-40rpx w-3.5px bg-A7C4FD rd-8rpx />
         <view f18 pl-10px lh-40rpx>
           支付方式
         </view>
@@ -29,7 +29,7 @@ style:
     </view>
     <view mb-20px>
       <view mb16px flex>
-        <view h-40rpx w-3.5px bg-#A7C4FD rd-8rpx />
+        <view h-40rpx w-3.5px bg-A7C4FD rd-8rpx />
         <view f18 pl-10px lh-40rpx>
           退费方式
         </view>

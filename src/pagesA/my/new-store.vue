@@ -12,11 +12,11 @@ const value = ref()
   <view
     py-24rpx px-40rpx flex flex-bt flex-ac bg-white
   >
-    <view c-#3B3D3D f14>
+    <view c-3B3D3D f14>
       <view mb-2px>
         门店图片
       </view>
-      <view f12 c-#C9CDD4>
+      <view f12 c-C9CDD4>
         建议上传门店图片，方便客户了解你
       </view>
     </view>
@@ -27,7 +27,7 @@ const value = ref()
   </view>
   <view h-12px />
   <view mb12px>
-    <view c-#969699 f14 mb-12px pl20px>
+    <view c-969699 f14 mb-12px pl20px>
       门店名称
     </view>
     <view px40rpx py12px bg-white>
@@ -35,7 +35,7 @@ const value = ref()
     </view>
   </view>
   <view mb12px>
-    <view c-#969699 f14 mb-12px pl20px>
+    <view c-969699 f14 mb-12px pl20px>
       联系电话
     </view>
     <view px40rpx py12px bg-white>
@@ -43,7 +43,7 @@ const value = ref()
     </view>
   </view>
   <view mb12px>
-    <view c-#969699 f14 mb-12px pl20px>
+    <view c-969699 f14 mb-12px pl20px>
       验证码
     </view>
     <view px40rpx py12px bg-white>
@@ -51,25 +51,25 @@ const value = ref()
     </view>
   </view>
   <view mb12px>
-    <view c-#969699 f14 mb-12px pl20px>
+    <view c-969699 f14 mb-12px pl20px>
       所在地区
     </view>
     <view px40rpx py12px bg-white flex flex-ac flex-bt>
-      <text f14 c-#C9CDD4>
+      <text f14 c-C9CDD4>
         请选择省市区县、乡镇等
       </text>
       <wd-icon name="arrow-right" size="16px" color="#bfbfbf" />
     </view>
   </view>
   <view mb12px>
-    <view c-#969699 f14 mb-12px pl20px>
+    <view c-969699 f14 mb-12px pl20px>
       详细地址
     </view>
     <view px40rpx py12px bg-white>
       <wd-input v-model="value" :maxlength="20" show-word-limit :no-border="true" />
     </view>
   </view>
-  <view f12 c-#8A8888 tc mt10px>
+  <view f12 c-8A8888 tc mt10px>
     提交后，可在工作台切换进入新店
   </view>
   <view mx-40rpx mt-34rpx color-white>
@@ -88,7 +88,7 @@ const value = ref()
       data="字符串变量"
     />
   </view>
-  <view f12 c-#8A8888 tc mt10px>
+  <view f12 c-8A8888 tc mt10px>
     扫码添加微信，立即在线沟通
   </view>
   <view h50px />

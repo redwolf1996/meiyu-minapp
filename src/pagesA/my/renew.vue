@@ -91,13 +91,13 @@ async function renew() {
   <view px20px py13px bg-white pf bottom-0 wp100>
     <view flex flex-ac flex-bt>
       <view>
-        <view f18 c-#FF6B03>
+        <view f18 c-FF6B03>
           <!-- 一个月&nbsp;￥80 -->
           ￥{{ curItem?.price ?? '--' }}
         </view>
         <view>
           <radio style="transform:scale(0.7) translate(-10px, 0)" value="3" color="#1a66ff" />
-          <text dib c-#999999 f12 style="transform: translateX(-8px);">
+          <text dib c-999999 f12 style="transform: translateX(-8px);">
             积分100抵扣￥10.00
           </text>
         </view>
@@ -110,14 +110,14 @@ async function renew() {
       <radio style="transform:scale(0.7) translate(-10px, 0)" value="3" color="#1a66ff" />
       <text dib f12 style="transform: translateX(-8px);">
         <text>开通前确认</text>
-        <text c-#1A66FF>
+        <text c-1A66FF>
           《会员服务协议》
         </text>
         <text>及</text>
-        <text c-#1A66FF>
+        <text c-1A66FF>
           《缴费协议》和
         </text>
-        <text c-#1A66FF>
+        <text c-1A66FF>
           《隐私政策》
         </text>
       </text>

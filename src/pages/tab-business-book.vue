@@ -6,8 +6,12 @@ style:
 </route>
 
 <script lang="ts" setup>
-const { windowHeight, screenWidth } = getMenuButtonInfo()
-// const { startTimer } = usePolling()
+// // #ifdef MP-WEIXIN
+// const { windowHeight, screenWidth } = getMenuButtonInfo()
+// // #endif
+const windowHeight = uni.getWindowInfo().windowHeight
+const screenWidth = uni.getWindowInfo().screenWidth
+
 const dropMenu = ref()
 const mode = ref(0) // 0预约看板 1预约列表
 const visableSearch = ref(false)
@@ -127,7 +131,7 @@ function scrollView(e: any) {
           <view>
             <GridTagSelect v-model="val" :sources="sources" :columns="3" />
             <MyCell label="服务时段">
-              <span f14 c-#3B3D3D>09:00-21:00</span>
+              <span f14 c-3B3D3D>09:00-21:00</span>
             </MyCell>
           </view>
         </view>
@@ -230,11 +234,11 @@ function scrollView(e: any) {
       <view flex word-spacing-0 pr z-100>
         <view sticky left-0 dib w-40px hp100 z-200>
           <view h-32px w-40px sticky left-0 top-0 bg-white z-300 />
-          <view bg-#F3F6FF flex flex-y flex-ac>
+          <view bg-F3F6FF flex flex-y flex-ac>
             <view
               v-for="(item, index) in hours24h" :key="`i${item}`"
               :class="{ 'active-time': Math.floor((scrollTop + 200) / 100) === index }"
-              tc w-40px c-#8EA0B6 h-100px style="border-bottom: 1px solid transparent;"
+              tc w-40px c-8EA0B6 h-100px style="border-bottom: 1px solid transparent;"
             >
               <text f12 lh-24rpx>
                 {{ item }}
@@ -243,7 +247,7 @@ function scrollView(e: any) {
           </view>
         </view>
         <view dib hp100 pr z-150 flex-grow-1>
-          <view h-32px lh-32px sticky top-0 z-180 flex f12 c-#364250>
+          <view h-32px lh-32px sticky top-0 z-180 flex f12 c-364250>
             <view v-for="item in tableData" :key="item" bg-white tc flex-shrink-0 :style="{ flexBasis: `${multipleItemWidth}px` }">
               {{ item }}
             </view>

@@ -22,7 +22,7 @@ function test() {
           <wd-switch v-model="checked" :active-color="themeColor" />
         </MyCell>
         <MyCell label="门店营业时间" @click="test">
-          <view f12 c-#3B3D3D tr>
+          <view f12 c-3B3D3D tr>
             <view>
               09:00-21:00
             </view>
@@ -30,7 +30,7 @@ function test() {
           </view>
         </MyCell>
         <MyCell label="上门服务时间" no-border @click="test">
-          <view tr f12 c-#3B3D3D>
+          <view tr f12 c-3B3D3D>
             <view>
               09:00-21:00
             </view>
@@ -41,7 +41,7 @@ function test() {
         </MyCell>
       </MyCellGroup>
 
-      <view mt-22px mb-11px pl-20px f14 c-#969699>
+      <view mt-22px mb-11px pl-20px f14 c-969699>
         开店
       </view>
 

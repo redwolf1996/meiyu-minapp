@@ -7,7 +7,7 @@ style:
 
 <template>
   <view p-32rpx>
-    <view px-40rpx py-48rpx bg-blue h-340rpx color-#fff pr>
+    <view px-40rpx py-48rpx bg-blue h-340rpx color-fff pr>
       <view fs-36>
         申请金额<span fs-28>（元）</span>
       </view>
@@ -16,7 +16,7 @@ style:
       </view>
     </view>
 
-    <view p-40rpx bg-white color-#888 fs-28 flex flex-ac gap-4px mt-32rpx>
+    <view p-40rpx bg-white color-888 fs-28 flex flex-ac gap-4px mt-32rpx>
       <wd-icon name="warning" size="16px" />
       <view>
         <view lh-42rpx>
@@ -37,7 +37,7 @@ style:
     </view>
     <view mx-40rpx color-white>
       <wd-button size="large" type="text" block>
-        <view flex flex-cc color-#1A66FF>
+        <view flex flex-cc color-1A66FF>
           <text>取消</text>
         </view>
       </wd-button>

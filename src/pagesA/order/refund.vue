@@ -20,7 +20,7 @@ style:
               产品名称1
             </view>
             <view f12 flex flex-ac flex-bt>
-              <view c-#7973F9>
+              <view c-7973F9>
                 产品
               </view>
               <view>x1</view>
@@ -43,7 +43,7 @@ style:
               产品名称1
             </view>
             <view f12 flex flex-ac flex-bt>
-              <view c-#7973F9>
+              <view c-7973F9>
                 产品
               </view>
               <view>x1</view>

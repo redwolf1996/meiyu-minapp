@@ -23,7 +23,7 @@ const emits = defineEmits(['click'])
     :class="{ 'no-border': props.noBorder, 'border-top': props.borderTop }"
     @click="emits('click', $event)"
   >
-    <view c-#3B3D3D fw-500 f14 flex flex-ac gap8px>
+    <view c-3B3D3D fw-500 f14 flex flex-ac gap8px>
       <slot name="icon" />
       <text>{{ props.label }}</text>
       <text v-if="props.required" class="required">

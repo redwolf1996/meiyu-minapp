@@ -47,21 +47,21 @@ const items = [{
           :src="`${IMG_BASE}/cat.png`"
         />
         <view h40px flex flex-y flex-bt flex-1>
-          <view c-#28282B f14 flex-bt flex flex-ac>
+          <view c-28282B f14 flex-bt flex flex-ac>
             <view>面部清洁补水</view>
             <view>￥98</view>
           </view>
-          <view c-#717171 f12>
+          <view c-717171 f12>
             基础版&nbsp;&nbsp;x1
           </view>
         </view>
       </view>
-      <view h1px mt10px bg-#EBEBF0 />
+      <view h1px mt10px bg-EBEBF0 />
       <view mt12px flex flex-bt flex-ac>
         <view f12>
           MY2024040910101000045
         </view>
-        <view c-#FF4070 f16>
+        <view c-FF4070 f16>
           合计收款：¥98
         </view>
       </view>

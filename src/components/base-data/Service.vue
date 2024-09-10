@@ -148,7 +148,7 @@ function toCats() {
       />
       <MyCellGroup>
         <MyCell noBorder borderTop required label="服务分类" @click="toCats()">
-          <text v-if="!catName" f14 c-#bfbfbf pr-5px>
+          <text v-if="!catName" f14 c-bfbfbf pr-5px>
             请选择
           </text>
           <text v-else f14>

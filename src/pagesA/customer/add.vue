@@ -118,7 +118,7 @@ function openCalendar() {
 
       <view px-20px bg-white>
         <MyCell noBorder borderTop required label="生日" @click="openCalendar()">
-          <text v-if="!form.birthday" f14 c-#bfbfbf pr-5px>
+          <text v-if="!form.birthday" f14 c-bfbfbf pr-5px>
             请选择
           </text>
           <text v-else f14>

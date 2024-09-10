@@ -29,10 +29,10 @@ style:
   <MyCellGroup>
     <MyCell label="企业微信" />
     <MyCell label="客服电话">
-      <span f14 c-#3B3D3D>13263301397</span>
+      <span f14 c-3B3D3D>13263301397</span>
     </MyCell>
     <MyCell label="客服邮箱">
-      <span f14 c-#3B3D3D>support@xunhuazn.com</span>
+      <span f14 c-3B3D3D>support@xunhuazn.com</span>
     </MyCell>
     <MyCell label="问题留言" />
   </MyCellGroup>

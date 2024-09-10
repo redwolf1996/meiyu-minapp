@@ -4,16 +4,16 @@ export const IMG_BASE = import.meta.env.VITE_APP_IMG_BASE
 
 export function getMenuButtonInfo() {
   // 获取距上
-  const barTop = wx.getSystemInfoSync().statusBarHeight
+  const barTop = uni.getSystemInfoSync().statusBarHeight
   // 获取胶囊按钮位置信息
-  const menuButtonInfo = wx.getMenuButtonBoundingClientRect()
+  const menuButtonInfo = uni.getMenuButtonBoundingClientRect()
   // 获取导航栏高度
   const barHeight = menuButtonInfo.height + (menuButtonInfo.top - barTop) * 2
   const barWidth = menuButtonInfo.width
-  const windowHeight = wx.getSystemInfoSync().windowHeight
-  const windowWidth = wx.getSystemInfoSync().windowWidth
-  const screenWidth = wx.getSystemInfoSync().screenWidth
-  const restHeight = wx.getSystemInfoSync().windowHeight - barHeight - barTop - 52
+  const windowHeight = uni.getSystemInfoSync().windowHeight
+  const windowWidth = uni.getSystemInfoSync().windowWidth
+  const screenWidth = uni.getSystemInfoSync().screenWidth
+  const restHeight = uni.getSystemInfoSync().windowHeight - barHeight - barTop - 52
 
   return {
     barHeight,

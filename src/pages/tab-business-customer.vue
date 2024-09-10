@@ -69,32 +69,32 @@ function handleChange1() {}
   <view py-12rpx px-32rpx>
     <view flex flex-bt flex-ac gap-32rpx>
       <view flex-1 pr>
-        <input placeholder="搜索姓名/手机号" placeholder-class="cus-input" px-40px bg-#F2F3F5 h-36px lh-36px rd-4px type="text">
+        <input placeholder="搜索姓名/手机号" placeholder-class="cus-input" px-40px bg-F2F3F5 h-36px lh-36px rd-4px type="text">
         <uni-icons style="transform: translateY(-50%);top: 50%;" pa left-24rpx type="search" color="#86909C" size="24" />
         <uni-icons style="transform: translateY(-50%);top: 50%;" pa right-24rpx type="clear" color="#86909C" size="24" />
       </view>
-      <view rd-2px w-28px h-28px lh-28px tc bg-#F2F3F5 fs-32 fb @click="toAddCustomer()">
+      <view rd-2px w-28px h-28px lh-28px tc bg-F2F3F5 fs-32 fb @click="toAddCustomer()">
         +
       </view>
     </view>
     <wd-drop-menu>
       <wd-drop-menu-item v-model="value1" :options="option1" @change="handleChange1" />
       <wd-drop-menu-item ref="filter" title="筛选">
-        <view p-24rpx bg-#F9F9F9>
+        <view p-24rpx bg-F9F9F9>
           <view bg-white rd-10px p-24rpx>
             <view f14 mb-16px>
               生日
             </view>
             <GridTagSelect v-model="value1" :sources="sources" />
-            <view flex flex-ac gap-32rpx mt-32rpx c-#929292>
+            <view flex flex-ac gap-32rpx mt-32rpx c-929292>
               <text>范围</text>
-              <input placeholder-class="cus-input" w-150rpx px-10px bg-#F2F3F5 h-32px lh-32px type="text">
+              <input placeholder-class="cus-input" w-150rpx px-10px bg-F2F3F5 h-32px lh-32px type="text">
               <text>至</text>
-              <input placeholder-class="cus-input" w-150rpx px-10px bg-#F2F3F5 h-32px lh-32px type="text">
+              <input placeholder-class="cus-input" w-150rpx px-10px bg-F2F3F5 h-32px lh-32px type="text">
             </view>
-            <view flex flex-ac gap-32rpx mt-32rpx c-#929292>
+            <view flex flex-ac gap-32rpx mt-32rpx c-929292>
               <text>最近</text>
-              <input placeholder-class="cus-input" w-150rpx px-10px bg-#F2F3F5 h-32px lh-32px type="text">
+              <input placeholder-class="cus-input" w-150rpx px-10px bg-F2F3F5 h-32px lh-32px type="text">
               <text>天过生日</text>
             </view>
           </view>
@@ -104,11 +104,11 @@ function handleChange1() {}
               成为客户时间
             </view>
             <GridTagSelect v-model="value1" :sources="sources2" :columns="3" />
-            <view flex flex-ac gap-32rpx mt-32rpx c-#929292>
+            <view flex flex-ac gap-32rpx mt-32rpx c-929292>
               <text>范围</text>
-              <input placeholder-class="cus-input" w-150rpx px-10px bg-#F2F3F5 h-32px lh-32px type="text">
+              <input placeholder-class="cus-input" w-150rpx px-10px bg-F2F3F5 h-32px lh-32px type="text">
               <text>至</text>
-              <input placeholder-class="cus-input" w-150rpx px-10px bg-#F2F3F5 h-32px lh-32px type="text">
+              <input placeholder-class="cus-input" w-150rpx px-10px bg-F2F3F5 h-32px lh-32px type="text">
             </view>
           </view>
 
@@ -122,7 +122,7 @@ function handleChange1() {}
               <label f12><radio style="transform:scale(0.7)" value="3" color="#1a66ff" />指定类型卡</label>
             </radio-group>
             <MyCell label="请选择" noBorder @click="show2 = true">
-              <span f14 c-#3B3D3D>09:00-21:00</span>
+              <span f14 c-3B3D3D>09:00-21:00</span>
             </MyCell>
             <view flex flex-wrap gap-20rpx>
               <view class="tag">
@@ -168,7 +168,7 @@ function handleChange1() {}
                     </text>
                     <radio style="transform:scale(0.7)" value="3" color="#1a66ff" />
                   </view>
-                  <view f12 c-#9A9FA5>
+                  <view f12 c-9A9FA5>
                     永久有效
                   </view>
                 </view>
@@ -196,7 +196,7 @@ function handleChange1() {}
                     </text>
                     <radio style="transform:scale(0.7)" value="3" color="#1a66ff" />
                   </view>
-                  <view f12 c-#9A9FA5>
+                  <view f12 c-9A9FA5>
                     永久有效
                   </view>
                 </view>
@@ -239,47 +239,47 @@ function handleChange1() {}
                 :src="`${IMG_BASE}/icon-v1.png`"
               />
             </view>
-            <view c-#929292 f12 mt-10px>
+            <view c-929292 f12 mt-10px>
               138****6578
             </view>
           </view>
         </view>
         <view grid grid-cols-2 f12 mt-10px>
           <view>
-            <text c-#929292>
+            <text c-929292>
               余额：
             </text>
-            <text c-#00BB00>
+            <text c-00BB00>
               1200.00
             </text>
           </view>
           <view>
-            <text c-#929292>
+            <text c-929292>
               上次消费：
             </text>
-            <text c-#00BB00>
+            <text c-00BB00>
               2024.1.12
             </text>
           </view>
           <view>
-            <text c-#929292>
+            <text c-929292>
               手艺人：
             </text>
-            <text c-#00BB00>
+            <text c-00BB00>
               王诗晴
             </text>
           </view>
           <view>
-            <text c-#929292>
+            <text c-929292>
               营销顾问：
             </text>
-            <text c-#00BB00>
+            <text c-00BB00>
               张倩
             </text>
           </view>
         </view>
       </view>
-      <view px-40rpx py-26rpx bg-#F0F0F0 rd-16rpx>
+      <view px-40rpx py-26rpx bg-F0F0F0 rd-16rpx>
         <view flex flex-ac gap-32rpx>
           <wd-img
             :round="true"
@@ -299,41 +299,41 @@ function handleChange1() {}
                 :src="`${IMG_BASE}/icon-v1.png`"
               />
             </view>
-            <view c-#929292 f12 mt-10px>
+            <view c-929292 f12 mt-10px>
               138****6578
             </view>
           </view>
         </view>
         <view grid grid-cols-2 f12 mt-10px>
           <view>
-            <text c-#929292>
+            <text c-929292>
               余额：
             </text>
-            <text c-#00BB00>
+            <text c-00BB00>
               1200.00
             </text>
           </view>
           <view>
-            <text c-#929292>
+            <text c-929292>
               上次消费：
             </text>
-            <text c-#00BB00>
+            <text c-00BB00>
               2024.1.12
             </text>
           </view>
           <view>
-            <text c-#929292>
+            <text c-929292>
               手艺人：
             </text>
-            <text c-#00BB00>
+            <text c-00BB00>
               王诗晴
             </text>
           </view>
           <view>
-            <text c-#929292>
+            <text c-929292>
               营销顾问：
             </text>
-            <text c-#00BB00>
+            <text c-00BB00>
               张倩
             </text>
           </view>

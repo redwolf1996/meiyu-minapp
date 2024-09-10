@@ -26,7 +26,7 @@ style:
         </MyCell>
         <view class="h12px" />
       </view>
-      <view f12 c-#434343>
+      <view f12 c-434343>
         <view flex flex-ac flex-bt mb12px>
           <view>订单编号</view>
           <view>MY2024042215384700000001</view>
@@ -44,7 +44,7 @@ style:
           <view>2024-04-22 15:38:47</view>
         </view>
         <view flex flex-ac flex-bt mt12px>
-          <view c-#FF5B05>
+          <view c-FF5B05>
             剩余支付时间: 12:23:12（用户端线上支付时再考虑）
           </view>
         </view>
@@ -62,7 +62,7 @@ style:
             客户
           </text>
         </view>
-        <view rd-16rpx mt-20rpx bg-#F0F0F0 py-18rpx px-32rpx flex flex-ac gap-32rpx>
+        <view rd-16rpx mt-20rpx bg-F0F0F0 py-18rpx px-32rpx flex flex-ac gap-32rpx>
           <wd-img
             :width="48"
             :height="48"
@@ -75,7 +75,7 @@ style:
             </view>
             <view flex flex-ac flex-bt>
               <view flex flex-ac gap-16rpx>
-                <text c-#929292 fs-28 lh-28rpx>
+                <text c-929292 fs-28 lh-28rpx>
                   13888888888
                 </text>
                 <wd-img
@@ -85,10 +85,10 @@ style:
                 />
               </view>
               <view f12>
-                <text c-#929292>
+                <text c-929292>
                   会员卡
                 </text>
-                <text c-#00BB00>
+                <text c-00BB00>
                   2张
                 </text>
               </view>
@@ -111,7 +111,7 @@ style:
         <view mb20px style="border-bottom: 1px solid #eee;">
           <view fb mb12px flex flex-bt>
             <view>
-              <text c-#1A66FF>
+              <text c-1A66FF>
                 01
               </text>
               <text>水乳套装</text>
@@ -138,7 +138,7 @@ style:
         <view mb20px style="border-bottom: 1px solid #eee;">
           <view fb mb12px flex flex-bt>
             <view>
-              <text c-#1A66FF>
+              <text c-1A66FF>
                 01
               </text>
               <text>水乳套装</text>

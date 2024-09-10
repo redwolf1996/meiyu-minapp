@@ -37,7 +37,7 @@ function handleChange1() {
     <text>提现总金额：2866</text>
     <text>共 {{ info?.total ?? '--' }} 条记录</text>
   </view>
-  <view mx-32rpx my-32rpx px-32rpx py-24rpx bg-#fff rd-16rpx>
+  <view mx-32rpx my-32rpx px-32rpx py-24rpx bg-fff rd-16rpx>
     <view py-24rpx>
       <view mb-48rpx>
         <view flex flex-ac flex-bt>

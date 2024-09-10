@@ -18,13 +18,13 @@ function calendarChange() {
   <view py20px bg-white mt12px px50rpx>
     <view tc>
       <text>体验套餐</text>
-      <text c-#1A66FF pl10px>
+      <text c-1A66FF pl10px>
         40分钟
       </text>
     </view>
     <view f14 tc mt5px mb50rpx>
       <text>手艺人</text>
-      <text c-#1A66FF pl10px>
+      <text c-1A66FF pl10px>
         王乐乐
       </text>
     </view>
@@ -42,7 +42,7 @@ function calendarChange() {
         :src="`${IMG_BASE}/book-status.png`"
       />
     </view>
-    <view tc mt20px c-#FFAB2D f14>
+    <view tc mt20px c-FFAB2D f14>
       已选：2023/11/11 16:00-16:40
     </view>
   </view>

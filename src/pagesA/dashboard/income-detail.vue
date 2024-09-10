@@ -25,7 +25,7 @@ function handleChange1() {
     <text>收入：2666&#12288;支出：2222</text>
     <text>共 7 条记录</text>
   </view>
-  <view mx-32rpx my-32rpx px-32rpx py-24rpx bg-#fff rd-16rpx>
+  <view mx-32rpx my-32rpx px-32rpx py-24rpx bg-fff rd-16rpx>
     <view py-24rpx>
       <view mb-48rpx pb-32rpx style="border-bottom: 1px solid #eee;">
         <view flex flex-ac flex-bt>

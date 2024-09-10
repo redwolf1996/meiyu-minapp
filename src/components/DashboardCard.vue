@@ -22,7 +22,7 @@
               张硕
             </view>
             <view w-12rpx h-12rpx round style="background-color: #FE502E;" />
-            <view color-white tc px-8rpx py-4rpx lh-24rpx bg-#FE502E>
+            <view color-white tc px-8rpx py-4rpx lh-24rpx bg-FE502E>
               到店服务
             </view>
           </view>

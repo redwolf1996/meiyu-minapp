@@ -137,7 +137,7 @@ function toWorkTimes() {
       <wd-cell-group :border="true">
         <MyCellGroup>
           <MyCell noBorder required label="工作时间" @click="toWorkTimes()">
-            <text v-if="!staffScheduling.length" f14 c-#bfbfbf pr-5px>
+            <text v-if="!staffScheduling.length" f14 c-bfbfbf pr-5px>
               请选择
             </text>
             <view v-else>
@@ -147,7 +147,7 @@ function toWorkTimes() {
             </view>
           </MyCell>
           <MyCell noBorder borderTop required label="服务分类" @click="toCats()">
-            <text v-if="!catName" f14 c-#bfbfbf pr-5px>
+            <text v-if="!catName" f14 c-bfbfbf pr-5px>
               请选择
             </text>
             <text v-else f14>

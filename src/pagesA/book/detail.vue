@@ -19,7 +19,7 @@ style:
           客户
         </text>
       </view>
-      <view rd-16rpx mt-20rpx bg-#F0F0F0 py-18rpx px-32rpx flex flex-ac gap-32rpx>
+      <view rd-16rpx mt-20rpx bg-F0F0F0 py-18rpx px-32rpx flex flex-ac gap-32rpx>
         <wd-img
           :width="48"
           :height="48"
@@ -32,7 +32,7 @@ style:
           </view>
           <view flex flex-ac flex-bt>
             <view flex flex-ac gap-16rpx>
-              <text c-#929292 fs-28 lh-28rpx>
+              <text c-929292 fs-28 lh-28rpx>
                 13888888888
               </text>
               <wd-img
@@ -42,10 +42,10 @@ style:
               />
             </view>
             <view f12>
-              <text c-#929292>
+              <text c-929292>
                 会员卡
               </text>
-              <text c-#00BB00>
+              <text c-00BB00>
                 2张
               </text>
             </view>
@@ -64,39 +64,39 @@ style:
           预约信息
         </text>
       </view>
-      <view mt-36rpx dib px-8px c-#00CCD8 bg-#CCF3F6 fs-22 h-20px lh-20px tc>
+      <view mt-36rpx dib px-8px c-00CCD8 bg-CCF3F6 fs-22 h-20px lh-20px tc>
         预约上门
       </view>
-      <!-- <view mt-36rpx dib px-8px c-#FF5A5F bg-#FCE8E9 fs-22 h-20px lh-20px tc>
+      <!-- <view mt-36rpx dib px-8px c-FF5A5F bg-FCE8E9 fs-22 h-20px lh-20px tc>
         预约到店
       </view> -->
-      <view mt-10px f12 c-#818181>
-        预约时间：<text c-#232220>
+      <view mt-10px f12 c-818181>
+        预约时间：<text c-232220>
           2022
         </text>
       </view>
-      <view mt-10px f12 c-#818181>
-        预约人：<text c-#232220>
+      <view mt-10px f12 c-818181>
+        预约人：<text c-232220>
           2022
         </text>
       </view>
-      <view mt-10px f12 c-#818181>
-        手机号：<text c-#232220>
+      <view mt-10px f12 c-818181>
+        手机号：<text c-232220>
           2022
         </text>
       </view>
-      <view mt-10px f12 c-#818181>
-        手艺人：<text c-#232220>
+      <view mt-10px f12 c-818181>
+        手艺人：<text c-232220>
           2022
         </text>
       </view>
-      <view mt-10px f12 c-#818181>
-        备注：<text c-#232220>
+      <view mt-10px f12 c-818181>
+        备注：<text c-232220>
           2022
         </text>
       </view>
-      <view mt-10px f12 c-#818181>
-        地址：<text c-#232220>
+      <view mt-10px f12 c-818181>
+        地址：<text c-232220>
           2022
         </text>
       </view>
@@ -116,7 +116,7 @@ style:
           预约服务
         </text>
       </view>
-      <view f14 c-#1E1E1E mt-40rpx mb-20rpx>
+      <view f14 c-1E1E1E mt-40rpx mb-20rpx>
         元素美容美甲店
       </view>
       <view flex flex-ac gap-12px>
@@ -128,18 +128,18 @@ style:
         />
         <view flex-1 flex flex-y flex-bt h-72px>
           <view>
-            <view c-#3B3D3D f14>
+            <view c-3B3D3D f14>
               面部清洁补水
             </view>
-            <view c-#7C7C7C fs-22 mt-8rpx>
+            <view c-7C7C7C fs-22 mt-8rpx>
               服务时长：60分钟
             </view>
           </view>
           <view flex flex-ac flex-bt>
-            <view c-#FF1919 f18 lh-18px>
+            <view c-FF1919 f18 lh-18px>
               ¥198
             </view>
-            <view c-#7C7C7C f12 lh-12px>
+            <view c-7C7C7C f12 lh-12px>
               x1
             </view>
           </view>

@@ -31,7 +31,7 @@ const items = [{
     <view px-48rpx py-40rpx bg-white rd-10px mb-32rpx>
       <view flex flex-ac flex-bt>
         <view flex flex-y gap-10px>
-          <view c-#404143 f14 lh-14px>
+          <view c-404143 f14 lh-14px>
             2023.11.22 8:00-10:00
           </view>
           <view f12 flex tc flex-ac gap-10rpx f10>
@@ -39,7 +39,7 @@ const items = [{
               张硕
             </view>
             <view w-12rpx h-12rpx round style="background-color: #91919F;" />
-            <view color-white tc px-8rpx py-4rpx lh-24rpx bg-#FE502E>
+            <view color-white tc px-8rpx py-4rpx lh-24rpx bg-FE502E>
               到店服务
             </view>
           </view>
@@ -59,14 +59,14 @@ const items = [{
           />
           <view flex-1 flex flex-y gap-20rpx>
             <view flex flex-bt>
-              <text c-#0D0D26 f14 fb>
+              <text c-0D0D26 f14 fb>
                 面部清洁补水
               </text>
-              <text c-#3A3A3A f14>
+              <text c-3A3A3A f14>
                 x1
               </text>
             </view>
-            <view c-#161719 fs-20>
+            <view c-161719 fs-20>
               1小时
             </view>
           </view>
@@ -80,14 +80,14 @@ const items = [{
           />
           <view flex-1 flex flex-y gap-20rpx>
             <view flex flex-bt>
-              <text c-#0D0D26 f14 fb>
+              <text c-0D0D26 f14 fb>
                 面部清洁补水
               </text>
-              <text c-#3A3A3A f14>
+              <text c-3A3A3A f14>
                 x1
               </text>
             </view>
-            <view c-#161719 fs-20>
+            <view c-161719 fs-20>
               1小时
             </view>
           </view>
@@ -139,7 +139,7 @@ const items = [{
     <view px-48rpx py-40rpx bg-white rd-10px mb-32rpx>
       <view flex flex-ac flex-bt>
         <view flex flex-y gap-10px>
-          <view c-#404143 f14 lh-14px>
+          <view c-404143 f14 lh-14px>
             2023.11.22 8:00-10:00
           </view>
           <view f12 flex tc flex-ac gap-10rpx f10>
@@ -147,7 +147,7 @@ const items = [{
               张硕
             </view>
             <view w-12rpx h-12rpx round style="background-color: #91919F;" />
-            <view color-white tc px-8rpx py-4rpx lh-24rpx bg-#FE502E>
+            <view color-white tc px-8rpx py-4rpx lh-24rpx bg-FE502E>
               到店服务
             </view>
           </view>
@@ -167,14 +167,14 @@ const items = [{
           />
           <view flex-1 flex flex-y gap-20rpx>
             <view flex flex-bt>
-              <text c-#0D0D26 f14 fb>
+              <text c-0D0D26 f14 fb>
                 面部清洁补水
               </text>
-              <text c-#3A3A3A f14>
+              <text c-3A3A3A f14>
                 x1
               </text>
             </view>
-            <view c-#161719 fs-20>
+            <view c-161719 fs-20>
               1小时
             </view>
           </view>
@@ -188,14 +188,14 @@ const items = [{
           />
           <view flex-1 flex flex-y gap-20rpx>
             <view flex flex-bt>
-              <text c-#0D0D26 f14 fb>
+              <text c-0D0D26 f14 fb>
                 面部清洁补水
               </text>
-              <text c-#3A3A3A f14>
+              <text c-3A3A3A f14>
                 x1
               </text>
             </view>
-            <view c-#161719 fs-20>
+            <view c-161719 fs-20>
               1小时
             </view>
           </view>
