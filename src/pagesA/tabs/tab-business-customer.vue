@@ -341,6 +341,7 @@ function handleChange1() {}
       </view>
     </view>
   </view>
+  <MyTabBar :tab-index="2" />
 </template>
 
 <style lang='scss' scoped>

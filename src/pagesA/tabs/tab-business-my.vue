@@ -114,6 +114,7 @@ function toRenew() {
     </text>
   </view>
   <view h100px />
+  <MyTabBar :tab-index="3" />
 </template>
 
 <style lang='scss' scoped>

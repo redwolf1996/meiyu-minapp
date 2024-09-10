@@ -10,6 +10,7 @@ import { getMenuButtonInfo } from '@/utils/index'
 // #endif
 
 import type { DashBoardData } from './types'
+import MyTabBar from '../components/MyTabBar.vue'
 
 const toast = useToast()
 const menuButtonWidth = ref(0)
@@ -289,7 +290,7 @@ function toInvite() {
   </view>
   <!--  #endif -->
   <!--  #ifndef  MP-WEIXIN -->
-  <view wp-100 pf bottom-52px h-48px @click="toInvite()">
+  <view wp-100 pf bottom-50px h-48px @click="toInvite()">
     <wd-img
       :height="48"
       width="100%"
@@ -297,6 +298,8 @@ function toInvite() {
     />
   </view>
   <!--  #endif -->
+
+  <MyTabBar :tab-index="0" />
 </template>
 
 <style lang="scss" scoped>
