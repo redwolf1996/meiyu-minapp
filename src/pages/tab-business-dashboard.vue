@@ -119,7 +119,7 @@ function toInvite() {
         :style="{ backgroundImage: `url(${IMG_BASE}/bg-dashboard.png)` }"
       >
         <view f14>
-          本月收入(元)
+          本月实收(元)
         </view>
         <view fb font-size-64rpx mt-12px>
           26237.23
@@ -127,7 +127,7 @@ function toInvite() {
         <view flex mt-20px gap-40px>
           <view wp-33.3333>
             <view f12 style="opacity: .6;">
-              今日收入
+              今日实收
             </view>
             <view f16 mt-12rpx>
               777
