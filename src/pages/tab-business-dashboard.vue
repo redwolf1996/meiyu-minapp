@@ -12,10 +12,7 @@ import { getMenuButtonInfo } from '@/utils/index'
 import type { DashBoardData } from './types'
 
 const toast = useToast()
-const menuButtonWidth = ref(10)
-// #ifdef MP-WEIXIN
-const h = getMenuButtonInfo()
-// #endif
+const menuButtonWidth = ref(0)
 const userInfo = useUserStore()?.userInfo
 const info = ref<DashBoardData>()
 
@@ -85,7 +82,7 @@ function toInvite() {
 <template>
   <wd-toast />
   <view px-24rpx>
-    <wd-navbar :fixed="true" :safeAreaInsetTop="true" :bordered="false">
+    <wd-navbar :fixed="true" :placeholder="true" :safeAreaInsetTop="true" :bordered="false">
       <template #title>
         <view flex flex-ac flex-bt :style="{ width: `calc(100% - ${menuButtonWidth}px)` }">
           <view px-24rpx>
@@ -110,9 +107,6 @@ function toInvite() {
     </wd-navbar>
 
     <view class="conitaner" pr>
-      <!-- #ifdef MP-WEIXIN -->
-      <view :style="{ height: `${h.barHeight + h.barTop}px` }" />
-      <!-- #endif -->
       <view
         p-40rpx color-white pr
         style="background-size: cover;"
