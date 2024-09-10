@@ -54,31 +54,37 @@ const multipleItemWidth = computed(() => {
   return (screenWidth - 40) / len
 })
 
-onMounted(() => {
+onMounted(async () => {
   const theNode = uni.createSelectorQuery().select('#head')
   theNode.boundingClientRect((data: any) => {
     headHeight.value = data?.height
+    // console.log(headHeight.value)
   }).exec()
 
   const theNode2 = uni.createSelectorQuery().select('#title')
   theNode2.boundingClientRect((data: any) => {
     titleHeight.value = data?.height
+    // console.log(titleHeight.value)
   }).exec()
 
   const theNode3 = uni.createSelectorQuery().select('.wd-tabbar')
   theNode3.boundingClientRect((data: any) => {
     barHeight.value = data?.height
+    // console.log(barHeight.value)
   }).exec()
 })
 
-onShow(() => {
-  // startTimer(() => {
-  //   console.log('xxx')
-  // })
+const gridHeight = computed(() => {
+  // const res = windowHeight - (headHeight.value + titleHeight.value + barHeight.value)
+  const res = (headHeight.value + titleHeight.value + barHeight.value)
+  // console.log(windowHeight)
+  // console.log(headHeight.value)
+  // console.log(titleHeight.value)
+  // console.log(barHeight.value)
+  return res
 })
 
 function handleClickList() {
-
 }
 
 function selectMode(m: number) {
@@ -234,7 +240,7 @@ function scrollView(e: any) {
       :scroll-top="800"
       class="content pr"
       :style="{
-        height: `${windowHeight - headHeight - titleHeight - barHeight}px`,
+        height: `calc(100vh - ${gridHeight}px)`,
       }" @scroll="scrollView"
     >
       <view flex word-spacing-0 pr z-100>
