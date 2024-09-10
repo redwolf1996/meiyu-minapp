@@ -4,11 +4,16 @@ const props = withDefaults(defineProps<{
 }>(), {
   tabIndex: 1,
 })
-
 const tabbar = ref(props.tabIndex)
+const tabUrls: NavigateToOptions['url'][] = [
+  '/pagesA/tabs/tab-business-dashboard',
+  '/pagesA/tabs/tab-business-book',
+  '/pagesA/tabs/tab-business-customer',
+  '/pagesA/tabs/tab-business-my',
+]
 
 function changeBar({ value }: { value: string }) {
-  console.log(value)
+  uni.navigateTo({ url: tabUrls[value] })
 }
 </script>
 
