@@ -285,6 +285,7 @@ function toInvite() {
     </view>
   </view>
 
+  <!--  #ifdef  MP-WEIXIN -->
   <view wp-100 pf bottom-0 h-48px @click="toInvite()">
     <wd-img
       :height="48"
@@ -292,6 +293,16 @@ function toInvite() {
       :src="`${IMG_BASE}/invite-banner.png`"
     />
   </view>
+  <!--  #endif -->
+  <!--  #ifndef  MP-WEIXIN -->
+  <view wp-100 pf bottom-52px h-48px @click="toInvite()">
+    <wd-img
+      :height="48"
+      width="100%"
+      :src="`${IMG_BASE}/invite-banner.png`"
+    />
+  </view>
+  <!--  #endif -->
 </template>
 
 <style lang="scss" scoped>
