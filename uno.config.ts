@@ -6,6 +6,9 @@ import {
 } from 'unocss'
 
 import { presetUni } from '@uni-helper/unocss-preset-uni'
+import {
+  transformerAttributify,
+} from 'unocss-applet'
 
 export default defineConfig({
   presets: [
@@ -35,6 +38,7 @@ export default defineConfig({
   transformers: [
     transformerDirectives(),
     transformerVariantGroup(),
+    transformerAttributify(), // 使得unocss属性支持 color-#00aa44  w-50% (% # {}等默认不支持的字符) 等的关键（H5）
   ],
   rules: [
     ['wp100', { width: '100%' }],
