@@ -45,10 +45,10 @@ async function initStore() {
   })
   const org = userInfo.orgInfo
   if (!org) { // 如果店铺未创建
-    return my.navigateTo('/pagesA/init/steps/step1')
+    return uni.navigateTo({ url: '/pagesA/init/steps/step1' })
   }
   else if (!org.staffCountStatus || !org.productCountStatus || !org.serviceCountStatus) { // 如果新手引导未完成
-    return my.navigateTo('/pagesA/init/steps/index')
+    return uni.navigateTo({ url: '/pagesA/init/steps/index' })
   }
 
   getInfo()

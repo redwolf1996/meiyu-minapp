@@ -63,7 +63,7 @@ onShow(() => {
 })
 
 function toAdd(path: string) {
-  my.navigateTo(path)
+  uni.navigateTo({ url: path })
 }
 </script>
 

@@ -52,7 +52,7 @@ function handleConfirm({ value }) {
 
 async function save() {
   await request.post<any>('/business/store', form)
-  my.redirectTo('/pagesA/init/steps/index')
+  uni.redirectTo({ url: '/pagesA/init/steps/index' })
 }
 </script>
 
