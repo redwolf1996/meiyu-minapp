@@ -35,7 +35,7 @@ const staffList = ref<{ label: string, value: number }[]>([])
 
 async function save() {
   await request.post<null>('/business/store-customer', form)
-  uni.switchTab({ url: '/pages/tab-business-customer' })
+  uni.reLaunch({ url: '/pagesA/tabs/tab-business-customer' })
 }
 
 onLoad(() => {

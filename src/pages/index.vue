@@ -6,22 +6,22 @@ style:
 <script lang="ts" setup>
 // const userInfo = useUserStore().userInfo
 // if (userInfo.token && userInfo.isRegister) {
-//   toDashboard()
+//   toBusinessDashboard()
 // }
 // else {
-//   toLogin()
+//   toBusinessLogin()
 // }
 
 // h5开发临时用，后面去掉
-toDashboard()
+toBusinessDashboard()
 
-function toDashboard() {
-  uni.switchTab({ url: '/pages/tab-business-dashboard' })
+function toBusinessDashboard() {
+  uni.reLaunch({ url: '/pagesA/tabs/tab-business-dashboard' })
 }
 
-function toLogin() {
-  uni.navigateTo({ url: '/pagesA/login/index' })
-}
+// function toBusinessLogin() {
+//   uni.navigateTo({ url: '/pagesA/login/index' })
+// }
 </script>
 
 <template>

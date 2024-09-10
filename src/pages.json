@@ -6,38 +6,6 @@
       "style": {
         "navigationBarTitleText": "首页"
       }
-    },
-    {
-      "path": "pages/tab-business-book",
-      "type": "page",
-      "layout": false,
-      "style": {
-        "navigationBarTitleText": "预约看板",
-        "navigationStyle": "custom"
-      }
-    },
-    {
-      "path": "pages/tab-business-customer",
-      "type": "page",
-      "style": {
-        "navigationBarTitleText": "客户",
-        "navigationBarBackgroundColor": "#ffffff"
-      }
-    },
-    {
-      "path": "pages/tab-business-dashboard",
-      "type": "page",
-      "style": {
-        "navigationBarTitleText": "工作台",
-        "navigationStyle": "custom"
-      }
-    },
-    {
-      "path": "pages/tab-business-my",
-      "type": "page",
-      "style": {
-        "navigationBarTitleText": "我的"
-      }
     }
   ],
   "globalStyle": {
@@ -228,6 +196,10 @@
           "style": {
             "navigationBarTitleText": "分享卡项"
           }
+        },
+        {
+          "path": "components/MyTabBar",
+          "type": "page"
         },
         {
           "path": "customer/add",
@@ -519,6 +491,38 @@
           "type": "page",
           "style": {
             "navigationBarTitleText": "工作时间"
+          }
+        },
+        {
+          "path": "tabs/tab-business-book",
+          "type": "page",
+          "layout": false,
+          "style": {
+            "navigationBarTitleText": "预约看板",
+            "navigationStyle": "custom"
+          }
+        },
+        {
+          "path": "tabs/tab-business-customer",
+          "type": "page",
+          "style": {
+            "navigationBarTitleText": "客户",
+            "navigationBarBackgroundColor": "#ffffff"
+          }
+        },
+        {
+          "path": "tabs/tab-business-dashboard",
+          "type": "page",
+          "style": {
+            "navigationBarTitleText": "工作台",
+            "navigationStyle": "custom"
+          }
+        },
+        {
+          "path": "tabs/tab-business-my",
+          "type": "page",
+          "style": {
+            "navigationBarTitleText": "我的"
           }
         },
         {

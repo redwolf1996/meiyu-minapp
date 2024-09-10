@@ -5,10 +5,6 @@
 
 interface NavigateToOptions {
   url: "/pages/index" |
-       "/pages/tab-business-book" |
-       "/pages/tab-business-customer" |
-       "/pages/tab-business-dashboard" |
-       "/pages/tab-business-my" |
        "/pagesA/cats" |
        "/pagesA/rich-edit" |
        "/pagesA/billing/billing" |
@@ -27,6 +23,7 @@ interface NavigateToOptions {
        "/pagesA/booking/storeTime" |
        "/pagesA/card/list" |
        "/pagesA/card/share" |
+       "/pagesA/components/MyTabBar" |
        "/pagesA/customer/add" |
        "/pagesA/customer/detail" |
        "/pagesA/dashboard/cash-apply" |
@@ -68,6 +65,10 @@ interface NavigateToOptions {
        "/pagesA/staff/detail" |
        "/pagesA/staff/index" |
        "/pagesA/staff/work-time" |
+       "/pagesA/tabs/tab-business-book" |
+       "/pagesA/tabs/tab-business-customer" |
+       "/pagesA/tabs/tab-business-dashboard" |
+       "/pagesA/tabs/tab-business-my" |
        "/pagesA/init/steps/done" |
        "/pagesA/init/steps/index" |
        "/pagesA/init/steps/step1" |

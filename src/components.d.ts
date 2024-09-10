@@ -20,6 +20,7 @@ declare module 'vue' {
     MyCell: typeof import('./components/MyCell.vue')['default']
     MyCellGroup: typeof import('./components/MyCellGroup.vue')['default']
     MySquare: typeof import('./components/MySquare.vue')['default']
+    MyTabBar: typeof import('./pagesA/components/MyTabBar.vue')['default']
     StepNav: typeof import('./components/StepNav.vue')['default']
     StripDot: typeof import('./components/StripDot.vue')['default']
     TopSearch: typeof import('./components/TopSearch.vue')['default']

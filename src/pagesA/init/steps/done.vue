@@ -5,7 +5,7 @@ style:
 
 <script lang="ts" setup>
 function toDashboard() {
-  uni.switchTab({ url: '/pages/tab-business-dashboard' })
+  uni.reLaunch({ url: '/pagesA/tabs/tab-business-dashboard' })
 }
 </script>
 

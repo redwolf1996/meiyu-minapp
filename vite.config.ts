@@ -24,6 +24,7 @@ export default defineConfig({
     }),
     UniHelperLayouts(), // https://github.com/uni-helper/vite-plugin-uni-layouts
     UniHelperComponents({ // https://github.com/uni-helper/vite-plugin-uni-components
+      dirs: ['src/components', 'src/pagesA/components', 'src/pagesB/components'],
       dts: 'src/components.d.ts',
       directoryAsNamespace: true,
     }),
