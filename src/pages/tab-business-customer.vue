@@ -5,6 +5,8 @@ style:
 </route>
 
 <script lang="ts" setup>
+import type { CusList, CusModel, CusReqModel } from './types'
+
 const filter = ref()
 const value1 = ref(0)
 const option1 = [
@@ -32,6 +34,31 @@ const sources3: any = [
 ]
 const show = ref(false)
 const show2 = ref(false)
+const reqParams = reactive<CusReqModel>({
+  storeId,
+  pageSize: 1,
+  pageNum: 5,
+  keyword: '',
+  phone: '',
+  birthdayS: '',
+  birthdayE: '',
+  cDateS: '',
+  cDateE: '',
+  cardAll: 1,
+  cardIds: '',
+  cardCIds: '',
+})
+const list = ref<CusList[]>([])
+
+onShow(() => {
+  getList()
+})
+
+async function getList() {
+  const res = await request.get<CusModel>('/business/store-customer', reqParams)
+  list.value = res.data.list
+}
+
 function toAddCustomer() {
   uni.navigateTo({ url: '/pagesA/customer/add' })
 }
