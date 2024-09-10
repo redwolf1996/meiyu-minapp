@@ -1,8 +1,10 @@
 <script lang="ts" setup>
 const props = withDefaults(defineProps<{
   tabIndex?: number // 展示第几个tab
+  placeholder?: boolean // 底部是否占位
 }>(), {
   tabIndex: 1,
+  placeholder: true,
 })
 const tabbar = ref(props.tabIndex)
 const tabUrls: NavigateToOptions['url'][] = [
@@ -23,7 +25,8 @@ function changeBar({ value }: { value: string }) {
     :bordered="true"
     :safeAreaInsetBottom="true"
     :fixed="true"
-    :placeholder="true"
+    :placeholder="props.placeholder"
+    :zIndex="99999"
     active-color="#1A66FF"
     inactive-color="#A7A8AC"
     @change="changeBar"

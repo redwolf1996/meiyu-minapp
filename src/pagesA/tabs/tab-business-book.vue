@@ -17,6 +17,7 @@ const mode = ref(0) // 0预约看板 1预约列表
 const visableSearch = ref(false)
 const headHeight = ref(0)
 const titleHeight = ref(0)
+const barHeight = ref(0)
 const scrollTop = ref(800)
 const txt = ref('xxx')
 const val = ref()
@@ -62,6 +63,11 @@ onMounted(() => {
   const theNode2 = uni.createSelectorQuery().select('#title')
   theNode2.boundingClientRect((data: any) => {
     titleHeight.value = data?.height
+  }).exec()
+
+  const theNode3 = uni.createSelectorQuery().select('.wd-tabbar')
+  theNode3.boundingClientRect((data: any) => {
+    barHeight.value = data?.height
   }).exec()
 })
 
@@ -228,7 +234,7 @@ function scrollView(e: any) {
       :scroll-top="800"
       class="content pr"
       :style="{
-        height: `${windowHeight - headHeight - titleHeight}px`,
+        height: `${windowHeight - headHeight - titleHeight - barHeight}px`,
       }" @scroll="scrollView"
     >
       <view flex word-spacing-0 pr z-100>
@@ -273,8 +279,14 @@ function scrollView(e: any) {
     </scroll-view>
     <BookList v-if="mode === 1" />
   </view>
-  <MyTabBar :tab-index="1" />
+  <MyTabBar :tab-index="1" :placeholder="false" />
 </template>
+
+<style>
+page {
+  overflow-y: hidden !important;
+}
+</style>
 
 <style lang='scss' scoped>
 .active-time {
@@ -293,7 +305,7 @@ function scrollView(e: any) {
 .plus {
   position: fixed;
   right: 10rpx;
-  bottom: 10rpx;
+  bottom: 55px;
   width: 112rpx;
   height: 112rpx;
   background: #3a82fb;

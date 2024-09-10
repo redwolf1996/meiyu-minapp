@@ -84,7 +84,7 @@ interface NavigateToOptions {
 interface RedirectToOptions extends NavigateToOptions {}
 
 interface SwitchTabOptions {
-
+  
 }
 
 type ReLaunchOptions = NavigateToOptions | SwitchTabOptions;
