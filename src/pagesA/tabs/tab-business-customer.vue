@@ -142,7 +142,7 @@ function handleChange1() {}
           <wd-action-sheet v-model="show" title="选择卡类型" @close="show = false">
             <view p-40rpx>
               <GridTagSelect v-model="value1" :sources="sources3" :columns="3" />
-              <button class="my-btn theme" wp100 mt-30px>
+              <button class="theme my-btn" wp100 mt-30px>
                 确定
               </button>
             </view>

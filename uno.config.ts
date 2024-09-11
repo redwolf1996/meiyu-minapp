@@ -1,5 +1,6 @@
 import {
   defineConfig,
+  presetAttributify,
   presetIcons,
   transformerDirectives,
   transformerVariantGroup,
@@ -38,7 +39,18 @@ export default defineConfig({
   transformers: [
     transformerDirectives(),
     transformerVariantGroup(),
-    transformerAttributify(), // 使得unocss属性支持 color-#00aa44  w-50% (% # {}等默认不支持的字符) 等的关键（H5）
+    transformerAttributify({ // 使得unocss属性支持 color-#00aa44  w-50% (% # {}等默认不支持的字符) 等的关键（H5）
+      ignoreAttributes: [ // 使得H5支持属性忽略
+        'color',
+        'size',
+        'block',
+        'mode',
+        'custom-class',
+        'custom-input-class',
+        'active-color',
+        'inline',
+      ],
+    }),
   ],
   rules: [
     ['wp100', { width: '100%' }],
