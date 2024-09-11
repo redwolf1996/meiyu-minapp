@@ -74,9 +74,6 @@ function handleChange1() {}
     ref="paging"
     v-model="dataList"
     lower-threshold="5" auto-show-back-to-top :default-page-size="10"
-    :loading-more-custom-style="{
-      transform: 'translateY(-55px)',
-    }"
     @query="queryList"
   >
     <template #top>
@@ -302,7 +299,9 @@ function handleChange1() {}
         </view>
       </view>
     </view>
-    <MyTabBar :tab-index="2" />
+    <template #bottom>
+      <MyTabBar :tab-index="2" />
+    </template>
   </z-paging>
 </template>
 

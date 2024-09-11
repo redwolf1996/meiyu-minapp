@@ -2,9 +2,11 @@
 const props = withDefaults(defineProps<{
   tabIndex?: number // 展示第几个tab
   placeholder?: boolean // 底部是否占位
+  fixed?: boolean
 }>(), {
   tabIndex: 1,
   placeholder: true,
+  fixed: true,
 })
 const tabbar = ref(props.tabIndex)
 const tabUrls: NavigateToOptions['url'][] = [
@@ -24,7 +26,7 @@ function changeBar({ value }: { value: string }) {
     v-model="tabbar"
     :bordered="true"
     :safeAreaInsetBottom="true"
-    :fixed="true"
+    :fixed="props.fixed"
     :placeholder="props.placeholder"
     :zIndex="99999"
     active-color="#1A66FF"
