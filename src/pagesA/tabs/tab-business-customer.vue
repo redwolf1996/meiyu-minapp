@@ -63,6 +63,10 @@ async function getList() {
 function toAddCustomer() {
   uni.navigateTo({ url: '/pagesA/customer/add' })
 }
+
+function search({ value }) {
+  console.log(value)
+}
 function handleChange1() {}
 </script>
 
@@ -71,14 +75,13 @@ function handleChange1() {}
   <view py-12rpx px-32rpx>
     <view flex flex-bt flex-ac gap-32rpx>
       <view flex-1 pr>
-        <input placeholder="搜索姓名/手机号" placeholder-class="cus-input" px-40px bg-F2F3F5 h-36px lh-36px rd-4px type="text">
-        <uni-icons style="transform: translateY(-50%);top: 50%;" pa left-24rpx type="search" color="#86909C" size="24" />
-        <uni-icons style="transform: translateY(-50%);top: 50%;" pa right-24rpx type="clear" color="#86909C" size="24" />
+        <wd-search placeholder-left hide-cancel placeholder="搜索姓名/手机号" @search="search" />
       </view>
       <view rd-2px w-28px h-28px lh-28px tc bg-F2F3F5 fs-32 fb @click="toAddCustomer()">
         +
       </view>
     </view>
+
     <wd-drop-menu>
       <wd-drop-menu-item v-model="value1" :options="option1" @change="handleChange1" />
       <wd-drop-menu-item ref="filter" title="筛选">
@@ -347,6 +350,9 @@ function handleChange1() {}
 </template>
 
 <style lang='scss' scoped>
+:deep(.wd-search) {
+  padding: 0 !important;
+}
 .my-item {
   border-bottom: 1px solid #efefef;
   display: flex;
@@ -382,8 +388,8 @@ label {
 }
 </style>
 
-  <style>
-  page {
+<style>
+page {
   background-color: #fff;
 }
 </style>
