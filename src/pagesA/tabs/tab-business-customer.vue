@@ -251,7 +251,7 @@ function handleChange1() {}
             <view>
               <view flex flex-ac gap-4rpx>
                 <text f16>
-                  Jane Cooper
+                  {{ item.name }}
                 </text>
                 <wd-img
                   :round="true"
@@ -261,7 +261,7 @@ function handleChange1() {}
                 />
               </view>
               <view c-929292 f12 mt-10px>
-                138****6578
+                {{ item.phone }}
               </view>
             </view>
           </view>
@@ -271,7 +271,7 @@ function handleChange1() {}
                 余额：
               </text>
               <text c-00BB00>
-                1200.00
+                {{ item.amount ?? '--' }}
               </text>
             </view>
             <view>
@@ -279,7 +279,7 @@ function handleChange1() {}
                 上次消费：
               </text>
               <text c-00BB00>
-                2024.1.12
+                {{ item.lastPayTime || '--' }}
               </text>
             </view>
             <view>
@@ -287,7 +287,7 @@ function handleChange1() {}
                 手艺人：
               </text>
               <text c-00BB00>
-                王诗晴
+                {{ item.artisanUserName || '--' }}
               </text>
             </view>
             <view>
@@ -295,7 +295,7 @@ function handleChange1() {}
                 营销顾问：
               </text>
               <text c-00BB00>
-                张倩
+                {{ item.adviserUserName || '--' }}
               </text>
             </view>
           </view>

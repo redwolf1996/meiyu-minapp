@@ -130,6 +130,9 @@ export interface CusList {
    * 积分
    */
   integration: number
+  /**
+   * 上次消费时间
+   */
   lastPayTime: null | string
   /**
    * 会员
