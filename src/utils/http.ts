@@ -15,7 +15,7 @@ const httpInterceptor = {
       ...options?.header,
       client: 'minapp',
     }
-    const token = userStore.userInfo?.token
+    // const token = userStore.userInfo?.token
     // if (token) {
     // TODO 临时给h5使用 后面删掉
     const tk = 'eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbklkIjoiMWNlY2U2ODctMWVhYi00NGU2LWFiMjYtZTY1MWRiOWM1NGE0Iiwib3BlbmlkIjoib295Z0o3WHI3aGtFN2dCQ003VGYzaS1RM0hTbyIsImJ1c2luZXNzSWQiOjEsInVzZXJUeXBlIjoiYnVzaW5lc3MifQ.CFxbpXNSFKef_LQrBj1xV9qUHd4iX32ow0_nGn15RhxVqg12qNcrLp_Ewwm3O8km7vcfIRlKn1Ixn_7cVq98Kw'

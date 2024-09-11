@@ -125,7 +125,7 @@ export interface CusList {
   /**
    * 性别中文
    */
-  genderDesc: null
+  genderDesc: string
   /**
    * 积分
    */

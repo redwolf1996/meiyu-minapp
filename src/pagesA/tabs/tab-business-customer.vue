@@ -49,15 +49,14 @@ const reqParams = reactive<CusReqModel>({
   cardIds: '',
   cardCIds: '',
 })
-const list = ref<CusList[]>([])
+const paging = ref(null)
+const dataList = ref<CusList[]>([])
 
-onShow(() => {
-  getList()
-})
-
-async function getList() {
+async function queryList(page: number, pageSize: number) {
+  reqParams.pageNum = page
+  reqParams.pageSize = pageSize
   const res = await request.get<CusModel>('/business/store-customer', reqParams)
-  list.value = res.data.list
+  paging.value.complete(res.data.list)
 }
 
 function toAddCustomer() {
@@ -71,27 +70,37 @@ function handleChange1() {}
 </script>
 
 <template>
-  <MyNavBar title="客户列表" :capsule="false" />
-  <view py-12rpx px-32rpx>
-    <view flex flex-bt flex-ac gap-32rpx>
-      <view flex-1 pr>
-        <wd-search placeholder-left hide-cancel placeholder="搜索姓名/手机号" @search="search" />
-      </view>
-      <view rd-2px w-28px h-28px lh-28px tc bg-F2F3F5 fs-32 fb @click="toAddCustomer()">
-        +
-      </view>
-    </view>
+  <z-paging
+    ref="paging"
+    v-model="dataList"
+    lower-threshold="5" auto-show-back-to-top :default-page-size="10"
+    :loading-more-custom-style="{
+      transform: 'translateY(-55px)',
+    }"
+    @query="queryList"
+  >
+    <template #top>
+      <MyNavBar title="客户列表" :capsule="false" />
+      <view py-12rpx px-32rpx>
+        <view flex flex-bt flex-ac gap-32rpx>
+          <view flex-1 pr>
+            <wd-search placeholder-left hide-cancel placeholder="搜索姓名/手机号" @search="search" />
+          </view>
+          <view rd-2px w-28px h-28px lh-28px tc bg-F2F3F5 fs-32 fb @click="toAddCustomer()">
+            +
+          </view>
+        </view>
 
-    <wd-drop-menu>
-      <wd-drop-menu-item v-model="value1" :options="option1" @change="handleChange1" />
-      <wd-drop-menu-item ref="filter" title="筛选">
-        <view p-24rpx bg-F9F9F9>
-          <view bg-white rd-10px p-24rpx>
-            <view f14 mb-16px>
-              生日
-            </view>
-            <GridTagSelect v-model="value1" :sources="sources" />
-            <!-- <view flex flex-ac gap-32rpx mt-32rpx c-929292>
+        <wd-drop-menu>
+          <wd-drop-menu-item v-model="value1" :options="option1" @change="handleChange1" />
+          <wd-drop-menu-item ref="filter" title="筛选">
+            <view p-24rpx bg-F9F9F9>
+              <view bg-white rd-10px p-24rpx>
+                <view f14 mb-16px>
+                  生日
+                </view>
+                <GridTagSelect v-model="value1" :sources="sources" />
+                <!-- <view flex flex-ac gap-32rpx mt-32rpx c-929292>
               <text>范围</text>
               <input placeholder-class="cus-input" w-150rpx px-10px bg-F2F3F5 h-32px lh-32px type="text">
               <text>至</text>
@@ -102,9 +111,9 @@ function handleChange1() {}
               <input placeholder-class="cus-input" w-150rpx px-10px bg-F2F3F5 h-32px lh-32px type="text">
               <text>天过生日</text>
             </view> -->
-          </view>
+              </view>
 
-          <!-- <view bg-white rd-10px p-24rpx mt-24rpx>
+              <!-- <view bg-white rd-10px p-24rpx mt-24rpx>
             <view f14 mb-16px>
               成为客户时间
             </view>
@@ -117,7 +126,7 @@ function handleChange1() {}
             </view>
           </view> -->
 
-          <!-- <view bg-white rd-10px p-24rpx mt-24rpx>
+              <!-- <view bg-white rd-10px p-24rpx mt-24rpx>
             <view f14 mb-32rpx>
               持有卡项
             </view>
@@ -139,216 +148,162 @@ function handleChange1() {}
             </view>
           </view> -->
 
-          <wd-action-sheet v-model="show" title="选择卡类型" @close="show = false">
-            <view p-40rpx>
-              <GridTagSelect v-model="value1" :sources="sources3" :columns="3" />
-              <button class="theme my-btn" wp100 mt-30px>
-                确定
-              </button>
-            </view>
-          </wd-action-sheet>
-
-          <wd-action-sheet v-model="show2" title="选择卡项" @close="show = false">
-            <view p-40rpx>
-              <view class="my-item">
-                <wd-img
-                  :width="86"
-                  :height="75"
-                  :src="`${IMG_BASE}/img-cika.png`"
-                />
-                <view flex flex-y flex-bt gap-12rpx flex-1>
-                  <view flex flex-ac>
-                    <wd-img
-                      :width="16"
-                      :height="16"
-                      :src="`${IMG_BASE}/icon-star2.png`"
-                    />
-                    <text f12 pl-10rpx>
-                      30次
-                    </text>
-                  </view>
-                  <view flex flex-ac flex-bt>
-                    <text f16 fb>
-                      7980面部精雕30次
-                    </text>
-                    <radio style="transform:scale(0.7)" value="3" color="#1a66ff" />
-                  </view>
-                  <view f12 c-9A9FA5>
-                    永久有效
-                  </view>
+              <!-- TODO 查询过于复杂先不做 -->
+              <wd-action-sheet v-model="show" title="选择卡类型" @close="show = false">
+                <view p-40rpx>
+                  <GridTagSelect v-model="value1" :sources="sources3" :columns="3" />
+                  <button class="theme my-btn" wp100 mt-30px>
+                    确定
+                  </button>
                 </view>
-              </view>
-              <view class="my-item">
-                <wd-img
-                  :width="86"
-                  :height="75"
-                  :src="`${IMG_BASE}/img-cika.png`"
-                />
-                <view flex flex-y flex-bt gap-12rpx flex-1>
-                  <view flex flex-ac>
-                    <wd-img
-                      :width="16"
-                      :height="16"
-                      :src="`${IMG_BASE}/icon-star2.png`"
-                    />
-                    <text f12 pl-10rpx>
-                      30次
-                    </text>
-                  </view>
-                  <view flex flex-ac flex-bt>
-                    <text f16 fb>
-                      7980面部精雕30次
-                    </text>
-                    <radio style="transform:scale(0.7)" value="3" color="#1a66ff" />
-                  </view>
-                  <view f12 c-9A9FA5>
-                    永久有效
-                  </view>
-                </view>
-              </view>
-              <button class="my-btn theme" wp100 mt-30px>
-                确定
-              </button>
-            </view>
-          </wd-action-sheet>
+              </wd-action-sheet>
 
-          <view flex tc flex-cc mt-24rpx px-112rpx gap-20rpx>
-            <button class="my-btn normal" w-220rpx>
-              <!-- 重置 -->
-              关闭
-            </button>
-            <button class="my-btn theme" w-220rpx>
-              <!-- 查看50个用户 -->
-              确定
-            </button>
-          </view>
-        </view>
-      </wd-drop-menu-item>
-    </wd-drop-menu>
-    <view py-8rpx>
-      <view px-40rpx py-26rpx bg-white rd-16rpx>
-        <view flex flex-ac gap-32rpx>
-          <wd-img
-            :round="true"
-            :width="48"
-            :height="48"
-            :src="`${IMG_BASE}/cat.png`"
-          />
-          <view>
-            <view flex flex-ac gap-4rpx>
-              <text f16>
-                Jane Cooper
-              </text>
-              <wd-img
-                :round="true"
-                :width="18"
-                :height="18"
-                :src="`${IMG_BASE}/icon-v1.png`"
-              />
+              <!-- TODO 查询过于复杂先不做 -->
+              <wd-action-sheet v-model="show2" title="选择卡项" @close="show = false">
+                <view p-40rpx>
+                  <view class="my-item">
+                    <wd-img
+                      :width="86"
+                      :height="75"
+                      :src="`${IMG_BASE}/img-cika.png`"
+                    />
+                    <view flex flex-y flex-bt gap-12rpx flex-1>
+                      <view flex flex-ac>
+                        <wd-img
+                          :width="16"
+                          :height="16"
+                          :src="`${IMG_BASE}/icon-star2.png`"
+                        />
+                        <text f12 pl-10rpx>
+                          30次
+                        </text>
+                      </view>
+                      <view flex flex-ac flex-bt>
+                        <text f16 fb>
+                          7980面部精雕30次
+                        </text>
+                        <radio style="transform:scale(0.7)" value="3" color="#1a66ff" />
+                      </view>
+                      <view f12 c-9A9FA5>
+                        永久有效
+                      </view>
+                    </view>
+                  </view>
+                  <view class="my-item">
+                    <wd-img
+                      :width="86"
+                      :height="75"
+                      :src="`${IMG_BASE}/img-cika.png`"
+                    />
+                    <view flex flex-y flex-bt gap-12rpx flex-1>
+                      <view flex flex-ac>
+                        <wd-img
+                          :width="16"
+                          :height="16"
+                          :src="`${IMG_BASE}/icon-star2.png`"
+                        />
+                        <text f12 pl-10rpx>
+                          30次
+                        </text>
+                      </view>
+                      <view flex flex-ac flex-bt>
+                        <text f16 fb>
+                          7980面部精雕30次
+                        </text>
+                        <radio style="transform:scale(0.7)" value="3" color="#1a66ff" />
+                      </view>
+                      <view f12 c-9A9FA5>
+                        永久有效
+                      </view>
+                    </view>
+                  </view>
+                  <button class="my-btn theme" wp100 mt-30px>
+                    确定
+                  </button>
+                </view>
+              </wd-action-sheet>
+
+              <view flex tc flex-cc mt-24rpx px-112rpx gap-20rpx>
+                <button class="my-btn normal" w-220rpx>
+                  <!-- 重置 -->
+                  关闭
+                </button>
+                <button class="my-btn theme" w-220rpx>
+                  <!-- 查看50个用户 -->
+                  确定
+                </button>
+              </view>
             </view>
-            <view c-929292 f12 mt-10px>
-              138****6578
-            </view>
-          </view>
-        </view>
-        <view grid grid-cols-2 f12 mt-10px>
-          <view>
-            <text c-929292>
-              余额：
-            </text>
-            <text c-00BB00>
-              1200.00
-            </text>
-          </view>
-          <view>
-            <text c-929292>
-              上次消费：
-            </text>
-            <text c-00BB00>
-              2024.1.12
-            </text>
-          </view>
-          <view>
-            <text c-929292>
-              手艺人：
-            </text>
-            <text c-00BB00>
-              王诗晴
-            </text>
-          </view>
-          <view>
-            <text c-929292>
-              营销顾问：
-            </text>
-            <text c-00BB00>
-              张倩
-            </text>
-          </view>
-        </view>
+          </wd-drop-menu-item>
+        </wd-drop-menu>
       </view>
-      <view px-40rpx py-26rpx bg-F0F0F0 rd-16rpx>
-        <view flex flex-ac gap-32rpx>
-          <wd-img
-            :round="true"
-            :width="48"
-            :height="48"
-            :src="`${IMG_BASE}/cat.png`"
-          />
-          <view>
-            <view flex flex-ac gap-4rpx>
-              <text f16>
-                Jane Cooper
+    </template>
+    <view py-12rpx px-32rpx>
+      <view py-8rpx>
+        <view v-for="(item, index) in dataList" :key="`cus-${index}`" :class="[(index % 2 === 0) ? 'bg-white' : 'bg-F0F0F0']" px-40rpx py-26rpx rd-16rpx>
+          <view flex flex-ac gap-32rpx>
+            <wd-img
+              :round="true"
+              :width="48"
+              :height="48"
+              :src="`${IMG_BASE}/cat.png`"
+            />
+            <view>
+              <view flex flex-ac gap-4rpx>
+                <text f16>
+                  Jane Cooper
+                </text>
+                <wd-img
+                  :round="true"
+                  :width="18"
+                  :height="18"
+                  :src="`${IMG_BASE}/icon-v1.png`"
+                />
+              </view>
+              <view c-929292 f12 mt-10px>
+                138****6578
+              </view>
+            </view>
+          </view>
+          <view grid grid-cols-2 f12 mt-10px>
+            <view>
+              <text c-929292>
+                余额：
               </text>
-              <wd-img
-                :round="true"
-                :width="18"
-                :height="18"
-                :src="`${IMG_BASE}/icon-v1.png`"
-              />
+              <text c-00BB00>
+                1200.00
+              </text>
             </view>
-            <view c-929292 f12 mt-10px>
-              138****6578
+            <view>
+              <text c-929292>
+                上次消费：
+              </text>
+              <text c-00BB00>
+                2024.1.12
+              </text>
             </view>
-          </view>
-        </view>
-        <view grid grid-cols-2 f12 mt-10px>
-          <view>
-            <text c-929292>
-              余额：
-            </text>
-            <text c-00BB00>
-              1200.00
-            </text>
-          </view>
-          <view>
-            <text c-929292>
-              上次消费：
-            </text>
-            <text c-00BB00>
-              2024.1.12
-            </text>
-          </view>
-          <view>
-            <text c-929292>
-              手艺人：
-            </text>
-            <text c-00BB00>
-              王诗晴
-            </text>
-          </view>
-          <view>
-            <text c-929292>
-              营销顾问：
-            </text>
-            <text c-00BB00>
-              张倩
-            </text>
+            <view>
+              <text c-929292>
+                手艺人：
+              </text>
+              <text c-00BB00>
+                王诗晴
+              </text>
+            </view>
+            <view>
+              <text c-929292>
+                营销顾问：
+              </text>
+              <text c-00BB00>
+                张倩
+              </text>
+            </view>
           </view>
         </view>
       </view>
     </view>
-  </view>
-  <MyTabBar :tab-index="2" />
+    <MyTabBar :tab-index="2" />
+  </z-paging>
 </template>
 
 <style lang='scss' scoped>
