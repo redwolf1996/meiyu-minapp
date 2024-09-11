@@ -9,7 +9,7 @@
 		<z-paging ref="paging" :fixed="false" 
 			:auto="false" :useVirtualList="useVirtualList" :useInnerList="useInnerList" :cellKeyName="cellKeyName" :innerListStyle="innerListStyle" 
 			:preloadPage="preloadPage" :cellHeightMode="cellHeightMode" :virtualScrollFps="virtualScrollFps" :virtualListCol="virtualListCol"
-			@query="_queryList" @listChange="_updateList" style="height: 100%;">
+			@query="_queryList" @listChange="_updateList">
 			<slot />
 			<template #header>
 				<slot name="header"/>

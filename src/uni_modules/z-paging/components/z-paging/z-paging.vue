@@ -4,7 +4,7 @@
   / /_____| |_) | (_| | (_| | | | | | (_| |
  /___|    | .__/ \__,_|\__, |_|_| |_|\__, |
           |_|          |___/         |___/ 
-v2.7.7 (2024-04-01)
+v2.7.11 (2024-06-28)
 by ZXLee
 -->
 <!-- 文档地址：https://z-paging.zxlee.cn -->
@@ -35,7 +35,7 @@ by ZXLee
 				<scroll-view
 					ref="zp-scroll-view" :class="{'zp-scroll-view':true,'zp-scroll-view-absolute':!usePageScroll,'zp-scroll-view-hide-scrollbar':!showScrollbar}" :style="[chatRecordRotateStyle]"
 					:scroll-top="scrollTop" :scroll-x="scrollX"
-					:scroll-y="scrollable&&!usePageScroll&&scrollEnable&&(refresherCompleteScrollable?true:refresherStatus!==R.Complete)" :enable-back-to-top="finalEnableBackToTop"
+					:scroll-y="finalScrollable" :enable-back-to-top="finalEnableBackToTop"
 					:show-scrollbar="showScrollbar" :scroll-with-animation="finalScrollWithAnimation"
 					:scroll-into-view="scrollIntoView" :lower-threshold="finalLowerThreshold" :upper-threshold="5"
 					:refresher-enabled="finalRefresherEnabled&&!useCustomRefresher" :refresher-threshold="finalRefresherThreshold"
@@ -96,7 +96,7 @@ by ZXLee
 										<view class="zp-list-container" :style="[innerListStyle]">
 											<template v-if="finalUseVirtualList">
 												<view class="zp-list-cell" :style="[innerCellStyle]" :id="`zp-id-${item[virtualCellIndexKey]}`" v-for="(item,index) in virtualList" :key="item['zp_unique_index']" @click="_innerCellClick(item,virtualTopRangeIndex+index)">
-													<view v-if="useCompatibilityMode">使用兼容模式请在组件源码z-paging.vue第94行中注释这一行，并打开下面一行注释</view>
+													<view v-if="useCompatibilityMode">使用兼容模式请在组件源码z-paging.vue第99行中注释这一行，并打开下面一行注释</view>
 													<!-- <zp-public-virtual-cell v-if="useCompatibilityMode" :extraData="extraData" :item="item" :index="virtualTopRangeIndex+index" /> -->
 													<slot v-else name="cell" :item="item" :index="virtualTopRangeIndex+index"/>
 												</view>
@@ -110,7 +110,7 @@ by ZXLee
 										<slot name="footer"/>
 									</template>
 									<!-- 聊天记录模式加载更多loading -->
-									<template v-if="useChatRecordMode&&(loadingStatus!==M.NoMore||zSlots.chatNoMore)&&(realTotalData.length||(showChatLoadingWhenReload&&showLoading))&&!isFirstPageAndNoMore">
+									<template v-if="useChatRecordMode&&realTotalData.length>=defaultPageSize&&(loadingStatus!==M.NoMore||zSlots.chatNoMore)&&(realTotalData.length||(showChatLoadingWhenReload&&showLoading))&&!isFirstPageAndNoMore">
 										<view :style="[chatRecordRotateStyle]">
 											<slot v-if="loadingStatus===M.NoMore&&zSlots.chatNoMore" name="chatNoMore" />
 											<template v-else>
@@ -199,7 +199,7 @@ by ZXLee
 			</view>
 			<component :is="finalNvueListIs" ref="zp-n-list" :id="nvueListId" :style="[{'flex': 1,'top':isIos?'0px':'-1px'},usePageScroll?scrollViewStyle:{},chatRecordRotateStyle]" :alwaysScrollableVertical="true"
 				:fixFreezing="nFixFreezing" :show-scrollbar="showScrollbar" :loadmoreoffset="finalLowerThreshold" :enable-back-to-top="enableBackToTop"
-				:scrollable="scrollable&&scrollEnable&&(refresherCompleteScrollable?true:refresherStatus!==R.Complete)" :bounce="nvueBounce" :column-count="nWaterfallColumnCount" :column-width="nWaterfallColumnWidth"
+				:scrollable="finalScrollable" :bounce="nvueBounce" :column-count="nWaterfallColumnCount" :column-width="nWaterfallColumnWidth"
 				:column-gap="nWaterfallColumnGap" :left-gap="nWaterfallLeftGap" :right-gap="nWaterfallRightGap" :pagingEnabled="nvuePagingEnabled" :offset-accuracy="offsetAccuracy"
 				@loadmore="_nOnLoadmore" @scroll="_nOnScroll" @scrollend="_nOnScrollend">
 				<refresh v-if="(zSlots.top?cacheTopHeight!==-1:true)&&finalNvueRefresherEnabled" class="zp-n-refresh" :style="[nvueRefresherStyle]" :display="nRefresherLoading?'show':'hide'" @refresh="_nOnRrefresh" @pullingdown="_nOnPullingdown">
@@ -251,7 +251,7 @@ by ZXLee
 				<!-- 上拉加载更多view -->
 				<component :is="nViewIs" v-if="!refresherOnly&&loadingMoreEnabled&&!showEmpty">
 					<!-- 聊天记录模式加载更多loading（滚动到顶部加载更多或无更多数据时显示） -->
-					<template v-if="useChatRecordMode&&(loadingStatus!==M.NoMore||zSlots.chatNoMore)&&realTotalData.length&&isChatRecordModeAndInversion">
+					<template v-if="useChatRecordMode&&realTotalData.length>=defaultPageSize&&(loadingStatus!==M.NoMore||zSlots.chatNoMore)&&realTotalData.length&&isChatRecordModeAndInversion">
 						<view :style="[chatRecordRotateStyle]">
 							<slot v-if="loadingStatus===M.NoMore&&zSlots.chatNoMore" name="chatNoMore" />
 							<template v-else>

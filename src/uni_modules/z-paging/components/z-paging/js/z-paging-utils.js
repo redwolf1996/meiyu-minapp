@@ -19,7 +19,7 @@ function gc(key, defaultValue) {
 		const value = config[key];
 		// 如果全局配置存在但对应的配置项不存在，则返回默认值；反之返回配置项
 		return value === undefined ? defaultValue : value;
-	}
+	};
 }
 
 // 获取最终的touch位置
@@ -32,7 +32,7 @@ function getTouch(e) {
 	} else if (e.datail && e.datail != {}) {
 		touch = e.datail;
 	} else {
-		return {touchX: 0, touchY: 0}
+		return { touchX: 0, touchY: 0 }
 	}
 	return {
 		touchX: touch.clientX,
@@ -147,6 +147,11 @@ function wait(ms) {
 	});
 }
 
+// 是否是promise
+function isPromise(func) {
+	return Object.prototype.toString.call(func) === '[object Promise]';
+}
+
 // 添加单位
 function addUnit(value, unit) {
 	if (Object.prototype.toString.call(value) === '[object String]') {
@@ -158,6 +163,18 @@ function addUnit(value, unit) {
 		value = tempValue;
 	}
 	return unit === 'rpx' ? value + 'rpx' : (value / 2) + 'px';
+}
+
+// 深拷贝
+function deepCopy(obj) {
+	if (typeof obj !== 'object' || obj === null) return obj;
+	let newObj = Array.isArray(obj) ? [] : {};
+	for (let key in obj) {
+		if (obj.hasOwnProperty(key)) {
+			newObj[key] = deepCopy(obj[key]);
+		}
+	}
+	return newObj;
 }
 
 // ------------------ 私有方法 ------------------------
@@ -247,5 +264,7 @@ export default {
 	consoleErr,
 	delay,
 	wait,
-	addUnit
+	isPromise,
+	addUnit,
+	deepCopy
 };

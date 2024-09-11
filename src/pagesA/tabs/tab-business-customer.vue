@@ -19,13 +19,13 @@ const sources: any = [
   { label: '当天生日', value: 1, isActive: true },
   { label: '当月生日', value: 2, isActive: false },
 ]
-const sources2: any = [
-  { label: '今天', value: 1, isActive: true },
-  { label: '昨天', value: 2, isActive: false },
-  { label: '本周', value: 3, isActive: true },
-  { label: '本月', value: 4, isActive: false },
-  { label: '上月', value: 5, isActive: true },
-]
+// const sources2: any = [
+//   { label: '今天', value: 1, isActive: true },
+//   { label: '昨天', value: 2, isActive: false },
+//   { label: '本周', value: 3, isActive: true },
+//   { label: '本月', value: 4, isActive: false },
+//   { label: '上月', value: 5, isActive: true },
+// ]
 const sources3: any = [
   { label: '折扣卡', value: 1, isActive: true },
   { label: '充值卡', value: 2, isActive: false },

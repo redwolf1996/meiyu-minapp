@@ -88,14 +88,12 @@ export default {
 		},
 		finalScrollTop(newVal) {
 			this.renderPropScrollTop = newVal < 6 ? 0 : 10;
-		},
+		}
 	},
 	computed: {
 		finalScrollWithAnimation() {
 			if (this.privateScrollWithAnimation !== -1) {
-				const scrollWithAnimation = this.privateScrollWithAnimation === 1;
-				this.privateScrollWithAnimation = -1;
-				return scrollWithAnimation;
+				return this.privateScrollWithAnimation === 1;
 			}
 			return this.scrollWithAnimation;
 		},
@@ -109,8 +107,15 @@ export default {
 		finalScrollTop() {
 			return this.usePageScroll ? this.pageScrollTop : this.oldScrollTop;
 		},
+		// 当前是否是旧版webview
 		finalIsOldWebView() {
 			return this.isOldWebView && !this.usePageScroll;
+		},
+		// 当前scroll-view/list-view是否允许滚动
+		finalScrollable() {
+			return this.scrollable && !this.usePageScroll && this.scrollEnable 
+			&& (this.refresherCompleteScrollable ? true : this.refresherStatus !== Enum.Refresher.Complete)
+			&& (this.refresherRefreshingScrollable ? true : this.refresherStatus !== Enum.Refresher.Loading);
 		}
 	},
 	methods: {
@@ -168,9 +173,31 @@ export default {
 				this._scrollToY(y, offset, animate);
 			})
 		},
-		// 滚动到指定view(nvue中有效)。index为需要滚动的view的index(第几个)；offset为偏移量，单位为px；animate为是否展示滚动动画，默认为否
+		// 滚动到指定view(nvue中和虚拟列表中有效)。index为需要滚动的view的index(第几个，从0开始)；offset为偏移量，单位为px；animate为是否展示滚动动画，默认为否
 		scrollIntoViewByIndex(index, offset, animate) {
-			this._scrollIntoView(index, offset, animate);
+			if (index >= this.realTotalData.length) {
+				u.consoleErr('当前滚动的index超出已渲染列表长度，请先通过refreshToPage加载到对应index页并等待渲染成功后再调用此方法！')
+				return;
+			}
+			this.$nextTick(() => {
+				// #ifdef APP-NVUE
+				// 在nvue中，根据index获取对应节点信息并滚动到此节点位置
+				this._scrollIntoView(index, offset, animate);
+				// #endif
+				// #ifndef APP-NVUE
+				if (this.finalUseVirtualList) {
+					const isCellFixed = this.cellHeightMode === Enum.CellHeightMode.Fixed;
+					u.delay(() => {
+						if (this.finalUseVirtualList) {
+							// 虚拟列表 + 每个cell高度完全相同模式下，此时滚动到对应index的cell就是滚动到scrollTop = cellHeight * index的位置
+							// 虚拟列表 + 高度是动态非固定的模式下，此时滚动到对应index的cell就是滚动到scrollTop = 缓存的cell高度数组中第index个的lastTotalHeight的位置
+							const scrollTop = isCellFixed ? this.virtualCellHeight * index : this.virtualHeightCacheList[index].lastTotalHeight;
+							this.scrollToY(scrollTop, offset, animate);
+						}
+					}, isCellFixed ? 0 : 100)
+				}
+				// #endif
+			})
 		},
 		// 滚动到指定view(nvue中有效)。view为需要滚动的view(通过`this.$refs.xxx`获取)，不包含"#"；offset为偏移量，单位为px；animate为是否展示滚动动画，默认为否
 		scrollIntoViewByView(view, offset, animate) {
@@ -195,7 +222,7 @@ export default {
 		},
 		// 更新z-paging内置scroll-view的scrollTop
 		updateScrollViewScrollTop(scrollTop, animate = true) {
-			this.privateScrollWithAnimation = animate ? 1 : 0;
+			this._updatePrivateScrollWithAnimation(animate);
 			this.scrollTop = this.oldScrollTop;
 			this.$nextTick(() => {
 				this.scrollTop = scrollTop;
@@ -255,7 +282,7 @@ export default {
 				});
 				return;
 			}
-			this.privateScrollWithAnimation = animate ? 1 : 0;
+			this._updatePrivateScrollWithAnimation(animate);
 			this.scrollTop = this.oldScrollTop;
 			this.$nextTick(() => {
 				this.scrollTop = 0;
@@ -287,7 +314,7 @@ export default {
 				return;
 			}
 			try {
-				this.privateScrollWithAnimation = animate ? 1 : 0;
+				this._updatePrivateScrollWithAnimation(animate);
 				const pagingContainerNode = await this._getNodeClientRect('.zp-paging-container');
 				const scrollViewNode = await this._getNodeClientRect('.zp-scroll-view');
 				const pagingContainerH = pagingContainerNode ? pagingContainerNode[0].height : 0;
@@ -354,7 +381,7 @@ export default {
 		},
 		// 滚动到指定位置
 		_scrollToY(y, offset = 0, animate = false, addScrollTop = false) {
-			this.privateScrollWithAnimation = animate ? 1 : 0;
+			this._updatePrivateScrollWithAnimation(animate);
 			u.delay(() => {
 				if (this.usePageScroll) {
 					if (addScrollTop && this.pageScrollTop !== -1) {
@@ -385,6 +412,14 @@ export default {
 			const scrollDiff = e.detail.scrollHeight - this.oldScrollTop;
 			// 在非ios平台滚动中，再次验证一下是否滚动到了底部。因为在一些安卓设备中，有概率滚动到底部不触发@scrolltolower事件，因此添加双重检测逻辑
 			!this.isIos && this._checkScrolledToBottom(scrollDiff);
+		},
+		// 更新内置的scroll-view是否启用滚动动画
+		_updatePrivateScrollWithAnimation(animate) {
+			this.privateScrollWithAnimation = animate ? 1 : 0;
+			u.delay(() => this.$nextTick(() => {
+				// 在滚动结束后将滚动动画状态设置回初始状态
+				this.privateScrollWithAnimation = -1;
+			}), 100, 'updateScrollWithAnimationDelay')
 		},
 		// 检测scrollView是否要铺满屏幕
 		_doCheckScrollViewShouldFullHeight(totalData) {
@@ -434,7 +469,7 @@ export default {
 			this.$emit('scrollTopChange', newVal);
 			this.$emit('update:scrollTop', newVal);
 			this._checkShouldShowBackToTop(newVal);
-			// 之前在安卓中scroll-view有概率滚动到顶部时scrollTop不为0导致下拉刷新判断异常，经过测试在HX3.98+已修复，因此暂时关闭此容错判断
+			// 之前在安卓中scroll-view有概率滚动到顶部时scrollTop不为0导致下拉刷新判断异常，因此判断scrollTop在105之内都允许下拉刷新，但此方案会导致某些情况（例如滚动到距离顶部10px处）下拉抖动，因此改为通过获取zp-scroll-view的节点信息中的scrollTop进行验证的方案
 			// const scrollTop = this.isIos ? (newVal > 5 ? 6 : 0) : (newVal > 105 ? 106 : (newVal > 5 ? 6 : 0));
 			const scrollTop = newVal > 5 ? 6 : 0;
 			if (isPageScrollTop && this.wxsPageScrollTop !== scrollTop) {

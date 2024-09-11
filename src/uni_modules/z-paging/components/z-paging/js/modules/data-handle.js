@@ -53,6 +53,16 @@ export default {
 			type: String,
 			default: u.gc('autowireQueryName', '')
 		},
+		// 获取分页数据Function，功能与@query类似。若设置了fetch则@query将不再触发
+		fetch: {
+			type: Function,
+			default: null
+		},
+		// fetch的附加参数，fetch配置后有效
+		fetchParams: {
+			type: Object,
+			default: u.gc('fetchParams', null)
+		},
 		// z-paging mounted后自动调用reload方法(mounted后自动调用接口)，默认为是
 		auto: {
 			type: Boolean,
@@ -496,6 +506,7 @@ export default {
 					this.loadingStatus = Enum.More.Default;
 				}
 				if (isLocal) {
+					// 如果当前是本地分页，则必然是由setLocalPaging方法触发，此时直接本地加载第一页数据即可。后续本地分页加载更多方法由滚动到底部加载更多事件处理
 					this.totalLocalPagingList = data;
 					const localPageNo = this.defaultPageNo;
 					const localPageSize = this.queryFrom !== Enum.QueryFrom.Refresh ? this.defaultPageSize : this.currentRefreshPageSize;
@@ -503,6 +514,7 @@ export default {
 						this.completeByTotal(res, this.totalLocalPagingList.length);
 					})
 				} else {
+					// 如果当前不是本地分页，则按照正常分页逻辑进行数据处理&emit数据
 					let dataChangeDelayTime = 0;
 					// #ifdef APP-NVUE
 					if (this.privateShowRefresherWhenReload && this.finalNvueListIs === 'waterfall') {
@@ -624,7 +636,7 @@ export default {
 				this.privateConcat = false;
 				const totalPageSize = pageNo * this.pageSize;
 				this.currentRefreshPageSize = totalPageSize;
-				// 如果是本地分页，则在组件内部自己处理分页逻辑，不emit query相关事件
+				// 如果调用refresh时是本地分页，则在组件内部自己处理分页逻辑，不emit query相关事件
 				if (this.isLocalPaging && this.isHandlingRefreshToPage) {
 					this._localPagingQueryList(this.defaultPageNo, totalPageSize, 0, res => {
 						this.complete(res);
@@ -686,7 +698,19 @@ export default {
 			this.queryFrom = from;
 			this.requestTimeStamp = u.getTime();
 			const [lastItem] = this.realTotalData.slice(-1);
-			this.$emit('query', ...interceptor._handleQuery(pageNo, pageSize, from, lastItem || null));
+			if (this.fetch) {
+				const fetchParams = interceptor._handleFetchParams({pageNo, pageSize, from, lastItem: lastItem || null}, this.fetchParams);
+				const fetchResult = this.fetch(fetchParams);
+				if (!interceptor._handleFetchResult(fetchResult, this, fetchParams)) {
+					u.isPromise(fetchResult) ? fetchResult.then(res => {
+						this.complete(res);
+					}).catch(err => {
+						this.complete(false);
+					}) : this.complete(fetchResult)
+				}
+			} else {
+				this.$emit('query', ...interceptor._handleQuery(pageNo, pageSize, from, lastItem || null));
+			}
 		},
 		// 触发数据改变promise
 		_callDataPromise(success, totalList) {

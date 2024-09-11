@@ -59,6 +59,11 @@ export default {
 			type: String,
 			default: u.gc('cellHeightMode', Enum.CellHeightMode.Fixed)
 		},
+		// 固定的cell高度，cellHeightMode=fixed才有效，若设置了值，则不计算第一个cell高度而使用设置的cell高度
+		fixedCellHeight: {
+			type: [Number, String],
+			default: u.gc('fixedCellHeight', 0)
+		},
 		// 虚拟列表列数，默认为1。常用于每行有多列的情况，例如每行有2列数据，需要将此值设置为2
 		virtualListCol: {
 			type: [Number, String],
@@ -98,18 +103,8 @@ export default {
 	},
 	watch: {
 		// 监听总数据的改变，刷新虚拟列表布局
-		realTotalData(newVal) {
-			// #ifndef APP-NVUE
-			if (this.finalUseVirtualList) {
-				this.updateVirtualListFromDataChange = true;
-				this.$nextTick(() => {
-					this.getCellHeightRetryCount.fixed = 0;
-					!newVal.length && this._resetDynamicListState(!this.isUserPullDown);
-					newVal.length && this.cellHeightMode === Enum.CellHeightMode.Fixed && this.isFirstPage && this._updateFixedCellHeight();
-					this._updateVirtualScroll(this.oldScrollTop);
-				})
-			}
-			// #endif
+		realTotalData() {
+			this.updateVirtualListRender();
 		},
 		// 监听虚拟列表渲染数组的改变并emit
 		virtualList(newVal){
@@ -140,6 +135,9 @@ export default {
 		},
 		finalVirtualPageHeight(){
 			return this.virtualPageHeight > 0 ? this.virtualPageHeight : this.windowHeight;
+		},
+		finalFixedCellHeight() {
+			return u.convertToPx(this.fixedCellHeight);
 		},
 		virtualRangePageHeight(){
 			return this.finalVirtualPageHeight * this.preloadPage;
@@ -227,6 +225,23 @@ export default {
 			// 将当前cell的高度信息从高度缓存数组中删除
 			this.virtualHeightCacheList.splice(index, 1);
 		},
+		// 手动触发虚拟列表渲染更新，可用于解决例如修改了虚拟列表数组中元素，但展示未更新的情况
+		updateVirtualListRender() {
+			// #ifndef APP-NVUE
+			if (this.finalUseVirtualList) {
+				this.updateVirtualListFromDataChange = true;
+				this.$nextTick(() => {
+					this.getCellHeightRetryCount.fixed = 0;
+					if (this.realTotalData.length) {
+						this.cellHeightMode === Enum.CellHeightMode.Fixed && this.isFirstPage && this._updateFixedCellHeight()
+					} else {
+						this._resetDynamicListState(!this.isUserPullDown);
+					}
+					this._updateVirtualScroll(this.oldScrollTop);
+				})
+			}
+			// #endif
+		},
 		// 初始化虚拟列表
 		_virtualListInit() {
 			this.$nextTick(() => {
@@ -243,21 +258,25 @@ export default {
 		},
 		// cellHeightMode为fixed时获取第一个cell高度
 		_updateFixedCellHeight() {
-			this.$nextTick(() => {
-				u.delay(() => {
-					this._getNodeClientRect(`#zp-id-${0}`,this.finalUseInnerList).then(cellNode => {
-						if (!cellNode) {
-							if (this.getCellHeightRetryCount.fixed > 10) return;
-							this.getCellHeightRetryCount.fixed ++;
-							// 如果获取第一个cell的节点信息失败，则重试（不超过10次）
-							this._updateFixedCellHeight();
-						} else {
-							this.virtualCellHeight = cellNode[0].height;
-							this._updateVirtualScroll(this.oldScrollTop);
-						}
-					});
-				}, c.delayTime, 'updateFixedCellHeightDelay');
-			})
+			if (!this.finalFixedCellHeight) {
+				this.$nextTick(() => {
+					u.delay(() => {
+						this._getNodeClientRect(`#zp-id-${0}`,this.finalUseInnerList).then(cellNode => {
+							if (!cellNode) {
+								if (this.getCellHeightRetryCount.fixed > 10) return;
+								this.getCellHeightRetryCount.fixed ++;
+								// 如果获取第一个cell的节点信息失败，则重试（不超过10次）
+								this._updateFixedCellHeight();
+							} else {
+								this.virtualCellHeight = cellNode[0].height;
+								this._updateVirtualScroll(this.oldScrollTop);
+							}
+						});
+					}, c.delayTime, 'updateFixedCellHeightDelay');
+				})
+			} else {
+				this.virtualCellHeight = this.finalFixedCellHeight;
+			}
 		},
 		// cellHeightMode为dynamic时获取每个cell高度
 		_updateDynamicCellHeight(list, dataFrom = 'bottom') {
@@ -309,6 +328,7 @@ export default {
 		_setCellIndex(list, dataFrom = 'bottom') {
 			let currentItemIndex = 0;
 			const cellIndexKey = this.virtualCellIndexKey;
+			([Enum.QueryFrom.Refresh, Enum.QueryFrom.Reload].indexOf(this.queryFrom) >= 0) && this._resetDynamicListState();
 			if (this.totalData.length) {
 				if (dataFrom === 'bottom') {
 					currentItemIndex = this.realTotalData.length;
@@ -322,13 +342,16 @@ export default {
 						currentItemIndex = firstItem[cellIndexKey] - list.length;
 					}
 				}
-			} else {			
+			} else {
 				this._resetDynamicListState();
 			}
 			for (let i = 0; i < list.length; i++) {
 				let item = list[i];
 				if (!item || Object.prototype.toString.call(item) !== '[object Object]') {
 					item = { item };
+				}
+				if (item[c.listCellIndexUniqueKey]) {
+					item = u.deepCopy(item);
 				}
 				item[cellIndexKey] = currentItemIndex + i;
 				item[c.listCellIndexUniqueKey] = `${this.virtualListKey}-${item[cellIndexKey]}`;
