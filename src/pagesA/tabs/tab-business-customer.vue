@@ -91,7 +91,7 @@ function handleChange1() {}
               生日
             </view>
             <GridTagSelect v-model="value1" :sources="sources" />
-            <view flex flex-ac gap-32rpx mt-32rpx c-929292>
+            <!-- <view flex flex-ac gap-32rpx mt-32rpx c-929292>
               <text>范围</text>
               <input placeholder-class="cus-input" w-150rpx px-10px bg-F2F3F5 h-32px lh-32px type="text">
               <text>至</text>
@@ -101,10 +101,10 @@ function handleChange1() {}
               <text>最近</text>
               <input placeholder-class="cus-input" w-150rpx px-10px bg-F2F3F5 h-32px lh-32px type="text">
               <text>天过生日</text>
-            </view>
+            </view> -->
           </view>
 
-          <view bg-white rd-10px p-24rpx mt-24rpx>
+          <!-- <view bg-white rd-10px p-24rpx mt-24rpx>
             <view f14 mb-16px>
               成为客户时间
             </view>
@@ -115,9 +115,9 @@ function handleChange1() {}
               <text>至</text>
               <input placeholder-class="cus-input" w-150rpx px-10px bg-F2F3F5 h-32px lh-32px type="text">
             </view>
-          </view>
+          </view> -->
 
-          <view bg-white rd-10px p-24rpx mt-24rpx>
+          <!-- <view bg-white rd-10px p-24rpx mt-24rpx>
             <view f14 mb-32rpx>
               持有卡项
             </view>
@@ -137,7 +137,7 @@ function handleChange1() {}
                 折扣卡
               </view>
             </view>
-          </view>
+          </view> -->
 
           <wd-action-sheet v-model="show" title="选择卡类型" @close="show = false">
             <view p-40rpx>
@@ -212,12 +212,14 @@ function handleChange1() {}
             </view>
           </wd-action-sheet>
 
-          <view flex tc flex-cc mt-24rpx px-112rpx gap-40px>
+          <view flex tc flex-cc mt-24rpx px-112rpx gap-20rpx>
             <button class="my-btn normal" w-220rpx>
-              重置
+              <!-- 重置 -->
+              关闭
             </button>
-            <button class="my-btn theme" w-350rpx>
-              查看50个用户
+            <button class="my-btn theme" w-220rpx>
+              <!-- 查看50个用户 -->
+              确定
             </button>
           </view>
         </view>
