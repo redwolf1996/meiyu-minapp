@@ -11,7 +11,8 @@
       "@dcloudio/types",
       "miniprogram-api-typings",
       "@uni-helper/uni-types",
-      "wot-design-uni/global.d.ts"
+      "wot-design-uni/global.d.ts",
+      "./src/uni_modules/z-paging/global.d.ts"
     ],
     "strictNullChecks": false,
     "noImplicitAny": false,

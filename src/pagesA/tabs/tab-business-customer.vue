@@ -49,7 +49,7 @@ const reqParams = reactive<CusReqModel>({
   cardIds: '',
   cardCIds: '',
 })
-const paging = ref(null)
+const paging = ref<ZPagingInstance<CusList> | null>(null)
 const dataList = ref<CusList[]>([])
 
 async function queryList(page: number, pageSize: number) {
