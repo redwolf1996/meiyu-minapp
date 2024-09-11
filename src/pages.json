@@ -165,6 +165,10 @@
           }
         },
         {
+          "path": "components/MyNavBar",
+          "type": "page"
+        },
+        {
           "path": "components/MyTabBar",
           "type": "page"
         },

@@ -6,9 +6,6 @@ style:
 </route>
 
 <script lang="ts" setup>
-// // #ifdef MP-WEIXIN
-// const { windowHeight, screenWidth } = getMenuButtonInfo()
-// // #endif
 const windowHeight = uni.getWindowInfo().windowHeight
 const screenWidth = uni.getWindowInfo().screenWidth
 
@@ -40,11 +37,6 @@ const hours24h = get24Hours()
 // const tableData = ['张三', '李四', '王五']
 const tableData = ['张三', '李四', '王五', '赵六']
 
-// const tableItemWidth = computed(()=>{
-//   if(tableData.length <=3 ) return `calc(100% - 80rpx)`
-//   return 0
-// })
-
 const multipleItemWidth = computed(() => {
   const len = tableData.length
   if (len === 0)
@@ -58,30 +50,21 @@ onMounted(async () => {
   const theNode = uni.createSelectorQuery().select('#head')
   theNode.boundingClientRect((data: any) => {
     headHeight.value = data?.height
-    // console.log(headHeight.value)
   }).exec()
 
   const theNode2 = uni.createSelectorQuery().select('#title')
   theNode2.boundingClientRect((data: any) => {
     titleHeight.value = data?.height
-    // console.log(titleHeight.value)
   }).exec()
 
   const theNode3 = uni.createSelectorQuery().select('.wd-tabbar')
   theNode3.boundingClientRect((data: any) => {
     barHeight.value = data?.height
-    // console.log(barHeight.value)
   }).exec()
 })
 
-const gridHeight = computed(() => {
-  // const res = windowHeight - (headHeight.value + titleHeight.value + barHeight.value)
-  const res = (headHeight.value + titleHeight.value + barHeight.value)
-  // console.log(windowHeight)
-  // console.log(headHeight.value)
-  // console.log(titleHeight.value)
-  // console.log(barHeight.value)
-  return res
+const restHeight = computed(() => {
+  return headHeight.value + titleHeight.value + barHeight.value
 })
 
 function handleClickList() {
@@ -240,7 +223,7 @@ function scrollView(e: any) {
       :scroll-top="800"
       class="content pr"
       :style="{
-        height: `calc(100vh - ${gridHeight}px)`,
+        height: `calc(100vh - ${restHeight}px)`,
       }" @scroll="scrollView"
     >
       <view flex word-spacing-0 pr z-100>

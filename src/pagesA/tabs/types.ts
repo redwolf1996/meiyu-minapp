@@ -47,7 +47,7 @@ export interface CusReqModel {
   /**
    * =1 任意卡项；指定卡id或者卡类型是传值0
    */
-  cardAll?: number
+  cardAll?: number | string
   /**
    * 知道卡类型，id逗号分隔（指定类型时，类型id）
    */

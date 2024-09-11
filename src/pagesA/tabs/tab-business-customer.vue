@@ -36,15 +36,15 @@ const show = ref(false)
 const show2 = ref(false)
 const reqParams = reactive<CusReqModel>({
   storeId,
-  pageSize: 1,
-  pageNum: 5,
+  pageNum: 1,
+  pageSize: 5,
   keyword: '',
   phone: '',
   birthdayS: '',
   birthdayE: '',
   cDateS: '',
   cDateE: '',
-  cardAll: 1,
+  cardAll: '',
   cardIds: '',
   cardCIds: '',
 })

@@ -23,6 +23,7 @@ interface NavigateToOptions {
        "/pagesA/booking/storeTime" |
        "/pagesA/card/list" |
        "/pagesA/card/share" |
+       "/pagesA/components/MyNavBar" |
        "/pagesA/components/MyTabBar" |
        "/pagesA/customer/add" |
        "/pagesA/customer/detail" |
