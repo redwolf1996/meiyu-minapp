@@ -46,7 +46,7 @@ export default defineConfig({
     UnoCSS(),
   ],
   build: {
-    sourcemap: true,
+    sourcemap: false,
   },
   server: {
     host: '0.0.0.0',

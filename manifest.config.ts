@@ -7,6 +7,11 @@ export default defineManifestConfig({
   'versionName': '1.0.0',
   'versionCode': '100',
   'transformPx': false,
+  'h5': {
+    router: {
+      base: '/myh5/',
+    },
+  },
   'mp-weixin': {
     appid: 'wx208ed5b60f57b9bc',
     setting: { urlCheck: false },
