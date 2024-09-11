@@ -2,6 +2,7 @@
 style:
   navigationBarTitleText: 客户
   navigationBarBackgroundColor: "#ffffff"
+  navigationStyle: "custom"
 </route>
 
 <script lang="ts" setup>
@@ -66,6 +67,7 @@ function handleChange1() {}
 </script>
 
 <template>
+  <MyNavBar title="客户列表" :capsule="false" />
   <view py-12rpx px-32rpx>
     <view flex flex-bt flex-ac gap-32rpx>
       <view flex-1 pr>

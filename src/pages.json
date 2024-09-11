@@ -478,7 +478,8 @@
           "type": "page",
           "style": {
             "navigationBarTitleText": "客户",
-            "navigationBarBackgroundColor": "#ffffff"
+            "navigationBarBackgroundColor": "#ffffff",
+            "navigationStyle": "custom"
           }
         },
         {
