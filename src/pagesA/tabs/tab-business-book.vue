@@ -197,19 +197,19 @@ function scrollView(e: any) {
       <view bg-white h-20rpx />
       <view flex flex-ac flex-cc gap-100rpx flex-rd f12 h-54rpx lh-54rpx bg-white class="status">
         <view flex flex-ac>
-          <MySquare color="#FFCBE2" />
+          <MySquare color="gray" />
           <text lh-24rpx pl-8rpx>
             待服务(1)
           </text>
         </view>
         <view flex flex-ac>
-          <MySquare color="#FEE7D7" />
+          <MySquare color="orange" />
           <text lh-24rpx pl-8rpx>
             服务中(2)
           </text>
         </view>
         <view flex flex-ac>
-          <MySquare color="#D4D4D6" />
+          <MySquare color="#00aa44" />
           <text lh-24rpx pl-8rpx>
             已完成(3)
           </text>
@@ -232,8 +232,8 @@ function scrollView(e: any) {
           <view bg-F3F6FF flex flex-y flex-ac>
             <view
               v-for="(item, index) in hours24h" :key="`i${item}`"
-              :class="{ 'active-time': Math.floor((scrollTop + 200) / 100) === index }"
-              tc w-40px c-8EA0B6 h-100px style="border-bottom: 1px solid transparent;"
+              :class="{ 'active-time': Math.floor((scrollTop + 200) / 120) === index }"
+              tc w-40px c-8EA0B6 h-120px style="border-bottom: 1px solid transparent;"
             >
               <text f12 lh-24rpx>
                 {{ item }}
@@ -247,14 +247,20 @@ function scrollView(e: any) {
               {{ item }}
             </view>
           </view>
-          <view h-2400px class="table-content" flex>
+          <view h-2880px class="table-content" flex>
             <view v-for="item in tableData" :key="`k${item}`" pr bg-white tc flex-shrink-0 :style="{ flexBasis: `${multipleItemWidth}px` }">
               <!-- {{ item }} -->
               <Grids96 />
               <view class="booking" :style="{ width: `${multipleItemWidth - 10}px` }">
-                <view>王乐乐</view>
-                <view>基础护理</view>
-                <view>8:00-8:30</view>
+                <view f12>
+                  王乐乐
+                </view>
+                <view f10>
+                  基础护理
+                </view>
+                <view f10>
+                  8:00-8:30
+                </view>
               </view>
             </view>
           </view>
