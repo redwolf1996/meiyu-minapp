@@ -10,7 +10,7 @@ import type { CusList, CusModel, CusReqModel } from './types'
 
 const filter = ref()
 const value1 = ref(0)
-const option1 = [
+const optionsVip = [
   { label: '全部', value: 0 },
   { label: '会员', value: 1 },
   { label: '非会员', value: 2 },
@@ -66,7 +66,9 @@ function toAddCustomer() {
 function search({ value }) {
   console.log(value)
 }
-function handleChange1() {}
+function handleChangeVip() {
+
+}
 </script>
 
 <template>
@@ -89,7 +91,7 @@ function handleChange1() {}
         </view>
 
         <wd-drop-menu>
-          <wd-drop-menu-item v-model="value1" :options="option1" @change="handleChange1" />
+          <wd-drop-menu-item v-model="value1" :options="optionsVip" @change="handleChangeVip" />
           <wd-drop-menu-item ref="filter" title="筛选">
             <view p-24rpx bg-F9F9F9>
               <view bg-white rd-10px p-24rpx>
