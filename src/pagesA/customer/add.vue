@@ -169,8 +169,8 @@ function openCalendar() {
 }
 </style>
 
-  <style lang='scss' scoped>
-  :deep(.wd-radio-group) {
+<style lang='scss' scoped>
+:deep(.wd-radio-group) {
   line-height: 32 !important;
 }
 :deep(.wd-upload__evoke) {
