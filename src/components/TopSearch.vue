@@ -5,11 +5,15 @@ const props = withDefaults(defineProps<{
   placeholder: '请输入名称',
 })
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue', 'search'])
 const txt = ref('')
 
 function onChangeInput(e: HTMLInputElement) {
   emit('update:modelValue', e.value)
+}
+
+function onClickSearch() {
+  emit('search')
 }
 </script>
 
@@ -37,6 +41,7 @@ export default {
         :width="32"
         :height="32"
         :src="`${IMG_BASE}/icon-search.png`"
+        @click="onClickSearch()"
       />
     </view>
   </view>

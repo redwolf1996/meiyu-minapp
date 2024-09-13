@@ -65,7 +65,7 @@ function toScanCode() {
   toast.warning('开发中')
 }
 function toCard() {
-  toast.warning('开发中')
+  uni.navigateTo({ url: '/pagesA/card/list' })
 }
 function toAddCustomer() {
   uni.navigateTo({ url: '/pagesA/customer/add' })
