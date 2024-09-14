@@ -68,3 +68,6 @@ export function getStoreId() {
 }
 
 export const storeId = getStoreId()
+
+export const uniPlatform = uni.getSystemInfoSync().uniPlatform
+export const isH5 = uniPlatform === 'web'

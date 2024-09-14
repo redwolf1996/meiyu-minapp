@@ -69,6 +69,9 @@ function search({ value }) {
 function handleChangeVip() {
 
 }
+function toDetail(item: CusList) {
+  uni.navigateTo({ url: `/pagesA/customer/detail?id=${item.storeCustomerId}` })
+}
 </script>
 
 <template>
@@ -239,7 +242,7 @@ function handleChangeVip() {
     </template>
     <view py-12rpx px-32rpx>
       <view py-8rpx>
-        <view v-for="(item, index) in dataList" :key="`cus-${index}`" :class="[(index % 2 === 0) ? 'bg-white' : 'bg-F0F0F0']" px-40rpx py-26rpx rd-16rpx>
+        <view v-for="(item, index) in dataList" :key="`cus-${index}`" :class="[(index % 2 === 0) ? 'bg-white' : 'bg-F0F0F0']" px-40rpx py-26rpx rd-16rpx @click="toDetail(item)">
           <view flex flex-ac gap-32rpx>
             <wd-img
               :round="true"

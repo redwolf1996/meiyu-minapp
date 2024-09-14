@@ -69,3 +69,117 @@ export interface Customer {
    */
   wechatCode?: string
 }
+
+export interface CustomerDetail {
+  /**
+   * 地址
+   */
+  address: string
+  /**
+   * 顾问
+   */
+  adviserId: number
+  /**
+   * 顾问姓名
+   */
+  adviserName: string
+  /**
+   * 余额
+   */
+  amount: number
+  /**
+   * 手艺人
+   */
+  artisanId: number
+  /**
+   * 手艺人姓名
+   */
+  artisanName: string
+  /**
+   * 头像
+   */
+  avatar: string
+  birthday: string
+  /**
+   * 购卡数
+   */
+  cardC: number
+  /**
+   * 市
+   */
+  city: string
+  /**
+   * 区
+   */
+  county: string
+  createBy: number
+  createTime: string
+  /**
+   * 客户id
+   */
+  customerId: number
+  /**
+   * 消费次数
+   */
+  expendC: number
+  /**
+   * 性别，1男，2女，0未知
+   */
+  gender: string
+  /**
+   * 累计消费
+   */
+  historyExpend: number
+  /**
+   * 累计获取积分
+   */
+  historyIntegration: number
+  /**
+   * 店铺客户id
+   */
+  id: number
+  /**
+   * 可用积分
+   */
+  integration: number
+  lastPayTime: string
+  /**
+   * 会员等级，1->普通客户，2->vip客户
+   */
+  level: string
+  /**
+   * 姓名
+   */
+  name: string
+  /**
+   * 备注名
+   */
+  noteName: string
+  /**
+   * 备注
+   */
+  notes: string
+  orgId: number
+  /**
+   * 手机号
+   */
+  phone: string
+  /**
+   * 省
+   */
+  province: string
+  /**
+   * 来源
+   */
+  source: string
+  /**
+   * 店铺
+   */
+  storeId: number
+  updateBy: number
+  updateTime: string
+  /**
+   * 微信
+   */
+  wechatCode: string
+}

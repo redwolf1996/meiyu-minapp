@@ -4,6 +4,9 @@ style:
 </route>
 
 <script lang="ts" setup>
+import type { CustomerDetail } from './types'
+
+defineOptions({ inheritAttrs: false })
 const showCard = ref(false)
 const cardValue = ref(1)
 const value = ref(0)
@@ -28,10 +31,18 @@ const tabs = [{
   label: '会员档案',
   value: 2,
 }]
+
+onLoad((options) => {
+  getInfo(+options?.id)
+})
+
+async function getInfo(storeCustomerId: number) {
+  await request.get<CustomerDetail>(`/business/store-customer/${storeCustomerId}`)
+}
 </script>
 
 <template>
-  <view ps top-0 z-10000>
+  <view ps top-44px z-100 :class="isH5 ? 'top-44px' : 'top-0'">
     <view flex flex-ac p-40rpx gap-40rpx bg-white>
       <wd-img
         :round="true"
