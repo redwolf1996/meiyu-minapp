@@ -1,7 +1,6 @@
 <route lang="yaml">
 style:
-  navigationBarTitleText: 充值卡
-  navigationStyle: custom
+  navigationBarTitleText: 添加充值卡
 </route>
 
 <script lang="ts" setup>
@@ -55,16 +54,7 @@ function handleClose() {}
 </script>
 
 <template>
-  <StepNav :step="3" />
-  <view mt-10px tc fs-40>
-    添加充值卡
-  </view>
-  <view mt-8px tc>
-    也可跳过稍后在【工作台-产品管理】中添加
-  </view>
-
   <wd-form ref="form" :model="model">
-    <view h-24rpx />
     <wd-cell-group :border="true">
       <wd-input
         v-model="model.value1"
@@ -273,15 +263,7 @@ function handleClose() {}
   <view mx-40rpx mt-64rpx color-white>
     <wd-button size="large" custom-class="theme-bg" block>
       <view flex flex-cc>
-        <text>下一步</text>
-      </view>
-    </wd-button>
-  </view>
-
-  <view mx-40rpx color-white>
-    <wd-button size="large" type="text" block>
-      <view flex flex-cc color-333>
-        <text>跳过</text>
+        <text>保存</text>
       </view>
     </wd-button>
   </view>

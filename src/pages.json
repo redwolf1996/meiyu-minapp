@@ -154,24 +154,21 @@
           "path": "card/card-add-chongzhika",
           "type": "page",
           "style": {
-            "navigationBarTitleText": "充值卡",
-            "navigationStyle": "custom"
+            "navigationBarTitleText": "添加充值卡"
           }
         },
         {
           "path": "card/card-add-cika",
           "type": "page",
           "style": {
-            "navigationBarTitleText": "添加次卡",
-            "navigationStyle": "custom"
+            "navigationBarTitleText": "添加次卡"
           }
         },
         {
           "path": "card/card-add-zhekouka",
           "type": "page",
           "style": {
-            "navigationBarTitleText": "折扣卡",
-            "navigationStyle": "custom"
+            "navigationBarTitleText": "添加折扣卡"
           }
         },
         {

@@ -89,9 +89,9 @@ function selAction(e) {
         <wd-img
           :width="100"
           :height="100"
-          mode="center"
+          mode="widthFix"
           :radius="12"
-          :src="`${IMG_BASE}/cat.png`"
+          :src="`${IMG_BASE}/detail/list-cika.png`"
         />
         <div flex flex-y flex-bt flex-1 h-108px>
           <div flex flex-bt>
