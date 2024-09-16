@@ -39,7 +39,12 @@ function search() {
 }
 
 function selCard(e) {
-  console.log(e)
+  if (e.index === 0)
+    return uni.navigateTo({ url: '/pagesA/card/card-add-cika' })
+  if (e.index === 1)
+    return uni.navigateTo({ url: '/pagesA/card/card-add-zhekouka' })
+  if (e.index === 2)
+    return uni.navigateTo({ url: '/pagesA/card/card-add-chongzhika' })
 }
 
 function selAction(e) {

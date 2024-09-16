@@ -21,6 +21,9 @@ interface NavigateToOptions {
        "/pagesA/booking/index" |
        "/pagesA/booking/share" |
        "/pagesA/booking/storeTime" |
+       "/pagesA/card/card-add-chongzhika" |
+       "/pagesA/card/card-add-cika" |
+       "/pagesA/card/card-add-zhekouka" |
        "/pagesA/card/list" |
        "/pagesA/card/share" |
        "/pagesA/components/MyNavBar" |

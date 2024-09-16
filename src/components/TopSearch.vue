@@ -56,7 +56,7 @@ export default {
 
 <style lang='scss' scoped>
 .search {
-  padding: 12px 16px;
+  padding: 12rpx 16rpx;
   background: #fff;
 
   .inner {
