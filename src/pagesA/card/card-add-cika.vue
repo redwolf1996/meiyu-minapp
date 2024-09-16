@@ -5,6 +5,7 @@ style:
 
 <script lang="ts" setup>
 import piaoyiEditor from '@/uni_modules/piaoyi-editor/components/piaoyi-editor/piaoyi-editor.vue'
+import type { CardForm } from './types'
 
 const value = ref<number>(1)
 const columns = ref(['选项1', '选项2', '选项3', '选项4', '选项5', '选项6', '选项7'])
@@ -12,14 +13,19 @@ const showDrawer = ref(false)
 const form: any = reactive({
   val: 1,
 })
-const model = reactive<{
-  value1: string
-  value2: string
-  value3: string
-}>({
-  value1: '',
-  value2: '',
-  value3: '',
+const model = reactive<CardForm>({
+  storeId,
+  type: 1,
+  secondType: 1,
+  gift: 0,
+  name: '',
+  categoryId: 4,
+  price: 200,
+  info: [
+  ],
+  expires: null,
+  isShow: 1,
+  desc: '卡',
 })
 const sources: any = [
   {
@@ -47,7 +53,7 @@ const sources2: any = [
   },
   {
     label: '不支持',
-    value: 2,
+    value: 0,
     isActive: false,
   },
 ]
@@ -77,29 +83,28 @@ function handleClose() {}
         <text>选择次卡类型</text>
       </view>
       <view h-28rpx />
-      <GridTagSelect v-model="form.val" :sources="sources" :columns="3" />
+      <GridTagSelect v-model="model.secondType" :sources="sources" :columns="3" />
     </view>
 
     <view h-24rpx />
     <wd-cell-group :border="true">
       <wd-input
-        v-model="model.value1"
+        v-model="model.name"
         label="卡名称"
-        prop="value1"
         placeholder="请输入"
         suffix-icon="arrow-right"
         :rules="[{ required: true, message: '请填写卡名称' }]"
       />
       <wd-picker
-        v-model="value"
+        v-model="model.name"
         :rules="[{ required: true, message: '请选择服务分类' }]"
         label="卡分类"
         align-right :columns="columns"
       />
       <wd-input
-        v-model="model.value2"
+        v-model="model.price"
         label="售价"
-        prop="value23232"
+        type="number"
         placeholder="请输入"
         suffix-icon="arrow-right"
         :rules="[{ required: true, message: '请填写售价' }]"
@@ -109,7 +114,7 @@ function handleClose() {}
     <view h-24rpx />
     <wd-cell-group :border="true">
       <wd-input
-        v-model="model.value1"
+        v-model="model.info"
         label="购卡权益"
         disabled
         prop="value1"
@@ -149,7 +154,7 @@ function handleClose() {}
       </view>
       <wd-input
         v-if="form.val === 3"
-        v-model="model.value1"
+        v-model="value"
         label="可使用次数"
         prop="value1"
         placeholder="请输入"
@@ -173,6 +178,7 @@ function handleClose() {}
           <view flex flex-ac f14 style="color:rgba(0, 0, 0, 0.85)">
             <text>购买后</text>
             <input
+              v-model="model.expires"
               px-10rpx w-46px tc theme-red type="number" placeholder="请输入"
               placeholder-style="color:#b6bdbd;padding-top: 1px;"
             >
@@ -227,7 +233,7 @@ function handleClose() {}
         <text>网店售卖</text>
       </view>
       <view h-28rpx />
-      <GridTagSelect v-model="form.val" :sources="sources2" :columns="2" />
+      <GridTagSelect v-model="model.isShow" :sources="sources2" :columns="2" />
     </view>
 
     <view h-24rpx />

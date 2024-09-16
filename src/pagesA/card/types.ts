@@ -57,3 +57,65 @@ export interface List {
    */
   type?: number
 }
+
+export interface CardForm {
+  /**
+   * 分类
+   */
+  categoryId: number
+  /**
+   * 描述
+   */
+  desc: string
+  /**
+   * 有效期天数，0不限
+   */
+  expires: number
+  /**
+   * 充值卡赠送
+   */
+  gift?: number
+  /**
+   * 卡项所对应的服务列表
+   */
+  info: Info[]
+  /**
+   * 是否网店销售，0否，1是
+   */
+  isShow: number
+  /**
+   * 卡名
+   */
+  name: string
+  /**
+   * 售价，充值卡的充值金额
+   */
+  price: number
+  /**
+   * 次卡类型，0非次卡，1->有限次卡，2->不限次卡，3->通卡
+   */
+  secondType: number
+  /**
+   * 当前门店
+   */
+  storeId: number
+  /**
+   * 分类，1->次卡，2->充值卡，3->折扣卡
+   */
+  type: number
+}
+
+export interface Info {
+  /**
+   * 次卡表示数量，折扣充值卡表示折扣1-100
+   */
+  equity: number
+  /**
+   * 产品id，与服务id只能存在一个有值的
+   */
+  productId?: number
+  /**
+   * 服务id
+   */
+  serviceId?: number
+}
