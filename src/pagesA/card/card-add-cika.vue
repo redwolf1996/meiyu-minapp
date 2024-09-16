@@ -146,7 +146,12 @@ function handleClose() {}
           ¥499
         </view>
         <view wp-30 flex flex-xr>
-          <wd-input-number v-if="form.val === 1" v-model="value" />
+          <view v-if="form.val !== 1">
+            <wd-input-number v-model="value" />
+            <text pl-10px>
+              次
+            </text>
+          </view>
           <view v-else>
             不限次
           </view>
