@@ -12,6 +12,15 @@ const items = [{
   label: '所有产品',
   value: 1,
 }]
+const servs = ref([])
+const prods = ref([])
+
+const checked = ref(false)
+function select(e: UniHelper.CheckboxGroupOnChangeEvent) {
+  checked.value = !!e.detail.value.includes('cb')
+}
+
+function toAdd() {}
 </script>
 
 <template>
@@ -20,9 +29,63 @@ const items = [{
       <wd-tab :title="item.label" />
     </block>
   </wd-tabs>
+  <view v-if="(tab === 0 && servs.length === 0) || (tab === 1 && prods.length === 0)" class="empty">
+    <view tc mt56rpx f12 c-#979797>
+      暂无数据
+    </view>
+    <view>
+      <view mx-200rpx mt-64rpx color-white @click="toAdd()">
+        <wd-button size="large" custom-class="theme-bg" block>
+          <view flex flex-cc>
+            <text>添加{{ tab ? '产品' : '服务' }}</text>
+          </view>
+        </wd-button>
+      </view>
+    </view>
+  </view>
+
+  <view class="footer">
+    <view>
+      <view>已选择 7 项</view>
+      <view class="h5px" />
+      <view flex flex-cc>
+        <checkbox-group @change="select">
+          <checkbox
+            value="cb"
+            :checked="checked"
+          />
+        </checkbox-group>
+        <text f14>
+          所有服务和产品
+        </text>
+      </view>
+    </view>
+    <view w120px>
+      <wd-button size="large" custom-class="theme-bg" block>
+        <view flex flex-cc>
+          <text>确定</text>
+        </view>
+      </wd-button>
+    </view>
+  </view>
 </template>
 
+<style>
+page {
+  height: 100vh;
+}
+</style>
+
 <style lang='scss' scoped>
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+}
 .this-tab {
   padding: 0 100rpx;
 }
