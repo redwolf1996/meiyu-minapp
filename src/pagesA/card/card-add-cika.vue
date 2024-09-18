@@ -7,7 +7,6 @@ style:
 import type { CardForm } from './types'
 
 const value = ref<number>(1)
-const showDrawer = ref(false)
 const form = reactive<CardForm>({
   storeId,
   type: 1,
@@ -54,10 +53,7 @@ const sources2: any = [
 ]
 
 const catName = computed(() => curClassify.value.name)
-
-function test() {
-  console.log('xxx')
-}
+// const prodServs = ref([])
 
 function toCats() {
   curClassify.value.type = CatType.Card
@@ -65,8 +61,8 @@ function toCats() {
   uni.navigateTo({ url: '/pagesA/cats' })
 }
 
-function toBs() { // 商品和服务列表页面
-
+function toProdServs() { // 商品和服务列表页面
+  uni.navigateTo({ url: '/pagesA/prod-servs' })
 }
 
 function toRichEdit() {
@@ -122,7 +118,7 @@ function save() {
     <view h-24rpx />
     <wd-cell-group :border="true">
       <MyCellGroup>
-        <MyCell noBorder borderTop required label="购卡权益" @click="toBs()">
+        <MyCell noBorder borderTop required label="购卡权益" @click="toProdServs()">
           <text v-if="!catName" f14 c-bfbfbf pr-5px>
             请选择商品或服务
           </text>

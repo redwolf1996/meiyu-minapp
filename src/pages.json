@@ -43,6 +43,13 @@
           }
         },
         {
+          "path": "prod-servs",
+          "type": "page",
+          "style": {
+            "navigationBarTitleText": "选择服务和产品"
+          }
+        },
+        {
           "path": "rich-edit",
           "type": "page",
           "style": {

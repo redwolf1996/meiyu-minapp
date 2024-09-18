@@ -24,7 +24,7 @@ const items = [{
 </script>
 
 <template>
-  <wd-tabs v-model="tab" :lineHeight="2" :lineWidth="24" color="#1A66FF">
+  <wd-tabs v-model="tab" :lineHeight="2" :lineWidth="24" color="#1A66FF" swipeable>
     <block v-for="item in items" :key="`t${item.value}`">
       <wd-tab :title="item.label" />
     </block>
