@@ -87,6 +87,7 @@ onMounted(() => {
 })
 
 function toggleCheck(item: CatItem) {
+  console.log(curClassify.value.multiple)
   if (!curClassify.value.multiple) {
     list.value.forEach((v) => {
       v.checked = false

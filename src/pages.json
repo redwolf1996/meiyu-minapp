@@ -175,7 +175,7 @@
           "path": "card/list",
           "type": "page",
           "style": {
-            "navigationBarTitleText": "卡项管理"
+            "navigationBarTitleText": "添加次卡"
           }
         },
         {

@@ -1,6 +1,6 @@
 <route lang="yaml">
 style:
-  navigationBarTitleText: 卡项管理
+  navigationBarTitleText: 添加次卡
 </route>
 
 <script lang="ts" setup>
@@ -40,11 +40,11 @@ function search() {
 
 function selCard(e) {
   if (e.index === 0)
-    return uni.navigateTo({ url: '/pagesA/card/card-add-cika' })
+    uni.navigateTo({ url: '/pagesA/card/card-add-cika' })
   if (e.index === 1)
-    return uni.navigateTo({ url: '/pagesA/card/card-add-zhekouka' })
+    uni.navigateTo({ url: '/pagesA/card/card-add-zhekouka' })
   if (e.index === 2)
-    return uni.navigateTo({ url: '/pagesA/card/card-add-chongzhika' })
+    uni.navigateTo({ url: '/pagesA/card/card-add-chongzhika' })
 }
 
 function selAction(e) {
@@ -159,7 +159,6 @@ function selAction(e) {
     </view>
 
     <wd-action-sheet v-model="visCardType" :actions="cardList" @select="selCard" />
-
     <wd-action-sheet v-model="visAction" :actions="actionList" @select="selAction" />
   </z-paging>
 </template>

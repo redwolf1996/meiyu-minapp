@@ -62,7 +62,7 @@ export interface CardForm {
   /**
    * 分类
    */
-  categoryId: number
+  categoryId: ComputedRef<number | number[]>
   /**
    * 描述
    */
@@ -70,7 +70,7 @@ export interface CardForm {
   /**
    * 有效期天数，0不限
    */
-  expires: number
+  expires: number | null
   /**
    * 充值卡赠送
    */
