@@ -39,10 +39,11 @@ onLoad((options) => {
 async function getInfo(storeCustomerId: number) {
   await request.get<CustomerDetail>(`/business/store-customer/${storeCustomerId}`)
 }
+console.log(isH5)
 </script>
 
 <template>
-  <view ps top-44px z-100 :class="isH5 ? 'top-44px' : 'top-0'">
+  <view ps z-100 :class="isH5 ? 'top-44px' : 'top-0'">
     <view flex flex-ac p-40rpx gap-40rpx bg-white>
       <wd-img
         :round="true"

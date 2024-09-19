@@ -300,7 +300,7 @@ page {
 .plus {
   position: fixed;
   right: 10rpx;
-  bottom: 55px;
+  bottom: 90px;
   width: 112rpx;
   height: 112rpx;
   background: #3a82fb;
