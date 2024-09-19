@@ -274,7 +274,7 @@ function scrollView(e: any) {
     </scroll-view>
     <BookList v-if="mode === 1" />
   </view>
-  <MyTabBar :tab-index="1" :placeholder="false" />
+  <MyTabBar :tab-index="1" />
 </template>
 
 <style>

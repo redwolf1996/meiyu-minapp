@@ -19,7 +19,6 @@ export default defineManifestConfig({
     optimization: {
       subPackages: true,
     },
-    lazyCodeLoading: 'requiredComponents',
   },
   'uniStatistics': {
     enable: false,

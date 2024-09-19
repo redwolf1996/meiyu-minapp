@@ -16,13 +16,13 @@ const tabUrls: NavigateToOptions['url'][] = [
   '/pagesA/tabs/tab-business-my',
 ]
 
-function changeBar({ value }: { value: string }) {
-  uni.navigateTo({ url: tabUrls[value] })
+function changeBar(index: number) {
+  uni.navigateTo({ url: tabUrls[index] })
 }
 </script>
 
 <template>
-  <wd-tabbar
+  <!-- <wd-tabbar
     v-model="tabbar"
     :bordered="true"
     :safeAreaInsetBottom="true"
@@ -37,7 +37,18 @@ function changeBar({ value }: { value: string }) {
     <wd-tabbar-item title="预约" icon="call" />
     <wd-tabbar-item title="客户" icon="usergroup" />
     <wd-tabbar-item title="我的" icon="user" />
-  </wd-tabbar>
+  </wd-tabbar> -->
+
+  <uv-tabbar
+    :zIndex="99999"
+    :value="tabbar" active-color="#1A66FF" inactive-color="#A7A8AC"
+    @change="changeBar"
+  >
+    <uv-tabbar-item text="工作台" icon="home" />
+    <uv-tabbar-item text="预约" icon="phone" />
+    <uv-tabbar-item text="客户" icon="account-fill" />
+    <uv-tabbar-item text="我的" icon="account" />
+  </uv-tabbar>
 </template>
 
 <style lang='scss' scoped>

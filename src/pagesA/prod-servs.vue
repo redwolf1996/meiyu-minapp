@@ -12,12 +12,12 @@ const items = [{
   label: '所有产品',
   value: 1,
 }]
-const servs = ref([])
-const prods = ref([])
+// const servs = ref([])
+// const prods = ref([])
 const checked = ref(false)
 const active = ref<number>(1)
 const scrollTop = ref<number>(0)
-const subCategories = Array.from({ length: 24 }).fill({ title: '标题文字', label: '这是描述这是描述' }, 0, 24)
+const subCategories: any = Array.from({ length: 24 }).fill({ title: '标题文字', label: '这是描述这是描述' }, 0, 24)
 const categories = ref([
   {
     label: '分类一',
@@ -82,7 +82,7 @@ function select(e: UniHelper.CheckboxGroupOnChangeEvent) {
   checked.value = !!e.detail.value.includes('cb')
 }
 
-function toAdd() {}
+// function toAdd() {}
 </script>
 
 <template>
@@ -115,7 +115,7 @@ function toAdd() {}
         :throttle="false"
       >
         <wd-cell-group :title="item.title" border>
-          <wd-cell v-for="(cell, index) in item.items" :key="index" :title="cell.title" :label="cell.label">
+          <wd-cell v-for="(cell, index1) in item.items" :key="index1" :title="cell.title" :label="cell.label">
             <wd-icon name="github-filled" size="24px" />
           </wd-cell>
         </wd-cell-group>
