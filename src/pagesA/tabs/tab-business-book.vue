@@ -264,6 +264,8 @@ function scrollView(e: any) {
               </view>
             </view>
           </view>
+          <view class="h50px" />
+          <wu-safe-bottom />
         </view>
       </view>
       <view class="plus" @click="createOrder()">
@@ -278,9 +280,11 @@ function scrollView(e: any) {
 </template>
 
 <style>
+/* #ifdef WEB */
 page {
   overflow-y: hidden !important;
 }
+/* #endif */
 </style>
 
 <style lang='scss' scoped>
