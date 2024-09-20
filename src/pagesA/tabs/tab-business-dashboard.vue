@@ -10,7 +10,6 @@ import { getMenuButtonInfo } from '@/utils/index'
 // #endif
 
 import type { DashBoardData } from './types'
-import MyTabBar from '../components/MyTabBar.vue'
 
 const toast = useToast()
 const menuButtonWidth = ref(0)
