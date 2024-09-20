@@ -27,8 +27,6 @@ interface NavigateToOptions {
        "/pagesA/card/card-add-zhekouka" |
        "/pagesA/card/list" |
        "/pagesA/card/share" |
-       "/pagesA/components/MyNavBar" |
-       "/pagesA/components/MyTabBar" |
        "/pagesA/customer/add" |
        "/pagesA/customer/detail" |
        "/pagesA/dashboard/cash-apply" |

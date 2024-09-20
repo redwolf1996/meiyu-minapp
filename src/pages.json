@@ -193,14 +193,6 @@
           }
         },
         {
-          "path": "components/MyNavBar",
-          "type": "page"
-        },
-        {
-          "path": "components/MyTabBar",
-          "type": "page"
-        },
-        {
           "path": "customer/add",
           "type": "page",
           "layout": "common",
