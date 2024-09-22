@@ -78,6 +78,7 @@ function toDetail(item: CusList) {
   <z-paging
     ref="paging"
     v-model="dataList"
+    back-to-top-bottom="200rpx"
     lower-threshold="5" auto-show-back-to-top :default-page-size="10"
     @query="queryList"
   >

@@ -147,7 +147,7 @@ function scrollView(e: any) {
       </view>
     </wd-popup>
     <view id="title">
-      <wd-navbar title="标题" :safeAreaInsetTop="true" @click-left="handleClickList">
+      <wd-navbar title="标题" :fixed="true" :placeholder="true" :safeAreaInsetTop="true" @click-left="handleClickList">
         <template #left>
           <view transform-translate-y-4px>
             <wd-img
@@ -288,6 +288,10 @@ page {
 </style>
 
 <style lang='scss' scoped>
+#head {
+  position: fixed;
+  top: 100px;
+}
 .active-time {
   color: #364250 !important;
 }
