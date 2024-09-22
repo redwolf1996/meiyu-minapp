@@ -256,6 +256,10 @@ function toInvite() {
             <i i-mdi-credit-card-check-outline fs-64 c-1563ff />
             <text>开单收银</text>
           </view>
+          <view @click="toCashing()">
+            <i i-material-symbols-add-card-outline fs-64 c-1563ff />
+            <text>开卡充值</text>
+          </view>
           <view @click="toOrderList()">
             <i i-mdi-order-bool-ascending fs-64 c-1563ff />
             <text>订单列表</text>
