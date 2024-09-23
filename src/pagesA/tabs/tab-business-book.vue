@@ -8,7 +8,8 @@ style:
 <script lang="ts" setup>
 const windowHeight = uni.getWindowInfo().windowHeight
 const screenWidth = uni.getWindowInfo().screenWidth
-
+const instance = getCurrentInstance()
+const query = uni.createSelectorQuery().in(instance.proxy)
 const dropMenu = ref()
 const mode = ref(0) // 0预约看板 1预约列表
 const visableSearch = ref(false)
@@ -46,20 +47,20 @@ const multipleItemWidth = computed(() => {
   return (screenWidth - 40) / len
 })
 
-onMounted(async () => {
-  const theNode = uni.createSelectorQuery().select('#head')
-  theNode.boundingClientRect((data: any) => {
+onMounted(() => {
+  query.select('#head').boundingClientRect((data: any) => {
     headHeight.value = data?.height
+    console.log(`head${headHeight.value}`)
   }).exec()
 
-  const theNode2 = uni.createSelectorQuery().select('#title')
-  theNode2.boundingClientRect((data: any) => {
+  query.select('#title').boundingClientRect((data: any) => {
     titleHeight.value = data?.height
+    console.log(`title${titleHeight.value}`)
   }).exec()
 
-  const theNode3 = uni.createSelectorQuery().select('.wd-tabbar')
-  theNode3.boundingClientRect((data: any) => {
+  query.select('.wd-tabbar').boundingClientRect((data: any) => {
     barHeight.value = data?.height
+    console.log(`tabbar${barHeight.value}`)
   }).exec()
 })
 
@@ -280,18 +281,12 @@ function scrollView(e: any) {
 </template>
 
 <style>
-/* #ifdef WEB */
 page {
   overflow-y: hidden !important;
 }
-/* #endif */
 </style>
 
 <style lang='scss' scoped>
-#head {
-  position: fixed;
-  top: 100px;
-}
 .active-time {
   color: #364250 !important;
 }
