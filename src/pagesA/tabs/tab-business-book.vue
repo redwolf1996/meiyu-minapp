@@ -78,7 +78,9 @@ function calendarChange() {
 function showSearch() {
   visableSearch.value = true
 }
-function createOrder() {}
+function createOrder() {
+  uni.navigateTo({ url: '/pagesA/book/add' })
+}
 
 function scrollView(e: any) {
   scrollTop.value = e.detail.scrollTop

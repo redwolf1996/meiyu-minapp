@@ -126,9 +126,9 @@ function clickItem(item: any) {
       <wd-picker v-model="value" :rules="[{ required: true, message: '请选择服务时间' }]" label="服务时间" align-right :columns="columns" />
       <!-- <wd-picker v-model="value" :rules="[{ required: true, message: '请选择手艺人' }]" label="手艺人" align-right :columns="columns" /> -->
     </wd-cell-group>
-    <MyCellGroup>
+    <MyCellGroup :py="0">
       <MyCell label="手艺人" required noBorder borderTop @click="toSelectStaff">
-        <span f14 c-B6BDBD pr4px>请选择手艺人</span>
+        <span font-size-14px c-B6BDBD pr4px>请选择手艺人</span>
       </MyCell>
     </MyCellGroup>
   </wd-form>
