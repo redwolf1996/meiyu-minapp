@@ -14,6 +14,7 @@ export function getMenuButtonInfo() {
   const windowWidth = uni.getSystemInfoSync().windowWidth
   const screenWidth = uni.getSystemInfoSync().screenWidth
   const restHeight = uni.getSystemInfoSync().windowHeight - barHeight - barTop - 52
+  const navHeight = barHeight + barTop
 
   return {
     barHeight,
@@ -23,6 +24,7 @@ export function getMenuButtonInfo() {
     windowHeight,
     windowWidth,
     screenWidth,
+    navHeight,
   }
 }
 

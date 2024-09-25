@@ -42,7 +42,7 @@
 	 * @property {Boolean}			fixed				是否固定在底部（默认 true ）
 	 * @property {Boolean}			placeholder			fixed定位固定在底部时，是否生成一个等高元素防止塌陷（默认 true ）
 	 * @property {Object}			customStyle			定义需要用到的外部样式
-	 * 
+	 *
 	 * @example <uv-tabbar :value="value2" :placeholder="false" @change="name => value2 = name" :fixed="false" :safeAreaInsetBottom="false"><uv-tabbar-item text="首页" icon="home" dot ></uv-tabbar-item></uv-tabbar>
 	 */
 	export default {
@@ -99,6 +99,7 @@
 				this.$uvGetRect('.uv-tabbar__content').then(({height = 50}) => {
 					// 修复IOS safearea bottom 未填充高度
 					this.placeholderHeight = height
+          uni.$emit("getTabHeight", height)
 				})
 				// #endif
 
@@ -125,11 +126,11 @@
 		@include flex(column);
 		flex: 1;
 		justify-content: center;
-		
+
 		&__content {
 			@include flex(column);
 			background-color: #fff;
-			
+
 			&__item-wrapper {
 				height: 50px;
 				@include flex(row);

@@ -14,8 +14,8 @@ const dropMenu = ref()
 const mode = ref(0) // 0预约看板 1预约列表
 const visableSearch = ref(false)
 const headHeight = ref(0)
-const titleHeight = ref(0)
-const barHeight = ref(0)
+const tabHeight = ref(0)
+const navHeight = getMenuButtonInfo().navHeight // 只能通过系统方法获取navHeight，通过dom获取不到
 const scrollTop = ref(800)
 const txt = ref('xxx')
 const val = ref()
@@ -32,10 +32,6 @@ const sources2: any = [
   { label: '小美', value: 3, isActive: false },
 ]
 const hours24h = get24Hours()
-
-// const tableData = ['张三']
-// const tableData = ['张三', '李四']
-// const tableData = ['张三', '李四', '王五']
 const tableData = ['张三', '李四', '王五', '赵六']
 
 const multipleItemWidth = computed(() => {
@@ -47,25 +43,28 @@ const multipleItemWidth = computed(() => {
   return (screenWidth - 40) / len
 })
 
-onMounted(() => {
+onMounted(async () => {
+  // 获取日历和预约图表上方服务状态数tag高度
   query.select('#head').boundingClientRect((data: any) => {
     headHeight.value = data?.height
-    console.log(`head${headHeight.value}`)
-  }).exec()
-
-  query.select('#title').boundingClientRect((data: any) => {
-    titleHeight.value = data?.height
-    console.log(`title${titleHeight.value}`)
-  }).exec()
-
-  query.select('.wd-tabbar').boundingClientRect((data: any) => {
-    barHeight.value = data?.height
-    console.log(`tabbar${barHeight.value}`)
   }).exec()
 })
 
+// 只能通过事件监听获取第三方组件uv-tabbar的高度
+uni.$on('getTabHeight', (data) => {
+  tabHeight.value = data
+})
+
+const sideHeight = computed(() => {
+  return navHeight + headHeight.value + tabHeight.value
+})
+
 const restHeight = computed(() => {
-  return headHeight.value + titleHeight.value + barHeight.value
+  return windowHeight - sideHeight.value
+})
+
+watchEffect(() => {
+  console.log(windowHeight, sideHeight.value, restHeight.value)
 })
 
 function handleClickList() {
@@ -224,7 +223,7 @@ function scrollView(e: any) {
       :scroll-top="800"
       class="content pr"
       :style="{
-        height: `calc(100vh - ${restHeight}px)`,
+        height: `${restHeight}px`,
       }" @scroll="scrollView"
     >
       <view flex word-spacing-0 pr z-100>
@@ -250,7 +249,6 @@ function scrollView(e: any) {
           </view>
           <view h-2880px class="table-content" flex>
             <view v-for="item in tableData" :key="`k${item}`" pr bg-white tc flex-shrink-0 :style="{ flexBasis: `${multipleItemWidth}px` }">
-              <!-- {{ item }} -->
               <Grids96 />
               <view class="booking" :style="{ width: `${multipleItemWidth - 10}px` }">
                 <view f12>
@@ -265,8 +263,6 @@ function scrollView(e: any) {
               </view>
             </view>
           </view>
-          <view class="h50px" />
-          <wu-safe-bottom />
         </view>
       </view>
       <view class="plus" @click="createOrder()">
@@ -277,7 +273,7 @@ function scrollView(e: any) {
     </scroll-view>
     <BookList v-if="mode === 1" />
   </view>
-  <MyTabBar :tab-index="1" />
+  <MyTabBar id="my-tabbar" :tab-index="1" />
 </template>
 
 <style>
