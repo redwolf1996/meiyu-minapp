@@ -63,10 +63,6 @@ const restHeight = computed(() => {
   return windowHeight - sideHeight.value
 })
 
-watchEffect(() => {
-  console.log(windowHeight, sideHeight.value, restHeight.value)
-})
-
 function handleClickList() {
 }
 
@@ -273,7 +269,7 @@ function scrollView(e: any) {
     </scroll-view>
     <BookList v-if="mode === 1" />
   </view>
-  <MyTabBar id="my-tabbar" :tab-index="1" />
+  <MyTabBar :tab-index="1" />
 </template>
 
 <style>
