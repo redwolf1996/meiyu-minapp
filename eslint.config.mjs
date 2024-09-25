@@ -28,6 +28,7 @@ export default antfu(
       'no-console': ['off'],
       'eqeqeq': ['off'],
       'import/order': ['off'],
+      'array-callback-return': 'off',
     },
   },
 )
