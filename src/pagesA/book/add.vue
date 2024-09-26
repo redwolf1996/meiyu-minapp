@@ -5,17 +5,32 @@ style:
 </route>
 
 <script lang="ts" setup>
+import type { BookForm } from './types'
+
 const form = ref()
 const value = ref()
-const columns = ref(['选项1', '选项2', '选项3', '选项4', '选项5', '选项6', '选项7'])
-const model = reactive<{
-  value1: string
-  value2: string
-  value3: string
-}>({
-  value1: '',
-  value2: '',
-  value3: '',
+const columns = ref([
+  {
+    label: '到店',
+    value: 1,
+  },
+  {
+    label: '上门',
+    value: 2,
+  },
+])
+const model = reactive<BookForm>({
+  storeId: null,
+  storeCustomerPhone: null,
+  storeCustomerName: null,
+  storeCustomerId: null,
+  storeServiceType: 1,
+  startTime: null,
+  artisanId: null,
+  payType: null,
+  customerCardId: null,
+  notes: null,
+  service: [],
 })
 const list = ref([
   {
@@ -67,6 +82,12 @@ function clickItem(item: any) {
   })
   item.active = !item.active
 }
+
+function toAddServ() {
+
+}
+
+function toSelServTime() {}
 </script>
 
 <template>
@@ -107,7 +128,7 @@ function clickItem(item: any) {
   <wd-form ref="form" :model="model">
     <wd-cell-group :border="true">
       <wd-input
-        v-model="model.value1"
+        v-model="model.storeCustomerPhone"
         label="联系电话"
         prop="value1"
         placeholder="请输入"
@@ -115,7 +136,7 @@ function clickItem(item: any) {
         :rules="[{ required: true, message: '请填写联系电话' }]"
       />
       <wd-input
-        v-model="model.value1"
+        v-model="model.storeCustomerName"
         label="联系人"
         prop="value1"
         placeholder="请输入"
@@ -123,12 +144,15 @@ function clickItem(item: any) {
         :rules="[{ required: true, message: '请填写联系人' }]"
       />
       <wd-picker v-model="value" :rules="[{ required: true, message: '请选择服务方式' }]" label="服务方式" align-right :columns="columns" />
-      <wd-picker v-model="value" :rules="[{ required: true, message: '请选择服务时间' }]" label="服务时间" align-right :columns="columns" />
-      <!-- <wd-picker v-model="value" :rules="[{ required: true, message: '请选择手艺人' }]" label="手艺人" align-right :columns="columns" /> -->
     </wd-cell-group>
-    <MyCellGroup :py="0">
-      <MyCell label="手艺人" required noBorder borderTop @click="toSelectStaff">
+    <MyCellGroup :py="0" @click="toSelectStaff">
+      <MyCell label="手艺人" required noBorder borderTop>
         <span font-size-14px c-B6BDBD pr4px>请选择手艺人</span>
+      </MyCell>
+    </MyCellGroup>
+    <MyCellGroup :py="0" @click="toSelServTime()">
+      <MyCell label="服务时间" required noBorder borderTop>
+        <span font-size-14px c-B6BDBD pr4px>请选择服务时间</span>
       </MyCell>
     </MyCellGroup>
   </wd-form>
@@ -179,7 +203,7 @@ function clickItem(item: any) {
       </view>
       <view h14px />
     </MyCellGroup>
-    <view style="border-top: 1px solid #EBEEF1" bg-white f14 c-1A66FF tc h40px lh-40px>
+    <view style="border-top: 1px solid #EBEEF1" bg-white f14 c-1A66FF tc h40px lh-40px @click="toAddServ()">
       +&nbsp;添加服务
     </view>
     <view px20px py12px>
@@ -187,7 +211,7 @@ function clickItem(item: any) {
     </view>
     <view bg-white px-40rpx py-24rpx>
       <wd-textarea
-        v-model="value"
+        v-model="model.notes"
         placeholderStyle="font-size: 14px;color:#C9CDD4;"
         placeholder="请输入预约备注" :maxlength="200" auto-height clearable show-word-limit
       />
