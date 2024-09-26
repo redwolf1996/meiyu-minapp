@@ -70,7 +70,9 @@ function toAddServ() {
   uni.navigateTo({ url: '/pagesA/prod-servs' })
 }
 
-function toSelServTime() {}
+function toSelServTime() {
+  uni.navigateTo({ url: '/pagesA/book/time' })
+}
 </script>
 
 <template>

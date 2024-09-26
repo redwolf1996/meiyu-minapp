@@ -5,8 +5,26 @@ style:
 </route>
 
 <script lang="ts" setup>
-function calendarChange() {
-  // console.log(e)
+import type { Times } from '@/utils'
+
+const times = ref(get24HoursQuarter())
+const day = ref(fd(+new Date()))
+const stime = ref('01:30')
+const duration = ref(40)
+const etime = computed(() => calculateEndTime(stime.value, duration.value))
+const selectedTime = computed(() => `${day.value} ${stime.value}-${etime.value}`)
+function calendarChange(e) {
+  day.value = e.fulldate
+}
+
+function clickItem(item: Times) {
+  if (item.disabled)
+    return false
+  times.value.map((v) => {
+    v.selected = false
+  })
+  item.selected = true
+  stime.value = item.value
 }
 </script>
 
@@ -29,9 +47,10 @@ function calendarChange() {
       </text>
     </view>
     <view class="my-table">
-      <template v-for="item in get24HoursHalf()" :key="item">
-        <view class="item">
-          {{ item }}
+      <template v-for="item in times" :key="item.value">
+        <view class="item pr" :class="{ selected: item.selected, disabled: item.disabled }" @click="clickItem(item)">
+          {{ item.value }}
+          <wd-icon v-if="item.selected" name="check" color="rgba(255,255,255,0.8)" size="20px" custom-style="position:absolute;left:50%;top:50%;transform:translate(-50%, -50%)" />
         </view>
       </template>
     </view>
@@ -43,17 +62,19 @@ function calendarChange() {
       />
     </view>
     <view tc mt20px c-FFAB2D f14>
-      已选：2023/11/11 16:00-16:40
+      已选：{{ selectedTime }}
     </view>
   </view>
 
-  <view mx-40rpx mt-48rpx color-white>
-    <wd-button size="large" custom-class="theme-bg" block>
+  <view mt-48rpx color-white pf w-90% bottom-20px fc>
+    <wd-button size="large" custom-class="theme-bg" :block="true">
       <view flex flex-cc>
         <text>确定</text>
       </view>
     </wd-button>
   </view>
+
+  <view class="h50px" />
 </template>
 
 <style lang='scss' scoped>
@@ -63,7 +84,9 @@ function calendarChange() {
   border-left: 1px solid #eaeaea;
   border-top: 1px solid #eaeaea;
   grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: repeat(8, 43px);
+  grid-template-rows: repeat(16, 43px);
+  height: 300px;
+  overflow-y: scroll;
   .item {
     box-sizing: border-box !important;
     border-right: 1px solid #eaeaea;
@@ -72,6 +95,12 @@ function calendarChange() {
     align-items: center;
     justify-content: center;
     font-size: 12px;
+    &.disabled {
+      background: #c8c7c7;
+    }
+    &.selected {
+      background: #3fa85e;
+    }
   }
 }
 .active-time {

@@ -21,6 +21,7 @@ declare global {
   const WeekMap: typeof import('./utils/consts')['WeekMap']
   const asyncComputed: typeof import('@vueuse/core')['asyncComputed']
   const autoResetRef: typeof import('@vueuse/core')['autoResetRef']
+  const calculateEndTime: typeof import('./utils/index')['calculateEndTime']
   const computed: typeof import('vue')['computed']
   const computedAsync: typeof import('@vueuse/core')['computedAsync']
   const computedEager: typeof import('@vueuse/core')['computedEager']
@@ -46,8 +47,11 @@ declare global {
   const eagerComputed: typeof import('@vueuse/core')['eagerComputed']
   const effectScope: typeof import('vue')['effectScope']
   const extendRef: typeof import('@vueuse/core')['extendRef']
+  const fd: typeof import('./utils/index')['fd']
+  const formatDay: typeof import('./utils/index')['formatDay']
   const get24Hours: typeof import('./utils/index')['get24Hours']
   const get24HoursHalf: typeof import('./utils/index')['get24HoursHalf']
+  const get24HoursQuarter: typeof import('./utils/index')['get24HoursQuarter']
   const getCurrentInstance: typeof import('vue')['getCurrentInstance']
   const getCurrentScope: typeof import('vue')['getCurrentScope']
   const getMenuButtonInfo: typeof import('./utils/index')['getMenuButtonInfo']
@@ -371,6 +375,7 @@ declare module 'vue' {
     readonly TimesCardTypeMap: UnwrapRef<typeof import('./utils/consts')['TimesCardTypeMap']>
     readonly VipLevelMap: UnwrapRef<typeof import('./utils/consts')['VipLevelMap']>
     readonly WeekMap: UnwrapRef<typeof import('./utils/consts')['WeekMap']>
+    readonly calculateEndTime: UnwrapRef<typeof import('./utils/index')['calculateEndTime']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
     readonly createApp: UnwrapRef<typeof import('vue')['createApp']>
     readonly curClassify: UnwrapRef<typeof import('./stores/classify')['curClassify']>
@@ -378,8 +383,10 @@ declare module 'vue' {
     readonly defineAsyncComponent: UnwrapRef<typeof import('vue')['defineAsyncComponent']>
     readonly defineComponent: UnwrapRef<typeof import('vue')['defineComponent']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
+    readonly fd: UnwrapRef<typeof import('./utils/index')['fd']>
     readonly get24Hours: UnwrapRef<typeof import('./utils/index')['get24Hours']>
     readonly get24HoursHalf: UnwrapRef<typeof import('./utils/index')['get24HoursHalf']>
+    readonly get24HoursQuarter: UnwrapRef<typeof import('./utils/index')['get24HoursQuarter']>
     readonly getCurrentInstance: UnwrapRef<typeof import('vue')['getCurrentInstance']>
     readonly getCurrentScope: UnwrapRef<typeof import('vue')['getCurrentScope']>
     readonly getMenuButtonInfo: UnwrapRef<typeof import('./utils/index')['getMenuButtonInfo']>

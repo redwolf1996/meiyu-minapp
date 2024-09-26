@@ -80,6 +80,7 @@ export default defineConfig({
     ['pr', { position: 'relative' }],
     ['pa', { position: 'absolute' }],
     ['pf', { position: 'fixed' }],
+    ['fc', { left: '50%', transform: 'translateX(-50%)' }],
     ['ps', { position: 'sticky' }],
     ['dib', { display: 'inline-block' }],
     ['fb', { 'font-weight': 'bold' }],

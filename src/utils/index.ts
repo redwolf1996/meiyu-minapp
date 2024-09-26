@@ -1,4 +1,5 @@
 import { useUserStore } from '@/stores/modules/user'
+import dayjs from 'dayjs'
 
 export const IMG_BASE = import.meta.env.VITE_APP_IMG_BASE
 
@@ -51,6 +52,30 @@ export function get24HoursHalf() {
   return times
 }
 
+export interface Times {
+  selected: boolean
+  disabled: boolean
+  value: string
+}
+
+export function get24HoursQuarter(): Times[] {
+  const times: Times[] = []
+  for (let hour = 0; hour < 24; hour++) {
+    for (let minute = 0; minute < 60; minute += 15) {
+      const formattedHour = hour.toString().padStart(2, '0')
+      const formattedMinute = minute.toString().padStart(2, '0')
+      times.push(
+        {
+          selected: false,
+          disabled: false,
+          value: `${formattedHour}:${formattedMinute}`,
+        },
+      )
+    }
+  }
+  return times
+}
+
 export function safeBottom() {
   return uni.getSystemInfoSync().safeAreaInsets?.bottom
 }
@@ -73,3 +98,28 @@ export const storeId = getStoreId()
 
 export const uniPlatform = uni.getSystemInfoSync().uniPlatform
 export const isH5 = uniPlatform === 'web'
+
+export function fd(tag: number | string, smb: string = '-') {
+  if (!tag)
+    return '--'
+  return dayjs(Number(tag)).format(`YYYY${smb}MM${smb}DD`)
+}
+
+export function calculateEndTime(startTime: string, duration: number | string) {
+  // 将开始时间转换为Date对象
+  const startDate = new Date(`1970-01-01T${startTime}:00`)
+
+  // 将持续时长（分钟）转换为毫秒
+  const durationMs = duration * 60 * 1000
+
+  // 计算结束时间
+  const endDate = new Date(startDate.getTime() + durationMs)
+
+  // 将结束时间转换为字符串格式
+  const endTime = endDate.toTimeString().split(' ')[0]
+
+  // 将结束时间格式化为hh:mm格式
+  const formattedEndTime = endTime.replace(/^(\d{2}):(\d{2}):(\d{2})$/, '$1:$2')
+
+  return formattedEndTime
+}
