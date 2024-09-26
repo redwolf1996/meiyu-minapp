@@ -5,11 +5,12 @@ style:
 </route>
 
 <script lang="ts" setup>
+import type { ListStaff } from '../staff/types'
 import type { BookForm } from './types'
 
 const form = ref()
 const value = ref()
-const columns = ref([
+const columns = ref<SelItem[]>([
   {
     label: '到店',
     value: 1,
@@ -32,52 +33,29 @@ const model = reactive<BookForm>({
   notes: null,
   service: [],
 })
-const list = ref([
-  {
-    active: false,
-  },
-  {
-    active: false,
-  },
-  {
-    active: false,
-  },
-  {
-    active: false,
-  },
-  {
-    active: false,
-  },
-  {
-    active: false,
-  },
-  {
-    active: false,
-  },
-  {
-    active: false,
-  },
-  {
-    active: false,
-  },
-  {
-    active: false,
-  },
-  {
-    active: false,
-  },
-  {
-    active: false,
-  },
-])
+const listStaff = ref<ListStaff[]>([])
 const visibleStaff = ref(false)
+
+onLoad(() => {
+  getStaff()
+})
+
+async function getStaff() {
+  const res = await request.get<ListRes<ListStaff>>('/business/staff', { storeId })
+  listStaff.value = res.data.list.map((v) => {
+    return {
+      ...v,
+      active: false,
+    }
+  })
+}
 
 function toSelectStaff() {
   visibleStaff.value = true
 }
 
 function clickItem(item: any) {
-  list.value.forEach((val: any) => {
+  listStaff.value.forEach((val: any) => {
     val.active = false
   })
   item.active = !item.active
@@ -100,7 +78,7 @@ function toSelServTime() {}
       选择手艺人
     </view>
     <view mt10px>
-      <view v-for="(item, index) in list" :key="`sd-${index}`" flex flex-ac flex-bt bg-white px40rpx py20rpx style="border-bottom: 1px solid #DFDFDF" @click="clickItem(item)">
+      <view v-for="(item, index) in listStaff" :key="`sd-${index}`" flex flex-ac flex-bt bg-white px40rpx py20rpx style="border-bottom: 1px solid #DFDFDF" @click="clickItem(item)">
         <view>
           <view f14 c-313131>
             轻言轻语
@@ -130,7 +108,6 @@ function toSelServTime() {}
       <wd-input
         v-model="model.storeCustomerPhone"
         label="联系电话"
-        prop="value1"
         placeholder="请输入"
         suffix-icon="arrow-right"
         :rules="[{ required: true, message: '请填写联系电话' }]"
@@ -138,20 +115,19 @@ function toSelServTime() {}
       <wd-input
         v-model="model.storeCustomerName"
         label="联系人"
-        prop="value1"
         placeholder="请输入"
         suffix-icon="arrow-right"
         :rules="[{ required: true, message: '请填写联系人' }]"
       />
       <wd-picker v-model="value" :rules="[{ required: true, message: '请选择服务方式' }]" label="服务方式" align-right :columns="columns" />
     </wd-cell-group>
-    <MyCellGroup :py="0" @click="toSelectStaff">
-      <MyCell label="手艺人" required noBorder borderTop>
+    <MyCellGroup :py="0">
+      <MyCell label="手艺人" required noBorder borderTop @click="toSelectStaff()">
         <span font-size-14px c-B6BDBD pr4px>请选择手艺人</span>
       </MyCell>
     </MyCellGroup>
-    <MyCellGroup :py="0" @click="toSelServTime()">
-      <MyCell label="服务时间" required noBorder borderTop>
+    <MyCellGroup :py="0">
+      <MyCell label="服务时间" required noBorder borderTop @click="toSelServTime()">
         <span font-size-14px c-B6BDBD pr4px>请选择服务时间</span>
       </MyCell>
     </MyCellGroup>
