@@ -5,13 +5,20 @@ style:
 
 <script lang="ts" setup>
 const tab = ref<number>(0)
-const items = [{
-  label: '所有服务',
-  value: 0,
-}, {
-  label: '所有产品',
-  value: 1,
-}]
+const items = [
+  {
+    label: '服务',
+    value: 0,
+  },
+  // {
+  //   label: '产品',
+  //   value: 1,
+  // },
+  // {
+  //   label: '卡项',
+  //   value: 1,
+  // },
+]
 // const servs = ref([])
 // const prods = ref([])
 const checked = ref(false)
@@ -21,54 +28,38 @@ const subCategories: any = Array.from({ length: 24 }).fill({ title: '标题文�
 const categories = ref([
   {
     label: '分类一',
+    id: 1,
     title: '标题一',
-    icon: 'thumb-up',
     items: subCategories,
-    disabled: false,
   },
   {
+    id: 2,
     label: '分类二',
     title: '标题二',
-    icon: 'thumb-up',
     items: subCategories,
-    disabled: false,
   },
   {
+    id: 3,
     label: '分类三',
     title: '标题三',
-    icon: 'thumb-up',
-    items: subCategories.slice(0, 18),
-    disabled: false,
-  },
-  {
-    label: '分类四',
-    title: '标题四',
-    icon: 'thumb-up',
-    items: subCategories.slice(0, 21),
-    disabled: false,
-  },
-  {
-    label: '分类五',
-    title: '标题五',
-    icon: 'thumb-up',
     items: subCategories,
-    disabled: false,
-  },
-  {
-    label: '分类六',
-    title: '标题六',
-    icon: 'thumb-up',
-    items: subCategories.slice(0, 18),
-    disabled: false,
-  },
-  {
-    label: '分类七',
-    title: '标题七',
-    icon: 'thumb-up',
-    items: subCategories,
-    disabled: true,
   },
 ])
+
+const cats = {
+  services: { // 大类
+    catId1: [{}], // key是小类id， value是实际小分类下的具体model数组
+    catId2: [{}],
+  },
+  products: {
+    catId1: [{}],
+    catId2: [{}],
+  },
+  cards: {
+    catId1: [],
+    catId2: [],
+  },
+}
 
 function handleChange({ value }) {
   active.value = value
@@ -86,11 +77,11 @@ function select(e: UniHelper.CheckboxGroupOnChangeEvent) {
 </script>
 
 <template>
-  <wd-tabs v-model="tab" custom-class="this-tab" :lineHeight="2" :lineWidth="24" color="#1A66FF" swipeable>
+  <!-- <wd-tabs v-model="tab" custom-class="this-tab" :lineHeight="2" :lineWidth="24" color="#1A66FF" swipeable>
     <block v-for="item in items" :key="`t${item.value}`">
       <wd-tab :title="item.label" />
     </block>
-  </wd-tabs>
+  </wd-tabs> -->
 
   <view class="wraper">
     <wd-sidebar v-model="active" @change="handleChange">
@@ -99,8 +90,6 @@ function select(e: UniHelper.CheckboxGroupOnChangeEvent) {
         :key="index"
         :value="index"
         :label="item.label"
-        :icon="item.icon"
-        :disabled="item.disabled"
       />
     </wd-sidebar>
     <view class="content" :style="`transform: translateY(-${active * 100}%)`">
@@ -114,11 +103,29 @@ function select(e: UniHelper.CheckboxGroupOnChangeEvent) {
         :scroll-top="scrollTop"
         :throttle="false"
       >
-        <wd-cell-group :title="item.title" border>
-          <wd-cell v-for="(cell, index1) in item.items" :key="index1" :title="cell.title" :label="cell.label">
-            <wd-icon name="github-filled" size="24px" />
-          </wd-cell>
-        </wd-cell-group>
+        <view p12px>
+          <view flex flex-ac flex-bt pb14px mb14px style="border-bottom: 1px solid #EBEEF1">
+            <view flex gap12px>
+              <wd-img
+                :width="72"
+                :height="72"
+                mode="center"
+                :src="`${IMG_BASE}/cat.png`"
+              />
+              <view>
+                <view f14>
+                  产品名称1
+                </view>
+                <view f12 c-#FF1919 mt6px>
+                  ￥499
+                </view>
+              </view>
+            </view>
+            <view flex flex-cc>
+              <wd-checkbox size="large" />
+            </view>
+          </view>
+        </view>
       </scroll-view>
     </view>
   </view>
@@ -141,18 +148,6 @@ function select(e: UniHelper.CheckboxGroupOnChangeEvent) {
   <view class="footer">
     <view>
       <view>已选择 7 项</view>
-      <view class="h5px" />
-      <view flex flex-cc>
-        <checkbox-group @change="select">
-          <checkbox
-            value="cb"
-            :checked="checked"
-          />
-        </checkbox-group>
-        <text f14>
-          所有服务和产品
-        </text>
-      </view>
     </view>
     <view w120px>
       <wd-button size="large" custom-class="theme-bg" block>
@@ -175,9 +170,7 @@ page {
 <style lang='scss' scoped>
 .wraper {
   display: flex;
-  height: calc(100vh - var(--window-top) - 122px);
-  height: calc(100vh - var(--window-top) - 122px - constant(safe-area-inset-bottom));
-  height: calc(100vh - var(--window-top) - 122px - env(safe-area-inset-bottom));
+  height: calc(100vh - 90px);
   overflow: hidden;
 }
 .content {
@@ -195,11 +188,12 @@ page {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 80px;
-  padding: 0 20rpx;
+  height: 90px;
   position: fixed;
+  padding: 0 20px;
   width: 100%;
   bottom: 0;
+  background-color: #fff;
 }
 .this-tab {
   padding: 0 100rpx;

@@ -33,6 +33,7 @@ const model = reactive<BookForm>({
   notes: null,
   service: [],
 })
+const artName = ref('')
 const listStaff = ref<ListStaff[]>([])
 const visibleStaff = ref(false)
 
@@ -54,15 +55,19 @@ function toSelectStaff() {
   visibleStaff.value = true
 }
 
-function clickItem(item: any) {
+function clickItem(item: ListStaff) {
   listStaff.value.forEach((val: any) => {
     val.active = false
   })
   item.active = !item.active
+  if (item.active) {
+    model.artisanId = item.staffId
+    artName.value = item.userName
+  }
 }
 
 function toAddServ() {
-
+  uni.navigateTo({ url: '/pagesA/prod-servs' })
 }
 
 function toSelServTime() {}
@@ -81,10 +86,10 @@ function toSelServTime() {}
       <view v-for="(item, index) in listStaff" :key="`sd-${index}`" flex flex-ac flex-bt bg-white px40rpx py20rpx style="border-bottom: 1px solid #DFDFDF" @click="clickItem(item)">
         <view>
           <view f14 c-313131>
-            轻言轻语
+            {{ item.userName }}
           </view>
           <view f12 c-777777 mt6px>
-            13299999999
+            {{ item.phone }}
           </view>
         </view>
         <wd-img
@@ -97,7 +102,7 @@ function toSelServTime() {}
       <view h50px />
     </view>
 
-    <view tc flex flex-cc color-white bg-white bottom-0 ps py-20px>
+    <view tc flex flex-cc color-white bg-white bottom-0 ps py-20px @click="visibleStaff = false">
       <MyButton width="500rpx">
         确定
       </MyButton>
@@ -123,7 +128,12 @@ function toSelServTime() {}
     </wd-cell-group>
     <MyCellGroup :py="0">
       <MyCell label="手艺人" required noBorder borderTop @click="toSelectStaff()">
-        <span font-size-14px c-B6BDBD pr4px>请选择手艺人</span>
+        <text v-if="!artName" font-size-14px c-B6BDBD pr5px>
+          请选择手艺人
+        </text>
+        <text v-else font-size-14px pr5px>
+          {{ artName }}
+        </text>
       </MyCell>
     </MyCellGroup>
     <MyCellGroup :py="0">

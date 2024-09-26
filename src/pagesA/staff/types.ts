@@ -48,5 +48,5 @@ export interface ListStaff {
   /**
    * 是否选中（用于列表选择）
    */
-  active: boolean
+  active?: boolean
 }
