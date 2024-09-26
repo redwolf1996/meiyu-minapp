@@ -7,12 +7,14 @@ style:
 <script lang="ts" setup>
 import type { Times } from '@/utils'
 
-const times = ref(get24HoursQuarter())
+const today = fd(+new Date())
 const day = ref(fd(+new Date()))
 const stime = ref('01:30')
 const duration = ref(40)
 const etime = computed(() => calculateEndTime(stime.value, duration.value))
 const selectedTime = computed(() => `${day.value} ${stime.value}-${etime.value}`)
+const times = ref(get24HoursQuarter())
+
 function calendarChange(e) {
   day.value = e.fulldate
 }
@@ -30,6 +32,7 @@ function clickItem(item: Times) {
 
 <template>
   <wu-calendar
+    :startDate="today"
     color="#2F4BEC" :itemHeight="50" startWeek="mon"
     :fold="true" type="week" :insert="true" @change="calendarChange"
   />
