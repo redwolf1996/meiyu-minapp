@@ -28,6 +28,12 @@ function clickItem(item: Times) {
   item.selected = true
   stime.value = item.value
 }
+
+function save() {
+  bookStime.value = `${day.value} ${stime.value}`
+
+  uni.navigateBack()
+}
 </script>
 
 <template>
@@ -70,7 +76,7 @@ function clickItem(item: Times) {
   </view>
 
   <view mt-48rpx color-white pf w-90% bottom-20px fc>
-    <wd-button size="large" custom-class="theme-bg" :block="true">
+    <wd-button size="large" custom-class="theme-bg" :block="true" @click="save()">
       <view flex flex-cc>
         <text>确定</text>
       </view>

@@ -140,7 +140,12 @@ function toSelServTime() {
     </MyCellGroup>
     <MyCellGroup :py="0">
       <MyCell label="服务时间" required noBorder borderTop @click="toSelServTime()">
-        <span font-size-14px c-B6BDBD pr4px>请选择服务时间</span>
+        <text v-if="!bookStime" font-size-14px c-B6BDBD pr4px>
+          请选择服务时间
+        </text>
+        <text v-else font-size-14px pr5px>
+          {{ bookStime }}
+        </text>
       </MyCell>
     </MyCellGroup>
   </wd-form>
