@@ -1,28 +1,12 @@
 <route lang="yaml">
 style:
-  navigationBarTitleText: 选择服务和产品
+  navigationBarTitleText: 选择服务
 </route>
 
 <script lang="ts" setup>
-import type { AllItems } from './types'
+import type { AllItems } from '../types'
 
-const tab = ref<number>(0)
-const items = [
-  {
-    label: '服务',
-    value: 0,
-  },
-  // {
-  //   label: '产品',
-  //   value: 1,
-  // },
-  // {
-  //   label: '卡项',
-  //   value: 1,
-  // },
-]
 // const servs = ref([])
-// const prods = ref([])
 const checked = ref(false)
 const active = ref<number>(1)
 const scrollTop = ref<number>(0)
@@ -83,12 +67,6 @@ function select(e: UniHelper.CheckboxGroupOnChangeEvent) {
 </script>
 
 <template>
-  <!-- <wd-tabs v-model="tab" custom-class="this-tab" :lineHeight="2" :lineWidth="24" color="#1A66FF" swipeable>
-    <block v-for="item in items" :key="`t${item.value}`">
-      <wd-tab :title="item.label" />
-    </block>
-  </wd-tabs> -->
-
   <view class="wraper">
     <wd-sidebar v-model="active" @change="handleChange">
       <wd-sidebar-item

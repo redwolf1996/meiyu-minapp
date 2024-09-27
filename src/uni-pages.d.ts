@@ -16,6 +16,7 @@ interface NavigateToOptions {
        "/pagesA/billing/pay" |
        "/pagesA/book/add" |
        "/pagesA/book/detail" |
+       "/pagesA/book/servs" |
        "/pagesA/book/submit" |
        "/pagesA/book/time" |
        "/pagesA/booking/d2dTime" |

@@ -115,6 +115,13 @@
           }
         },
         {
+          "path": "book/servs",
+          "type": "page",
+          "style": {
+            "navigationBarTitleText": "选择服务"
+          }
+        },
+        {
           "path": "book/submit",
           "type": "page",
           "style": {

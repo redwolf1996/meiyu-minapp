@@ -31,7 +31,6 @@ function clickItem(item: Times) {
 
 function save() {
   bookStime.value = `${day.value} ${stime.value}`
-
   uni.navigateBack()
 }
 </script>

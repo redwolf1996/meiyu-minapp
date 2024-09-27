@@ -67,7 +67,7 @@ function clickItem(item: ListStaff) {
 }
 
 function toAddServ() {
-  uni.navigateTo({ url: '/pagesA/prod-servs' })
+  uni.navigateTo({ url: '/pagesA/book/servs' })
 }
 
 function toSelServTime() {
