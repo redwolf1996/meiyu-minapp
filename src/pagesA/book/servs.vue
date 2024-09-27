@@ -4,51 +4,25 @@ style:
 </route>
 
 <script lang="ts" setup>
-import type { AllItems } from '../types'
+import type { AllItems, CatsItemsTree, ServiceList } from '../types'
 
-// const servs = ref([])
-const checked = ref(false)
 const active = ref<number>(1)
 const scrollTop = ref<number>(0)
-const subCategories: any = Array.from({ length: 24 }).fill({ title: '标题文字', label: '这是描述这是描述' }, 0, 24)
-const categories = ref([
-  {
-    label: '分类一',
-    id: 1,
-    title: '标题一',
-    items: subCategories,
-  },
-  {
-    id: 2,
-    label: '分类二',
-    title: '标题二',
-    items: subCategories,
-  },
-  {
-    id: 3,
-    label: '分类三',
-    title: '标题三',
-    items: subCategories,
-  },
-])
+const categories = ref<CatsItemsTree<ServiceList>[]>([])
 
-const cats = {
-  services: { // 大类
-    catId1: [{}], // key是小类id， value是实际小分类下的具体model数组
-    catId2: [{}],
-  },
-  products: {
-    catId1: [{}],
-    catId2: [{}],
-  },
-  cards: {
-    catId1: [],
-    catId2: [],
-  },
-}
-
-onLoad(() => {
-  const res = request.get<AllItems>('/business/goods_all', { storeId })
+onLoad(async () => {
+  const res = await request.get<AllItems>('/business/goods_all', { storeId })
+  const serviceCats = res.data.serviceCategory!
+  const services = res.data.serviceList
+  categories.value = serviceCats.map((v) => {
+    return {
+      id: v.id,
+      label: v.name,
+      items: services.filter(v1 => v.id === v1.categoryId).map((v2) => {
+        return { ...v2, checked: false }
+      }),
+    }
+  })
 })
 
 function handleChange({ value }) {
@@ -59,15 +33,13 @@ function handleChange({ value }) {
   })
 }
 
-function select(e: UniHelper.CheckboxGroupOnChangeEvent) {
-  checked.value = !!e.detail.value.includes('cb')
+function confirm() {
+  console.log(categories.value)
 }
-
-// function toAdd() {}
 </script>
 
 <template>
-  <view class="wraper">
+  <view class="wrapper">
     <wd-sidebar v-model="active" @change="handleChange">
       <wd-sidebar-item
         v-for="(item, index) in categories"
@@ -79,7 +51,7 @@ function select(e: UniHelper.CheckboxGroupOnChangeEvent) {
     <view class="content" :style="`transform: translateY(-${active * 100}%)`">
       <scroll-view
         v-for="(item, index) in categories"
-        :key="index"
+        :key="`cat-${index}`"
         class="category"
         scroll-y
         scroll-with-animation
@@ -88,7 +60,7 @@ function select(e: UniHelper.CheckboxGroupOnChangeEvent) {
         :throttle="false"
       >
         <view p12px>
-          <view flex flex-ac flex-bt pb14px mb14px style="border-bottom: 1px solid #EBEEF1">
+          <view v-for="(itm, idx) in item.items" :key="`itm-${idx}`" flex flex-ac flex-bt pb14px mb14px style="border-bottom: 1px solid #EBEEF1">
             <view flex gap12px>
               <wd-img
                 :width="72"
@@ -98,15 +70,20 @@ function select(e: UniHelper.CheckboxGroupOnChangeEvent) {
               />
               <view>
                 <view f14>
-                  产品名称1
+                  {{ itm.name }}
                 </view>
                 <view f12 c-#FF1919 mt6px>
-                  ￥499
+                  ￥{{ itm.price2 }}
+                </view>
+                <view f10 c-#D4D4D4 mt6px>
+                  <text line-through>
+                    ￥{{ itm.price }}
+                  </text>
                 </view>
               </view>
             </view>
             <view flex flex-cc>
-              <wd-checkbox size="large" />
+              <wd-checkbox v-model="itm.checked" size="large" />
             </view>
           </view>
         </view>
@@ -114,27 +91,12 @@ function select(e: UniHelper.CheckboxGroupOnChangeEvent) {
     </view>
   </view>
 
-  <!-- <view v-if="(tab === 0 && servs.length === 0) || (tab === 1 && prods.length === 0)" class="empty">
-    <view tc mt56rpx f12 c-#979797>
-      暂无数据
-    </view>
-    <view>
-      <view mx-200rpx mt-64rpx color-white @click="toAdd()">
-        <wd-button size="large" custom-class="theme-bg" block>
-          <view flex flex-cc>
-            <text>添加{{ tab ? '产品' : '服务' }}</text>
-          </view>
-        </wd-button>
-      </view>
-    </view>
-  </view> -->
-
   <view class="footer">
     <view>
       <view>已选择 7 项</view>
     </view>
     <view w120px>
-      <wd-button size="large" custom-class="theme-bg" block>
+      <wd-button size="large" custom-class="theme-bg" block @click="confirm()">
         <view flex flex-cc>
           <text>确定</text>
         </view>
@@ -152,7 +114,7 @@ page {
 </style>
 
 <style lang='scss' scoped>
-.wraper {
+.wrapper {
   display: flex;
   height: calc(100vh - 90px);
   overflow: hidden;

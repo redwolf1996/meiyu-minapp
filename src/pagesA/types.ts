@@ -1,13 +1,13 @@
 export interface AllItems {
-  cardCategory: CardCategory[]
+  cardCategory: Category[]
   cardList: CardList[]
-  productCategory: ProductCategory[]
+  productCategory: Category[]
   productList: ProductList[]
-  serviceCategory: ServiceCategory[]
+  serviceCategory: Category[]
   serviceList: ServiceList[]
 }
 
-export interface CardCategory {
+export interface Category {
   id: number
   name: string
   storeId: number
@@ -22,12 +22,7 @@ export interface CardList {
   price: number
   secondType: number
   type: number
-}
-
-export interface ProductCategory {
-  id: number
-  name: string
-  storeId: number
+  checked?: boolean
 }
 
 export interface ProductList {
@@ -43,12 +38,7 @@ export interface ProductList {
   price2: number
   storeId: number
   unit: string
-}
-
-export interface ServiceCategory {
-  id: number
-  name: string
-  storeId: number
+  checked?: boolean
 }
 
 export interface ServiceList {
@@ -68,4 +58,11 @@ export interface ServiceList {
   price2: number
   serviceColor: string
   storeId: number
+  checked?: boolean
+}
+
+export interface CatsItemsTree<T> {
+  id: number
+  label: string
+  items: T[]
 }
