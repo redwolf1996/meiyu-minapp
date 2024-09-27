@@ -1,6 +1,6 @@
 <route lang="yaml">
 style:
-  navigationBarTitleText: 添加次卡
+  navigationBarTitleText: 卡项管理
 </route>
 
 <script lang="ts" setup>

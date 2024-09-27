@@ -3,7 +3,26 @@ style:
   navigationBarTitleText: 店务管理
 </route>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+function toServ() {
+  uni.navigateTo({ url: '/pagesA/service/index' })
+}
+function toCard() {
+  uni.navigateTo({ url: '/pagesA/card/list' })
+}
+function toProd() {
+  uni.navigateTo({ url: '/pagesA/product/list' })
+}
+function toStaff() {
+  uni.navigateTo({ url: '/pagesA/staff/index' })
+}
+function toBook() {
+  uni.navigateTo({ url: '/pagesA/booking/index' })
+}
+function toPay() {
+  uni.navigateTo({ url: '/pagesA/dashboard/pay-ways' })
+}
+</script>
 
 <template>
   <view class="container">
@@ -15,7 +34,7 @@ style:
         </view>
       </view>
       <view flex flex-cc gap-100rpx tc>
-        <view>
+        <view @click="toServ()">
           <view>
             <wd-img
               :width="30"
@@ -27,7 +46,7 @@ style:
             服务管理
           </view>
         </view>
-        <view>
+        <view @click="toCard()">
           <view>
             <wd-img
               :width="30"
@@ -39,7 +58,7 @@ style:
             卡项管理
           </view>
         </view>
-        <view>
+        <view @click="toProd()">
           <view>
             <wd-img
               :width="30"
@@ -62,7 +81,7 @@ style:
         </view>
       </view>
       <view flex flex-cc gap-100rpx tc>
-        <view>
+        <view @click="toStaff()">
           <view>
             <wd-img
               :width="30"
@@ -74,7 +93,7 @@ style:
             员工管理
           </view>
         </view>
-        <view>
+        <view @click="toBook()">
           <view>
             <wd-img
               :width="30"
@@ -86,7 +105,7 @@ style:
             预约管理
           </view>
         </view>
-        <view>
+        <view @click="toPay()">
           <view>
             <wd-img
               :width="30"

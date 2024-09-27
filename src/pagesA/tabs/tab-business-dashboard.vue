@@ -73,7 +73,9 @@ function toAddBooking() {}
 function toCashing() {}
 function toOrderList() {}
 function toBookingList() {}
-function toStoreManage() {}
+function toStoreManage() {
+  uni.navigateTo({ url: '/pagesA/dashboard/store' })
+}
 function toInvite() {
   uni.navigateTo({ url: '/pagesA/my/invite' })
 }
