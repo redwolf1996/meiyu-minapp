@@ -72,7 +72,9 @@ function toAddCustomer() {
 function toAddBooking() {
   uni.navigateTo({ url: '/pagesA/book/add' })
 }
-function toCashing() {}
+function toCashing() {
+  uni.navigateTo({ url: '/pagesA/billing/index' })
+}
 function toOrderList() {}
 function toBookingList() {}
 function toStoreManage() {
