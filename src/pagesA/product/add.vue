@@ -6,7 +6,7 @@ style:
 <script lang="ts" setup></script>
 
 <template>
-  <view>添加或修改产品</view>
+  <BaseDataProduct />
 </template>
 
 <style lang='scss' scoped></style>
