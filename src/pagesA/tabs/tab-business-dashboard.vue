@@ -83,6 +83,9 @@ function toStoreManage() {
 function toInvite() {
   uni.navigateTo({ url: '/pagesA/my/invite' })
 }
+function toMsg() {
+  uni.navigateTo({ url: '/pagesA/msg/list' })
+}
 </script>
 
 <template>
@@ -94,7 +97,7 @@ function toInvite() {
           <view px-24rpx>
             美婷美甲美睫
           </view>
-          <view flex flex-y flex-cc pr-20rpx pr>
+          <view flex flex-y flex-cc pr-20rpx pr @click="toMsg()">
             <wd-img
               :width="28"
               :height="28"
