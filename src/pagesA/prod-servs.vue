@@ -13,6 +13,9 @@ const active2 = ref<number>(0)
 const scrollTop = ref<number>(0)
 const categoriesServ = ref<CatsItemsTree<ServiceList>[]>([])
 const categoriesProd = ref<CatsItemsTree<ProductList>[]>([])
+const checkedCount = computed(() => {
+  return checkedServs.value.length + checkedProds.value.length
+})
 
 onLoad(async () => {
   const res = await request.get<AllItems>('/business/goods_all', { storeId })
@@ -56,7 +59,7 @@ function handleChange2({ value }) {
   })
 }
 
-function confirm() {
+function changeCheck() {
   let servs = []
   let prods = []
   servs = categoriesServ.value.filter((v) => {
@@ -70,6 +73,10 @@ function confirm() {
 
   checkedServs.value = servs.filter(v => v.checked)
   checkedProds.value = prods.filter(v => v.checked)
+}
+
+function confirm() {
+
 }
 </script>
 
@@ -120,7 +127,7 @@ function confirm() {
                   </view>
                 </view>
                 <view flex flex-cc>
-                  <wd-checkbox v-model="itm.checked" size="large" />
+                  <wd-checkbox v-model="itm.checked" size="large" @change="changeCheck" />
                 </view>
               </view>
             </view>
@@ -173,7 +180,7 @@ function confirm() {
                   </view>
                 </view>
                 <view flex flex-cc>
-                  <wd-checkbox v-model="itm.checked" size="large" />
+                  <wd-checkbox v-model="itm.checked" size="large" @change="changeCheck" />
                 </view>
               </view>
             </view>
@@ -185,7 +192,7 @@ function confirm() {
 
   <view class="footer">
     <view>
-      <view>已选择 7 项</view>
+      <view>已选择 {{ checkedCount }} 项</view>
     </view>
     <view w120px>
       <wd-button size="large" custom-class="theme-bg" block @click="confirm()">
