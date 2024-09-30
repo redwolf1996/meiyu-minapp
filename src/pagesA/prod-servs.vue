@@ -4,159 +4,178 @@ style:
 </route>
 
 <script lang="ts" setup>
-import type { AllItems } from './types'
+import type { AllItems, CatsItemsTree, ProductList, ServiceList } from './types'
 
 const tab = ref<number>(0)
-const items = [
-  {
-    label: '服务',
-    value: 0,
-  },
-  // {
-  //   label: '产品',
-  //   value: 1,
-  // },
-  // {
-  //   label: '卡项',
-  //   value: 1,
-  // },
-]
-// const servs = ref([])
-// const prods = ref([])
-const checked = ref(false)
-const active = ref<number>(1)
+const active1 = ref<number>(0)
+const active2 = ref<number>(0)
 const scrollTop = ref<number>(0)
-const subCategories: any = Array.from({ length: 24 }).fill({ title: '标题文字', label: '这是描述这是描述' }, 0, 24)
-const categories = ref([
-  {
-    label: '分类一',
-    id: 1,
-    title: '标题一',
-    items: subCategories,
-  },
-  {
-    id: 2,
-    label: '分类二',
-    title: '标题二',
-    items: subCategories,
-  },
-  {
-    id: 3,
-    label: '分类三',
-    title: '标题三',
-    items: subCategories,
-  },
-])
+const categoriesServ = ref<CatsItemsTree<ServiceList>[]>([])
+const categoriesProd = ref<CatsItemsTree<ProductList>[]>([])
 
-const cats = {
-  services: { // 大类
-    catId1: [{}], // key是小类id， value是实际小分类下的具体model数组
-    catId2: [{}],
-  },
-  products: {
-    catId1: [{}],
-    catId2: [{}],
-  },
-  cards: {
-    catId1: [],
-    catId2: [],
-  },
-}
-
-onLoad(() => {
-  const res = request.get<AllItems>('/business/goods_all', { storeId })
+onLoad(async () => {
+  const res = await request.get<AllItems>('/business/goods_all', { storeId })
+  const serviceCats = res.data.serviceCategory!
+  const services = res.data.serviceList
+  const productCats = res.data.productCategory!
+  const products = res.data.productList
+  categoriesServ.value = serviceCats.map((v) => {
+    return {
+      id: v.id,
+      label: v.name,
+      items: services.filter(v1 => v.id === v1.categoryId).map((v2) => {
+        return { ...v2, checked: false }
+      }),
+    }
+  })
+  categoriesProd.value = productCats.map((v) => {
+    return {
+      id: v.id,
+      label: v.name,
+      items: products.filter(v1 => v.id === v1.categoryId).map((v2) => {
+        return { ...v2, checked: false }
+      }),
+    }
+  })
 })
 
-function handleChange({ value }) {
-  active.value = value
+function handleChange1({ value }) {
+  active1.value = value
   scrollTop.value = -1
   nextTick(() => {
     scrollTop.value = 0
   })
 }
 
-function select(e: UniHelper.CheckboxGroupOnChangeEvent) {
-  checked.value = !!e.detail.value.includes('cb')
+function handleChange2({ value }) {
+  active2.value = value
+  scrollTop.value = -1
+  nextTick(() => {
+    scrollTop.value = 0
+  })
 }
 
-// function toAdd() {}
+function confirm() {
+  console.log(categoriesServ.value)
+}
 </script>
 
 <template>
-  <!-- <wd-tabs v-model="tab" custom-class="this-tab" :lineHeight="2" :lineWidth="24" color="#1A66FF" swipeable>
-    <block v-for="item in items" :key="`t${item.value}`">
-      <wd-tab :title="item.label" />
-    </block>
-  </wd-tabs> -->
-
-  <view class="wraper">
-    <wd-sidebar v-model="active" @change="handleChange">
-      <wd-sidebar-item
-        v-for="(item, index) in categories"
-        :key="index"
-        :value="index"
-        :label="item.label"
-      />
-    </wd-sidebar>
-    <view class="content" :style="`transform: translateY(-${active * 100}%)`">
-      <scroll-view
-        v-for="(item, index) in categories"
-        :key="index"
-        class="category"
-        scroll-y
-        scroll-with-animation
-        :show-scrollbar="true"
-        :scroll-top="scrollTop"
-        :throttle="false"
-      >
-        <view p12px>
-          <view flex flex-ac flex-bt pb14px mb14px style="border-bottom: 1px solid #EBEEF1">
-            <view flex gap12px>
-              <wd-img
-                :width="72"
-                :height="72"
-                mode="center"
-                :src="`${IMG_BASE}/cat.png`"
-              />
-              <view>
-                <view f14>
-                  产品名称1
+  <wd-tabs v-model="tab" :lineHeight="2" :lineWidth="24" color="#1A66FF">
+    <wd-tab title="服务">
+      <view class="wrapper">
+        <wd-sidebar v-model="active1" @change="handleChange1">
+          <wd-sidebar-item
+            v-for="(item, index) in categoriesServ"
+            :key="index"
+            :value="index"
+            :label="item.label"
+          />
+        </wd-sidebar>
+        <view class="content" :style="`transform: translateY(-${active1 * 100}%)`">
+          <scroll-view
+            v-for="(item, index) in categoriesServ"
+            :key="`cat-${index}`"
+            class="category"
+            scroll-y
+            scroll-with-animation
+            :show-scrollbar="true"
+            :scroll-top="scrollTop"
+            :throttle="false"
+          >
+            <view p12px>
+              <view v-for="(itm, idx) in item.items" :key="`itm-${idx}`" flex flex-ac flex-bt pb14px mb14px style="border-bottom: 1px solid #EBEEF1">
+                <view flex gap12px>
+                  <wd-img
+                    :width="72"
+                    :height="72"
+                    mode="center"
+                    :src="`${IMG_BASE}/cat.png`"
+                  />
+                  <view>
+                    <view f14>
+                      {{ itm.name }}
+                    </view>
+                    <view f12 c-#FF1919 mt6px>
+                      ￥{{ itm.price2 }}
+                    </view>
+                    <view f10 c-#D4D4D4 mt6px>
+                      <text line-through>
+                        ￥{{ itm.price }}
+                      </text>
+                    </view>
+                  </view>
                 </view>
-                <view f12 c-#FF1919 mt6px>
-                  ￥499
+                <view flex flex-cc>
+                  <wd-checkbox v-model="itm.checked" size="large" />
                 </view>
               </view>
             </view>
-            <view flex flex-cc>
-              <wd-checkbox size="large" />
-            </view>
-          </view>
+          </scroll-view>
         </view>
-      </scroll-view>
-    </view>
-  </view>
-
-  <!-- <view v-if="(tab === 0 && servs.length === 0) || (tab === 1 && prods.length === 0)" class="empty">
-    <view tc mt56rpx f12 c-#979797>
-      暂无数据
-    </view>
-    <view>
-      <view mx-200rpx mt-64rpx color-white @click="toAdd()">
-        <wd-button size="large" custom-class="theme-bg" block>
-          <view flex flex-cc>
-            <text>添加{{ tab ? '产品' : '服务' }}</text>
-          </view>
-        </wd-button>
       </view>
-    </view>
-  </view> -->
+    </wd-tab>
+    <wd-tab title="产品">
+      <view class="wrapper">
+        <wd-sidebar v-model="active2" @change="handleChange2">
+          <wd-sidebar-item
+            v-for="(item, index) in categoriesProd"
+            :key="index"
+            :value="index"
+            :label="item.label"
+          />
+        </wd-sidebar>
+        <view class="content" :style="`transform: translateY(-${active2 * 100}%)`">
+          <scroll-view
+            v-for="(item, index) in categoriesProd"
+            :key="`cat-${index}`"
+            class="category"
+            scroll-y
+            scroll-with-animation
+            :show-scrollbar="true"
+            :scroll-top="scrollTop"
+            :throttle="false"
+          >
+            <view p12px>
+              <view v-for="(itm, idx) in item.items" :key="`itm-${idx}`" flex flex-ac flex-bt pb14px mb14px style="border-bottom: 1px solid #EBEEF1">
+                <view flex gap12px>
+                  <wd-img
+                    :width="72"
+                    :height="72"
+                    mode="center"
+                    :src="`${IMG_BASE}/cat.png`"
+                  />
+                  <view>
+                    <view f14>
+                      {{ itm.name }}
+                    </view>
+                    <view f12 c-#FF1919 mt6px>
+                      ￥{{ itm.price2 }}
+                    </view>
+                    <view f10 c-#D4D4D4 mt6px>
+                      <text line-through>
+                        ￥{{ itm.price }}
+                      </text>
+                    </view>
+                  </view>
+                </view>
+                <view flex flex-cc>
+                  <wd-checkbox v-model="itm.checked" size="large" />
+                </view>
+              </view>
+            </view>
+          </scroll-view>
+        </view>
+      </view>
+    </wd-tab>
+  </wd-tabs>
 
   <view class="footer">
     <view>
       <view>已选择 7 项</view>
     </view>
     <view w120px>
-      <wd-button size="large" custom-class="theme-bg" block>
+      <wd-button size="large" custom-class="theme-bg" block @click="confirm()">
         <view flex flex-cc>
           <text>确定</text>
         </view>
@@ -174,7 +193,7 @@ page {
 </style>
 
 <style lang='scss' scoped>
-.wraper {
+.wrapper {
   display: flex;
   height: calc(100vh - 90px);
   overflow: hidden;

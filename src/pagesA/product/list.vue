@@ -4,8 +4,19 @@ style:
 </route>
 
 <script lang="ts" setup>
+import type { List } from './types'
+
 const searchText = ref('')
 const showAddList = ref(false)
+
+onLoad(async () => {
+  const params = {
+    storeId,
+    pageNum: 1,
+    pageSize: 10,
+  }
+  await request.get<ListRes<List>>('/business/product', params)
+})
 
 watch(() => searchText.value, (newVal) => {
   console.log(newVal)

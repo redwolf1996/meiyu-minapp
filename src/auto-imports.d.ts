@@ -133,13 +133,15 @@ declare global {
   const refWithControl: typeof import('@vueuse/core')['refWithControl']
   const request: typeof import('./utils/request')['default']
   const resetCurClassify: typeof import('./stores/classify')['resetCurClassify']
-  const resetRichData: typeof import('./stores/rich-edit-data')['resetRichData']
+  const resetRichData: typeof import('./stores/sel-base-item')['resetRichData']
   const resolveComponent: typeof import('vue')['resolveComponent']
   const resolveRef: typeof import('@vueuse/core')['resolveRef']
   const resolveUnref: typeof import('@vueuse/core')['resolveUnref']
   const richData: typeof import('./stores/rich-edit-data')['richData']
   const richEditData: typeof import('./stores/rich-edit-data')['richEditData']
   const safeBottom: typeof import('./utils/index')['safeBottom']
+  const selBaseProduct: typeof import('./stores/sel-base-item')['selBaseProduct']
+  const selBaseService: typeof import('./stores/sel-base-item')['selBaseService']
   const shallowReactive: typeof import('vue')['shallowReactive']
   const shallowReadonly: typeof import('vue')['shallowReadonly']
   const shallowRef: typeof import('vue')['shallowRef']
@@ -446,10 +448,12 @@ declare module 'vue' {
     readonly ref: UnwrapRef<typeof import('vue')['ref']>
     readonly request: UnwrapRef<typeof import('./utils/request')['default']>
     readonly resetCurClassify: UnwrapRef<typeof import('./stores/classify')['resetCurClassify']>
-    readonly resetRichData: UnwrapRef<typeof import('./stores/rich-edit-data')['resetRichData']>
+    readonly resetRichData: UnwrapRef<typeof import('./stores/sel-base-item')['resetRichData']>
     readonly resolveComponent: UnwrapRef<typeof import('vue')['resolveComponent']>
     readonly richData: UnwrapRef<typeof import('./stores/rich-edit-data')['richData']>
     readonly safeBottom: UnwrapRef<typeof import('./utils/index')['safeBottom']>
+    readonly selBaseProduct: UnwrapRef<typeof import('./stores/sel-base-item')['selBaseProduct']>
+    readonly selBaseService: UnwrapRef<typeof import('./stores/sel-base-item')['selBaseService']>
     readonly shallowReactive: UnwrapRef<typeof import('vue')['shallowReactive']>
     readonly shallowReadonly: UnwrapRef<typeof import('vue')['shallowReadonly']>
     readonly shallowRef: UnwrapRef<typeof import('vue')['shallowRef']>
