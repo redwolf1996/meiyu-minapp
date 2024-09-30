@@ -5,6 +5,7 @@ style:
 
 <script lang="ts" setup>
 import type { AllItems, CatsItemsTree, ProductList, ServiceList } from './types'
+import { flatten } from 'lodash-es'
 
 const tab = ref<number>(0)
 const active1 = ref<number>(0)
@@ -56,16 +57,19 @@ function handleChange2({ value }) {
 }
 
 function confirm() {
-  // console.log(categoriesServ.value)
-  let res1 = []
-  let res2 = []
-  res1 = categoriesServ.value.map((v) => {
-    return v.items
-  })
-  res2 = categoriesProd.value.map((v) => {
-    return v.items
-  })
-  console.log(res1, res2)
+  let servs = []
+  let prods = []
+  servs = categoriesServ.value.filter((v) => {
+    return v.items.length > 0
+  }).map(v1 => toRaw(v1.items))
+  prods = categoriesProd.value.filter((v) => {
+    return v.items.length > 0
+  }).map(v1 => toRaw(v1.items))
+  servs = flatten(toRaw(servs))
+  prods = flatten(toRaw(prods))
+
+  checkedServs.value = servs.filter(v => v.checked)
+  checkedProds.value = prods.filter(v => v.checked)
 }
 </script>
 
