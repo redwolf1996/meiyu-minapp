@@ -76,7 +76,7 @@ function changeCheck() {
 }
 
 function confirm() {
-
+  uni.navigateBack()
 }
 </script>
 

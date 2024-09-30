@@ -5,10 +5,14 @@ style:
 
 <script lang="ts" setup>
 import type { AllItems, CatsItemsTree, ServiceList } from '../types'
+import { flatten } from 'lodash-es'
 
 const active = ref<number>(1)
 const scrollTop = ref<number>(0)
 const categories = ref<CatsItemsTree<ServiceList>[]>([])
+const checkedCount = computed(() => {
+  return checkedServs.value.length + checkedProds.value.length
+})
 
 onLoad(async () => {
   const res = await request.get<AllItems>('/business/goods_all', { storeId })
@@ -33,8 +37,17 @@ function handleChange({ value }) {
   })
 }
 
+function changeCheck() {
+  let servs = []
+  servs = categories.value.filter((v) => {
+    return v.items.length > 0
+  }).map(v1 => toRaw(v1.items))
+  servs = flatten(toRaw(servs))
+  checkedServs.value = servs.filter(v => v.checked)
+}
+
 function confirm() {
-  console.log(categories.value)
+  uni.navigateBack()
 }
 </script>
 
@@ -83,7 +96,7 @@ function confirm() {
               </view>
             </view>
             <view flex flex-cc>
-              <wd-checkbox v-model="itm.checked" size="large" />
+              <wd-checkbox v-model="itm.checked" size="large" @change="changeCheck" />
             </view>
           </view>
         </view>
@@ -93,7 +106,7 @@ function confirm() {
 
   <view class="footer">
     <view>
-      <view>已选择 7 项</view>
+      <view>已选择 {{ checkedCount }} 项</view>
     </view>
     <view w120px>
       <wd-button size="large" custom-class="theme-bg" block @click="confirm()">
