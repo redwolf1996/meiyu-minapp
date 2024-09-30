@@ -56,7 +56,16 @@ function handleChange2({ value }) {
 }
 
 function confirm() {
-  console.log(categoriesServ.value)
+  // console.log(categoriesServ.value)
+  let res1 = []
+  let res2 = []
+  res1 = categoriesServ.value.map((v) => {
+    return v.items
+  })
+  res2 = categoriesProd.value.map((v) => {
+    return v.items
+  })
+  console.log(res1, res2)
 }
 </script>
 
