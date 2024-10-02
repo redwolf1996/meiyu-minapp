@@ -21,6 +21,7 @@ declare global {
   const WeekMap: typeof import('./utils/consts')['WeekMap']
   const asyncComputed: typeof import('@vueuse/core')['asyncComputed']
   const autoResetRef: typeof import('@vueuse/core')['autoResetRef']
+  const bookInfo: typeof import('./stores/book-info')['bookInfo']
   const bookStime: typeof import('./stores/book')['bookStime']
   const calculateEndTime: typeof import('./utils/index')['calculateEndTime']
   const checkedProds: typeof import('./stores/sel-base-item')['checkedProds']
@@ -380,6 +381,7 @@ declare module 'vue' {
     readonly TimesCardTypeMap: UnwrapRef<typeof import('./utils/consts')['TimesCardTypeMap']>
     readonly VipLevelMap: UnwrapRef<typeof import('./utils/consts')['VipLevelMap']>
     readonly WeekMap: UnwrapRef<typeof import('./utils/consts')['WeekMap']>
+    readonly bookInfo: UnwrapRef<typeof import('./stores/book-info')['bookInfo']>
     readonly bookStime: UnwrapRef<typeof import('./stores/book')['bookStime']>
     readonly calculateEndTime: UnwrapRef<typeof import('./utils/index')['calculateEndTime']>
     readonly checkedProds: UnwrapRef<typeof import('./stores/sel-base-item')['checkedProds']>

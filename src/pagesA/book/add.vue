@@ -5,6 +5,7 @@ style:
 </route>
 
 <script lang="ts" setup>
+import { bookInfo } from '@/stores/book-info'
 import type { ListStaff } from '../staff/types'
 import type { BookForm } from './types'
 
@@ -85,8 +86,10 @@ function delServ(index) {
 }
 
 async function save() {
-  await request.post('/business/booking', model)
-  uni.redirectTo({ url: '/pagesA/tabs/tab-business-book' })
+  bookInfo.value = model
+  uni.navigateTo({ url: '/pagesA/book/submit' })
+  // await request.post('/business/booking', model)
+  // uni.redirectTo({ url: '/pagesA/tabs/tab-business-book' })
 }
 </script>
 
@@ -127,8 +130,9 @@ async function save() {
   </wd-popup>
   <wd-form ref="form" :model="model">
     <wd-cell-group :border="true">
-      <wd-input-number
+      <wd-input
         v-model="model.storeCustomerPhone"
+        type="number"
         label="联系电话"
         placeholder="请输入"
         suffix-icon="arrow-right"
