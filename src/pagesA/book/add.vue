@@ -86,10 +86,12 @@ function delServ(index) {
 }
 
 async function save() {
-  bookInfo.value = model
+  bookInfo.value = {
+    ...model,
+    servs: checkedServs.value,
+    artName: artName.value,
+  }
   uni.navigateTo({ url: '/pagesA/book/submit' })
-  // await request.post('/business/booking', model)
-  // uni.redirectTo({ url: '/pagesA/tabs/tab-business-book' })
 }
 </script>
 

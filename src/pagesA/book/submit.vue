@@ -4,6 +4,7 @@ style:
 </route>
 
 <script lang="ts" setup>
+console.log(bookInfo)
 </script>
 
 <template>
@@ -11,13 +12,14 @@ style:
     <view mb16px px12px py16px f12 flex flex-y gap-23rpx bg-white>
       <view bg-FCE8E9 c-FF5A5F h38rpx w128rpx tc flex flex-cc>
         预约到店
+        {{ bookInfo.storeServiceType === 1 ? '预约到店' : '上门服务' }}
       </view>
       <view flex flex-ac>
         <text c-818181>
           预约时间：
         </text>
         <text pl10px>
-          05-22 10:00
+          {{ bookInfo.startTime ?? '--' }}
         </text>
       </view>
       <view flex flex-ac>
@@ -25,7 +27,7 @@ style:
           预约人：
         </text>
         <text pl10px>
-          Haily
+          {{ bookInfo.storeCustomerName ?? '--' }}
         </text>
       </view>
       <view flex flex-ac>
@@ -33,7 +35,7 @@ style:
           手机号：
         </text>
         <text pl10px>
-          18988888888
+          {{ bookInfo.storeCustomerPhone ?? '--' }}
         </text>
       </view>
       <view flex flex-ac>
