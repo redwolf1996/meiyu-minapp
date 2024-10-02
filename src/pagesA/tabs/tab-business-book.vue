@@ -43,6 +43,12 @@ const multipleItemWidth = computed(() => {
   return (screenWidth - 40) / len
 })
 
+onLoad((options) => {
+  const tab = options?.tab
+  if (tab === 'list')
+    mode.value = 1
+})
+
 onMounted(async () => {
   // 获取日历和预约图表上方服务状态数tag高度
   query.select('#head').boundingClientRect((data: any) => {

@@ -76,7 +76,9 @@ function toCashing() {
   uni.navigateTo({ url: '/pagesA/billing/index' })
 }
 function toOrderList() {}
-function toBookingList() {}
+function toBookingList() {
+  uni.redirectTo({ url: '/pagesA/tabs/tab-business-book?tab=list' })
+}
 function toStoreManage() {
   uni.navigateTo({ url: '/pagesA/dashboard/store' })
 }
