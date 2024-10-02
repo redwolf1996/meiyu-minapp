@@ -21,17 +21,23 @@ const columns = ref<SelItem[]>([
   },
 ])
 const model = reactive<BookForm>({
-  storeId: null,
+  storeId,
   storeCustomerPhone: null,
   storeCustomerName: null,
   storeCustomerId: null,
   storeServiceType: 1,
-  startTime: null,
+  startTime: computed(() => `${bookStime.value}:00`),
   artisanId: null,
   payType: null,
   customerCardId: null,
   notes: null,
-  service: [],
+  service: computed(() => {
+    return checkedServs.value.map((v) => {
+      return {
+        storeServiceId: v.id,
+      }
+    })
+  }),
 })
 const artName = ref('')
 const listStaff = ref<ListStaff[]>([])
@@ -73,6 +79,15 @@ function toAddServ() {
 function toSelServTime() {
   uni.navigateTo({ url: '/pagesA/book/time' })
 }
+
+function delServ(index) {
+  checkedServs.value.splice(index, 1)
+}
+
+async function save() {
+  await request.post('/business/booking', model)
+  uni.redirectTo({ url: '/pagesA/tabs/tab-business-book' })
+}
 </script>
 
 <template>
@@ -112,7 +127,7 @@ function toSelServTime() {
   </wd-popup>
   <wd-form ref="form" :model="model">
     <wd-cell-group :border="true">
-      <wd-input
+      <wd-input-number
         v-model="model.storeCustomerPhone"
         label="联系电话"
         placeholder="请输入"
@@ -149,57 +164,40 @@ function toSelServTime() {
       </MyCell>
     </MyCellGroup>
   </wd-form>
-  <view>
-    <view flex flex-ac flex-bt f12 px20px py12px>
-      <view c-3D3D3D>
-        预约服务
+
+  <view v-if="checkedServs.length">
+    <view v-for="(item, index) in checkedServs" :key="`serv-${index}`">
+      <view flex flex-ac flex-bt f12 px20px py12px>
+        <view c-3D3D3D>
+          预约服务{{ index + 1 }}
+        </view>
+        <view c-1A66FF @click="delServ(index)">
+          删除
+        </view>
       </view>
-      <view c-1A66FF>
-        删除
-      </view>
+      <MyCellGroup>
+        <view f14 mb10px flex flex-ac flex-bt>
+          <view>服务项目</view>
+          <view>{{ item.name }}</view>
+        </view>
+        <view f12 c-848486 mb10px flex flex-ac flex-bt>
+          <view>服务时长</view>
+          <view>约{{ item.duration }}分钟</view>
+        </view>
+        <view f12 c-848486 flex flex-ac flex-bt>
+          <view>价格</view>
+          <view>￥{{ item.price2 }}</view>
+        </view>
+        <view h14px />
+      </MyCellGroup>
     </view>
-    <MyCellGroup>
-      <MyCell label="每天可服务时段" required noBorder>
-        <span f14 c-B6BDBD pr4px>请选择</span>
-      </MyCell>
-      <view f12 c-848486 mb10px flex flex-ac flex-bt>
-        <view>服务时长</view>
-        <view>约40分钟</view>
-      </view>
-      <view f12 c-848486 flex flex-ac flex-bt>
-        <view>价格</view>
-        <view>￥100.00</view>
-      </view>
-      <view h14px />
-    </MyCellGroup>
   </view>
+
   <view>
-    <view flex flex-ac flex-bt f12 px20px py12px>
-      <view c-3D3D3D>
-        预约服务
-      </view>
-      <view c-1A66FF>
-        删除
-      </view>
-    </view>
-    <MyCellGroup>
-      <MyCell label="每天可服务时段" required noBorder>
-        <span f14 c-B6BDBD pr4px>请选择</span>
-      </MyCell>
-      <view f12 c-848486 mb10px flex flex-ac flex-bt>
-        <view>服务时长</view>
-        <view>约40分钟</view>
-      </view>
-      <view f12 c-848486 flex flex-ac flex-bt>
-        <view>价格</view>
-        <view>￥100.00</view>
-      </view>
-      <view h14px />
-    </MyCellGroup>
     <view style="border-top: 1px solid #EBEEF1" bg-white f14 c-1A66FF tc h40px lh-40px @click="toAddServ()">
       +&nbsp;添加服务
     </view>
-    <view px20px py12px>
+    <view px20px py12px font-size-14px>
       备注
     </view>
     <view bg-white px-40rpx py-24rpx>
@@ -208,6 +206,14 @@ function toSelServTime() {
         placeholderStyle="font-size: 14px;color:#C9CDD4;"
         placeholder="请输入预约备注" :maxlength="200" auto-height clearable show-word-limit
       />
+    </view>
+
+    <view mx-40rpx mt-64rpx color-white>
+      <wd-button size="large" custom-class="theme-bg" block @click="save()">
+        <view flex flex-cc>
+          <text>保存</text>
+        </view>
+      </wd-button>
     </view>
   </view>
   <wu-safe-bottom />

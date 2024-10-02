@@ -18,11 +18,11 @@ export interface BookForm {
   /**
    * 预约的服务列表
    */
-  service: Service[]
+  service: ComputedRef<Service[]>
   /**
    * 服务开始时间，yyyy-MM-dd HH:mm:ss
    */
-  startTime: string
+  startTime: ComputedRef<string>
   /**
    * 手机号查询到的门店客户id
    */
