@@ -59,6 +59,9 @@ importers:
       '@vant/area-data':
         specifier: ^1.5.2
         version: 1.5.2
+      big.js:
+        specifier: ^6.2.2
+        version: 6.2.2
       dayjs:
         specifier: ^1.11.11
         version: 1.11.13
@@ -108,6 +111,9 @@ importers:
       '@iconify/json':
         specifier: ^2.2.242
         version: 2.2.242
+      '@types/big.js':
+        specifier: ^6.2.2
+        version: 6.2.2
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
@@ -2058,6 +2064,9 @@ packages:
   '@types/babel__traverse@7.20.6':
     resolution: {integrity: sha512-r1bzfrm0tomOI8g1SzvCaQHo6Lcv6zu0EA+W2kHrt8dyrHQxGzBBL4kdkzIS+jBMV+EYcMAEAqXqYaLJq5rOZg==}
 
+  '@types/big.js@6.2.2':
+    resolution: {integrity: sha512-e2cOW9YlVzFY2iScnGBBkplKsrn2CsObHQ2Hiw4V1sSyiGbgWL8IyqE3zFi1Pt5o1pdAtYkDAIsF3KKUPjdzaA==}
+
   '@types/cookie@0.4.1':
     resolution: {integrity: sha512-XW/Aa8APYr6jSVVA1y/DEIZX0/GMKLEVekNG727R8cs56ahETkRAy/3DR7+fJyh7oUgGwNQaRfXCun0+KbWY7Q==}
 
@@ -2709,6 +2718,9 @@ packages:
   base64url@3.0.1:
     resolution: {integrity: sha512-ir1UPr3dkwexU7FdV8qBBbNDRUhMmIekYMFZfi+C/sLNnRESKPl23nB9b2pltqfOQNnGzsDdId90AEtG5tCx4A==}
     engines: {node: '>=6.0.0'}
+
+  big.js@6.2.2:
+    resolution: {integrity: sha512-y/ie+Faknx7sZA5MfGA2xKlu0GDv8RWrXGsmlteyJQ2lvoKv9GBK/fpRMc2qlSoBAgNxrixICFCBefIq8WCQpQ==}
 
   binary-extensions@2.3.0:
     resolution: {integrity: sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==}
@@ -8360,6 +8372,8 @@ snapshots:
     dependencies:
       '@babel/types': 7.25.6
 
+  '@types/big.js@6.2.2': {}
+
   '@types/cookie@0.4.1': {}
 
   '@types/cors@2.8.17':
@@ -9248,6 +9262,8 @@ snapshots:
   base64id@2.0.0: {}
 
   base64url@3.0.1: {}
+
+  big.js@6.2.2: {}
 
   binary-extensions@2.3.0: {}
 

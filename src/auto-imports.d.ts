@@ -53,6 +53,10 @@ declare global {
   const extendRef: typeof import('@vueuse/core')['extendRef']
   const fd: typeof import('./utils/index')['fd']
   const formatDay: typeof import('./utils/index')['formatDay']
+  const func_add: typeof import('./utils/math')['func_add']
+  const func_div: typeof import('./utils/math')['func_div']
+  const func_mul: typeof import('./utils/math')['func_mul']
+  const func_sub: typeof import('./utils/math')['func_sub']
   const get24Hours: typeof import('./utils/index')['get24Hours']
   const get24HoursHalf: typeof import('./utils/index')['get24HoursHalf']
   const get24HoursQuarter: typeof import('./utils/index')['get24HoursQuarter']
@@ -151,6 +155,7 @@ declare global {
   const staffScheduling: typeof import('./stores/work-time')['staffScheduling']
   const storeId: typeof import('./utils/index')['storeId']
   const stores: typeof import('./stores/index')['default']
+  const sumArray: typeof import('./utils/math')['sumArray']
   const syncRef: typeof import('@vueuse/core')['syncRef']
   const syncRefs: typeof import('@vueuse/core')['syncRefs']
   const templateRef: typeof import('@vueuse/core')['templateRef']
@@ -394,6 +399,10 @@ declare module 'vue' {
     readonly defineComponent: UnwrapRef<typeof import('vue')['defineComponent']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
     readonly fd: UnwrapRef<typeof import('./utils/index')['fd']>
+    readonly func_add: UnwrapRef<typeof import('./utils/math')['func_add']>
+    readonly func_div: UnwrapRef<typeof import('./utils/math')['func_div']>
+    readonly func_mul: UnwrapRef<typeof import('./utils/math')['func_mul']>
+    readonly func_sub: UnwrapRef<typeof import('./utils/math')['func_sub']>
     readonly get24Hours: UnwrapRef<typeof import('./utils/index')['get24Hours']>
     readonly get24HoursHalf: UnwrapRef<typeof import('./utils/index')['get24HoursHalf']>
     readonly get24HoursQuarter: UnwrapRef<typeof import('./utils/index')['get24HoursQuarter']>
@@ -464,6 +473,7 @@ declare module 'vue' {
     readonly staffScheduling: UnwrapRef<typeof import('./stores/work-time')['staffScheduling']>
     readonly storeId: UnwrapRef<typeof import('./utils/index')['storeId']>
     readonly stores: UnwrapRef<typeof import('./stores/index')['default']>
+    readonly sumArray: UnwrapRef<typeof import('./utils/math')['sumArray']>
     readonly themeColor: UnwrapRef<typeof import('./utils/index')['themeColor']>
     readonly toRaw: UnwrapRef<typeof import('vue')['toRaw']>
     readonly toRef: UnwrapRef<typeof import('vue')['toRef']>

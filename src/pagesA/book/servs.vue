@@ -7,7 +7,7 @@ style:
 import type { AllItems, CatsItemsTree, ServiceList } from '../types'
 import { flatten } from 'lodash-es'
 
-const active = ref<number>(1)
+const active = ref<number>(0)
 const scrollTop = ref<number>(0)
 const categories = ref<CatsItemsTree<ServiceList>[]>([])
 const checkedCount = computed(() => {
