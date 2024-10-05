@@ -16,6 +16,8 @@ const props = withDefaults(defineProps<{
   width: '222rpx',
   fontSize: '30rpx',
 })
+
+const emits = defineEmits(['click'])
 </script>
 
 <template>
@@ -32,6 +34,7 @@ const props = withDefaults(defineProps<{
       fontSize: props.fontSize,
       textAlign: 'center',
     }"
+    @click="emits('click', $event)"
   >
     <slot />
   </view>

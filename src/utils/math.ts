@@ -3,9 +3,9 @@ import Big from 'big.js'
 // ----------- 精确计算封装 -------------------
 
 /**
- * 加法：四舍五入保留3位有效数据
+ * 加法：四舍五入保留2位有效数据
  */
-export function func_add(a, b, scale = 3) {
+export function func_add(a, b, scale = 2) {
   if (!a)
     a = 0
   if (!b)
@@ -14,9 +14,9 @@ export function func_add(a, b, scale = 3) {
 }
 
 /**
- * 减法：四舍五入保留3位有效数据
+ * 减法：四舍五入保留2位有效数据
  */
-export function func_sub(a, b, scale = 3) {
+export function func_sub(a, b, scale = 2) {
   if (!a)
     a = 0
   if (!b)
@@ -25,9 +25,9 @@ export function func_sub(a, b, scale = 3) {
 }
 
 /**
- * 乘法：四舍五入保留4位有效数据
+ * 乘法：四舍五入保留2位有效数据
  */
-export function func_mul(a, b, scale = 3) {
+export function func_mul(a, b, scale = 2) {
   if (!a)
     a = 0
   if (!b)
@@ -36,9 +36,9 @@ export function func_mul(a, b, scale = 3) {
 }
 
 /**
- * 除法：四舍五入保留3位有效数据
+ * 除法：四舍五入保留2位有效数据
  */
-export function func_div(a, b, scale = 3) {
+export function func_div(a, b, scale = 2) {
   if (!b)
     return Number(0)
   if (!a)
@@ -46,7 +46,10 @@ export function func_div(a, b, scale = 3) {
   return Number(new Big(a).div(b).toFixed(scale))
 }
 
-export function sumArray(arr, scale = 3) {
+/**
+ * 数组所有数相加
+ */
+export function sumArray(arr, scale = 2) {
   let sum = 0
   for (let i = 0; i < arr.length; i++) {
     sum = Number(func_add(sum, arr[i], scale))

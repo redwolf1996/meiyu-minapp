@@ -4,7 +4,15 @@ style:
 </route>
 
 <script lang="ts" setup>
-const totalAmount = ''
+const totalAmount = sumArray(bookInfo.value.servs.map(v => v.price2))
+async function doSubmit() {
+  const params = {
+    ...bookInfo.value,
+    totalAmount,
+  }
+  await request.post('/business/booking', params)
+  uni.redirectTo({ url: '/pagesA/tabs/tab-business-dashboard' })
+}
 </script>
 
 <template>
@@ -94,7 +102,7 @@ const totalAmount = ''
         <view flex flex-ac gap6px>
           <text>合计：</text>
           <text c-FF5A5F>
-            ￥4980
+            ￥{{ totalAmount }}
           </text>
         </view>
       </view>
@@ -108,9 +116,9 @@ const totalAmount = ''
 
   <view :class="[safeBottom() ? 'py20px' : 'py10px']" bg-white px20px flex flex-bt flex-ac pf wp100 bottom-0px>
     <view f12 c-1A66FF>
-      明天10:30到店
+      {{ bookInfo.startTime ?? '--' }}到店
     </view>
-    <MyButton width="200rpx">
+    <MyButton width="200rpx" @click="doSubmit()">
       提交预约
     </MyButton>
   </view>
