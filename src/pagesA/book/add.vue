@@ -7,7 +7,7 @@ style:
 <script lang="ts" setup>
 import { bookInfo } from '@/stores/book-info'
 import type { ListStaff } from '../staff/types'
-import type { BookForm } from './types'
+import type { BookForm, Service } from './types'
 
 const form = ref()
 const value = ref()
@@ -49,9 +49,15 @@ onShow(() => {
       totalAmount: v.price,
       amount: v.price2,
       goodsCount: 1,
+      name: v.name,
+      duration: v.duration,
     }
   })
 })
+
+function handleChange(item: Service) {
+  item.amount = func_mul(item.amount, item.goodsCount)
+}
 
 async function getStaff() {
   const res = await request.get<ListRes<ListStaff>>('/business/staff', { storeId })
@@ -177,7 +183,7 @@ async function save() {
   </wd-form>
 
   <view v-if="checkedServs.length">
-    <view v-for="(item, index) in checkedServs" :key="`serv-${index}`">
+    <view v-for="(item, index) in model.service" :key="`serv-${index}`">
       <view flex flex-ac flex-bt f12 px20px py12px>
         <view c-3D3D3D>
           预约服务{{ index + 1 }}
@@ -190,7 +196,7 @@ async function save() {
         <view f14 mb10px flex flex-ac flex-bt>
           <view>{{ item.name }}</view>
           <view>
-            <wd-input-number v-model="item.goodsCount" />
+            <wd-input-number v-model="item.goodsCount" :min="1" @change="handleChange(item)" />
           </view>
         </view>
         <view f12 c-848486 mb10px flex flex-ac flex-bt>
@@ -199,7 +205,7 @@ async function save() {
         </view>
         <view f12 c-848486 flex flex-ac flex-bt>
           <view>价格</view>
-          <view>￥{{ item.price2 }}</view>
+          <view>￥{{ item.amount }}</view>
         </view>
         <view h14px />
       </MyCellGroup>

@@ -1,49 +1,52 @@
 import Big from 'big.js'
 
 // ----------- 精确计算封装 -------------------
+export function get2(num: number) {
+  return Math.floor(num * 100) / 100
+}
 
 /**
- * 加法：四舍五入保留2位有效数据
+ * 加法：舍去法保留2位有效数据
  */
-export function func_add(a, b, scale = 2) {
+export function func_add(a, b) {
   if (!a)
     a = 0
   if (!b)
     b = 0
-  return Number(new Big(a).add(b).toFixed(scale))
+  return get2(Number(new Big(a).add(b)))
 }
 
 /**
- * 减法：四舍五入保留2位有效数据
+ * 减法：舍去法保留2位有效数据
  */
-export function func_sub(a, b, scale = 2) {
+export function func_sub(a, b) {
   if (!a)
     a = 0
   if (!b)
     b = 0
-  return Number(new Big(a).sub(b).toFixed(scale))
+  return get2(Number(new Big(a).sub(b)))
 }
 
 /**
- * 乘法：四舍五入保留2位有效数据
+ * 乘法：舍去法保留2位有效数据
  */
-export function func_mul(a, b, scale = 2) {
+export function func_mul(a, b) {
   if (!a)
     a = 0
   if (!b)
     b = 0
-  return Number(new Big(a).mul(b).toFixed(scale))
+  return get2(Number(new Big(a).mul(b)))
 }
 
 /**
- * 除法：四舍五入保留2位有效数据
+ * 除法：舍去法保留2位有效数据
  */
-export function func_div(a, b, scale = 2) {
+export function func_div(a, b) {
   if (!b)
     return Number(0)
   if (!a)
     a = 0
-  return Number(new Big(a).div(b).toFixed(scale))
+  return get2(Number(new Big(a).div(b)))
 }
 
 /**

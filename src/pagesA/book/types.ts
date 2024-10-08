@@ -74,4 +74,6 @@ export interface Service {
    * 优惠前金额
    */
   totalAmount: number
+  name?: string
+  duration: number
 }

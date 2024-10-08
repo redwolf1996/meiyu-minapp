@@ -57,6 +57,7 @@ declare global {
   const func_div: typeof import('./utils/math')['func_div']
   const func_mul: typeof import('./utils/math')['func_mul']
   const func_sub: typeof import('./utils/math')['func_sub']
+  const get2: typeof import('./utils/math')['get2']
   const get24Hours: typeof import('./utils/index')['get24Hours']
   const get24HoursHalf: typeof import('./utils/index')['get24HoursHalf']
   const get24HoursQuarter: typeof import('./utils/index')['get24HoursQuarter']
@@ -406,6 +407,7 @@ declare module 'vue' {
     readonly get24Hours: UnwrapRef<typeof import('./utils/index')['get24Hours']>
     readonly get24HoursHalf: UnwrapRef<typeof import('./utils/index')['get24HoursHalf']>
     readonly get24HoursQuarter: UnwrapRef<typeof import('./utils/index')['get24HoursQuarter']>
+    readonly get2: UnwrapRef<typeof import('./utils/math')['get2']>
     readonly getCurrentInstance: UnwrapRef<typeof import('vue')['getCurrentInstance']>
     readonly getCurrentScope: UnwrapRef<typeof import('vue')['getCurrentScope']>
     readonly getMenuButtonInfo: UnwrapRef<typeof import('./utils/index')['getMenuButtonInfo']>
