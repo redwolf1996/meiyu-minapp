@@ -7,6 +7,10 @@ style:
 function toAdd() {
   uni.navigateTo({ url: '/pagesA/staff/add' })
 }
+
+function toStaffDetail() {
+  uni.navigateTo({ url: '/pagesA/staff/detail' })
+}
 </script>
 
 <template>
@@ -23,7 +27,7 @@ function toAdd() {
     </view>
   </view>
   <view px-20rpx py-10rpx>
-    <view py-30rpx pl-30rpx pr-40rpx flex flex-ac flex-bt class="border-gray">
+    <view py-30rpx pl-30rpx pr-40rpx flex flex-ac flex-bt class="border-gray" @click="toStaffDetail()">
       <view flex flex-ac flex-bt gap-40rpx>
         <wd-img
           :width="75"
