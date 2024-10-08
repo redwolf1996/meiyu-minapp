@@ -35,14 +35,14 @@ async function initStore() {
   useUserStore().setUserInfo(res.data)
 
   // TODO H5临时用 后面去掉
-  useUserStore().setUserInfo({
-    orgInfo: {
-      cardCountStatus: 1, // 0未添加 1已添加 2稍后添加
-      productCountStatus: 1,
-      serviceCountStatus: 1,
-      staffCountStatus: 1,
-    },
-  })
+  // useUserStore().setUserInfo({
+  //   orgInfo: {
+  //     cardCountStatus: 1, // 0未添加 1已添加 2稍后添加
+  //     productCountStatus: 1,
+  //     serviceCountStatus: 1,
+  //     staffCountStatus: 1,
+  //   },
+  // })
   const org = userInfo.orgInfo
   if (!org) { // 如果店铺未创建
     return uni.navigateTo({ url: '/pagesA/init/steps/step1' })
