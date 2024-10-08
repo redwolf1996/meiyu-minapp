@@ -47,16 +47,20 @@ onShow(() => {
     return {
       storeServiceId: v.id,
       totalAmount: v.price,
-      amount: v.price2,
+      amount: v.price,
       goodsCount: 1,
       name: v.name,
       duration: v.duration,
+      price: v.price,
+      price2: v.price2,
+      coverImg: v.coverImg,
     }
   })
 })
 
 function handleChange(item: Service) {
-  item.amount = func_mul(item.amount, item.goodsCount)
+  item.amount = func_mul(item.price, item.goodsCount)
+  item.totalAmount = func_mul(item.price, item.goodsCount)
 }
 
 async function getStaff() {
@@ -93,15 +97,15 @@ function toSelServTime() {
 }
 
 function delServ(index) {
-  checkedServs.value.splice(index, 1)
+  model.service.splice(index, 1)
 }
 
 async function save() {
   bookInfo.value = {
     ...model,
-    servs: checkedServs.value,
     artName: artName.value,
   }
+  return console.log(bookInfo.value)
   uni.navigateTo({ url: '/pagesA/book/submit' })
 }
 </script>

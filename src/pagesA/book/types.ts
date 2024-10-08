@@ -75,5 +75,8 @@ export interface Service {
    */
   totalAmount: number
   name?: string
-  duration: number
+  duration?: number
+  price?: number
+  price2?: number
+  coverImg?: string
 }

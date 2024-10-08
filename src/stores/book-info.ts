@@ -1,4 +1,5 @@
 import type { ServiceList } from '@/pagesA/types'
+import type { Service } from '../pagesA/book/types'
 
 interface BookTempInfo {
   /**
@@ -20,7 +21,7 @@ interface BookTempInfo {
   /**
    * 预约的服务列表
    */
-  service: ComputedRef<Service[]>
+  service: Service[]
   /**
    * 服务开始时间，yyyy-MM-dd HH:mm:ss
    */
@@ -46,20 +47,9 @@ interface BookTempInfo {
    */
   storeServiceType: number
   /**
-   * 所选服务列表
-   */
-  servs: ServiceList[]
-  /**
    * 手艺人
    */
   artName: string
-}
-
-export interface Service {
-  /**
-   * 服务id
-   */
-  storeServiceId: number
 }
 
 export const bookInfo = ref<BookTempInfo>({})

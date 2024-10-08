@@ -4,11 +4,12 @@ style:
 </route>
 
 <script lang="ts" setup>
-const totalAmount = sumArray(bookInfo.value.servs.map(v => v.price2))
+const totalAmount = sumArray(bookInfo.value.service.map(v => func_mul(v.price, v.goodsCount)))
+const totalAmount2 = sumArray(bookInfo.value.service.map(v => func_mul(v.price2, v.goodsCount)))
 async function doSubmit() {
   const params = {
     ...bookInfo.value,
-    totalAmount,
+    totalAmount: totalAmount2,
   }
   await request.post('/business/booking', params)
   uni.redirectTo({ url: '/pagesA/tabs/tab-business-dashboard' })
@@ -61,7 +62,7 @@ async function doSubmit() {
       </view>
       <view flex flex-y gap13px>
         <view
-          v-for="(item, index) in bookInfo.servs" :key="`k-${index}`" flex flex-ac gap-12px
+          v-for="(item, index) in bookInfo.service" :key="`k-${index}`" flex flex-ac gap-12px
         >
           <wd-img
             radius="10px"
@@ -88,7 +89,7 @@ async function doSubmit() {
                 </text>
               </view>
               <view f12 c-7C7C7C>
-                x1
+                x{{ item.goodsCount ?? 1 }}
               </view>
             </view>
           </view>
@@ -99,10 +100,16 @@ async function doSubmit() {
     <view mb16px px12px py16px bg-white>
       <view flex flex-ac flex-bt>
         <view>商品金额</view>
+        <text c-#818181 font-size-14px>
+          ￥{{ totalAmount }}
+        </text>
+      </view>
+      <view flex flex-ac flex-bt>
+        <view />
         <view flex flex-ac gap6px>
           <text>合计：</text>
           <text c-FF5A5F>
-            ￥{{ totalAmount }}
+            ￥{{ totalAmount2 }}
           </text>
         </view>
       </view>
