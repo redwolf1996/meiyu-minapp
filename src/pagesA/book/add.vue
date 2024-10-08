@@ -32,13 +32,7 @@ const model = reactive<BookForm>({
   payType: null,
   customerCardId: null,
   notes: null,
-  service: computed(() => {
-    return checkedServs.value.map((v) => {
-      return {
-        storeServiceId: v.id,
-      }
-    })
-  }),
+  service: [],
 })
 const artName = ref('')
 const listStaff = ref<ListStaff[]>([])
@@ -46,6 +40,17 @@ const visibleStaff = ref(false)
 
 onLoad(() => {
   getStaff()
+})
+
+onShow(() => {
+  model.service = checkedServs.value.map((v) => {
+    return {
+      storeServiceId: v.id,
+      totalAmount: v.price,
+      amount: v.price2,
+
+    }
+  })
 })
 
 async function getStaff() {
@@ -183,8 +188,10 @@ async function save() {
       </view>
       <MyCellGroup>
         <view f14 mb10px flex flex-ac flex-bt>
-          <view>服务项目</view>
           <view>{{ item.name }}</view>
+          <view>
+            <wd-input-number v-model="item.goodsCount" />
+          </view>
         </view>
         <view f12 c-848486 mb10px flex flex-ac flex-bt>
           <view>服务时长</view>

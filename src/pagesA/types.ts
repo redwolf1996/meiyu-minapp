@@ -39,6 +39,7 @@ export interface ProductList {
   storeId: number
   unit: string
   checked?: boolean
+  [property: string]: any
 }
 
 export interface ServiceList {
@@ -59,6 +60,7 @@ export interface ServiceList {
   serviceColor: string
   storeId: number
   checked?: boolean
+  [property: string]: any
 }
 
 export interface CatsItemsTree<T> {

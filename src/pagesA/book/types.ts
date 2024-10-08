@@ -18,7 +18,7 @@ export interface BookForm {
   /**
    * 预约的服务列表
    */
-  service: ComputedRef<Service[]>
+  service: any[]
   /**
    * 服务开始时间，yyyy-MM-dd HH:mm:ss
    */
@@ -47,7 +47,31 @@ export interface BookForm {
 
 export interface Service {
   /**
+   * 优惠后金额
+   */
+  amount: number
+  /**
+   * 卡id
+   */
+  cardId?: number
+  /**
+   * 卡优惠金额
+   */
+  cardReduceAmount?: number
+  /**
+   * 用的购卡id
+   */
+  customerCardId?: number
+  /**
+   * 数量
+   */
+  goodsCount: number
+  /**
    * 服务id
    */
   storeServiceId: number
+  /**
+   * 优惠前金额
+   */
+  totalAmount: number
 }
