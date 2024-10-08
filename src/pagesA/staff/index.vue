@@ -3,14 +3,18 @@ style:
   navigationBarTitleText: 员工列表
 </route>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+function toAdd() {
+  uni.navigateTo({ url: '/pagesA/staff/add' })
+}
+</script>
 
 <template>
   <view bg-white flex flex-ac flex-bt py-10px px-36rpx>
     <view c-969699 f14>
       已添加（3/10）
     </view>
-    <view class="plus">
+    <view class="plus" @click="toAdd()">
       <wd-img
         :width="14"
         :height="14"
