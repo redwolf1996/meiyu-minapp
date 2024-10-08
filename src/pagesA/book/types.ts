@@ -18,7 +18,7 @@ export interface BookForm {
   /**
    * 预约的服务列表
    */
-  service: any[]
+  service: Service[]
   /**
    * 服务开始时间，yyyy-MM-dd HH:mm:ss
    */

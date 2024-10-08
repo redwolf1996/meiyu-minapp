@@ -8,7 +8,6 @@ style:
 import { bookInfo } from '@/stores/book-info'
 import type { ListStaff } from '../staff/types'
 import type { BookForm } from './types'
-import qiaoSelect from '@/uni_modules/qiao-select/components/qiao-select/qiaoSelect.vue'
 
 const form = ref()
 const value = ref()
@@ -49,7 +48,7 @@ onShow(() => {
       storeServiceId: v.id,
       totalAmount: v.price,
       amount: v.price2,
-
+      goodsCount: 1,
     }
   })
 })
