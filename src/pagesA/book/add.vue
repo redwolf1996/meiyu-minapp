@@ -164,7 +164,7 @@ async function save() {
       <wd-picker v-model="value" :rules="[{ required: true, message: '请选择服务方式' }]" label="服务方式" align-right :columns="columns" />
     </wd-cell-group>
     <MyCellGroup :py="0">
-      <MyCell label="手艺人" required noBorder borderTop @click="toSelectStaff()">
+      <MyCell label="手艺人" required noBorder borderTop @myclick="toSelectStaff()">
         <text v-if="!artName" font-size-14px c-B6BDBD pr5px>
           请选择手艺人
         </text>
@@ -174,7 +174,7 @@ async function save() {
       </MyCell>
     </MyCellGroup>
     <MyCellGroup :py="0">
-      <MyCell label="服务时间" required noBorder borderTop @click="toSelServTime()">
+      <MyCell label="服务时间" required noBorder borderTop @myclick="toSelServTime()">
         <text v-if="!bookStime" font-size-14px c-B6BDBD pr4px>
           请选择服务时间
         </text>
