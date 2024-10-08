@@ -4,24 +4,21 @@ style:
 </route>
 
 <script lang="ts" setup>
-// const userInfo = useUserStore().userInfo
-// if (userInfo.token && userInfo.isRegister) {
-//   toBusinessDashboard()
-// }
-// else {
-//   toBusinessLogin()
-// }
-
-// h5开发临时用，后面去掉
-toBusinessDashboard()
+const userInfo = useUserStore().userInfo
+if (userInfo.token && userInfo.isRegister) {
+  toBusinessDashboard()
+}
+else {
+  toBusinessLogin()
+}
 
 function toBusinessDashboard() {
   uni.reLaunch({ url: '/pagesA/tabs/tab-business-dashboard' })
 }
 
-// function toBusinessLogin() {
-//   uni.navigateTo({ url: '/pagesA/login/index' })
-// }
+function toBusinessLogin() {
+  uni.navigateTo({ url: '/pagesA/login/index' })
+}
 </script>
 
 <template>
