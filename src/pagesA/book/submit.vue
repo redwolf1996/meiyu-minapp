@@ -9,7 +9,7 @@ const totalAmount2 = sumArray(bookInfo.value.service.map(v => func_mul(v.price2,
 async function doSubmit() {
   const params = {
     ...bookInfo.value,
-    totalAmount: totalAmount2,
+    amount: totalAmount2,
   }
   await request.post('/business/booking', params)
   uni.redirectTo({ url: '/pagesA/tabs/tab-business-dashboard' })

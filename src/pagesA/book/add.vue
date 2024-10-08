@@ -105,7 +105,6 @@ async function save() {
     ...model,
     artName: artName.value,
   }
-  return console.log(bookInfo.value)
   uni.navigateTo({ url: '/pagesA/book/submit' })
 }
 </script>
