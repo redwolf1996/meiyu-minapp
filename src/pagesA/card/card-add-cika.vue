@@ -96,7 +96,7 @@ function save() {
         :rules="[{ required: true, message: '请填写卡名称' }]"
       />
       <MyCellGroup>
-        <MyCell noBorder borderTop required label="卡分类" @click="toCats()">
+        <MyCell noBorder borderTop required label="卡分类" @myclick="toCats()">
           <text v-if="!catName" f14 c-bfbfbf pr-5px>
             请选择
           </text>
@@ -118,7 +118,7 @@ function save() {
     <view h-24rpx />
     <wd-cell-group :border="true">
       <MyCellGroup>
-        <MyCell noBorder borderTop required label="购卡权益" @click="toProdServs()">
+        <MyCell noBorder borderTop required label="购卡权益" @myclick="toProdServs()">
           <text v-if="!catName" f14 c-bfbfbf pr-5px>
             请选择商品或服务
           </text>
