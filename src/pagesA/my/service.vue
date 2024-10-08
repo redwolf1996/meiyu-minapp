@@ -3,7 +3,11 @@ style:
   navigationBarTitleText: 联系客服
 </route>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+function toBWeChat() {
+  uni.navigateTo({ url: '/pagesA/my/qiwei' })
+}
+</script>
 
 <template>
   <view
@@ -27,7 +31,7 @@ style:
   </view>
   <view h18px />
   <MyCellGroup>
-    <MyCell label="企业微信" />
+    <MyCell label="企业微信" @myclick="toBWeChat()" />
     <MyCell label="客服电话">
       <span f14 c-3B3D3D>13263301397</span>
     </MyCell>

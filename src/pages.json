@@ -306,13 +306,6 @@
           }
         },
         {
-          "path": "my/index",
-          "type": "page",
-          "style": {
-            "navigationBarTitleText": "我的"
-          }
-        },
-        {
           "path": "my/invite",
           "type": "page",
           "style": {

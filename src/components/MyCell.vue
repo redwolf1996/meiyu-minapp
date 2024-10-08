@@ -13,7 +13,7 @@ const props = withDefaults(defineProps<{
   showArrow: true,
 })
 
-const emits = defineEmits(['click'])
+const emits = defineEmits(['myclick'])
 </script>
 
 <template>
@@ -21,7 +21,7 @@ const emits = defineEmits(['click'])
     py-20rpx
     flex flex-bt flex-ac class="cell"
     :class="{ 'no-border': props.noBorder, 'border-top': props.borderTop }"
-    @click="emits('click', $event)"
+    @click="emits('myclick', $event)"
   >
     <view c-3B3D3D fw-500 font-size-14px flex flex-ac gap8px>
       <slot name="icon" />

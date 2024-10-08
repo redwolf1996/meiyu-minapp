@@ -5,7 +5,9 @@ style:
 </route>
 
 <script lang="ts" setup>
-
+function toMyInvite() {
+  uni.navigateTo({ url: '/pagesA/my/my-invite' })
+}
 </script>
 
 <template>
@@ -60,7 +62,7 @@ style:
           分享邀请
         </view>
       </view>
-      <view mt24px flex flex-cc tc>
+      <view mt24px flex flex-cc tc @click="toMyInvite()">
         <text fs-34 c-1A66FF>
           我的邀请
         </text>

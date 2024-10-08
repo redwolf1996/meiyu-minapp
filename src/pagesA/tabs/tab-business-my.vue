@@ -8,6 +8,24 @@ style:
 function toRenew() {
   uni.navigateTo({ url: '/pagesA/my/renew' })
 }
+function toMyStore() {
+  uni.navigateTo({ url: '/pagesA/my/store' })
+}
+function toAddNewStore() {
+  uni.navigateTo({ url: '/pagesA/my/new-store' })
+}
+function toServ() {
+  uni.navigateTo({ url: '/pagesA/my/service' })
+}
+function toInvite() {
+  uni.navigateTo({ url: '/pagesA/my/invite' })
+}
+function toSettings() {
+  uni.navigateTo({ url: '/pagesA/my/settings' })
+}
+function toAbout() {
+  uni.navigateTo({ url: '/pagesA/my/about' })
+}
 </script>
 
 <template>
@@ -71,7 +89,7 @@ function toRenew() {
       </view>
     </view>
   </view>
-  <view px16px py8px>
+  <view px16px py8px @click="toInvite()">
     <wd-img
       height="48px"
       width="100%"
@@ -79,24 +97,24 @@ function toRenew() {
     />
   </view>
   <MyCellGroup>
-    <MyCell label="我的店铺" noBorder>
+    <MyCell label="我的店铺" noBorder @myclick="toMyStore()">
       <template #icon>
         <wd-icon name="home" size="18px" />
       </template>
       <span f14 c-3B3D3D>美婷美甲美睫</span>
     </MyCell>
-    <MyCell label="联系客服" noBorder>
+    <MyCell label="联系客服" noBorder @myclick="toServ()">
       <template #icon>
         <wd-icon name="user-talk" size="18px" />
       </template>
     </MyCell>
-    <MyCell label="意见反馈" noBorder>
+    <!-- <MyCell label="意见反馈" noBorder>
       <template #icon>
         <wd-icon name="evaluation" size="18px" />
       </template>
       <span f14 c-B6BDBD>欢迎反馈您使用中遇到的问题</span>
-    </MyCell>
-    <MyCell label="关于我们" noBorder>
+    </MyCell> -->
+    <MyCell label="关于我们" noBorder @myclick="toAbout()">
       <template #icon>
         <wd-icon name="warning" size="18px" />
       </template>
@@ -104,13 +122,13 @@ function toRenew() {
   </MyCellGroup>
   <view h16px />
   <MyCellGroup>
-    <MyCell label="设置" noBorder>
+    <MyCell label="设置" noBorder @myclick="toSettings()">
       <template #icon>
         <wd-icon name="setting" size="18px" />
       </template>
     </MyCell>
   </MyCellGroup>
-  <view c-1A66FF mt20px tc lh-20px>
+  <view c-1A66FF mt20px tc lh-20px @click="toAddNewStore()">
     <text style="border-bottom: 1px solid #1A66FF;">
       我要开新店
     </text>
