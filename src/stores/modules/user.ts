@@ -98,4 +98,7 @@ interface StoreInfo {
   storeName: string
   updateBy: number
   updateTime: string
+  province?: string
+  city?: string
+  county?: string
 }

@@ -128,11 +128,11 @@ function toAbout() {
       </template>
     </MyCell>
   </MyCellGroup>
-  <view c-1A66FF mt20px tc lh-20px @click="toAddNewStore()">
+  <!-- <view c-1A66FF mt20px tc lh-20px @click="toAddNewStore()">
     <text style="border-bottom: 1px solid #1A66FF;">
       我要开新店
     </text>
-  </view>
+  </view> -->
   <view h100px />
   <MyTabBar :tab-index="3" />
 </template>
