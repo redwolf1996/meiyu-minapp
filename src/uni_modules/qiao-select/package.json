@@ -1,0 +1,27 @@
+{
+	"id": "qiao-select",
+	"name": "搜索下拉选择器",
+	"displayName": "qiao-select带input模糊搜索的下拉选择框",
+	"version": "1.0.8",
+	"description": "搜索下拉选择器，支持输入框模糊搜索下拉数据，支持小程序,h5，可自行配置搜索项",
+	"keywords": [
+        "select",
+        "下拉搜索",
+        "选择器",
+        "选择框",
+        "搜索下拉"
+    ],
+	"dcloudext": {
+		"contact": {
+			"qq": "1450294898"
+		},
+		"declaration": {
+			"ads": "无",
+			"data": "无",
+			"permissions": "无"
+		},
+		"npmurl": "",
+		"type": "component-vue"
+	},
+	"repository": ""
+}
