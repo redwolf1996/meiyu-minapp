@@ -149,6 +149,7 @@ async function save() {
       <wd-input
         v-model="model.storeCustomerPhone"
         type="number"
+        :maxlength="11"
         label="联系电话"
         placeholder="请输入"
         suffix-icon="arrow-right"
