@@ -16,7 +16,7 @@ function toStaffDetail() {
 <template>
   <view bg-white flex flex-ac flex-bt py-10px px-36rpx>
     <view c-969699 f14>
-      已添加（3/10）
+      已添加&#12288;3
     </view>
     <view class="plus" @click="toAdd()">
       <wd-img
