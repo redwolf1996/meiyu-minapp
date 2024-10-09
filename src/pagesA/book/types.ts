@@ -80,3 +80,114 @@ export interface Service {
   price2?: number
   coverImg?: string
 }
+
+export interface BookDetail {
+  /**
+   * 手艺人，0表示未分配
+   */
+  artisanId: number
+  /**
+   * 手艺人
+   */
+  artisanName: string
+  /**
+   * 预约操作记录
+   */
+  bookingRecord: BookingRecord[]
+  /**
+   * 预约的服务列表
+   */
+  bookingService: BookingService[]
+  /**
+   * 地址
+   */
+  customerAddress: string
+  customerId: number
+  /**
+   * 备注
+   */
+  notes: string
+  /**
+   * 预约开始时间
+   */
+  startTime: string
+  /**
+   * 客户头像
+   */
+  storeCustomerAvatar: string
+  /**
+   * 门店客户id
+   */
+  storeCustomerId: number
+  /**
+   * 客户名
+   */
+  storeCustomerName: string
+  /**
+   * 客户名拼音
+   */
+  storeCustomerNamePY: string
+  /**
+   * 门店客户手机号
+   */
+  storeCustomerPhone: string
+  /**
+   * 门店名
+   */
+  storeName: string
+  [property: string]: any
+}
+
+export interface BookingRecord {
+  createBy?: number
+  /**
+   * 操作时间
+   */
+  createTime?: string
+  /**
+   * 操作人类型，1客户，2商家
+   */
+  handleType?: number
+  /**
+   * 操作人类别名
+   */
+  handleTypeDesc?: string
+  id?: number
+  /**
+   * 类别，1创建，2签到，3完成，4取消
+   */
+  type?: number
+  /**
+   * 类别名
+   */
+  typeDesc?: string
+  [property: string]: any
+}
+
+export interface BookingService {
+  /**
+   * 金额
+   */
+  amount: number
+  /**
+   * 数量
+   */
+  count: number
+  /**
+   * 时长分钟
+   */
+  duration: number
+  /**
+   * 服务头图
+   */
+  serviceCoverImg: string
+  /**
+   * 服务名
+   */
+  serviceName: string
+  /**
+   * 服务id
+   */
+  storeServiceId: number
+  [property: string]: any
+}

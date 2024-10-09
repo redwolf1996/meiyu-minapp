@@ -4,7 +4,29 @@ style:
   navigationBarTitleText: 预约详情
 </route>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import type { BookDetail } from './types'
+
+const bookDetail = ref<BookDetail>()
+const bookingId = ref(0)
+onLoad(async (options) => {
+  bookingId.value = options?.id
+  const res = await request.get<BookDetail>(`/business/booking/${bookingId.value}`)
+  bookDetail.value = res.data
+})
+
+function cancelDetail() {
+  uni.navigateBack()
+}
+
+function toEdit() {
+  uni.navigateTo({ url: `/pagesA/book/add?id=${bookingId.value}` })
+}
+
+function toOrder() {
+  uni.navigateTo({ url: `/pagesA/order/detail?id=${bookingId.value}` })
+}
+</script>
 
 <template>
   <view p-32rpx>
@@ -28,12 +50,12 @@ style:
         />
         <view flex flex-y flex-bt flex-1 gap-20rpx>
           <view f16>
-            王乐乐
+            {{ bookDetail?.storeCustomerName }}
           </view>
           <view flex flex-ac flex-bt>
             <view flex flex-ac gap-16rpx>
               <text c-929292 fs-28 lh-28rpx>
-                13888888888
+                {{ bookDetail?.storeCustomerPhone }}
               </text>
               <wd-img
                 :width="16"
@@ -75,7 +97,7 @@ style:
           2022
         </text>
       </view>
-      <view mt-10px f12 c-818181>
+      <!-- <view mt-10px f12 c-818181>
         预约人：<text c-232220>
           2022
         </text>
@@ -84,20 +106,20 @@ style:
         手机号：<text c-232220>
           2022
         </text>
-      </view>
+      </view> -->
       <view mt-10px f12 c-818181>
         手艺人：<text c-232220>
-          2022
+          {{ bookDetail?.artisanName ?? '未分配' }}
         </text>
       </view>
       <view mt-10px f12 c-818181>
         备注：<text c-232220>
-          2022
+          {{ bookDetail?.notes }}
         </text>
       </view>
       <view mt-10px f12 c-818181>
         地址：<text c-232220>
-          2022
+          {{ bookDetail?.customerAddress }}
         </text>
       </view>
       <view style="height: 1px;background-color: #E6E6E6" wp-100 mt10px />
@@ -171,14 +193,14 @@ style:
       </wd-steps>
     </view>
 
-    <view flex flex-cc mt-16px px-60rpx>
-      <button class="my-btn cancel">
+    <view flex flex-cc mt-16px px-60rpx gap10px>
+      <button class="my-btn cancel" @click="cancelDetail()">
         取消
       </button>
-      <button class="my-btn complete">
+      <button class="my-btn complete" @click="toEdit()">
         修改
       </button>
-      <button class="my-btn complete">
+      <button class="my-btn complete" @click="toOrder()">
         查看订单
       </button>
     </view>
