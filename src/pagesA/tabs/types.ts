@@ -27,12 +27,96 @@ export interface DashBoardData {
   /**
    * 今日预约
    */
-  todayBookingList: any[]
+  todayBookingList: TodayBookingList[]
   /**
    * vip客户数
    */
   vipCustomerCount: number
   waitCount: number
+}
+
+export interface TodayBookingList {
+  /**
+   * 手艺人
+   */
+  artisanId: number
+  /**
+   * 手艺人
+   */
+  artisanName: string
+  /**
+   * 手艺人电话
+   */
+  artisanPhone: string
+  /**
+   * 预约id
+   */
+  bookingId: number
+  /**
+   * 预约状态，1待服务，服务中2，已完成3，已取消4
+   */
+  bookingStatus: number
+  /**
+   * 预约状态
+   */
+  bookingStatusDesc: string
+  /**
+   * 时长
+   */
+  duration: number
+  /**
+   * 客户手机号
+   */
+  phone: string
+  /**
+   * 预约的服务
+   */
+  serviceList: ServiceList[]
+  /**
+   * 开始时间
+   */
+  startTime: string
+  /**
+   * 开始时间
+   */
+  startTimeStr: string
+  /**
+   * 门店客户id
+   */
+  storeCustomerId: number
+  /**
+   * 门店客户姓名
+   */
+  storeCustomerName: string
+  /**
+   * 服务类型，1到店，2上门
+   */
+  storeServiceType: number
+  /**
+   * 服务类型
+   */
+  storeServiceTypeDesc: string
+  [property: string]: any
+}
+
+export interface ServiceList {
+  /**
+   * 服务时长
+   */
+  duration: number
+  /**
+   * 服务头图
+   */
+  serviceCoverImg: string
+  /**
+   * 服务名
+   */
+  serviceName: string
+  /**
+   * 服务id
+   */
+  storeServiceId: number
+  [property: string]: any
 }
 
 export interface CusReqModel {

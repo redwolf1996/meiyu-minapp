@@ -6,7 +6,7 @@ style:
 <script lang="ts" setup>
 const { colPickerData, findChildrenByCode } = useColPickerData()
 const storeInfo = computed(() => {
-  return useUserStore().userInfo.storeList[0]
+  return useUserStore().userInfo?.storeList?.[0]
 })
 const imageValue = ref<any>([{
   url: storeInfo.value?.logo || '',

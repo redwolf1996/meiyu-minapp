@@ -1,4 +1,11 @@
 <script lang="ts" setup>
+import type { TodayBookingList } from '@/pagesA/tabs/types'
+
+const props = defineProps<{
+  data?: TodayBookingList // 今日预约列表
+}>()
+const data = props.data
+const img = data.serviceList?.[0].serviceCoverImg
 </script>
 
 <template>
@@ -8,22 +15,22 @@
         <wd-img
           :width="60"
           :height="60"
-          :src="`${IMG_BASE}/logo.png`"
+          :src="img"
         />
         <view flex flex-y flex-bt>
           <view f12>
-            基础护肤名称
+            {{ data.serviceList?.[0]?.serviceName }}
           </view>
           <view fb f12>
-            10:00-11:00
+            {{ data.startTimeStr }}
           </view>
           <view f12 flex tc flex-ac gap-10rpx f10>
             <view fb>
-              张硕
+              {{ data.artisanName }}
             </view>
             <view w-12rpx h-12rpx round style="background-color: #FE502E;" />
             <view color-white tc px-8rpx py-4rpx lh-24rpx bg-FE502E>
-              到店服务
+              {{ data.storeServiceTypeDesc }}
             </view>
           </view>
         </view>
@@ -42,13 +49,13 @@
           :src="`${IMG_BASE}/icon-people.png`"
         />
         <view fb>
-          王乐乐
+          {{ data.storeCustomerName }}
         </view>
         <view w-10rpx h-10rpx round ma style="background-color: #000;" />
-        <view>13952768882</view>
+        <view>{{ data.phone }}</view>
       </view>
       <view class="btn btn1">
-        待服务
+        {{ data.bookingStatusDesc }}
       </view>
     </view>
   </view>

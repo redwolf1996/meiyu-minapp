@@ -5,6 +5,7 @@ style:
 </route>
 
 <script lang="ts" setup>
+import dayjs from 'dayjs'
 // #ifdef MP-WEIXIN
 import { getMenuButtonInfo } from '@/utils/index'
 // #endif
@@ -14,7 +15,9 @@ import type { DashBoardData } from './types'
 const toast = useToast()
 const menuButtonWidth = ref(0)
 const userInfo = useUserStore()?.userInfo
+const storeInfo = userInfo?.storeList?.[0]
 const info = ref<DashBoardData>()
+const isOvertime = ref(false)
 
 onShow(() => {
   initStore()
@@ -27,6 +30,13 @@ onShow(() => {
 async function getInfo() {
   const res = await request.get<DashBoardData>(`/business/workbench/${storeId}`)
   info.value = res.data
+
+  // 判断是否过期
+  const today = dayjs()
+  const expTime = dayjs(info.value.orgExpiresTime)
+  if (today.isAfter(expTime)) {
+    isOvertime.value = true
+  }
 }
 
 // 店铺初始化
@@ -61,6 +71,8 @@ function toAddCustomer() {
   uni.navigateTo({ url: '/pagesA/customer/add' })
 }
 function toAddBooking() {
+  bookStime.value = ''
+  checkedServs.value = []
   uni.navigateTo({ url: '/pagesA/book/add' })
 }
 function toCashing() {
@@ -90,7 +102,7 @@ function toMsg() {
       <template #title>
         <view flex flex-ac flex-bt :style="{ width: `calc(100% - ${menuButtonWidth}px)` }">
           <view px-24rpx>
-            美婷美甲美睫
+            {{ storeInfo?.storeName || '--' }}
           </view>
           <view flex flex-y flex-cc pr-20rpx pr @click="toMsg()">
             <wd-img
@@ -120,7 +132,7 @@ function toMsg() {
           本月实收(元)
         </view>
         <view fb font-size-64rpx mt-12px>
-          26237.23
+          {{ info?.currentMonthIncome }}
         </view>
         <view flex mt-20px gap-40px>
           <view wp-33.3333>
@@ -128,7 +140,7 @@ function toMsg() {
               今日实收
             </view>
             <view f16 mt-12rpx>
-              777
+              {{ info?.currentDayIncome }}
             </view>
           </view>
           <view wp-33.3333>
@@ -136,7 +148,7 @@ function toMsg() {
               本月消耗金额
             </view>
             <view f16 mt-12rpx>
-              123
+              {{ info?.currentMonthDisburse }}
             </view>
           </view>
           <view wp-33.3333>
@@ -144,7 +156,7 @@ function toMsg() {
               本月开卡充值
             </view>
             <view f16 mt-12rpx>
-              3233
+              {{ info?.currentMonthCardIncome }}
             </view>
           </view>
         </view>
@@ -174,7 +186,7 @@ function toMsg() {
         </view>
         <view wp-25>
           <view fb f18>
-            0
+            {{ info?.customerCount }}
           </view>
           <view f12 color-646466 mt-2px>
             普通客户
@@ -182,7 +194,7 @@ function toMsg() {
         </view>
         <view wp-25>
           <view fb f18>
-            0
+            {{ info?.vipCustomerCount }}
           </view>
           <view f12 color-646466 mt-2px>
             VIP
@@ -190,7 +202,7 @@ function toMsg() {
         </view>
         <view wp-25>
           <view fb f18>
-            0
+            {{ info?.currentMonthBooking }}
           </view>
           <view f12 color-646466 mt-2px>
             本月预约
@@ -198,7 +210,7 @@ function toMsg() {
         </view>
         <view wp-25>
           <view fb f18>
-            0
+            {{ info?.waitCount }}
           </view>
           <view f12 color-646466 mt-2px>
             待服务
@@ -208,18 +220,19 @@ function toMsg() {
 
       <view mt-30px>
         <view class="title">
-          今日预约(4)
+          今日预约({{ info?.todayBookingList?.length ?? 0 }})
         </view>
         <view>
-          <scroll-view :scrollX="true" style="white-space: nowrap;">
-            <DashboardCard />
-            <DashboardCard />
-            <DashboardCard />
+          <scroll-view v-if="info?.todayBookingList?.length" :scrollX="true" style="white-space: nowrap;">
+            <DashboardCard v-for="(item, index) in info?.todayBookingList" :key="`sdk-${index}`" :data="item" />
           </scroll-view>
+          <view v-else tc c-#A7A8AC py20rpx>
+            暂无预约
+          </view>
         </view>
       </view>
 
-      <view mt-30px class="renew" flex flex-bt flex-ac gap-24rpx>
+      <view v-if="isOvertime" mt-30px class="renew" flex flex-bt flex-ac gap-24rpx>
         <wd-img
           :width="23"
           :height="23"
@@ -230,7 +243,7 @@ function toMsg() {
             服务已到期
           </view>
           <view f10>
-            您的服务已于2024年10月6日到期，历史数据仍可正常查询，请尽快续费以享受完整服务。
+            您的服务已于{{ dayjs(info?.orgExpiresTime).format('YYYY年MM月DD日') }}到期，历史数据仍可正常查询，请尽快续费以享受完整服务。
           </view>
         </view>
         <view class="renew-btn" @click="toRenew()">
@@ -374,5 +387,8 @@ function toMsg() {
   width: 100%;
   left: 0;
   right: 0;
+}
+:deep(.wd-status-tip__text) {
+  margin: 0 !important;
 }
 </style>

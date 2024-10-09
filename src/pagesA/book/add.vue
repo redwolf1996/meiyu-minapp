@@ -10,7 +10,6 @@ import type { ListStaff } from '../staff/types'
 import type { BookForm, Service } from './types'
 
 const form = ref()
-const value = ref()
 const columns = ref<SelItem[]>([
   {
     label: '到店',
@@ -83,7 +82,7 @@ function clickItem(item: ListStaff) {
   })
   item.active = !item.active
   if (item.active) {
-    model.artisanId = item.staffId
+    model.artisanId = item.storeStaffId
     artName.value = item.userName
   }
 }
@@ -162,7 +161,7 @@ async function save() {
         suffix-icon="arrow-right"
         :rules="[{ required: true, message: '请填写联系人' }]"
       />
-      <wd-picker v-model="value" :rules="[{ required: true, message: '请选择服务方式' }]" label="服务方式" align-right :columns="columns" />
+      <wd-picker v-model="model.storeServiceType" :rules="[{ required: true, message: '请选择服务方式' }]" label="服务方式" align-right :columns="columns" />
     </wd-cell-group>
     <MyCellGroup :py="0">
       <MyCell label="手艺人" required noBorder borderTop @myclick="toSelectStaff()">
