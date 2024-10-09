@@ -94,7 +94,7 @@ function toOrder() {
       </view> -->
       <view mt-10px f12 c-818181>
         预约时间：<text c-232220>
-          2022
+          {{ bookDetail?.startTime ?? '--' }}
         </text>
       </view>
       <!-- <view mt-10px f12 c-818181>
@@ -139,7 +139,7 @@ function toOrder() {
         </text>
       </view>
       <view f14 c-1E1E1E mt-40rpx mb-20rpx>
-        元素美容美甲店
+        {{ bookDetail?.storeName }}
       </view>
       <view flex flex-ac gap-12px>
         <wd-img
@@ -197,9 +197,9 @@ function toOrder() {
       <button class="my-btn cancel" @click="cancelDetail()">
         取消
       </button>
-      <button class="my-btn complete" @click="toEdit()">
+      <!-- <button class="my-btn complete" @click="toEdit()">
         修改
-      </button>
+      </button> -->
       <button class="my-btn complete" @click="toOrder()">
         查看订单
       </button>
