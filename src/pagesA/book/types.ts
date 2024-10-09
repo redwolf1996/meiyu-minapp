@@ -102,7 +102,14 @@ export interface BookDetail {
    * 地址
    */
   customerAddress: string
+  /**
+   * 客户id
+   */
   customerId: number
+  /**
+   * 卡数量
+   */
+  customerCardC: number
   /**
    * 备注
    */
@@ -135,6 +142,19 @@ export interface BookDetail {
    * 门店名
    */
   storeName: string
+  /**
+   * 服务类型：1到店 2上门
+   */
+  storeServiceType: number
+  storeServiceTypeDesc: string
+  /**
+   * 预约状态：1待服务 2服务中 3已完成 4已取消
+   */
+  bookingStatus: number
+  /**
+   * 预约单的订单号
+   */
+  orderId: number
   [property: string]: any
 }
 

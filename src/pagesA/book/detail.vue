@@ -19,9 +19,9 @@ function cancelDetail() {
   uni.navigateBack()
 }
 
-function toEdit() {
-  uni.navigateTo({ url: `/pagesA/book/add?id=${bookingId.value}` })
-}
+// function toEdit() {
+//   uni.navigateTo({ url: `/pagesA/book/add?id=${bookingId.value}` })
+// }
 
 function toOrder() {
   uni.navigateTo({ url: `/pagesA/order/detail?id=${bookingId.value}` })
@@ -68,7 +68,7 @@ function toOrder() {
                 会员卡
               </text>
               <text c-00BB00>
-                2张
+                {{ bookDetail?.customerCardC }}张
               </text>
             </view>
           </view>
