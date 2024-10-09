@@ -75,6 +75,10 @@ function toAddBooking() {
   checkedServs.value = []
   uni.navigateTo({ url: '/pagesA/book/add' })
 }
+function toBookDetail(item) {
+  const bookingId = item.bookingId
+  uni.navigateTo({ url: `/pagesA/book/detail?id=${bookingId}` })
+}
 function toCashing() {
   uni.navigateTo({ url: '/pagesA/billing/index' })
 }
@@ -224,7 +228,7 @@ function toMsg() {
         </view>
         <view>
           <scroll-view v-if="info?.todayBookingList?.length" :scrollX="true" style="white-space: nowrap;">
-            <DashboardCard v-for="(item, index) in info?.todayBookingList" :key="`sdk-${index}`" :data="item" />
+            <DashboardCard v-for="(item, index) in info?.todayBookingList" :key="`sdk-${index}`" :data="item" @myclick="toBookDetail(item)" />
           </scroll-view>
           <view v-else tc c-#A7A8AC py20rpx>
             暂无预约
@@ -296,7 +300,7 @@ function toMsg() {
         </view>
       </view>
 
-      <view h-100px />
+      <view h-30px />
     </view>
   </view>
 

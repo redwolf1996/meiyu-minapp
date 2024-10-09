@@ -4,12 +4,13 @@ import type { TodayBookingList } from '@/pagesA/tabs/types'
 const props = defineProps<{
   data?: TodayBookingList // 今日预约列表
 }>()
+const emits = defineEmits(['myclick'])
 const data = props.data
 const img = data.serviceList?.[0].serviceCoverImg
 </script>
 
 <template>
-  <view class="card-item">
+  <view class="card-item" @click="emits('myclick', $event)">
     <view flex flex-bt>
       <view flex gap-14px>
         <wd-img
