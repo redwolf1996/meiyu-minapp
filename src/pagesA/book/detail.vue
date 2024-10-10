@@ -9,22 +9,41 @@ import type { BookDetail } from './types'
 
 const bookDetail = ref<BookDetail>()
 const bookingId = ref(0)
-onLoad(async (options) => {
-  bookingId.value = options?.id
+onLoad((options) => {
+  bookingId.value = Number(options?.id)
+})
+
+onShow(async () => {
   const res = await request.get<BookDetail>(`/business/booking/${bookingId.value}`)
   bookDetail.value = res.data
 })
 
-function cancelDetail() {
-  uni.navigateBack()
+async function cancelBooking() {
+  await request.put<any>('/business/booking/status', { id: bookingId.value, status: 4 })
+  uni.showToast({
+    title: '已取消预约',
+    icon: 'none',
+  })
+  setTimeout(() => {
+    uni.navigateBack()
+  }, 1000)
 }
-
-// function toEdit() {
-//   uni.navigateTo({ url: `/pagesA/book/add?id=${bookingId.value}` })
-// }
 
 function toOrder() {
   uni.navigateTo({ url: `/pagesA/order/detail?id=${bookingId.value}` })
+}
+
+async function toEditTime() {
+  bookStime.value = ''
+  bookDetailInfo.value = {
+    bookingId: bookingId.value,
+    ...bookDetail.value,
+  }
+  uni.navigateTo({ url: `/pagesA/book/time` })
+}
+
+function toEditArt() {
+
 }
 </script>
 
@@ -94,38 +113,45 @@ function toOrder() {
       </view> -->
       <view mt-10px f12 c-818181>
         预约时间：<text c-232220>
-          {{ bookDetail?.startTime ?? '--' }}
+          {{ fdt(bookDetail?.startTime) }}
+        </text>
+        <text theme-color @click="toEditTime()">
+          &nbsp;&nbsp;修改
         </text>
       </view>
-      <!-- <view mt-10px f12 c-818181>
+      <view mt-10px f12 c-818181>
         预约人：<text c-232220>
-          2022
+          {{ bookDetail?.storeCustomerName ?? '--' }}
         </text>
       </view>
       <view mt-10px f12 c-818181>
         手机号：<text c-232220>
-          2022
+          {{ bookDetail?.storeCustomerPhone ?? '--' }}
         </text>
-      </view> -->
+      </view>
       <view mt-10px f12 c-818181>
         手艺人：<text c-232220>
-          {{ bookDetail?.artisanName ?? '未分配' }}
+          {{ bookDetail?.artisanName || '未分配' }}
+        </text>
+        <text theme-color @click="toEditArt()">
+          &nbsp;&nbsp;修改
         </text>
       </view>
       <view mt-10px f12 c-818181>
         备注：<text c-232220>
-          {{ bookDetail?.notes }}
+          {{ bookDetail?.notes ?? '--' }}
         </text>
       </view>
       <view mt-10px f12 c-818181>
         地址：<text c-232220>
-          {{ bookDetail?.customerAddress }}
+          {{ bookDetail?.customerAddress ?? '--' }}
         </text>
       </view>
-      <view style="height: 1px;background-color: #E6E6E6" wp-100 mt10px />
+      <!-- TODO 等做客户端的时候放上核销码 -->
+      <!-- <view style="height: 1px;background-color: #E6E6E6" wp-100 mt10px />
       <view f14 tc mt-10px>
         核销码&#12288;1780012312312
-      </view>
+      </view> -->
     </view>
     <view bg-white px-34rpx py-40rpx mt-16px>
       <view flex flex-ac gap-20rpx>
@@ -141,28 +167,30 @@ function toOrder() {
       <view f14 c-1E1E1E mt-40rpx mb-20rpx>
         {{ bookDetail?.storeName }}
       </view>
-      <view flex flex-ac gap-12px>
-        <wd-img
-          :width="72"
-          :height="72"
-          radius="10"
-          :src="`${IMG_BASE}/cat.png`"
-        />
-        <view flex-1 flex flex-y flex-bt h-72px>
-          <view>
-            <view c-3B3D3D f14>
-              面部清洁补水
+      <view flex flex-y gap-10px>
+        <view v-for="(item, index) in bookDetail?.bookingService" :key="`asd-${index}`" flex flex-ac gap-12px>
+          <wd-img
+            :width="72"
+            :height="72"
+            radius="10"
+            :src="item?.serviceCoverImg"
+          />
+          <view flex-1 flex flex-y flex-bt h-72px>
+            <view>
+              <view c-3B3D3D f14>
+                {{ item?.serviceName }}
+              </view>
+              <view c-7C7C7C fs-22 mt-8rpx>
+                服务时长：{{ item.duration }}分钟
+              </view>
             </view>
-            <view c-7C7C7C fs-22 mt-8rpx>
-              服务时长：60分钟
-            </view>
-          </view>
-          <view flex flex-ac flex-bt>
-            <view c-FF1919 f18 lh-18px>
-              ¥198
-            </view>
-            <view c-7C7C7C f12 lh-12px>
-              x1
+            <view flex flex-ac flex-bt>
+              <view c-FF1919 f18 lh-18px>
+                ¥{{ item.amount }}
+              </view>
+              <view c-7C7C7C f12 lh-12px>
+                x{{ item.count }}
+              </view>
             </view>
           </view>
         </view>
@@ -181,8 +209,15 @@ function toOrder() {
             服务记录
           </text>
         </view>
-        <view class="my-status-tag to-service">
-          待服务
+        <view
+          class="my-status-tag" :class="{
+            'to-service': bookDetail?.bookingStatus === 1,
+            'in-service': bookDetail?.bookingStatus === 2,
+            'end-service': bookDetail?.bookingStatus === 3,
+            'cancel-service': bookDetail?.bookingStatus === 4,
+          }"
+        >
+          {{ bookDetail?.bookingStatusDesc }}
         </view>
       </view>
       <view class="h-20px" />
@@ -194,12 +229,9 @@ function toOrder() {
     </view>
 
     <view flex flex-cc mt-16px px-60rpx gap10px>
-      <button class="my-btn cancel" @click="cancelDetail()">
+      <button class="my-btn cancel" @click="cancelBooking()">
         取消
       </button>
-      <!-- <button class="my-btn complete" @click="toEdit()">
-        修改
-      </button> -->
       <button class="my-btn complete" @click="toOrder()">
         查看订单
       </button>

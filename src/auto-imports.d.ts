@@ -21,6 +21,7 @@ declare global {
   const WeekMap: typeof import('./utils/consts')['WeekMap']
   const asyncComputed: typeof import('@vueuse/core')['asyncComputed']
   const autoResetRef: typeof import('@vueuse/core')['autoResetRef']
+  const bookDetailInfo: typeof import('./stores/book')['bookDetailInfo']
   const bookInfo: typeof import('./stores/book-info')['bookInfo']
   const bookStime: typeof import('./stores/book')['bookStime']
   const calculateEndTime: typeof import('./utils/index')['calculateEndTime']
@@ -52,6 +53,7 @@ declare global {
   const effectScope: typeof import('vue')['effectScope']
   const extendRef: typeof import('@vueuse/core')['extendRef']
   const fd: typeof import('./utils/index')['fd']
+  const fdt: typeof import('./utils/index')['fdt']
   const formatDay: typeof import('./utils/index')['formatDay']
   const func_add: typeof import('./utils/math')['func_add']
   const func_div: typeof import('./utils/math')['func_div']
@@ -387,6 +389,7 @@ declare module 'vue' {
     readonly TimesCardTypeMap: UnwrapRef<typeof import('./utils/consts')['TimesCardTypeMap']>
     readonly VipLevelMap: UnwrapRef<typeof import('./utils/consts')['VipLevelMap']>
     readonly WeekMap: UnwrapRef<typeof import('./utils/consts')['WeekMap']>
+    readonly bookDetailInfo: UnwrapRef<typeof import('./stores/book')['bookDetailInfo']>
     readonly bookInfo: UnwrapRef<typeof import('./stores/book-info')['bookInfo']>
     readonly bookStime: UnwrapRef<typeof import('./stores/book')['bookStime']>
     readonly calculateEndTime: UnwrapRef<typeof import('./utils/index')['calculateEndTime']>
@@ -400,6 +403,7 @@ declare module 'vue' {
     readonly defineComponent: UnwrapRef<typeof import('vue')['defineComponent']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
     readonly fd: UnwrapRef<typeof import('./utils/index')['fd']>
+    readonly fdt: UnwrapRef<typeof import('./utils/index')['fdt']>
     readonly func_add: UnwrapRef<typeof import('./utils/math')['func_add']>
     readonly func_div: UnwrapRef<typeof import('./utils/math')['func_div']>
     readonly func_mul: UnwrapRef<typeof import('./utils/math')['func_mul']>

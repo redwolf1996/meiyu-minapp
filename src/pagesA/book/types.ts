@@ -155,6 +155,10 @@ export interface BookDetail {
    * 预约单的订单号
    */
   orderId: number
+  /**
+   * 预约单号
+   */
+  bookingId?: number
   [property: string]: any
 }
 
@@ -209,5 +213,29 @@ export interface BookingService {
    * 服务id
    */
   storeServiceId: number
+  [property: string]: any
+}
+
+export interface TimeOccupy {
+  /**
+   * 手艺人id
+   */
+  artisanId: number
+  /**
+   * 日期
+   */
+  currentDate: string
+  /**
+   * 时长
+   */
+  duration: number
+  /**
+   * 占用时段格子index
+   */
+  employIndex: number[]
+  /**
+   * 开始时间
+   */
+  startTime: string
   [property: string]: any
 }

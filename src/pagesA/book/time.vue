@@ -6,14 +6,41 @@ style:
 
 <script lang="ts" setup>
 import type { Times } from '@/utils'
+import type { TimeOccupy } from './types'
+import { flatten } from 'lodash-es'
 
 const today = fd(+new Date())
 const day = ref(fd(+new Date()))
-const stime = ref('01:30')
-const duration = ref(40)
+const stime = ref('')
+const duration = ref(0)
 const etime = computed(() => calculateEndTime(stime.value, duration.value))
-const selectedTime = computed(() => `${day.value} ${stime.value}-${etime.value}`)
+const selectedTime = computed(() => {
+  if (!stime.value)
+    return ''
+  return `${day.value} ${stime.value}-${etime.value}`
+})
 const times = ref(get24HoursQuarter())
+
+onShow(async () => {
+  const params = {
+    storeId,
+    artisanId: bookDetailInfo.value.artisanId,
+    cDate: today,
+  }
+  const res = await request.get<TimeOccupy[]>('/business/booking-artisan', params)
+  const employIndexes = flatten(res.data.map(v => v.employIndex))
+  times.value = times.value.map((v, i) => {
+    return {
+      selected: v.selected,
+      disabled: !!employIndexes.includes(i),
+      value: v.value,
+    }
+  })
+})
+
+onHide(() => {
+  bookDetailInfo.value = null
+})
 
 function calendarChange(e) {
   day.value = e.fulldate

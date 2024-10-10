@@ -99,15 +99,23 @@ export const isH5 = uniPlatform === 'web'
 export function fd(tag: number | string, smb: string = '-') {
   if (!tag)
     return '--'
-  return dayjs(Number(tag)).format(`YYYY${smb}MM${smb}DD`)
+  return dayjs(tag).format(`YYYY${smb}MM${smb}DD`)
+}
+
+export function fdt(tag: number | string, smb: string = '-') {
+  if (!tag)
+    return '--'
+  return dayjs(tag).format(`YYYY${smb}MM${smb}DD HH:mm`)
 }
 
 export function calculateEndTime(startTime: string, duration: number | string) {
+  if (!startTime || !duration)
+    return ''
   // 将开始时间转换为Date对象
   const startDate = new Date(`1970-01-01T${startTime}:00`)
 
   // 将持续时长（分钟）转换为毫秒
-  const durationMs = duration * 60 * 1000
+  const durationMs = Number(duration) * 60 * 1000
 
   // 计算结束时间
   const endDate = new Date(startDate.getTime() + durationMs)
