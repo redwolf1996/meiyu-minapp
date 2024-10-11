@@ -4,7 +4,10 @@ style:
 </route>
 
 <script lang="ts" setup>
-
+function quit() {
+  useUserStore().clearUserInfo()
+  uni.redirectTo({ url: '/pagesA/login/index' })
+}
 </script>
 
 <template>
@@ -15,7 +18,7 @@ style:
       <span f14 c-3B3D3D>当前版本3.1.2</span>
     </MyCell>
   </MyCellGroup>
-  <view class="exit" tc bg-white h-48px lh-48px mt-10px c-3B3D3D>
+  <view class="exit" tc bg-white h-48px lh-48px mt-10px c-3B3D3D @click="quit()">
     退出登录
   </view>
 </template>
