@@ -6,6 +6,9 @@ style:
 </route>
 
 <script lang="ts" setup>
+import type { BookCount, Books } from './types'
+import dayjs from 'dayjs'
+
 const windowHeight = uni.getWindowInfo().windowHeight
 const screenWidth = uni.getWindowInfo().screenWidth
 const instance = getCurrentInstance()
@@ -47,6 +50,10 @@ onLoad((options) => {
   const tab = options?.tab
   if (tab === 'list')
     mode.value = 1
+
+  const today = dayjs().format('YYYY-MM-DD')
+  getBookDashboard(today)
+  getBookCount(today)
 })
 
 onMounted(async () => {
@@ -68,6 +75,20 @@ const sideHeight = computed(() => {
 const restHeight = computed(() => {
   return windowHeight - sideHeight.value
 })
+
+async function getBookDashboard(cDate: string) {
+  const res = await request.get<Books>('/business/booking-dashboard', {
+    storeId,
+    cDate,
+  })
+}
+
+async function getBookCount(cDate: string) {
+  const res = await request.get<BookCount>('/business/booking-count', {
+    storeId,
+    cDate,
+  })
+}
 
 function handleClickList() {
 }

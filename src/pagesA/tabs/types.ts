@@ -239,3 +239,105 @@ export interface CusList {
    */
   storeCustomerId: number
 }
+
+export interface Books {
+  artisanId?: number
+  /**
+   * 手艺人名
+   */
+  artisanName?: string
+  /**
+   * 预约列表
+   */
+  bookingList?: BookingList[]
+}
+
+export interface BookingList {
+  /**
+   * 预约id
+   */
+  bookingId?: number
+  /**
+   * 预约状态，1待服务，服务中2，已完成3，已取消4
+   */
+  bookingStatus?: number
+  /**
+   * 状态名
+   */
+  bookingStatusDesc?: string
+  /**
+   * 时长
+   */
+  duration?: number
+  /**
+   * 客户手机号
+   */
+  phone?: string
+  /**
+   * 服务列表
+   */
+  serviceList?: ServiceList[]
+  /**
+   * 开始时间
+   */
+  startTime?: string
+  /**
+   * 时长展示
+   */
+  startTimeStr?: string
+  /**
+   * 门店客户id
+   */
+  storeCustomerId?: number
+  /**
+   * 门店客户名
+   */
+  storeCustomerName?: string
+  /**
+   * 服务方式
+   */
+  storeServiceType?: number
+  /**
+   * 到店、上门
+   */
+  storeServiceTypeDesc?: string
+  [property: string]: any
+}
+
+export interface ServiceList {
+  /**
+   * 服务时长分钟
+   */
+  duration: number
+  /**
+   * 服务头图
+   */
+  serviceCoverImg: string
+  /**
+   * 服务名
+   */
+  serviceName: string
+  /**
+   * 服务id
+   */
+  storeServiceId: number
+}
+
+export interface BookCount {
+  /**
+   * 全部预约数
+   */
+  all: number
+  /**
+   * 已完成
+   */
+  finish: number
+  /**
+   * 服务中
+   */
+  underway: number
+  /**
+   * 待服务
+   */
+  wait: number
+}
