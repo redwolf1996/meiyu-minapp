@@ -92,6 +92,10 @@ function toAddServ() {
 }
 
 function toSelServTime() {
+  bookInfo.value = {
+    ...model,
+    artName: artName.value,
+  }
   uni.navigateTo({ url: '/pagesA/book/time' })
 }
 

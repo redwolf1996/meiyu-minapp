@@ -22,9 +22,13 @@ const selectedTime = computed(() => {
 const times = ref(get24HoursQuarter())
 
 onShow(async () => {
+  init()
+})
+
+async function init() {
   const params = {
     storeId,
-    artisanId: bookDetailInfo.value.artisanId,
+    artisanId: bookInfo.value.artisanId,
     cDate: today,
   }
   const res = await request.get<TimeOccupy[]>('/business/booking-artisan', params)
@@ -36,10 +40,15 @@ onShow(async () => {
       value: v.value,
     }
   })
-})
+  let tmpDuration = 0
+  bookInfo.value.service.map((v) => {
+    tmpDuration += v.duration * v.goodsCount
+  })
+  duration.value = tmpDuration
+}
 
 onHide(() => {
-  bookDetailInfo.value = null
+  bookInfo.value = null
 })
 
 function calendarChange(e) {
@@ -69,16 +78,16 @@ function save() {
     :fold="true" type="week" :insert="true" @change="calendarChange"
   />
   <view py20px bg-white mt12px px50rpx>
-    <view tc>
-      <text>体验套餐</text>
+    <view v-for="(itm, idx) in bookInfo.service" :key="`info-${idx}`" tc>
+      <text>{{ itm.name }}</text>
       <text c-1A66FF pl10px>
-        40分钟
+        {{ itm.duration }}分钟&nbsp;x{{ itm.goodsCount }}
       </text>
     </view>
     <view f14 tc mt5px mb50rpx>
       <text>手艺人</text>
       <text c-1A66FF pl10px>
-        王乐乐
+        {{ bookInfo.artName ?? '未分配' }}
       </text>
     </view>
     <view class="my-table">

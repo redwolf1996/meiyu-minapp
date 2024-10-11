@@ -1,4 +1,3 @@
-import type { ServiceList } from '@/pagesA/types'
 import type { Service } from '../pagesA/book/types'
 
 interface BookTempInfo {
@@ -52,4 +51,4 @@ interface BookTempInfo {
   artName: string
 }
 
-export const bookInfo = ref<BookTempInfo>({})
+export const bookInfo = ref<BookTempInfo>(null)
