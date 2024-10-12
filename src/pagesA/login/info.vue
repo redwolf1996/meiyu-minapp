@@ -29,7 +29,7 @@ function handleSubmit() {
         const res = await request.post<{ token: string, isRegister: number }>(url, form)
         const { token, isRegister } = res.data
         useUserStore().setUserInfo({ token, isRegister })
-        uni.reLaunch({ url: '/pagesA/tabs/dashboard/index' })
+        uni.redirectTo({ url: '/pagesA/tabs/tab-business-dashboard' })
       }
     })
     .catch((error) => {
