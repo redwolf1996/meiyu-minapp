@@ -1,22 +1,56 @@
 <route lang="yaml">
-layout: common
 style:
   navigationBarTitleText: 预约详情
 </route>
 
 <script lang="ts" setup>
+import type { ListStaff } from '../staff/types'
 import type { BookDetail } from './types'
 
 const bookDetail = ref<BookDetail>()
 const bookingId = ref(0)
+const visibleStaff = ref(false)
+const listStaff = ref<ListStaff[]>([])
+const curStaff = ref<ListStaff>(null)
+
 onLoad((options) => {
   bookingId.value = Number(options?.id)
+  getStaff()
 })
 
 onShow(async () => {
   const res = await request.get<BookDetail>(`/business/booking/${bookingId.value}`)
   bookDetail.value = res.data
 })
+
+async function getStaff() {
+  const res = await request.get<ListRes<ListStaff>>('/business/staff', { storeId })
+  listStaff.value = res.data.list.map((v) => {
+    return {
+      ...v,
+      active: false,
+    }
+  })
+}
+
+function clickItem(item: ListStaff) {
+  listStaff.value.forEach((val: any) => {
+    val.active = false
+  })
+  item.active = !item.active
+  if (item.active) {
+    curStaff.value = item
+  }
+}
+
+function confirmStaff() {
+  bookDetail.value.artisanName = curStaff.value?.userName
+  request.put<any>('/business/booking/artisan', {
+    id: bookingId.value,
+    artisanId: curStaff.value?.storeStaffId,
+  })
+  visibleStaff.value = false
+}
 
 async function cancelBooking() {
   await request.put<any>('/business/booking/status', { id: bookingId.value, status: 4 })
@@ -35,19 +69,59 @@ function toOrder() {
 
 async function toEditTime() {
   bookStime.value = ''
-  bookDetailInfo.value = {
-    bookingId: bookingId.value,
-    ...bookDetail.value,
-  }
+  bookInfo.value.artisanId = bookDetail.value.artisanId
+  bookInfo.value.artName = bookDetail.value.artisanName
+  bookInfo.value.service = bookDetail.value.bookingService.map((v) => {
+    return {
+      name: v.serviceName,
+      duration: v.duration,
+      goodsCount: v.count,
+    }
+  })
+
   uni.navigateTo({ url: `/pagesA/book/time` })
 }
 
 function toEditArt() {
-
+  visibleStaff.value = true
 }
 </script>
 
 <template>
+  <page-meta :page-style="`overflow:${visibleStaff ? 'hidden' : 'visible'};`" />
+  <wd-popup
+    v-model="visibleStaff" :z-index="999" :lock-scroll="true" :safe-area-inset-bottom="false" position="right"
+    custom-style="height: 100vh;width: 80%;background: #F9F9F9;"
+  >
+    <view tc f14 ps top-0 bg-white h-40px lh-40px>
+      选择手艺人
+    </view>
+    <view mt10px>
+      <view v-for="(item, index) in listStaff" :key="`sd-${index}`" flex flex-ac flex-bt bg-white px40rpx py20rpx style="border-bottom: 1px solid #DFDFDF" @click="clickItem(item)">
+        <view>
+          <view f14 c-313131>
+            {{ item.userName }}
+          </view>
+          <view f12 c-777777 mt6px>
+            {{ item.phone }}
+          </view>
+        </view>
+        <wd-img
+          v-if="item.active"
+          :width="26"
+          :height="19"
+          :src="`${IMG_BASE}/icon-correct.png`"
+        />
+      </view>
+      <view h50px />
+    </view>
+
+    <view tc flex flex-cc color-white bg-white bottom-0 ps py-20px @click="confirmStaff()">
+      <MyButton width="500rpx">
+        确定
+      </MyButton>
+    </view>
+  </wd-popup>
   <view p-32rpx>
     <view bg-white px-34rpx py-40rpx>
       <view flex flex-ac gap-20rpx>
@@ -113,7 +187,7 @@ function toEditArt() {
       </view> -->
       <view mt-10px f12 c-818181>
         预约时间：<text c-232220>
-          {{ fdt(bookDetail?.startTime) }}
+          {{ bookStime || fdt(bookDetail?.startTime) }}
         </text>
         <text theme-color @click="toEditTime()">
           &nbsp;&nbsp;修改
@@ -237,6 +311,7 @@ function toEditArt() {
       </button>
     </view>
   </view>
+  <wu-safe-bottom />
 </template>
 
 <style lang='scss' scoped></style>

@@ -20,7 +20,7 @@ interface BookTempInfo {
   /**
    * 预约的服务列表
    */
-  service: Service[]
+  service: any[]
   /**
    * 服务开始时间，yyyy-MM-dd HH:mm:ss
    */
@@ -51,4 +51,8 @@ interface BookTempInfo {
   artName: string
 }
 
-export const bookInfo = ref<BookTempInfo>(null)
+export const bookInfo = ref<Partial<BookTempInfo>>({
+  artisanId: null,
+  artName: null,
+  service: [],
+})

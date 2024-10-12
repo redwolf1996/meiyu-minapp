@@ -109,7 +109,6 @@
         {
           "path": "book/detail",
           "type": "page",
-          "layout": "common",
           "style": {
             "navigationBarTitleText": "预约详情"
           }

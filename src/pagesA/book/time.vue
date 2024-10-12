@@ -28,7 +28,7 @@ onShow(async () => {
 async function init() {
   const params = {
     storeId,
-    artisanId: bookInfo.value.artisanId,
+    artisanId: bookInfo.value?.artisanId,
     cDate: today,
   }
   const res = await request.get<TimeOccupy[]>('/business/booking-artisan', params)
@@ -41,9 +41,11 @@ async function init() {
     }
   })
   let tmpDuration = 0
+
   bookInfo.value.service.map((v) => {
     tmpDuration += v.duration * v.goodsCount
   })
+
   duration.value = tmpDuration
 }
 
@@ -78,10 +80,10 @@ function save() {
     :fold="true" type="week" :insert="true" @change="calendarChange"
   />
   <view py20px bg-white mt12px px50rpx>
-    <view v-for="(itm, idx) in bookInfo.service" :key="`info-${idx}`" tc>
+    <view v-for="(itm, idx) in bookInfo?.service" :key="`info-${idx}`" tc>
       <text>{{ itm.name }}</text>
       <text c-1A66FF pl10px>
-        {{ itm.duration }}分钟&nbsp;x{{ itm.goodsCount }}
+        {{ itm.duration }}分钟&nbsp;x{{ itm?.goodsCount }}
       </text>
     </view>
     <view f14 tc mt5px mb50rpx>
