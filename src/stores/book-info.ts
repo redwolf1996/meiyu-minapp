@@ -49,9 +49,11 @@ interface BookTempInfo {
    * 手艺人
    */
   artName: string
+  bookId?: number
 }
 
 export const bookInfo = ref<Partial<BookTempInfo>>({
+  bookId: null,
   artisanId: null,
   artName: null,
   service: [],

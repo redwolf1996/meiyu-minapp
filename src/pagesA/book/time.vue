@@ -67,8 +67,14 @@ function clickItem(item: Times) {
   stime.value = item.value
 }
 
-function save() {
+async function save() {
   bookStime.value = `${day.value} ${stime.value}`
+  if (bookInfo.value?.bookId) {
+    await request.put('/business/booking/time', {
+      id: bookInfo.value.bookId,
+      stime: `${bookStime.value}:00`,
+    })
+  }
   uni.navigateBack()
 }
 </script>

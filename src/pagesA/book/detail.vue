@@ -69,6 +69,7 @@ function toOrder() {
 
 async function toEditTime() {
   bookStime.value = ''
+  bookInfo.value.bookId = bookDetail.value.bookingId
   bookInfo.value.artisanId = bookDetail.value.artisanId
   bookInfo.value.artName = bookDetail.value.artisanName
   bookInfo.value.service = bookDetail.value.bookingService.map((v) => {
