@@ -92,6 +92,12 @@ function toAddServ() {
 }
 
 function toSelServTime() {
+  if (!checkedServs.value.length) {
+    return uni.showToast({
+      title: '请先选择服务',
+      icon: 'none',
+    })
+  }
   bookInfo.value = {
     ...model,
     artName: artName.value,
@@ -168,22 +174,12 @@ async function save() {
       <wd-picker v-model="model.storeServiceType" :rules="[{ required: true, message: '请选择服务方式' }]" label="服务方式" align-right :columns="columns" />
     </wd-cell-group>
     <MyCellGroup :py="0">
-      <MyCell label="手艺人" required noBorder borderTop @myclick="toSelectStaff()">
+      <MyCell label="手艺人" noBorder borderTop @myclick="toSelectStaff()">
         <text v-if="!artName" font-size-14px c-B6BDBD pr5px>
           请选择手艺人
         </text>
         <text v-else font-size-14px pr5px>
           {{ artName }}
-        </text>
-      </MyCell>
-    </MyCellGroup>
-    <MyCellGroup :py="0">
-      <MyCell label="服务时间" required noBorder borderTop @myclick="toSelServTime()">
-        <text v-if="!bookStime" font-size-14px c-B6BDBD pr4px>
-          请选择服务时间
-        </text>
-        <text v-else font-size-14px pr5px>
-          {{ bookStime }}
         </text>
       </MyCell>
     </MyCellGroup>
@@ -223,6 +219,18 @@ async function save() {
     <view style="border-top: 1px solid #EBEEF1" bg-white f14 c-1A66FF tc h40px lh-40px @click="toAddServ()">
       +&nbsp;添加服务
     </view>
+
+    <MyCellGroup :py="0">
+      <MyCell label="服务时间" required noBorder borderTop @myclick="toSelServTime()">
+        <text v-if="!bookStime" font-size-14px c-B6BDBD pr4px>
+          请选择服务时间
+        </text>
+        <text v-else font-size-14px pr5px>
+          {{ bookStime }}
+        </text>
+      </MyCell>
+    </MyCellGroup>
+
     <view px20px py12px font-size-14px>
       备注
     </view>
