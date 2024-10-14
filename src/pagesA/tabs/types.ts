@@ -238,6 +238,10 @@ export interface CusList {
    * 门店客户id
    */
   storeCustomerId: number
+  /**
+   * 是否被选中
+   */
+  active?: boolean
 }
 
 export interface Books {

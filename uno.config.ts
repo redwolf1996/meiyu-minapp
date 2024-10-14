@@ -24,6 +24,7 @@ export default defineConfig({
           'custom-input-class',
           'active-color',
           'inline',
+          'border',
         ],
       },
     }),
@@ -49,6 +50,7 @@ export default defineConfig({
         'custom-input-class',
         'active-color',
         'inline',
+        'border',
       ],
     }),
   ],
@@ -116,6 +118,7 @@ export default defineConfig({
     ['flex-ac', { 'align-items': 'center' }],
     ['flex-cc', { 'justify-content': 'center', 'align-items': 'center' }],
     ['abs-cc', { position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }],
+    ['x-center', { left: '50%', transform: 'translateX(-50%)' }],
     ['ellipsis', { 'overflow': 'hidden', 'white-space': 'nowrap', 'text-overflow': 'ellipsis', 'word-break': 'break-all' }],
   ],
 })

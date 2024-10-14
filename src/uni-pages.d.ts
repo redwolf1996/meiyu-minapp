@@ -30,6 +30,7 @@ interface NavigateToOptions {
        "/pagesA/card/share" |
        "/pagesA/customer/add" |
        "/pagesA/customer/detail" |
+       "/pagesA/customer/list" |
        "/pagesA/dashboard/cash-apply" |
        "/pagesA/dashboard/cashing-records" |
        "/pagesA/dashboard/income-detail" |

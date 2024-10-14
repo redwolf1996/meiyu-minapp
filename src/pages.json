@@ -214,6 +214,14 @@
           }
         },
         {
+          "path": "customer/list",
+          "type": "page",
+          "layout": "common",
+          "style": {
+            "navigationBarTitleText": "选择或添加客户"
+          }
+        },
+        {
           "path": "dashboard/cash-apply",
           "type": "page",
           "style": {
