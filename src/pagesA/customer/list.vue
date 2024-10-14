@@ -6,6 +6,7 @@ style:
 
 <script lang="ts" setup>
 import type { CusList } from '../tabs/types'
+import { cloneDeep } from 'lodash-es'
 
 const reqParams = reactive({
   storeId,
@@ -13,6 +14,7 @@ const reqParams = reactive({
   pageSize: 10000,
 })
 const list = ref<CusList[]>([])
+const tmpList = ref<CusList[]>([])
 const tmpCurCustomer = ref<CusList>(null)
 
 function clickItem(item: CusList) {
@@ -38,6 +40,7 @@ onLoad(async () => {
       active: false,
     }
   })
+  tmpList.value = cloneDeep(list.value)
 })
 
 function cancelSearch() {
@@ -45,9 +48,14 @@ function cancelSearch() {
 }
 
 function changeSearch({ value }) {
-  list.value = list.value.filter((v) => {
-    return v.phone.includes(value) || v.name.includes(value)
-  })
+  if (value === null || value === '' || value === undefined) {
+    list.value = tmpList.value
+  }
+  else {
+    list.value = tmpList.value.filter((v) => {
+      return !!(v.phone.includes(value) || v.name.includes(value))
+    })
+  }
 }
 </script>
 
