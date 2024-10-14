@@ -101,3 +101,8 @@ button::after{
   height: 0 !important;
   transform: scale(0) !important;
 }
+
+.search-fixed {
+  position: sticky;
+  top: 0;
+}

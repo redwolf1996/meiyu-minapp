@@ -65,8 +65,8 @@ function toAddCus() {
 </script>
 
 <template>
-  <view mt10px>
-    <wd-search placeholder="请输入客户姓名或手机号" cancel-txt="取消" @cancel="cancelSearch()" @change="changeSearch" />
+  <view>
+    <wd-search custom-class="search-fixed" placeholder="请输入客户姓名或手机号" cancel-txt="取消" @cancel="cancelSearch()" @change="changeSearch" />
     <view tc mt10px mb10px font-size-14px theme-color @click="toAddCus()">
       +&nbsp;&nbsp;添加客户
     </view>
@@ -98,4 +98,6 @@ function toAddCus() {
   </view>
 </template>
 
-<style lang='scss' scoped></style>
+<style lang='scss' scoped>
+
+</style>
