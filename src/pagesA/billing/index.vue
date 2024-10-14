@@ -4,20 +4,23 @@ style:
 </route>
 
 <script lang="ts" setup>
-import type { ListStaff } from '../staff/types'
 import type { BillModel } from './types'
 
 const form = reactive<BillModel>({
   storeId,
   orderTime: null,
-  storeCustomerId: 7,
+  storeCustomerId: computed(() => curCustomer.value?.customerId ?? null),
   adviserId: 6,
   notes: '',
   amount: 0,
   payType: 1,
   billingGoods: [],
 })
-const cusName = ref('')
+const cusName = computed(() => curCustomer.value?.name ?? '')
+
+onShow(() => {
+  console.log(curCustomer.value)
+})
 
 function handleConfirm({ value }) {
   console.log(value)
@@ -26,6 +29,10 @@ function handleConfirm({ value }) {
 function toSelCus() {
   uni.navigateTo({ url: '/pagesA/customer/list' })
 }
+
+function save() {
+  console.log(curCustomer.value)
+}
 </script>
 
 <template>
@@ -33,7 +40,7 @@ function toSelCus() {
     <wd-calendar v-model="form.orderTime" label="开单时间" type="datetime" @confirm="handleConfirm" />
     <wd-cell title="客户" is-link @click="toSelCus()">
       <view>
-        <text v-if="!form.customerCardId" c-#B6BDBD>
+        <text v-if="!cusName" c-#B6BDBD>
           请选择或添加
         </text>
         <text v-else>

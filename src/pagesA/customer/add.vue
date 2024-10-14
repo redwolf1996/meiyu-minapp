@@ -32,15 +32,20 @@ const form = reactive<Customer>({
   notes: '',
 })
 const staffList = ref<{ label: string, value: number }[]>([])
+const from = ref('tab')
+
+onLoad((options) => {
+  from.value = options?.from ?? 'tab'
+  setStaffList()
+})
 
 async function save() {
   await request.post<null>('/business/store-customer', form)
-  uni.reLaunch({ url: '/pagesA/tabs/tab-business-customer' })
+  if (from.value === 'tab')
+    uni.reLaunch({ url: '/pagesA/tabs/tab-business-customer' })
+  else
+    uni.navigateBack()
 }
-
-onLoad(() => {
-  setStaffList()
-})
 
 async function setStaffList() {
   const res = await api.getStaffList({ storeId })

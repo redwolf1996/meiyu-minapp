@@ -29,10 +29,11 @@ function clickItem(item: CusList) {
 
 function save() {
   curCustomer.value = tmpCurCustomer.value
+  console.log(curCustomer.value)
   uni.navigateBack()
 }
 
-onLoad(async () => {
+onShow(async () => {
   const res = await request.get<ListRes<CusList>>('/business/store-customer', reqParams)
   list.value = res.data.list.map((v) => {
     return {
@@ -57,12 +58,16 @@ function changeSearch({ value }) {
     })
   }
 }
+
+function toAddCus() {
+  uni.navigateTo({ url: '/pagesA/customer/add?from=list' })
+}
 </script>
 
 <template>
   <view mt10px>
     <wd-search placeholder="请输入客户姓名或手机号" cancel-txt="取消" @cancel="cancelSearch()" @change="changeSearch" />
-    <view tc mt10px mb10px font-size-14px theme-color>
+    <view tc mt10px mb10px font-size-14px theme-color @click="toAddCus()">
       +&nbsp;&nbsp;添加客户
     </view>
     <view v-for="(item, index) in list" :key="`sd-${index}`" flex flex-ac flex-bt bg-white px40rpx py20rpx style="border-bottom: 1px solid #DFDFDF" @click="clickItem(item)">

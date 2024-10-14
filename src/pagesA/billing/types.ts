@@ -30,7 +30,7 @@ export interface BillModel {
   /**
    * 门店客户id
    */
-  storeCustomerId: number
+  storeCustomerId: ComputedRef<number>
   /**
    * 当前门店id
    */
