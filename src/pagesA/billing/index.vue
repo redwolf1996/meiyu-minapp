@@ -33,6 +33,10 @@ function toSelCus() {
 function save() {
   console.log(curCustomer.value)
 }
+
+function toAddProdServs() {
+  uni.navigateTo({ url: '/pagesA/prod-servs' })
+}
 </script>
 
 <template>
@@ -58,7 +62,7 @@ function save() {
     <view f12 mt12px mb8px pl20px c-#3D3D3D>
       消费项目
     </view>
-    <view bg-white py10px px20px pr h65px>
+    <view bg-white py10px px20px pr h65px @click="toAddProdServs()">
       <view class="sp abs-cc">
         +&nbsp;添加商品
       </view>
