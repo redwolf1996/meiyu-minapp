@@ -53,7 +53,40 @@ function save() {
       </template>
     </wd-cell>
   </wd-cell-group>
+
+  <view>
+    <view f12 mt12px mb8px pl20px c-#3D3D3D>
+      消费项目
+    </view>
+    <view bg-white py10px px20px pr h65px>
+      <view class="sp abs-cc">
+        +&nbsp;添加商品
+      </view>
+    </view>
+  </view>
+
+  <view h-24rpx />
+  <view f12 mt12px mb8px pl20px c-#3D3D3D>
+    订单备注
+  </view>
+  <view bg-white px-40rpx py-24rpx>
+    <wd-textarea
+      placeholderStyle="font-size: 14px;color:#C9CDD4;"
+      placeholder="备注客户信息" :maxlength="200" auto-height clearable show-word-limit
+    />
+  </view>
+
   <wu-safe-bottom />
 </template>
 
-<style lang='scss' scoped></style>
+<style lang='scss' scoped>
+.sp {
+  height: 45px;
+  line-height: 45px;
+  text-align: center;
+  color: #1a66ff;
+  border: 1px solid #1a66ff;
+  border-radius: 4px;
+  width: 80%;
+}
+</style>

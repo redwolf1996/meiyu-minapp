@@ -57,7 +57,7 @@ const arr = ref<Step[]>([
 onShow(() => {
   const userInfo = useUserStore()?.userInfo
   const org = userInfo.orgInfo
-  if (org.staffCountStatus && org.productCountStatus && !org.serviceCountStatus) { // 如果新手引导未完成
+  if (org.staffCountStatus && org.productCountStatus && org.serviceCountStatus) { // 如果新手完成了
     uni.navigateTo({ url: '/pagesA/init/steps/done' })
   }
 })
