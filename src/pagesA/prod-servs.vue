@@ -59,6 +59,8 @@ function handleChange2({ value }) {
   })
 }
 
+const tmpCheckedServs = ref<ServiceList[]>([])
+const tmpCheckedProds = ref<ProductList[]>([])
 function changeCheck() {
   let servs = []
   let prods = []
@@ -71,11 +73,13 @@ function changeCheck() {
   servs = flatten(toRaw(servs))
   prods = flatten(toRaw(prods))
 
-  checkedServs.value = servs.filter(v => v.checked)
-  checkedProds.value = prods.filter(v => v.checked)
+  tmpCheckedServs.value = servs.filter(v => v.checked)
+  tmpCheckedProds.value = prods.filter(v => v.checked)
 }
 
 function confirm() {
+  checkedServs.value = tmpCheckedServs.value
+  checkedProds.value = tmpCheckedProds.value
   uni.navigateBack()
 }
 </script>

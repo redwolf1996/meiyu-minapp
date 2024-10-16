@@ -62,6 +62,7 @@ export default defineConfig({
     [/^wp-([.\d]+)$/, ([_, num]) => ({ width: `${num}%` })],
     [/^hp-([.\d]+)$/, ([_, num]) => ({ height: `${num}%` })],
     [/^fs-([.\d]+)$/, ([_, num]) => ({ 'font-size': `${num}rpx` })],
+    [/^fs-([.\d]+)px$/, ([_, num]) => ({ 'font-size': `${num}px` })],
     [/^color-([0-9a-zA-Z]+)$/, ([_, hex]) => ({ color: `#${hex}` })],
     [/^c-([0-9a-zA-Z]+)$/, ([_, hex]) => ({ color: `#${hex}` })],
     [/^bg-([0-9a-zA-Z]+)$/, ([_, hex]) => ({ 'background-color': `#${hex}` })],
