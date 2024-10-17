@@ -6,7 +6,9 @@ style:
 <script lang="ts" setup>
 import type { CardForm } from './types'
 
-const value = ref<number>(1)
+const userInfo = useUserStore()?.userInfo
+const storeInfo = userInfo?.storeList?.[0]
+const expiresType = ref(0) // 0不限次 1限次
 const form = reactive<CardForm>({
   storeId,
   type: 1,
@@ -14,12 +16,13 @@ const form = reactive<CardForm>({
   gift: 0,
   name: '',
   categoryId: computed(() => curClassify.value.id),
-  price: 200,
+  price: 0,
   info: [
   ],
   expires: null,
   isShow: 1,
-  desc: '卡',
+  desc: computed(() => richData.value.content),
+  countLimit: 0,
 })
 const sources: any = [
   {
@@ -55,6 +58,28 @@ const sources2: any = [
 const catName = computed(() => curClassify.value.name)
 // const prodServs = ref([])
 
+onLoad(() => {
+  resetRichData()
+})
+
+onShow(() => {
+  setProdServs()
+})
+
+function setProdServs() {
+  const arr: any = [...checkedProds.value, ...checkedServs.value]
+  form.info = arr.map((v) => {
+    return {
+      equity: 0,
+      productId: v.prodType === 1 ? v.id : null,
+      serviceId: v.prodType === 2 ? v.id : null,
+      name: v.name,
+      price: v.price,
+      price2: v.price2,
+    }
+  })
+}
+
 function toCats() {
   curClassify.value.type = CatType.Card
   curClassify.value.multiple = false
@@ -71,7 +96,11 @@ function toRichEdit() {
   uni.navigateTo({ url: '/pagesA/rich-edit' })
 }
 
-function save() {
+async function save() {
+  form.expires = expiresType.value ? form.expires : 0
+  await request.post<any>('/business/card', form)
+  await uni.showToast({ title: '创建成功' })
+  uni.navigateBack()
 }
 </script>
 
@@ -115,50 +144,44 @@ function save() {
     </wd-cell-group>
 
     <view h-24rpx />
-    <wd-cell-group :border="true">
-      <MyCellGroup>
-        <MyCell noBorder borderTop required label="购卡权益" @myclick="toProdServs()">
-          <text v-if="!catName" f14 c-bfbfbf pr-5px>
-            请选择商品或服务
-          </text>
-          <text v-else f14>
-            {{ catName }}
-          </text>
-        </MyCell>
-      </MyCellGroup>
-      <view flex flex-bt flex-ac f13 h-96rpx px-40rpx>
-        <view>
-          <text>产品名称1asdasdasdas</text>
-          <text theme-red>
-            ¥499
-          </text>
-        </view>
-        <view flex flex-cc>
-          <wd-input v-model="value" type="number" w-55px pr13px center no-border />
-          <text>次</text>
-        </view>
-      </view>
+    <wd-cell-group :border="false">
+      <wd-cell title="购卡权益" is-link @click="toProdServs()">
+        <text c-#B6BDBD>
+          选择商品
+        </text>
+      </wd-cell>
 
-      <view flex flex-bt flex-ac f13 h-96rpx px-40rpx>
+      <!-- 有限次卡 -->
+      <view v-for="(item, index) in form.info" :key="`ck-${index}`" flex flex-bt flex-ac f13 h-96rpx px20px>
         <view>
-          <text>产品名称1asdasdasdas</text>
-          <text theme-red>
-            ¥499
+          <text>{{ item.name }}</text>
+          <text theme-red pl5px>
+            ¥{{ item.price2 }}
           </text>
         </view>
-        <view flex flex-cc>
-          <view>
-            不限次
-          </view>
-        </view>
+        <wd-input-number v-if="form.secondType === 1" v-model="item.equity" />
+        <text v-else>
+          不限次
+        </text>
       </view>
     </wd-cell-group>
 
+    <wd-cell v-if="form.secondType === 3" title="已选服务共用次数" is-link>
+      <wd-input
+        v-model="form.countLimit"
+        label="售价"
+        type="number"
+        placeholder="请输入"
+        suffix-icon="arrow-right"
+      />
+    </wd-cell>
+
+    <view h-24rpx />
     <view bg-white p-40rpx>
       <view class="form-item-title required">
         <text>卡有效期</text>
       </view>
-      <wd-radio-group v-model="form.expires" checkedColor="#fa4350">
+      <wd-radio-group v-model="expiresType" checkedColor="#fa4350">
         <wd-radio :value="1">
           永久有效
         </wd-radio>
@@ -166,7 +189,7 @@ function save() {
           <view flex flex-ac f14 style="color:rgba(0, 0, 0, 0.85)">
             <text>购买后</text>
             <input
-              v-model="form.gift"
+              v-model="form.expires"
               px-10rpx w-42px tc theme-red type="number" placeholder="请输入"
               placeholder-style="color:#b6bdbd;padding-top: 1px;font-size:14px;"
             >
@@ -195,21 +218,20 @@ function save() {
         >
           <view flex flex-bt flex-ac>
             <view f14 style="color: rgba(255, 255, 255, 0.7);">
-              硕园美甲美睫
+              {{ storeInfo?.storeName || '--' }}
             </view>
             <view text-20rpx w-88rpx h-40rpx lh-40rpx tc style="background: #FF5F00;border-radius: 32rpx;">
               次卡
             </view>
           </view>
           <view text-48rpx pt-56rpx>
-            7980面部精雕30次
+            {{ form.name }}
           </view>
           <view f14>
-            30次
+            <!-- 30次 -->
           </view>
-          <view f12 flex flex-bt pt-52rpx>
-            <view>购买后180天内有效</view>
-            <view>09/25&#12288;</view>
+          <view v-if="form.expires !== null" f12 pt-52rpx>
+            {{ form.expires === 0 ? '永久有效' : `购买后${form.expires}天内有效` }}
           </view>
         </view>
       </view>

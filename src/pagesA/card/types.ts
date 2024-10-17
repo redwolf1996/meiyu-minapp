@@ -66,7 +66,7 @@ export interface CardForm {
   /**
    * 描述
    */
-  desc: string
+  desc: ComputedRef<string>
   /**
    * 有效期天数，0不限
    */
@@ -103,6 +103,10 @@ export interface CardForm {
    * 分类，1->次卡，2->充值卡，3->折扣卡
    */
   type: number
+  /**
+   * 已选服务共用次数
+   */
+  countLimit?:number
 }
 
 export interface Info {
@@ -118,4 +122,10 @@ export interface Info {
    * 服务id
    */
   serviceId?: number
+  /**
+   * 产品或服务名称
+   */
+  name?: string
+  price?: number
+  price2?: number
 }

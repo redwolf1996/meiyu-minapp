@@ -39,6 +39,7 @@ export interface ProductList {
   storeId: number
   unit: string
   checked?: boolean
+  prodType?: 1 // 1产品 2服务
   [property: string]: any
 }
 
@@ -60,6 +61,7 @@ export interface ServiceList {
   serviceColor: string
   storeId: number
   checked?: boolean
+  prodType?: 2 // 1产品 2服务
   [property: string]: any
 }
 

@@ -78,8 +78,18 @@ function changeCheck() {
 }
 
 function confirm() {
-  checkedServs.value = tmpCheckedServs.value
-  checkedProds.value = tmpCheckedProds.value
+  checkedServs.value = tmpCheckedServs.value.map((v) => {
+    return {
+      ...v,
+      prodType: 2,
+    }
+  })
+  checkedProds.value = tmpCheckedProds.value.map((v) => {
+    return {
+      ...v,
+      prodType: 1,
+    }
+  })
   uni.navigateBack()
 }
 </script>
