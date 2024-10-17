@@ -48,7 +48,6 @@ function selCard(e) {
 }
 
 function selAction(e) {
-  console.log(e)
 }
 </script>
 

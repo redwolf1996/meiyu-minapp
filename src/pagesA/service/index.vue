@@ -8,7 +8,6 @@ const searchText = ref('')
 const showAddList = ref(false)
 
 watch(() => searchText.value, (newVal) => {
-  console.log(newVal)
 })
 
 function toAdd() {

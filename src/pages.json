@@ -80,6 +80,7 @@
         {
           "path": "billing/index",
           "type": "page",
+          "layout": false,
           "style": {
             "navigationBarTitleText": "开单"
           }

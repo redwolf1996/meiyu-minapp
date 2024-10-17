@@ -99,7 +99,6 @@ function selectMode(m: number) {
 }
 
 function calendarChange() {
-  // console.log(e)
 }
 
 function showSearch() {

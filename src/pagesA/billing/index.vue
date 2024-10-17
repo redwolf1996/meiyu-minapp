@@ -1,11 +1,15 @@
 <route lang="yaml">
+layout: false
 style:
   navigationBarTitleText: 开单
 </route>
 
 <script lang="ts" setup>
+import type { ListStaff } from '../staff/types'
 import type { BillModel } from './types'
 
+const listStaff = ref<ListStaff[]>([])
+const visibleStaff = ref(false)
 const form = reactive<BillModel>({
   storeId,
   orderTime: null,
@@ -19,11 +23,39 @@ const form = reactive<BillModel>({
 const cusName = computed(() => curCustomer.value?.name ?? '')
 
 onShow(() => {
-  console.log(curCustomer.value)
+  getStaff()
 })
 
+function saveStaff() {
+  visibleStaff.value = false
+}
+
+function clickItem(item: ListStaff) {
+  listStaff.value.forEach((val: any) => {
+    val.active = false
+  })
+  item.active = !item.active
+  if (item.active) {
+    // model.artisanId = item.storeStaffId
+    // artName.value = item.userName
+  }
+}
+
+async function getStaff() {
+  const res = await request.get<ListRes<ListStaff>>('/business/staff', { storeId })
+  listStaff.value = res.data.list.map((v) => {
+    return {
+      ...v,
+      active: false,
+    }
+  })
+}
+
 function handleConfirm({ value }) {
-  console.log(value)
+}
+
+function toSelectStaff() {
+  visibleStaff.value = true
 }
 
 function toSelCus() {
@@ -41,6 +73,40 @@ const value = ref()
 </script>
 
 <template>
+  <page-meta :page-style="`overflow:${visibleStaff ? 'hidden' : 'visible'};`" />
+  <wd-popup
+    v-model="visibleStaff" :z-index="12000" :lock-scroll="true" :safe-area-inset-bottom="false" position="right"
+    custom-style="height: 100vh;width: 80%;background: #F9F9F9;"
+  >
+    <view tc f14 ps top-0 bg-white h-40px lh-40px>
+      选择手艺人
+    </view>
+    <view mt10px>
+      <view v-for="(item, index) in listStaff" :key="`sd-${index}`" flex flex-ac flex-bt bg-white px40rpx py20rpx style="border-bottom: 1px solid #DFDFDF" @click="clickItem(item)">
+        <view>
+          <view f14 c-313131>
+            {{ item.userName }}
+          </view>
+          <view f12 c-777777 mt6px>
+            {{ item.phone }}
+          </view>
+        </view>
+        <wd-img
+          v-if="item.active"
+          :width="26"
+          :height="19"
+          :src="`${IMG_BASE}/icon-correct.png`"
+        />
+      </view>
+      <view h50px />
+    </view>
+
+    <view tc flex flex-cc color-white bg-white bottom-0 ps py-20px @click="saveStaff()">
+      <MyButton width="500rpx">
+        确定
+      </MyButton>
+    </view>
+  </wd-popup>
   <wd-cell-group :border="true">
     <wd-calendar v-model="form.orderTime" label="开单时间" type="datetime" @confirm="handleConfirm" />
     <wd-cell title="客户" is-link @click="toSelCus()">
@@ -84,7 +150,7 @@ const value = ref()
       </view>
       <view>
         <wd-cell-group :border="true">
-          <wd-cell title="手艺人" is-link @click="toSelCus()">
+          <wd-cell title="手艺人" is-link @click="toSelectStaff()">
             <view>
               <text v-if="!cusName" c-#B6BDBD>
                 请选择或添加
@@ -112,7 +178,7 @@ const value = ref()
           </wd-cell>
         </wd-cell-group>
       </view>
-      <view flex flex-xr p10px pr20px>
+      <view flex flex-xr pt10px pr20px>
         <text>
           <text>小计：</text>
           <text c-#FA483C>

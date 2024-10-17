@@ -64,7 +64,6 @@ function toAddCustomer() {
 }
 
 function search({ value }) {
-  console.log(value)
 }
 function handleChangeVip() {
 

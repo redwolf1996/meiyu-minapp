@@ -49,4 +49,3 @@ function dealSortedArr() {
 }
 
 dealSortedArr()
-console.log(finalArr)

@@ -29,7 +29,6 @@ function clickItem(item: CusList) {
 
 function save() {
   curCustomer.value = tmpCurCustomer.value
-  console.log(curCustomer.value)
   uni.navigateBack()
 }
 

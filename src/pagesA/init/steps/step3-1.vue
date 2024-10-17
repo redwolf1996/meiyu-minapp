@@ -65,7 +65,6 @@ function setContents(e) {
 }
 
 function test() {
-  console.log('xxx')
 }
 
 function handleClose() {}

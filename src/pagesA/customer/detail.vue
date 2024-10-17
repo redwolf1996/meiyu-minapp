@@ -39,7 +39,6 @@ onLoad((options) => {
 async function getInfo(storeCustomerId: number) {
   await request.get<CustomerDetail>(`/business/store-customer/${storeCustomerId}`)
 }
-console.log(isH5)
 </script>
 
 <template>

@@ -72,7 +72,6 @@ function toRichEdit() {
 }
 
 function save() {
-  console.log(form)
 }
 </script>
 

@@ -69,7 +69,6 @@ function clickItem(item: Times) {
 
 async function save() {
   bookStime.value = `${day.value} ${stime.value}`
-  console.log(bookInfo.value)
   if (bookInfo.value?.bookId) {
     await request.put('/business/booking/time', {
       id: bookInfo.value.bookId,
