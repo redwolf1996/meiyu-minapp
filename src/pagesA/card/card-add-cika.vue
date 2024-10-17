@@ -105,7 +105,7 @@ async function save() {
 </script>
 
 <template>
-  <wd-form ref="form" :model="form">
+  <wd-form :model="form">
     <view bg-white p-40rpx>
       <view class="form-item-title required">
         <text>选择次卡类型</text>
@@ -121,7 +121,6 @@ async function save() {
         label="卡名称"
         placeholder="请输入"
         suffix-icon="arrow-right"
-        :rules="[{ required: true, message: '请填写卡名称' }]"
       />
       <MyCellGroup>
         <MyCell noBorder borderTop required label="卡分类" @myclick="toCats()">
@@ -151,7 +150,6 @@ async function save() {
         </text>
       </wd-cell>
 
-      <!-- 有限次卡 -->
       <view v-for="(item, index) in form.info" :key="`ck-${index}`" flex flex-bt flex-ac f13 h-96rpx px20px>
         <view>
           <text>{{ item.name }}</text>
@@ -159,22 +157,24 @@ async function save() {
             ¥{{ item.price2 }}
           </text>
         </view>
+        <!-- 有限次卡 -->
         <wd-input-number v-if="form.secondType === 1" v-model="item.equity" />
+        <!-- 不限次卡、通卡 -->
         <text v-else>
           不限次
         </text>
       </view>
-    </wd-cell-group>
 
-    <wd-cell v-if="form.secondType === 3" title="已选服务共用次数" is-link>
+      <!-- 通卡 -->
       <wd-input
+        v-if="form.secondType === 3"
         v-model="form.countLimit"
-        label="售价"
+        label="已选服务共用次数"
         type="number"
         placeholder="请输入"
         suffix-icon="arrow-right"
       />
-    </wd-cell>
+    </wd-cell-group>
 
     <view h-24rpx />
     <view bg-white p-40rpx>
