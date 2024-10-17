@@ -19,7 +19,7 @@ const form = reactive<CardForm>({
   price: 0,
   info: [
   ],
-  expires: null,
+  expires: 0,
   isShow: 1,
   desc: computed(() => richData.value.content),
   countLimit: 0,
@@ -182,10 +182,10 @@ async function save() {
         <text>卡有效期</text>
       </view>
       <wd-radio-group v-model="expiresType" checkedColor="#fa4350">
-        <wd-radio :value="1">
+        <wd-radio :value="0">
           永久有效
         </wd-radio>
-        <wd-radio :value="2">
+        <wd-radio :value="1">
           <view flex flex-ac f14 style="color:rgba(0, 0, 0, 0.85)">
             <text>购买后</text>
             <input

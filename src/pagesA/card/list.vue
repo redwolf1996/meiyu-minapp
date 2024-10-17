@@ -35,8 +35,12 @@ async function queryList(page: number, pageSize: number) {
 }
 
 function search() {
-  paging.value.reload()
+  paging.value?.reload()
 }
+
+onShow(() => {
+  search()
+})
 
 function selCard(e) {
   if (e.index === 0)
