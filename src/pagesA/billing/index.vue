@@ -52,6 +52,7 @@ async function getStaff() {
 }
 
 function handleConfirm({ value }) {
+  console.log(value)
 }
 
 function toSelectStaff() {

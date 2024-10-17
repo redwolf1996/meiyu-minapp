@@ -59,7 +59,7 @@ const catName = computed(() => curClassify.value.name)
 // const prodServs = ref([])
 
 onLoad(() => {
-  resetRichData()
+  // resetRichData()
 })
 
 onShow(() => {
@@ -91,8 +91,8 @@ function toProdServs() { // 商品和服务列表页面
 }
 
 function toRichEdit() {
-  richData.value.key = 'product'
-  richData.value.title = '添加产品说明'
+  richData.value.key = 'card'
+  richData.value.title = '添加卡项说明'
   uni.navigateTo({ url: '/pagesA/rich-edit' })
 }
 
