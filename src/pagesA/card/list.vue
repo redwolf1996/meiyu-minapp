@@ -4,7 +4,7 @@ style:
 </route>
 
 <script lang="ts" setup>
-import type { List, ListModel, ReqModel } from './types'
+import type { List, ReqModel } from './types'
 
 const visCardType = ref(false)
 const visAction = ref(false)
@@ -30,7 +30,7 @@ const dataList = ref<List[]>([])
 async function queryList(page: number, pageSize: number) {
   reqParams.pageNum = page
   reqParams.pageSize = pageSize
-  const res = await request.get<ListModel>('/business/card', reqParams)
+  const res = await request.get<ListRes<List>>('/business/card', reqParams)
   paging.value.complete(res.data.list)
 }
 
