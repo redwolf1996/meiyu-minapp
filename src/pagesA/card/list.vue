@@ -34,6 +34,7 @@ const paging = ref<ZPagingInstance<List> | null>(null)
 const dataList = ref<List[]>([])
 const curItem = ref<List>(null)
 const total = ref(0)
+const deleteDialogRef = ref()
 
 async function queryList(page: number, pageSize: number) {
   reqParams.pageNum = page
@@ -76,7 +77,7 @@ function selAction(e) {
   }
 
   if (e.index === 1) { // 删除
-
+    deleteDialogRef.value.open()
   }
 
   if (e.index === 2) { // 复制
@@ -87,6 +88,12 @@ function selAction(e) {
     if (curItem.value.type === 3) // 折扣卡
       uni.navigateTo({ url: `/pagesA/card/card-add-zhekouka?id=${curItem.value.id}&mode=copy` })
   }
+}
+
+async function dialogConfirm() { // 删除卡项
+  await request.delete<any>(`/business/card/${curItem.value.id}`)
+  search()
+  deleteDialogRef.value.close()
 }
 
 function showItemMenu(item: List) {
@@ -201,6 +208,15 @@ function showItemMenu(item: List) {
 
     <wd-action-sheet v-model="visCardType" :actions="cardList" @select="selCard" />
     <wd-action-sheet v-model="visAction" :actions="actionList" @select="selAction" />
+
+    <uni-popup ref="deleteDialogRef" type="dialog">
+      <uni-popup-dialog
+        type="warn"
+        cancelText="取消" confirmText="确定"
+        title="提示" content="删除后不可恢复，确定删除吗？"
+        @confirm="dialogConfirm"
+      />
+    </uni-popup>
   </z-paging>
 </template>
 
