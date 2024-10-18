@@ -182,7 +182,7 @@
           "path": "card/card-add-zhekouka",
           "type": "page",
           "style": {
-            "navigationBarTitleText": "添加折扣卡"
+            "navigationBarTitleText": "添加折扣"
           }
         },
         {
