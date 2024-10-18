@@ -5,6 +5,7 @@ style:
 
 <script lang="ts" setup>
 import type { CardForm } from './types'
+import { sumBy } from 'lodash-es'
 
 const userInfo = useUserStore()?.userInfo
 const storeInfo = userInfo?.storeList?.[0]
@@ -35,6 +36,7 @@ const form = ref<CardForm>({
   desc: computed(() => richData.value.content),
   countLimit: 0,
 })
+
 const sources2: any = [
   {
     label: '支持',
@@ -176,15 +178,17 @@ function changeEquity(val) {
             <view f14 style="color: rgba(255, 255, 255, 0.7);">
               {{ storeInfo?.storeName || '--' }}
             </view>
-            <view text-20rpx w-88rpx h-40rpx lh-40rpx tc style="background: #FF5F00;border-radius: 32rpx;">
+            <view text-20rpx w-88rpx h-40rpx lh-40rpx tc flex flex-cc style="background: transparent;border-radius: 32rpx;border: 1px solid #fff;color: #fff">
               折扣卡
             </view>
           </view>
           <view text-48rpx pt-56rpx>
             {{ form.name }}
           </view>
-          <view f14>
-            6折
+          <view v-if="form.info?.length" f14>
+            <text v-for="(item, index) in form.info" :key="`info-${index}`">
+              {{ item.equity }}折&nbsp;
+            </text>
           </view>
           <view f12 pt-52rpx>
             {{ expiresType === 0 ? '永久有效' : `购买后${form.expires}天内有效` }}

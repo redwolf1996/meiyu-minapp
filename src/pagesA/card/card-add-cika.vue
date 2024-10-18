@@ -4,6 +4,7 @@ style:
 </route>
 
 <script lang="ts" setup>
+import { sumBy } from 'lodash-es'
 import type { CardForm } from './types'
 
 const userInfo = useUserStore()?.userInfo
@@ -34,6 +35,10 @@ const form = ref<CardForm>({
   isShow: 1,
   desc: computed(() => richData.value.content),
   countLimit: 0,
+})
+const limits = computed(() => {
+  const arr: any = [...checkedProds.value, ...checkedServs.value]
+  return sumBy(arr, (v1: any) => v1.equity)
 })
 const sources: any = [
   {
@@ -67,29 +72,6 @@ const sources2: any = [
 ]
 
 const catName = computed(() => curClassify.value.name)
-// const prodServs = ref([])
-
-onLoad(() => {
-  // resetRichData()
-})
-
-// onShow(() => {
-//   setProdServs()
-// })
-
-// function setProdServs() {
-//   const arr: any = [...checkedProds.value, ...checkedServs.value]
-//   form.value.info = arr.map((v) => {
-//     return {
-//       equity: 0,
-//       productId: v.prodType === 1 ? v.id : null,
-//       serviceId: v.prodType === 2 ? v.id : null,
-//       name: v.name,
-//       price: v.price,
-//       price2: v.price2,
-//     }
-//   })
-// }
 
 function toCats() {
   curClassify.value.type = CatType.Card
@@ -237,7 +219,7 @@ function changeEquity(val) {
             <view f14 style="color: rgba(255, 255, 255, 0.7);">
               {{ storeInfo?.storeName || '--' }}
             </view>
-            <view text-20rpx w-88rpx h-40rpx lh-40rpx tc style="background: #FF5F00;border-radius: 32rpx;">
+            <view text-20rpx w-88rpx h-40rpx lh-40rpx tc flex flex-cc style="background: transparent;border-radius: 32rpx;border: 1px solid #fff;color: #fff">
               次卡
             </view>
           </view>
@@ -245,7 +227,7 @@ function changeEquity(val) {
             {{ form.name }}
           </view>
           <view f14>
-            <!-- 30次 -->
+            {{ limits }}次
           </view>
           <view f12 pt-52rpx>
             {{ expiresType === 0 ? '永久有效' : `购买后${form.expires}天内有效` }}

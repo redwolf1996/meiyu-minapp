@@ -184,15 +184,15 @@ function changeEquity(val) {
             <view f14 style="color: rgba(255, 255, 255, 0.7);">
               {{ storeInfo?.storeName || '--' }}
             </view>
-            <view text-20rpx w-88rpx h-40rpx lh-40rpx tc style="background: #FF5F00;border-radius: 32rpx;">
-              折扣卡
+            <view text-20rpx w-88rpx h-40rpx lh-40rpx tc flex flex-cc style="background: transparent;border-radius: 32rpx;border: 1px solid #fff;color: #fff">
+              充值卡
             </view>
           </view>
           <view text-48rpx pt-56rpx>
             {{ form.name }}
           </view>
-          <view f14>
-            充1000送200
+          <view v-if="form.price && form.gift" f14>
+            充{{ form.price }}送{{ form.gift }}
           </view>
           <view f12 pt-52rpx>
             {{ expiresType === 0 ? '永久有效' : `购买后${form.expires}天内有效` }}
