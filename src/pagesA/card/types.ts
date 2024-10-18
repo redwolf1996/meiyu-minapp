@@ -73,6 +73,10 @@ export interface List {
 
 export interface CardForm {
   /**
+   * ID 编辑和复制的时候必填
+   */
+  id?: number | string | null
+  /**
    * 分类
    */
   categoryId: ComputedRef<number | number[]> | null
@@ -91,7 +95,7 @@ export interface CardForm {
   /**
    * 卡项所对应的服务列表
    */
-  info: ComputedRef<Info[]> | null
+  info: Info[] | any
   /**
    * 是否网店销售，0否，1是
    */

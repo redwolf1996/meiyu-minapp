@@ -17,23 +17,29 @@ const form = ref<CardForm>({
   name: '',
   categoryId: computed(() => curClassify.value.id),
   price: 0,
-  info: computed(() => {
-    const arr: any = [...checkedProds.value, ...checkedServs.value]
-    return arr.map((v) => {
-      return {
-        equity: 10,
-        productId: v.prodType === 1 ? v.id : null,
-        serviceId: v.prodType === 2 ? v.id : null,
-        name: v.name,
-        price: v.price,
-        price2: v.price2,
-      }
-    })
+  info: computed({
+    get() {
+      const arr: any = [...checkedProds.value, ...checkedServs.value]
+      return arr.map((v) => {
+        return {
+          equity: 10,
+          productId: v.prodType === 1 ? v.id : null,
+          serviceId: v.prodType === 2 ? v.id : null,
+          name: v.name,
+          price: v.price,
+          price2: v.price2,
+        }
+      })
+    },
+    set(newVal) {
+      console.log(newVal)
+    },
   }),
   expires: 0,
   isShow: 1,
   desc: computed(() => richData.value.content),
   countLimit: 0,
+  id: null,
 })
 const sources2: any = [
   {
@@ -47,8 +53,47 @@ const sources2: any = [
     isActive: false,
   },
 ]
-
 const catName = computed(() => curClassify.value.name)
+
+type Mode = 'edit' | 'copy' | null
+const cardId = ref(0) // 修改和复制时候的id
+const mode = ref<Mode>(null) // 修改还是复制
+
+onLoad((options) => {
+  cardId.value = +options?.id
+  mode.value = options?.mode
+  if (cardId.value) {
+    if (mode.value === 'edit')
+      form.value.id = cardId.value
+    if (mode.value === 'copy')
+      form.value.id = null
+    setFormInfo()
+  }
+})
+
+async function setFormInfo() {
+  const res = await request.get<any>(`/business/card/${cardId.value}`)
+  const data = res.data
+  form.value.secondType = data.secondType
+  form.value.gift = data.gift
+  form.value.name = data.name
+  form.value.price = data.price
+  form.value.expires = data.expires
+  form.value.isShow = data.isShow
+  form.value.countLimit = data.countLimit
+  form.value.info = data.info.map((v) => {
+    return {
+      equity: v.equity,
+      productId: v.productId,
+      serviceId: v.serviceId,
+      name: v.productName || v.serviceName,
+      price: v.price,
+      price2: v.price2,
+    }
+  })
+  curClassify.value.id = data.categoryId
+  richData.value.content = data.desc
+}
 
 function toCats() {
   curClassify.value.type = CatType.Card
