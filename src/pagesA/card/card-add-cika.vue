@@ -275,11 +275,6 @@ function changeEquity(val) {
 .ipt {
   width: 100px !important;
 }
-// .wd-form {
-//   :deep(.wd-input__inner {
-//     text-align: left !important;
-//   }
-// }
 .end-time {
   display: inline-block;
   margin-left: 8px;

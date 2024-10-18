@@ -137,11 +137,15 @@ function selAction(e) {
                   不限次
                 </text>
               </template>
-              <template v-if="item.type === 2">
-                <span f12>{{ item.info?.[0].equity }}折</span>
-              </template>
               <template v-if="item.type === 3">
-                <span f12>赠送{{ item.gift }}</span>
+                <text v-for="(it, idx) in item.info" :key="`zk-${index}-${idx}`" f12>
+                  {{ it.equity }}折&nbsp;
+                </text>
+              </template>
+              <template v-if="item.type === 2">
+                <text f12>
+                  赠送{{ item.gift }}
+                </text>
               </template>
             </view>
             <wd-img
