@@ -32,6 +32,7 @@ const reqParams = reactive<ReqModel>({
 })
 const paging = ref<ZPagingInstance<List> | null>(null)
 const dataList = ref<List[]>([])
+const curItem = ref<List>(null)
 const total = ref(0)
 
 async function queryList(page: number, pageSize: number) {
@@ -55,7 +56,7 @@ onShow(() => {
   search()
 })
 
-function selCard(e) {
+function selCard(e) { // 添加会员卡
   if (e.index === 0)
     uni.navigateTo({ url: '/pagesA/card/card-add-cika' })
   if (e.index === 1)
@@ -65,7 +66,32 @@ function selCard(e) {
 }
 
 function selAction(e) {
-  console.log(e)
+  if (e.index === 0) { // 修改
+    if (curItem.value.type === 1) // 次卡
+      uni.navigateTo({ url: `/pagesA/card/card-add-cika?id=${curItem.value.id}&mode=edit` })
+    if (curItem.value.type === 2) // 充值卡
+      uni.navigateTo({ url: `/pagesA/card/card-add-chongzhika?id=${curItem.value.id}&mode=edit` })
+    if (curItem.value.type === 3) // 折扣卡
+      uni.navigateTo({ url: `/pagesA/card/card-add-zhekouka?id=${curItem.value.id}&mode=edit` })
+  }
+
+  if (e.index === 1) { // 删除
+
+  }
+
+  if (e.index === 2) { // 复制
+    if (curItem.value.type === 1) // 次卡
+      uni.navigateTo({ url: `/pagesA/card/card-add-cika?id=${curItem.value.id}&mode=copy` })
+    if (curItem.value.type === 2) // 充值卡
+      uni.navigateTo({ url: `/pagesA/card/card-add-chongzhika?id=${curItem.value.id}&mode=copy` })
+    if (curItem.value.type === 3) // 折扣卡
+      uni.navigateTo({ url: `/pagesA/card/card-add-zhekouka?id=${curItem.value.id}&mode=copy` })
+  }
+}
+
+function showItemMenu(item: List) {
+  curItem.value = item
+  visAction.value = true
 }
 </script>
 
@@ -152,7 +178,7 @@ function selAction(e) {
               :width="20"
               :height="20"
               :src="`${IMG_BASE}/icon-more.png`"
-              @click="visAction = true"
+              @click="showItemMenu(item)"
             />
           </view>
           <view fb f16>
