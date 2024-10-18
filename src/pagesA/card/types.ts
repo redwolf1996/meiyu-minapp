@@ -56,6 +56,19 @@ export interface List {
    * 类型，1->次卡，2->充值卡，3->折扣卡
    */
   type?: number
+  /**
+   * 有限次卡次数
+   */
+  avaTimes?: number
+  /**
+   * 不限次卡 次数上限
+   */
+  countLimit: number
+  /**
+   * 是否网店展示
+   */
+  isShow: boolean
+  info: Info[]
 }
 
 export interface CardForm {
@@ -78,7 +91,7 @@ export interface CardForm {
   /**
    * 卡项所对应的服务列表
    */
-  info: Info[] | null
+  info: ComputedRef<Info[]> | null
   /**
    * 是否网店销售，0否，1是
    */
@@ -106,14 +119,14 @@ export interface CardForm {
   /**
    * 已选服务共用次数
    */
-  countLimit?:number | null
+  countLimit?: number | null
 }
 
 export interface Info {
   /**
    * 次卡表示数量，折扣充值卡表示折扣1-100
    */
-  equity: number | null
+  equity?: number | null
   /**
    * 产品id，与服务id只能存在一个有值的
    */
@@ -128,4 +141,7 @@ export interface Info {
   name?: string | null
   price?: number | null
   price2?: number | null
+  serviceName?: string
+  productName?: string
+  cardId?: number
 }

@@ -5,6 +5,7 @@ style:
 
 <script lang="ts" setup>
 import type { List, ReqModel } from './types'
+import { sumBy } from 'lodash-es'
 
 const visCardType = ref(false)
 const visAction = ref(false)
@@ -18,6 +19,11 @@ const actionList = ref<any>([
   { name: '删除' },
   { name: '复制' },
 ])
+const cardImg = {
+  1: 'list-cika',
+  2: 'list-chongzhi',
+  3: 'list-zhekou',
+}
 const reqParams = reactive<ReqModel>({
   storeId,
   pageNum: 1,
@@ -26,12 +32,19 @@ const reqParams = reactive<ReqModel>({
 })
 const paging = ref<ZPagingInstance<List> | null>(null)
 const dataList = ref<List[]>([])
+const total = ref(0)
 
 async function queryList(page: number, pageSize: number) {
   reqParams.pageNum = page
   reqParams.pageSize = pageSize
   const res = await request.get<ListRes<List>>('/business/card', reqParams)
-  paging.value.complete(res.data.list)
+  total.value = res.data.total
+  paging.value.complete(res.data.list.map((v) => {
+    return {
+      ...v,
+      avaTimes: sumBy(v.info, v1 => v1.equity),
+    }
+  }))
 }
 
 function search() {
@@ -60,7 +73,7 @@ function selAction(e) {
   <z-paging
     ref="paging"
     v-model="dataList"
-    lower-threshold="5" auto-show-back-to-top :default-page-size="10"
+    lower-threshold="100" auto-show-back-to-top :default-page-size="10"
     @query="queryList"
   >
     <template #top>
@@ -70,11 +83,11 @@ function selAction(e) {
         <view class="title">
           <view flex flex-ac>
             <view class="bd-left" />
-            <div pl-10px>
+            <view pl-10px>
               卡项列表
-            </div>
+            </view>
             <span f14>
-              （共<span style="color:#1A66FF">10</span>项）
+              （共<span style="color:#1A66FF">{{ total }}</span>项）
             </span>
           </view>
           <view class="plus" @click="visCardType = true">
@@ -88,78 +101,72 @@ function selAction(e) {
       </view>
     </template>
 
+    <template #bottom>
+      <view class="h50px" />
+    </template>
+
     <view mx-14px p-16px bg-white rd-b-8px>
-      <div mt-12px flex flex-bt flex-ac gap-40rpx pb-10px style="border-bottom: 1px solid #EFEFEF;">
+      <view
+        v-for="(item, index) in dataList" :key="`card-${index}`"
+        mt-12px flex flex-bt flex-ac gap-40rpx
+        pb-10px style="border-bottom: 1px solid #EFEFEF;"
+      >
         <wd-img
           :width="100"
           :height="100"
           mode="widthFix"
           :radius="12"
-          :src="`${IMG_BASE}/detail/list-cika.png`"
+          :src="`${IMG_BASE}/detail/${cardImg[item.type]}.png`"
         />
-        <div flex flex-y flex-bt flex-1 h-108px>
-          <div flex flex-bt>
-            <div flex flex-ac gap-5px>
+        <view flex flex-y flex-bt flex-1 h-108px>
+          <view flex flex-bt>
+            <view flex flex-ac gap-5px>
               <wd-img
                 :width="16"
                 :height="16"
                 :src="`${IMG_BASE}/icon-star.png`"
               />
-              <span f12>80</span>
-            </div>
+              <template v-if="item.type === 1">
+                <text v-if="item.secondType === 1" f12>
+                  {{ item.avaTimes }}次
+                </text>
+                <text v-if="item.secondType === 2" f12>
+                  不限次
+                </text>
+                <text v-if="item.secondType === 3" f12>
+                  不限次
+                </text>
+              </template>
+              <template v-if="item.type === 2">
+                <span f12>{{ item.info?.[0].equity }}折</span>
+              </template>
+              <template v-if="item.type === 3">
+                <span f12>赠送{{ item.gift }}</span>
+              </template>
+            </view>
             <wd-img
               :width="20"
               :height="20"
               :src="`${IMG_BASE}/icon-more.png`"
               @click="visAction = true"
             />
-          </div>
-          <div fb f16>
-            幻彩悦光爽肤水
-          </div>
-          <div f12 color-9A9FA5>
-            网店展示
-          </div>
-          <div>
-            <span fb f12 px-12rpx py-7rpx bg-B5E4CA rd-12rpx>￥128</span>
-          </div>
-        </div>
-      </div>
-      <div mt-12px flex flex-bt flex-ac gap-40rpx pb-10px style="border-bottom: 1px solid #EFEFEF;">
-        <wd-img
-          :width="100"
-          :height="100"
-          mode="center"
-          :radius="12"
-          :src="`${IMG_BASE}/cat.png`"
-        />
-        <div flex flex-y flex-bt flex-1 h-108px>
-          <div flex flex-bt>
-            <div flex flex-ac gap-5px>
-              <wd-img
-                :width="16"
-                :height="16"
-                :src="`${IMG_BASE}/icon-time.png`"
-              />
-              <span f12>80分钟</span>
-            </div>
-            <wd-img
-              :width="20"
-              :height="20"
-              :src="`${IMG_BASE}/icon-more.png`"
-            />
-          </div>
-          <div fb f16>
-            幻彩悦光爽肤水
-          </div>
-          <div f12 color-9A9FA5>
-            网店展示
-          </div>
-          <div>
-            <span fb f12 px-12rpx py-7rpx bg-B5E4CA rd-12rpx>￥128</span>
-          </div>
-        </div>
-      </div>
+          </view>
+          <view fb f16>
+            {{ item.name }}
+          </view>
+          <view f12 color-9A9FA5>
+            <text v-if="item.expires === 0">
+              永久有效
+            </text>
+            <text v-if="item.expires">
+              购买后{{ item.expires }}天内有效
+            </text>
+          </view>
+          <view>
+            <span fb f12 px-12rpx py-7rpx bg-B5E4CA rd-12rpx>￥{{ item.price }}</span>
+          </view>
+        </view>
+      </view>
     </view>
 
     <wd-action-sheet v-model="visCardType" :actions="cardList" @select="selCard" />

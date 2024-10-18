@@ -9,7 +9,7 @@ import type { CardForm } from './types'
 const userInfo = useUserStore()?.userInfo
 const storeInfo = userInfo?.storeList?.[0]
 const expiresType = ref(0) // 0不限次 1限次
-const form = reactive<CardForm>({
+const form = ref<CardForm>({
   storeId,
   type: 1,
   secondType: 1,
@@ -17,8 +17,19 @@ const form = reactive<CardForm>({
   name: '',
   categoryId: computed(() => curClassify.value.id),
   price: 0,
-  info: [
-  ],
+  info: computed(() => {
+    const arr: any = [...checkedProds.value, ...checkedServs.value]
+    return arr.map((v) => {
+      return {
+        equity: 0,
+        productId: v.prodType === 1 ? v.id : null,
+        serviceId: v.prodType === 2 ? v.id : null,
+        name: v.name,
+        price: v.price,
+        price2: v.price2,
+      }
+    })
+  }),
   expires: 0,
   isShow: 1,
   desc: computed(() => richData.value.content),
@@ -62,23 +73,23 @@ onLoad(() => {
   // resetRichData()
 })
 
-onShow(() => {
-  setProdServs()
-})
+// onShow(() => {
+//   setProdServs()
+// })
 
-function setProdServs() {
-  const arr: any = [...checkedProds.value, ...checkedServs.value]
-  form.info = arr.map((v) => {
-    return {
-      equity: 0,
-      productId: v.prodType === 1 ? v.id : null,
-      serviceId: v.prodType === 2 ? v.id : null,
-      name: v.name,
-      price: v.price,
-      price2: v.price2,
-    }
-  })
-}
+// function setProdServs() {
+//   const arr: any = [...checkedProds.value, ...checkedServs.value]
+//   form.value.info = arr.map((v) => {
+//     return {
+//       equity: 0,
+//       productId: v.prodType === 1 ? v.id : null,
+//       serviceId: v.prodType === 2 ? v.id : null,
+//       name: v.name,
+//       price: v.price,
+//       price2: v.price2,
+//     }
+//   })
+// }
 
 function toCats() {
   curClassify.value.type = CatType.Card
@@ -97,10 +108,14 @@ function toRichEdit() {
 }
 
 async function save() {
-  form.expires = expiresType.value ? form.expires : 0
-  await request.post<any>('/business/card', form)
+  form.value.expires = expiresType.value ? form.value.expires : 0
+  await request.post<any>('/business/card', form.value)
   await uni.showToast({ title: '创建成功' })
   uni.navigateBack()
+}
+
+function changeEquity(val) {
+  console.log(val)
 }
 </script>
 
@@ -150,20 +165,22 @@ async function save() {
         </text>
       </wd-cell>
 
-      <view v-for="(item, index) in form.info" :key="`ck-${index}`" flex flex-bt flex-ac f13 h-96rpx px20px>
-        <view>
-          <text>{{ item.name }}</text>
-          <text theme-red pl5px>
-            ¥{{ item.price2 }}
+      <template v-if="form.info?.length">
+        <view v-for="(item, index) in form.info" :key="`ck-${index}`" flex flex-bt flex-ac f13 h-96rpx px20px>
+          <view>
+            <text>{{ item.name }}</text>
+            <text theme-red pl5px>
+              ¥{{ item.price2 }}
+            </text>
+          </view>
+          <!-- 有限次卡 -->
+          <wd-input-number v-show="form.secondType === 1" v-model="item.equity" @change="changeEquity" />
+          <!-- 不限次卡、通卡 -->
+          <text v-show="form.secondType === 2 || form.secondType === 3">
+            不限次
           </text>
         </view>
-        <!-- 有限次卡 -->
-        <wd-input-number v-if="form.secondType === 1" v-model="item.equity" />
-        <!-- 不限次卡、通卡 -->
-        <text v-else>
-          不限次
-        </text>
-      </view>
+      </template>
 
       <!-- 通卡 -->
       <wd-input
