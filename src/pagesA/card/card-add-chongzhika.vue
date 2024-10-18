@@ -8,10 +8,10 @@ import type { CardForm } from './types'
 
 const userInfo = useUserStore()?.userInfo
 const storeInfo = userInfo?.storeList?.[0]
-const expiresType = ref(0) // 0不限次 1限次
+const expiresType = ref(0) // 0永久有效 1限期有效
 const form = ref<CardForm>({
   storeId,
-  type: 1,
+  type: 2,
   secondType: 1,
   gift: 0,
   name: '',
@@ -21,7 +21,7 @@ const form = ref<CardForm>({
     const arr: any = [...checkedProds.value, ...checkedServs.value]
     return arr.map((v) => {
       return {
-        equity: 0,
+        equity: 10,
         productId: v.prodType === 1 ? v.id : null,
         serviceId: v.prodType === 2 ? v.id : null,
         name: v.name,
@@ -105,6 +105,14 @@ function changeEquity(val) {
         suffix-icon="arrow-right"
         :rules="[{ required: true, message: '请填写售价' }]"
       />
+      <wd-input
+        v-model="form.gift"
+        label="赠送金额"
+        type="number"
+        placeholder="请输入"
+        suffix-icon="arrow-right"
+        :rules="[{ required: true, message: '请填写赠送金额' }]"
+      />
     </wd-cell-group>
 
     <view h-24rpx />
@@ -123,24 +131,13 @@ function changeEquity(val) {
               ¥{{ item.price2 }}
             </text>
           </view>
-          <!-- 有限次卡 -->
-          <wd-input-number v-show="form.secondType === 1" v-model="item.equity" @change="changeEquity" />
-          <!-- 不限次卡、通卡 -->
-          <text v-show="form.secondType === 2 || form.secondType === 3">
-            不限次
-          </text>
+          <!-- 充值卡也可以打折 -->
+          <view flex flex-ac gap5px>
+            <wd-input-number v-model="item.equity" :step="0.1" :min="1" :max="10" :precision="1" @change="changeEquity" />
+            <text>折</text>
+          </view>
         </view>
       </template>
-
-      <!-- 通卡 -->
-      <wd-input
-        v-if="form.secondType === 3"
-        v-model="form.countLimit"
-        label="已选服务共用次数"
-        type="number"
-        placeholder="请输入"
-        suffix-icon="arrow-right"
-      />
     </wd-cell-group>
 
     <view h-24rpx />
@@ -164,39 +161,6 @@ function changeEquity(val) {
           </view>
         </wd-radio>
       </wd-radio-group>
-    </view>
-
-    <view tc pr mt-28rpx>
-      <image
-        style="width: 630rpx;height: 368rpx;"
-        mode="aspectFit"
-        :src="`${IMG_BASE}/bg_zkk.png`"
-      />
-      <view
-        pa color-white
-        style="width: 630rpx;height: 368rpx;padding: 25px;
-                top: 0;left: 50%;text-align: left;
-                transform: translateX(-50%);"
-      >
-        <view flex flex-bt flex-ac>
-          <view f14 style="color: rgba(255, 255, 255, 0.7);">
-            硕园美甲美睫
-          </view>
-          <view text-20rpx py-8rpx px-20rpx tc style="background: #FF5F00;border-radius: 32rpx;">
-            折扣卡
-          </view>
-        </view>
-        <view text-48rpx pt-56rpx>
-          7980面部精雕30次
-        </view>
-        <view f14>
-          30次
-        </view>
-        <view f12 flex flex-bt pt-52rpx>
-          <view>购买后180天内有效</view>
-          <view>09/25&#12288;</view>
-        </view>
-      </view>
     </view>
 
     <view h-24rpx />
@@ -230,8 +194,8 @@ function changeEquity(val) {
           <view f14>
             充1000送200
           </view>
-          <view v-if="form.expires !== null" f12 pt-52rpx>
-            {{ form.expires === 0 ? '永久有效' : `购买后${form.expires}天内有效` }}
+          <view f12 pt-52rpx>
+            {{ expiresType === 0 ? '永久有效' : `购买后${form.expires}天内有效` }}
           </view>
         </view>
       </view>

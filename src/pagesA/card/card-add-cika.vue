@@ -8,7 +8,7 @@ import type { CardForm } from './types'
 
 const userInfo = useUserStore()?.userInfo
 const storeInfo = userInfo?.storeList?.[0]
-const expiresType = ref(0) // 0不限次 1限次
+const expiresType = ref(0) // 0永久有效 1限期有效
 const form = ref<CardForm>({
   storeId,
   type: 1,
@@ -247,8 +247,8 @@ function changeEquity(val) {
           <view f14>
             <!-- 30次 -->
           </view>
-          <view v-if="form.expires !== null" f12 pt-52rpx>
-            {{ form.expires === 0 ? '永久有效' : `购买后${form.expires}天内有效` }}
+          <view f12 pt-52rpx>
+            {{ expiresType === 0 ? '永久有效' : `购买后${form.expires}天内有效` }}
           </view>
         </view>
       </view>
