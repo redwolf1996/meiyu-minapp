@@ -5,12 +5,13 @@ const props = withDefaults(defineProps<{
   placeholder: '请输入名称',
 })
 
-const emit = defineEmits(['update:modelValue', 'search'])
-const txt = ref('')
+const emit = defineEmits(['search'])
+const model: any = defineModel<any>()
 
-function onChangeInput(e: HTMLInputElement) {
-  emit('update:modelValue', e.value)
-}
+// function onChangeInput(e: HTMLInputElement) {
+//   console.log(e.value)
+//   model.value = e.value
+// }
 
 function onClickSearch() {
   emit('search')
@@ -29,13 +30,12 @@ export default {
   <view class="search">
     <view class="inner">
       <wd-input
-        v-model="txt"
+        v-model="model"
         :placeholder="props.placeholder"
         custom-class="cus-input"
         :no-border="true"
         size="small"
         clearable
-        @change="onChangeInput"
       />
       <wd-img
         :width="32"
