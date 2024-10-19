@@ -17,24 +17,7 @@ const form = ref<CardForm>({
   name: '',
   categoryId: computed(() => curClassify.value.id),
   price: 0,
-  info: computed({
-    get() {
-      const arr: any = [...checkedProds.value, ...checkedServs.value]
-      return arr.map((v) => {
-        return {
-          equity: 10,
-          productId: v.prodType === 1 ? v.id : null,
-          serviceId: v.prodType === 2 ? v.id : null,
-          name: v.name,
-          price: v.price,
-          price2: v.price2,
-        }
-      })
-    },
-    set(newVal) {
-      console.log(newVal)
-    },
-  }),
+  info: [],
   expires: 0,
   isShow: 1,
   desc: computed(() => richData.value.content),
@@ -63,11 +46,31 @@ onLoad((options) => {
   cardId.value = +options?.id
   mode.value = options?.mode
   if (cardId.value) {
-    if (mode.value === 'edit')
+    if (mode.value === 'edit') {
+      uni.setNavigationBarTitle({ title: '修改充值卡' })
       form.value.id = cardId.value
-    if (mode.value === 'copy')
+    }
+    if (mode.value === 'copy') {
+      uni.setNavigationBarTitle({ title: '复制充值卡' })
       form.value.id = null
+    }
     setFormInfo()
+  }
+})
+
+onShow(() => {
+  if (checkedProds.value.length || checkedServs.value.length) {
+    const arr: any = [...checkedProds.value, ...checkedServs.value]
+    form.value.info = arr.map((v) => {
+      return {
+        equity: 10,
+        productId: v.prodType === 1 ? v.id : null,
+        serviceId: v.prodType === 2 ? v.id : null,
+        name: v.name,
+        price: v.price,
+        price2: v.price2,
+      }
+    })
   }
 })
 
@@ -86,12 +89,13 @@ async function setFormInfo() {
       equity: v.equity,
       productId: v.productId,
       serviceId: v.serviceId,
-      name: v.productName || v.serviceName,
+      name: v.serviceName || v.productName,
       price: v.price,
       price2: v.price2,
     }
   })
   curClassify.value.id = data.categoryId
+  curClassify.value.name = data.name
   richData.value.content = data.desc
 }
 
@@ -113,8 +117,16 @@ function toRichEdit() {
 
 async function save() {
   form.value.expires = expiresType.value ? form.value.expires : 0
-  await request.post<any>('/business/card', form.value)
-  await uni.showToast({ title: '创建成功' })
+  if (mode.value === 'edit')
+    await request.put<any>('/business/card', form.value)
+  else
+    await request.post<any>('/business/card', form.value)
+  let msg = '添加成功'
+  if (mode.value === 'edit')
+    msg = '修改成功'
+  if (mode.value === 'copy')
+    msg = '复制成功'
+  await uni.showToast({ title: msg })
   uni.navigateBack()
 }
 

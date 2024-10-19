@@ -95,7 +95,7 @@ export interface CardForm {
   /**
    * 卡项所对应的服务列表
    */
-  info: Info[] | any
+  info: Info[] | null
   /**
    * 是否网店销售，0否，1是
    */
