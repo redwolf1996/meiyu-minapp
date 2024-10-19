@@ -18,19 +18,7 @@ const form = ref<CardForm>({
   name: '',
   categoryId: computed(() => curClassify.value.id),
   price: 0,
-  info: computed(() => {
-    const arr: any = [...checkedProds.value, ...checkedServs.value]
-    return arr.map((v) => {
-      return {
-        equity: 0,
-        productId: v.prodType === 1 ? v.id : null,
-        serviceId: v.prodType === 2 ? v.id : null,
-        name: v.name,
-        price: v.price,
-        price2: v.price2,
-      }
-    })
-  }),
+  info: [],
   expires: 0,
   isShow: 1,
   desc: computed(() => richData.value.content),
@@ -72,6 +60,68 @@ const sources2: any = [
 ]
 
 const catName = computed(() => curClassify.value.name)
+
+type Mode = 'edit' | 'copy' | null
+const cardId = ref(0) // 修改和复制时候的id
+const mode = ref<Mode>(null) // 修改还是复制
+
+onLoad((options) => {
+  cardId.value = +options?.id
+  mode.value = options?.mode
+  if (cardId.value) {
+    if (mode.value === 'edit') {
+      uni.setNavigationBarTitle({ title: '修改折扣卡' })
+      form.value.id = cardId.value
+    }
+    if (mode.value === 'copy') {
+      uni.setNavigationBarTitle({ title: '复制折扣卡' })
+      form.value.id = null
+    }
+    setFormInfo()
+  }
+})
+
+onShow(() => {
+  if (checkedProds.value.length || checkedServs.value.length) {
+    const arr: any = [...checkedProds.value, ...checkedServs.value]
+    form.value.info = arr.map((v) => {
+      return {
+        equity: 10,
+        productId: v.prodType === 1 ? v.id : null,
+        serviceId: v.prodType === 2 ? v.id : null,
+        name: v.name,
+        price: v.price,
+        price2: v.price2,
+      }
+    })
+  }
+})
+
+async function setFormInfo() {
+  const res = await request.get<any>(`/business/card/${cardId.value}`)
+  const data = res.data
+  form.value.secondType = data.secondType
+  form.value.gift = data.gift
+  form.value.name = data.name
+  form.value.price = data.price
+  form.value.expires = data.expires
+  expiresType.value = data.expires ? 1 : 0
+  form.value.isShow = data.isShow
+  form.value.countLimit = data.countLimit
+  form.value.info = data.info.map((v) => {
+    return {
+      equity: v.equity,
+      productId: v.productId,
+      serviceId: v.serviceId,
+      name: v.serviceName || v.productName,
+      price: v.price,
+      price2: v.price2,
+    }
+  })
+  curClassify.value.id = data.categoryId
+  curClassify.value.name = data.categoryName
+  richData.value.content = data.desc
+}
 
 function toCats() {
   curClassify.value.type = CatType.Card
@@ -251,7 +301,7 @@ function changeEquity(val) {
         <text>卡项说明</text>
       </view>
       <!-- 0是初始状态 11是清空后还包含空标签 <p><br></p>的字符数 -->
-      <rich-text v-if="richData.len !== 0 && richData.len !== 11" :nodes="richData.content" />
+      <rich-text v-if="richData.content" :nodes="richData.content" />
       <wd-textarea
         v-else
         readonly
