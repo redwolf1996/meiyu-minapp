@@ -64,7 +64,7 @@ function toProdServs() { // 商品和服务列表页面
 
 function toRichEdit() {
   richData.value.key = 'card'
-  richData.value.title = '添加卡项说明'
+  richData.value.title = '卡项说明'
   uni.navigateTo({ url: '/pagesA/rich-edit' })
 }
 

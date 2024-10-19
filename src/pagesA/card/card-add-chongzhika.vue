@@ -82,6 +82,7 @@ async function setFormInfo() {
   form.value.name = data.name
   form.value.price = data.price
   form.value.expires = data.expires
+  expiresType.value = data.expires ? 1 : 0
   form.value.isShow = data.isShow
   form.value.countLimit = data.countLimit
   form.value.info = data.info.map((v) => {
@@ -95,7 +96,7 @@ async function setFormInfo() {
     }
   })
   curClassify.value.id = data.categoryId
-  curClassify.value.name = data.name
+  curClassify.value.name = data.categoryName
   richData.value.content = data.desc
 }
 
@@ -111,7 +112,7 @@ function toProdServs() { // 商品和服务列表页面
 
 function toRichEdit() {
   richData.value.key = 'card'
-  richData.value.title = '添加卡项说明'
+  richData.value.title = '卡项说明'
   uni.navigateTo({ url: '/pagesA/rich-edit' })
 }
 
@@ -126,7 +127,8 @@ async function save() {
     msg = '修改成功'
   if (mode.value === 'copy')
     msg = '复制成功'
-  await uni.showToast({ title: msg })
+  uni.showToast({ title: msg })
+  await sleep(1000)
   uni.navigateBack()
 }
 
@@ -273,7 +275,7 @@ function changeEquity(val) {
         <text>卡项说明</text>
       </view>
       <!-- 0是初始状态 11是清空后还包含空标签 <p><br></p>的字符数 -->
-      <rich-text v-if="richData.len !== 0 && richData.len !== 11" :nodes="richData.content" />
+      <rich-text v-if="richData.content" :nodes="richData.content" />
       <wd-textarea
         v-else
         readonly

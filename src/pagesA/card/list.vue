@@ -57,7 +57,16 @@ onShow(() => {
   search()
 })
 
+function resetStoreData() {
+  curClassify.value.id = null
+  curClassify.value.name = null
+  richData.value.content = ''
+  checkedProds.value = []
+  checkedServs.value = []
+}
+
 function selCard(e) { // 添加会员卡
+  resetStoreData()
   if (e.index === 0)
     uni.navigateTo({ url: '/pagesA/card/card-add-cika' })
   if (e.index === 1)
@@ -66,7 +75,7 @@ function selCard(e) { // 添加会员卡
     uni.navigateTo({ url: '/pagesA/card/card-add-chongzhika' })
 }
 
-function selAction(e) {
+function selAction(e) { // 修改、删除、复制当前卡项
   if (e.index === 0) { // 修改
     if (curItem.value.type === 1) // 次卡
       uni.navigateTo({ url: `/pagesA/card/card-add-cika?id=${curItem.value.id}&mode=edit` })

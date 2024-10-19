@@ -11,7 +11,7 @@ onMounted(() => {
 })
 
 const name = computed(() => richData.value.key)
-const values = computed(() => richData.value.content)
+const values = ref('')
 const tmp = reactive({
   content: '',
   len: 0,
@@ -21,6 +21,10 @@ function setContents(e: { html: string, length: number }) {
   tmp.content = e.html
   tmp.len = e.length
 }
+
+onShow(() => {
+  values.value = richData.value.content
+})
 
 function save() {
   richData.value.content = tmp.content

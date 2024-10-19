@@ -130,3 +130,12 @@ export function calculateEndTime(startTime: string, duration: number | string) {
 
   return formattedEndTime
 }
+
+/**
+ * 休眠函数
+ * @param ms 延迟毫秒数
+ * @returns
+ */
+export function sleep(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
