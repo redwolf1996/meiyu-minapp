@@ -111,7 +111,7 @@ async function setFormInfo() {
   const data = res.data
   resetSources()
   form.value.secondType = data.secondType
-  sources[data.secondType - 1].isActive = true
+  sources.value[data.secondType - 1].isActive = true
   form.value.gift = data.gift
   form.value.name = data.name
   form.value.price = data.price
@@ -158,8 +158,17 @@ function toRichEdit() {
 
 async function save() {
   form.value.expires = expiresType.value ? form.value.expires : 0
-  await request.post<any>('/business/card', form.value)
-  await uni.showToast({ title: '创建成功' })
+  if (mode.value === 'edit')
+    await request.put<any>('/business/card', form.value)
+  else
+    await request.post<any>('/business/card', form.value)
+  let msg = '添加成功'
+  if (mode.value === 'edit')
+    msg = '修改成功'
+  if (mode.value === 'copy')
+    msg = '复制成功'
+  uni.showToast({ title: msg })
+  await sleep(1000)
   uni.navigateBack()
 }
 
