@@ -75,9 +75,16 @@ onShow(() => {
   }
 })
 
+function resetSources() {
+  sources2.value.map((v) => {
+    v.isActive = false
+  })
+}
+
 async function setFormInfo() {
   const res = await request.get<any>(`/business/card/${cardId.value}`)
   const data = res.data
+  resetSources()
   form.value.secondType = data.secondType
   form.value.gift = data.gift
   form.value.name = data.name
@@ -85,6 +92,12 @@ async function setFormInfo() {
   form.value.expires = data.expires
   expiresType.value = data.expires ? 1 : 0
   form.value.isShow = data.isShow
+  if (data.isShow) {
+    sources2.value[0].isActive = true
+  }
+  else {
+    sources2.value[1].isActive = true
+  }
   form.value.countLimit = data.countLimit
   form.value.info = data.info.map((v) => {
     return {

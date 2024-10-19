@@ -28,7 +28,7 @@ const limits = computed(() => {
   const arr: any = [...checkedProds.value, ...checkedServs.value]
   return sumBy(arr, (v1: any) => v1.equity)
 })
-const sources: any = [
+const sources: any = ref([
   {
     label: '有限次卡',
     value: 1,
@@ -44,9 +44,9 @@ const sources: any = [
     value: 3,
     isActive: false,
   },
-]
+])
 
-const sources2: any = [
+const sources2: any = ref([
   {
     label: '支持',
     value: 1,
@@ -57,7 +57,7 @@ const sources2: any = [
     value: 0,
     isActive: false,
   },
-]
+])
 
 const catName = computed(() => curClassify.value.name)
 
@@ -70,11 +70,11 @@ onLoad((options) => {
   mode.value = options?.mode
   if (cardId.value) {
     if (mode.value === 'edit') {
-      uni.setNavigationBarTitle({ title: '修改折扣卡' })
+      uni.setNavigationBarTitle({ title: '修改次卡' })
       form.value.id = cardId.value
     }
     if (mode.value === 'copy') {
-      uni.setNavigationBarTitle({ title: '复制折扣卡' })
+      uni.setNavigationBarTitle({ title: '复制次卡' })
       form.value.id = null
     }
     setFormInfo()
@@ -97,16 +97,33 @@ onShow(() => {
   }
 })
 
+function resetSources() {
+  sources.value.map((v) => {
+    v.isActive = false
+  })
+  sources2.value.map((v) => {
+    v.isActive = false
+  })
+}
+
 async function setFormInfo() {
   const res = await request.get<any>(`/business/card/${cardId.value}`)
   const data = res.data
+  resetSources()
   form.value.secondType = data.secondType
+  sources[data.secondType - 1].isActive = true
   form.value.gift = data.gift
   form.value.name = data.name
   form.value.price = data.price
   form.value.expires = data.expires
   expiresType.value = data.expires ? 1 : 0
   form.value.isShow = data.isShow
+  if (data.isShow) {
+    sources2.value[0].isActive = true
+  }
+  else {
+    sources2.value[1].isActive = true
+  }
   form.value.countLimit = data.countLimit
   form.value.info = data.info.map((v) => {
     return {
@@ -205,11 +222,19 @@ function changeEquity(val) {
               ¥{{ item.price2 }}
             </text>
           </view>
+
           <!-- 有限次卡 -->
-          <wd-input-number v-show="form.secondType === 1" v-model="item.equity" @change="changeEquity" />
-          <!-- 不限次卡、通卡 -->
-          <text v-show="form.secondType === 2 || form.secondType === 3">
+          <view v-if="form.secondType === 1" flex flex-ac gap5px>
+            <wd-input-number v-model="item.equity" :min="0" :precision="0" @change="changeEquity" />
+            <text>次</text>
+          </view>
+          <!-- 不限次卡 -->
+          <text v-if="form.secondType === 2">
             不限次
+          </text>
+          <!-- 通卡 -->
+          <text v-if="form.secondType === 3">
+            共用次数
           </text>
         </view>
       </template>
@@ -218,7 +243,7 @@ function changeEquity(val) {
       <wd-input
         v-if="form.secondType === 3"
         v-model="form.countLimit"
-        label="已选服务共用次数"
+        label="商品共用次数"
         type="number"
         placeholder="请输入"
         suffix-icon="arrow-right"
