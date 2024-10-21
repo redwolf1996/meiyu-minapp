@@ -25,9 +25,9 @@ const form = ref<CardForm>({
   countLimit: 0,
 })
 const limits = computed(() => {
-  const arr: any = [...checkedProds.value, ...checkedServs.value]
-  return sumBy(arr, (v1: any) => v1.equity)
+  return sumBy(form.value.info, (v1: any) => v1.equity)
 })
+
 const sources: any = ref([
   {
     label: '有限次卡',
@@ -86,7 +86,7 @@ onShow(() => {
     const arr: any = [...checkedProds.value, ...checkedServs.value]
     form.value.info = arr.map((v) => {
       return {
-        equity: 10,
+        equity: 0,
         productId: v.prodType === 1 ? v.id : null,
         serviceId: v.prodType === 2 ? v.id : null,
         name: v.name,
@@ -303,7 +303,10 @@ function changeEquity(val) {
             <view f14 style="color: rgba(255, 255, 255, 0.7);">
               {{ storeInfo?.storeName || '--' }}
             </view>
-            <view text-20rpx w-88rpx h-40rpx lh-40rpx tc flex flex-cc style="background: transparent;border-radius: 32rpx;border: 1px solid #fff;color: #fff">
+            <view
+              text-20rpx w-88rpx h-40rpx lh-40rpx tc flex flex-cc
+              style="background: transparent;border-radius: 32rpx;border: 1px solid #fff;color: #fff"
+            >
               次卡
             </view>
           </view>

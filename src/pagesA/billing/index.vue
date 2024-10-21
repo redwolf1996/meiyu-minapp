@@ -206,19 +206,7 @@ const value = ref()
     />
   </view>
 
-  <view h-24rpx />
-  <view f12 mt12px mb8px pl20px c-#3D3D3D>
-    订单备注
-  </view>
-  <view bg-white px-40rpx py-24rpx>
-    <wd-textarea
-      placeholderStyle="font-size: 14px;color:#C9CDD4;"
-      placeholder="备注客户信息" :maxlength="200" auto-height clearable show-word-limit
-    />
-  </view>
-
   <view class="h150px" />
-
   <view class="footer" z-10000>
     <view class="h64px lh-64px" flex flex-bt flex-ac px14px>
       <text />
