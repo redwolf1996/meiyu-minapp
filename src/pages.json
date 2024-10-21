@@ -193,6 +193,13 @@
           }
         },
         {
+          "path": "card/select-card",
+          "type": "page",
+          "style": {
+            "navigationBarTitleText": "选择卡项"
+          }
+        },
+        {
           "path": "card/share",
           "type": "page",
           "style": {

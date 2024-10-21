@@ -27,6 +27,7 @@ interface NavigateToOptions {
        "/pagesA/card/card-add-cika" |
        "/pagesA/card/card-add-zhekouka" |
        "/pagesA/card/list" |
+       "/pagesA/card/select-card" |
        "/pagesA/card/share" |
        "/pagesA/customer/add" |
        "/pagesA/customer/detail" |

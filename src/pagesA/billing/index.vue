@@ -10,20 +10,51 @@ import type { BillModel } from './types'
 
 const listStaff = ref<ListStaff[]>([])
 const visibleStaff = ref(false)
-const form = reactive<BillModel>({
+const curIndex = ref(0) // 商品和服务列表当前选择项的索引
+const form = ref<BillModel>({
   storeId,
   orderTime: null,
   storeCustomerId: computed(() => curCustomer.value?.customerId ?? null),
-  adviserId: 6,
+  adviserId: null,
   notes: '',
   amount: 0,
   payType: 1,
   billingGoods: [],
+  customerCardId: null,
 })
 const cusName = computed(() => curCustomer.value?.name ?? '')
 
 onShow(() => {
   getStaff()
+  if (checkedProds.value.length || checkedServs.value.length) {
+    const arr: any = [...checkedProds.value, ...checkedServs.value]
+    const tmp = arr.map((v) => {
+      return {
+        goodsType: v.prodType === 1 ? 2 : 1, // 1服务 2产品
+        goodsId: v.id,
+        goodsCount: 1, // 商品数量
+        goodsPrice: v.price, // 商品原价
+        cardReduceAmount: 0, // 卡优惠金额
+        name: v.name, // 服务或产品名称
+        totalAmount: null, // 商品原价总价
+        amount: null, // 商品优惠后总价
+        customerCardId: null, // 购卡id
+        cardId: null, // 卡id
+        artisanId: null, // 手艺人id
+        artisan: null, // 手艺人
+      }
+    })
+    form.value.billingGoods = tmp
+    form.value.billingGoods.forEach((item: any) => {
+      item.totalAmount = computed(() => {
+        return func_mul(item.goodsPrice, item.goodsCount)
+      })
+      item.amount = computed(() => {
+        return func_mul(func_sub(item.goodsPrice, item.cardReduceAmount), item.goodsCount)
+      })
+    })
+    console.log(form.value)
+  }
 })
 
 function saveStaff() {
@@ -36,8 +67,8 @@ function clickItem(item: ListStaff) {
   })
   item.active = !item.active
   if (item.active) {
-    // model.artisanId = item.storeStaffId
-    // artName.value = item.userName
+    form.value.billingGoods[curIndex.value].artisanId = item.storeStaffId
+    form.value.billingGoods[curIndex.value].artisan = item.userName
   }
 }
 
@@ -55,8 +86,14 @@ function handleConfirm({ value }) {
   console.log(value)
 }
 
-function toSelectStaff() {
+function toSelectStaff(index: number) {
+  curIndex.value = index
   visibleStaff.value = true
+}
+
+function toSelCard(index: number) {
+  curIndex.value = index
+  uni.navigateTo({ url: '/pagesA/card/select-card' })
 }
 
 function toSelCus() {
@@ -70,7 +107,6 @@ function toSelCus() {
 function toAddProdServs() {
   uni.navigateTo({ url: '/pagesA/prod-servs' })
 }
-const value = ref()
 </script>
 
 <template>
@@ -108,6 +144,7 @@ const value = ref()
       </MyButton>
     </view>
   </wd-popup>
+
   <wd-cell-group :border="true">
     <wd-calendar v-model="form.orderTime" label="开单时间" type="datetime" @confirm="handleConfirm" />
     <wd-cell title="客户" is-link @click="toSelCus()">
@@ -130,7 +167,63 @@ const value = ref()
     <view f12 mt12px mb8px pl20px c-#3D3D3D>
       消费项目
     </view>
-    <view bg-white py20px pr mb10px>
+
+    <template v-if="form.billingGoods.length">
+      <view v-for="(item, index) in form.billingGoods" :key="`jds-${index}`" bg-white py20px pr mb10px>
+        <view flex flex-ac flex-bt px20px>
+          <view fs-16px fb>
+            <text theme-color>
+              {{ index < 9 ? `0${index + 1}` : (index + 1) }}
+            </text>
+            <text pl10px>
+              {{ item.name }}
+            </text>
+          </view>
+          <view>
+            <wd-input-number v-model="item.goodsCount" />
+          </view>
+        </view>
+        <view flex flex-xr py10px pr20px>
+          <text>
+            ￥{{ item.goodsPrice }}
+          </text>
+        </view>
+        <view>
+          <wd-cell-group :border="true">
+            <wd-cell title="手艺人" is-link @click="toSelectStaff(index)">
+              <view>
+                <text v-if="!item.artisan" c-#B6BDBD>
+                  请选择
+                </text>
+                <text v-else>
+                  {{ item.artisan }}
+                </text>
+              </view>
+            </wd-cell>
+            <wd-cell title="使用卡项" is-link @click="toSelCard(index)">
+              <view>
+                <text v-if="!cusName" c-#B6BDBD>
+                  请选择
+                </text>
+                <text v-else>
+                  {{ cusName }}
+                </text>
+              </view>
+            </wd-cell>
+          </wd-cell-group>
+        </view>
+        <view flex flex-xr pt10px pr20px>
+          <text>
+            <text>小计：</text>
+            <text c-#FA483C>
+              ￥{{ item.amount }}
+            </text>
+          </text>
+        </view>
+      </view>
+    </template>
+
+    <!-- <view bg-white py20px pr mb10px>
       <view flex flex-ac flex-bt px20px>
         <view fs-16px fb>
           <text theme-color>
@@ -154,28 +247,22 @@ const value = ref()
           <wd-cell title="手艺人" is-link @click="toSelectStaff()">
             <view>
               <text v-if="!cusName" c-#B6BDBD>
-                请选择或添加
+                请选择
               </text>
               <text v-else>
                 {{ cusName }}
               </text>
             </view>
-            <template #icon>
-              <wd-icon name="user" size="16px" />
-            </template>
           </wd-cell>
           <wd-cell title="使用卡项" is-link @click="toSelCus()">
             <view>
               <text v-if="!cusName" c-#B6BDBD>
-                请选择或添加
+                请选择
               </text>
               <text v-else>
                 {{ cusName }}
               </text>
             </view>
-            <template #icon>
-              <wd-icon name="user" size="16px" />
-            </template>
           </wd-cell>
         </wd-cell-group>
       </view>
@@ -187,7 +274,7 @@ const value = ref()
           </text>
         </text>
       </view>
-    </view>
+    </view> -->
     <view bg-white py10px px20px pr h65px @click="toAddProdServs()">
       <view class="sp abs-cc">
         +&nbsp;添加商品

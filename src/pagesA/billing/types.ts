@@ -42,11 +42,15 @@ export interface BillingGood {
   /**
    * 商品优惠后总价
    */
-  amount?: number
+  amount?: ComputedRef<number> | number | null
   /**
-   * 受益人，服务
+   * 手艺人id
    */
   artisanId?: number
+  /**
+   * 手艺人
+   */
+  artisan?: string
   /**
    * 卡id
    */
@@ -78,6 +82,10 @@ export interface BillingGood {
   /**
    * 商品原价总价
    */
-  totalAmount?: number
+  totalAmount?: ComputedRef<number> | number | null
+  /**
+   * 服务或产品名称
+   */
+  name?: string
   [property: string]: any
 }
