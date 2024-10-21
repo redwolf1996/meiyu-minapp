@@ -84,8 +84,6 @@ export function getStoreId() {
   const lastStoreId = useUserStore().userInfo?.lastStoreId
   // TODO [0]前面不加问号会导致一个大坑=》在开发者工具上不报错，到了真机调试的时候各种报错
   const firstStoreId = useUserStore().userInfo?.storeList?.[0]?.storeId
-  console.log(`last-${lastStoreId}`)
-  console.log(`first-${firstStoreId}`)
   if (lastStoreId !== 0)
     return lastStoreId
   if (firstStoreId)
