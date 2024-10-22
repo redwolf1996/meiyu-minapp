@@ -26,6 +26,17 @@ function toSettings() {
 function toAbout() {
   uni.navigateTo({ url: '/pagesA/my/about' })
 }
+function toFeedBack() {
+  wx.openEmbeddedMiniProgram({
+    appId: 'wx8abaf00ee8c3202e',
+    extraData: {
+      id: '673474',
+      customData: {
+        clientInfo: `iPhone OS 10.3.1 / 3.2.0.43 / 0`,
+      },
+    },
+  })
+}
 </script>
 
 <template>
@@ -108,12 +119,12 @@ function toAbout() {
         <wd-icon name="user-talk" size="18px" />
       </template>
     </MyCell>
-    <!-- <MyCell label="意见反馈" noBorder>
+    <MyCell label="意见反馈" noBorder @myclick="toFeedBack()">
       <template #icon>
         <wd-icon name="evaluation" size="18px" />
       </template>
       <span f14 c-B6BDBD>欢迎反馈您使用中遇到的问题</span>
-    </MyCell> -->
+    </MyCell>
     <MyCell label="关于我们" noBorder @myclick="toAbout()">
       <template #icon>
         <wd-icon name="warning" size="18px" />

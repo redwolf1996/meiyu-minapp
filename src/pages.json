@@ -505,7 +505,8 @@
           "layout": false,
           "style": {
             "navigationBarTitleText": "预约看板",
-            "navigationStyle": "custom"
+            "navigationStyle": "custom",
+            "disableScroll": true
           }
         },
         {

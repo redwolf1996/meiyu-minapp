@@ -3,6 +3,7 @@ layout: false
 style:
   navigationBarTitleText: 预约看板
   navigationStyle: "custom"
+  disableScroll: true
 </route>
 
 <script lang="ts" setup>
@@ -244,6 +245,9 @@ function scrollView(e: any) {
       v-if="mode === 0"
       :scroll-x="true"
       :scroll-y="true"
+      :enhanced="true"
+      :bounces="false"
+      :show-scrollbar="false"
       :scroll-top="800"
       class="content pr"
       :style="{
