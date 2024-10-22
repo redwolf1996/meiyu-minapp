@@ -132,7 +132,7 @@ export function calculateEndTime(startTime: string, duration: number | string) {
 /**
  * 休眠函数
  * @param ms 延迟毫秒数
- * @returns
+ * @returns Promise
  */
 export function sleep(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms))

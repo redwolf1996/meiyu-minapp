@@ -4,27 +4,31 @@ style:
 </route>
 
 <script lang="ts" setup>
-import type { AllItems, CatsItemsTree, ServiceList } from '../types'
+import type { AllItems, CardList, CatsItemsTree } from '../types'
 import { flatten } from 'lodash-es'
 
 const active = ref<number>(0)
 const scrollTop = ref<number>(0)
-const categories = ref<CatsItemsTree<ServiceList>[]>([])
-const checkedCount = computed(() => {
-  return checkedServs.value.length + checkedProds.value.length
-})
+const categories = ref<CatsItemsTree<CardList>[]>([])
 
 onLoad(async () => {
   const res = await request.get<AllItems>('/business/goods_all', { storeId })
-  const serviceCats = res.data.serviceCategory!
-  const services = res.data.serviceList
-  categories.value = serviceCats.map((v) => {
+  const cardCats = res.data.cardCategory!
+  cardCats.unshift({
+    id: 0,
+    name: '所有分类',
+    storeId: null,
+  })
+  const cards = res.data.cardList
+  categories.value = cardCats.map((v) => {
     return {
       id: v.id,
       label: v.name,
-      items: services.filter(v1 => v.id === v1.categoryId).map((v2) => {
-        return { ...v2, checked: false }
-      }),
+      items: v.id === 0
+        ? cards
+        : cards.filter(v1 => v.id === v1.categoryId).map((v2) => {
+          return { ...v2, checked: false }
+        }),
     }
   })
 })
@@ -44,10 +48,6 @@ function changeCheck() {
   }).map(v1 => toRaw(v1.items))
   servs = flatten(toRaw(servs))
   checkedServs.value = servs.filter(v => v.checked)
-}
-
-function confirm() {
-  uni.navigateBack()
 }
 </script>
 
@@ -73,47 +73,19 @@ function confirm() {
         :throttle="false"
       >
         <view p12px>
-          <view v-for="(itm, idx) in item.items" :key="`itm-${idx}`" flex flex-ac flex-bt pb14px mb14px style="border-bottom: 1px solid #EBEEF1">
-            <view flex gap12px>
-              <wd-img
-                :width="72"
-                :height="72"
-                mode="center"
-                :src="`${IMG_BASE}/cat.png`"
-              />
-              <view>
-                <view f14>
-                  {{ itm.name }}
-                </view>
-                <view f12 c-#FF1919 mt6px>
-                  ￥{{ itm.price2 }}
-                </view>
-                <view f10 c-#D4D4D4 mt6px>
-                  <text line-through>
-                    ￥{{ itm.price }}
-                  </text>
-                </view>
-              </view>
-            </view>
-            <view flex flex-cc>
-              <wd-checkbox v-model="itm.checked" size="large" @change="changeCheck" />
-            </view>
+          <view v-for="(itm, idx) in item.items" :key="`itm-${idx}`" h132px mb12px>
+            <image
+              style="width: 100%;height: 132px;"
+              mode="aspectFit"
+              :src="`${IMG_BASE}/bg_czk.png`"
+            />
+            <!-- <view>1</view>
+            <view>2</view>
+            <view>3</view>
+            <view>4</view> -->
           </view>
         </view>
       </scroll-view>
-    </view>
-  </view>
-
-  <view class="footer">
-    <view>
-      <view>已选择 {{ checkedCount }} 项</view>
-    </view>
-    <view w120px>
-      <wd-button size="large" custom-class="theme-bg" block @click="confirm()">
-        <view flex flex-cc>
-          <text>确定</text>
-        </view>
-      </wd-button>
     </view>
   </view>
 </template>
@@ -129,7 +101,7 @@ page {
 <style lang='scss' scoped>
 .wrapper {
   display: flex;
-  height: calc(100vh - 90px);
+  height: calc(100vh - 50px);
   overflow: hidden;
 }
 .content {
