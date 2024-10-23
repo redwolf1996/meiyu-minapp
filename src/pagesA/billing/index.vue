@@ -146,7 +146,7 @@ function toAddProdServs() {
   </wd-popup>
 
   <wd-cell-group :border="true">
-    <wd-calendar v-model="form.orderTime" label="开单时间" type="datetime" @confirm="handleConfirm" />
+    <wd-calendar v-model="form.orderTime" :z-index="12000" label="开单时间" type="datetime" @confirm="handleConfirm" />
     <wd-cell title="客户" is-link @click="toSelCus()">
       <view>
         <text v-if="!cusName" c-#B6BDBD>
@@ -222,59 +222,6 @@ function toAddProdServs() {
         </view>
       </view>
     </template>
-
-    <!-- <view bg-white py20px pr mb10px>
-      <view flex flex-ac flex-bt px20px>
-        <view fs-16px fb>
-          <text theme-color>
-            01
-          </text>
-          <text pl10px>
-            水乳套装
-          </text>
-        </view>
-        <view>
-          <wd-input-number v-model="value" />
-        </view>
-      </view>
-      <view flex flex-xr py10px pr20px>
-        <text>
-          ￥18.00
-        </text>
-      </view>
-      <view>
-        <wd-cell-group :border="true">
-          <wd-cell title="手艺人" is-link @click="toSelectStaff()">
-            <view>
-              <text v-if="!cusName" c-#B6BDBD>
-                请选择
-              </text>
-              <text v-else>
-                {{ cusName }}
-              </text>
-            </view>
-          </wd-cell>
-          <wd-cell title="使用卡项" is-link @click="toSelCus()">
-            <view>
-              <text v-if="!cusName" c-#B6BDBD>
-                请选择
-              </text>
-              <text v-else>
-                {{ cusName }}
-              </text>
-            </view>
-          </wd-cell>
-        </wd-cell-group>
-      </view>
-      <view flex flex-xr pt10px pr20px>
-        <text>
-          <text>小计：</text>
-          <text c-#FA483C>
-            ￥9.00
-          </text>
-        </text>
-      </view>
-    </view> -->
     <view bg-white py10px px20px pr h65px @click="toAddProdServs()">
       <view class="sp abs-cc">
         +&nbsp;添加商品
