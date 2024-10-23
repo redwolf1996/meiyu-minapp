@@ -14,8 +14,8 @@ import type { DashBoardData } from './types'
 
 const toast = useToast()
 const menuButtonWidth = ref(0)
-const userInfo = useUserStore()?.userInfo
-const storeInfo = userInfo?.storeList?.[0]
+const userInfo = computed(() => useUserStore()?.userInfo)
+const storeInfo = computed(() => userInfo.value?.storeList?.[0])
 const info = ref<DashBoardData>()
 const isOvertime = ref(false)
 
@@ -44,8 +44,10 @@ async function initStore() {
   const res = await request.get<any>('/business/info')
   useUserStore().setUserInfo(res.data)
 
-  const org = userInfo.orgInfo
-  if (!userInfo?.storeList?.length) { // 如果店铺未创建
+  const org = userInfo.value.orgInfo
+  console.log(userInfo.value)
+  console.log(`storeList size:${userInfo.value?.storeList?.length}`)
+  if (!userInfo.value?.storeList?.length) { // 如果店铺未创建
     return uni.navigateTo({ url: '/pagesA/init/steps/step1' })
   }
   else if (!org.staffCountStatus || !org.productCountStatus || !org.serviceCountStatus) { // 如果新手引导未完成
