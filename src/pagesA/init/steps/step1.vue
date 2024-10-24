@@ -54,6 +54,8 @@ async function save() {
   await request.post<any>('/business/store', form)
   const res = await request.get<any>('/business/info')
   useUserStore().setUserInfo(res.data)
+  uni.showToast({ title: '创建店铺成功' })
+  await sleep(1000)
   uni.redirectTo({ url: '/pagesA/init/steps/index' })
 }
 </script>
