@@ -17,7 +17,10 @@ export const useUserStore = defineStore(
       userInfo.value = merge(userInfo.value, val)
     }
     function clearUserInfo() {
-      userInfo.value = merge(userInfo.value, null)
+      userInfo.value = merge(userInfo.value, {
+        token: null,
+        storeList: [],
+      })
     }
 
     return {

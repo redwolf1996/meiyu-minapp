@@ -45,8 +45,6 @@ async function initStore() {
   useUserStore().setUserInfo(res.data)
 
   const org = userInfo.value.orgInfo
-  console.log(userInfo.value)
-  console.log(`storeList size:${userInfo.value?.storeList?.length}`)
   if (!userInfo.value?.storeList?.length) { // 如果店铺未创建
     return uni.navigateTo({ url: '/pagesA/init/steps/step1' })
   }
