@@ -53,7 +53,6 @@ onShow(() => {
         return func_mul(func_sub(item.goodsPrice, item.cardReduceAmount), item.goodsCount)
       })
     })
-    console.log(form.value)
   }
 })
 
