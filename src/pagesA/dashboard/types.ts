@@ -81,7 +81,7 @@ export interface BusinessInfo {
   /**
    * 我关联的店铺
    */
-  storeList: StoreList[]
+  storeList: StoreList[] | null
   updateTime: string
   /**
    * 用户名，姓名

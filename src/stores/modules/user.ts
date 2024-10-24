@@ -19,7 +19,7 @@ export const useUserStore = defineStore(
     function clearUserInfo() {
       userInfo.value = merge(userInfo.value, {
         token: null,
-        storeList: [],
+        storeList: null,
       })
     }
 
@@ -61,7 +61,7 @@ interface UserInfo {
   othersInviteCode: string // 被邀请的邀请码
   phone: string
   status: 1 | 2 // 1正常 2禁用
-  storeList: StoreInfo[]
+  storeList: StoreInfo[] | null
   updateTime: string
   userName: string
 }

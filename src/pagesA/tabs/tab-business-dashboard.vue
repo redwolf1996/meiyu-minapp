@@ -45,7 +45,7 @@ async function initStore() {
   useUserStore().setUserInfo(res.data)
 
   const org = userInfo.value.orgInfo
-  if (!userInfo.value?.storeList?.length) { // 如果店铺未创建
+  if (!userInfo.value?.storeList?.length || !userInfo.value.storeList === null) { // 如果店铺未创建
     return uni.navigateTo({ url: '/pagesA/init/steps/step1' })
   }
   else if (!org.staffCountStatus || !org.productCountStatus || !org.serviceCountStatus) { // 如果新手引导未完成
