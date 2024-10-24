@@ -9,7 +9,7 @@ const { colPickerData, findChildrenByCode } = useColPickerData()
 const imageValue = ref<any>([])
 const form: any = reactive({
   storeName: '',
-  logo: computed(() => imageValue.value[0].url),
+  logo: computed(() => imageValue.value?.[0]?.url),
   phone: '',
   address: '',
   desc: '',

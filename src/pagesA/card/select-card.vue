@@ -73,12 +73,28 @@ function changeCheck() {
         :throttle="false"
       >
         <view p12px>
-          <view v-for="(itm, idx) in item.items" :key="`itm-${idx}`" h132px mb12px>
+          <view v-for="(itm, idx) in item.items" :key="`itm-${idx}`" h132px mb12px pr>
             <image
               style="width: 100%;height: 132px;"
               mode="aspectFit"
               :src="`${IMG_BASE}/bg_czk.png`"
             />
+            <view class="txt">
+              <view>
+                <view>{{ itm.name }}</view>
+                <view>{{ itm.type }}</view>
+              </view>
+              <view>
+                <text>本金 ￥1000.00</text>
+                <text>赠金 ￥1000.00</text>
+              </view>
+              <view>
+                有效期：永久有效
+              </view>
+              <view>
+                查看详情>
+              </view>
+            </view>
             <!-- <view>1</view>
             <view>2</view>
             <view>3</view>
@@ -99,6 +115,16 @@ page {
 </style>
 
 <style lang='scss' scoped>
+.txt {
+  color: #ffffff;
+  position: absolute;
+  height: 132px;
+  width: 100%;
+  z-index: 200;
+  border: 2px solid black;
+  left: 0;
+  top: 0;
+}
 .wrapper {
   display: flex;
   height: calc(100vh - 50px);
