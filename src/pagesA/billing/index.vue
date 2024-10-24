@@ -189,7 +189,7 @@ function toAddProdServs() {
         </view>
         <view>
           <wd-cell-group :border="true">
-            <wd-cell title="手艺人" is-link @click="toSelectStaff(index)">
+            <wd-cell v-if="item.goodsType === 1" title="手艺人" is-link @click="toSelectStaff(index)">
               <view>
                 <text v-if="!item.artisan" c-#B6BDBD>
                   请选择
