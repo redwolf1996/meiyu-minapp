@@ -53,7 +53,6 @@ function handleConfirm({ value }) {
 async function save() {
   await request.post<any>('/business/store', form)
   const res = await request.get<any>('/business/info')
-  console.log(res.data)
   useUserStore().setUserInfo(res.data)
   uni.redirectTo({ url: '/pagesA/init/steps/index' })
 }

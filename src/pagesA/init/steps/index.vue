@@ -62,7 +62,9 @@ onShow(() => {
   }
 })
 
-function toAdd(path: string) {
+function toAdd(path: string, status: number) {
+  if (status !== 0)
+    return false
   uni.navigateTo({ url: path })
 }
 </script>
@@ -89,7 +91,7 @@ function toAdd(path: string) {
     />
   </view>
   <view mx-40rpx fs-28>
-    <view v-for="(item, index) in arr" :key="index" mb-30rpx>
+    <view v-for="(item, index) in arr" :key="index" mb-30rpx @click="toAdd(item.path, item.status)">
       <view mb-16rpx color-999>
         第{{ item.step }}步
       </view>
@@ -102,7 +104,7 @@ function toAdd(path: string) {
             </view>
           </view>
           <view flex tc flex-cc>
-            <view v-if="item.status === 0" pr-10rpx theme-color @click="toAdd(item.path)">
+            <view v-if="item.status === 0" pr-10rpx theme-color>
               去添加
             </view>
             <view v-if="item.status === 1" flex pr-10rpx color-2ecc71 flex-cc>
