@@ -21,7 +21,10 @@ export interface CardList {
   name: string
   price: number
   secondType: number
-  type: number
+  /**
+   * 卡类型 1->次卡，2->充值卡，3->折扣卡
+   */
+  type: 1 | 2 | 3
   checked?: boolean
 }
 

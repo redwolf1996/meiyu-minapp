@@ -79,20 +79,45 @@ function changeCheck() {
               mode="aspectFit"
               :src="`${IMG_BASE}/bg_czk.png`"
             />
-            <view class="txt">
+            <view class="txt" flex flex-y flex-bt>
               <view>
-                <view>{{ itm.name }}</view>
-                <view>{{ itm.type }}</view>
+                <view flex flex-bt flex-ac>
+                  <view fs-14px>
+                    {{ itm.name }}
+                  </view>
+                  <view
+                    text-20rpx w-88rpx h-40rpx lh-40rpx tc flex flex-cc
+                    style="background: transparent;border-radius: 32rpx;border: 1px solid #fff;color: #fff"
+                  >
+                    {{ CardTypeMap[itm.type] }}
+                  </view>
+                </view>
+                <view fs-14px mt-10px>
+                  <template v-if="itm.type === 1">
+                    <text>￥{{ itm.price }}&nbsp;</text>
+                    <text>权益次数：{{ itm.gift }}次</text>
+                  </template>
+                  <template v-if="itm.type === 2">
+                    <text>本金￥{{ itm.price }}&nbsp;</text>
+                    <text>赠金￥{{ itm.gift }}</text>
+                  </template>
+                  <template v-if="itm.type === 3">
+                    <text>￥{{ itm.price }}&nbsp;</text>
+                    <text>6-9折</text>
+                  </template>
+                </view>
+                <view fs-12px mt-20px>
+                  <text>有效期：</text>
+                  <text v-if="itm.expires === 0">
+                    永久有效
+                  </text>
+                  <text v-else>
+                    购买后{{ itm.expires }}天内有效
+                  </text>
+                </view>
               </view>
-              <view>
-                <text>本金 ￥1000.00</text>
-                <text>赠金 ￥1000.00</text>
-              </view>
-              <view>
-                有效期：永久有效
-              </view>
-              <view>
-                查看详情>
+              <view fs-12px flex flex-ac flex-xr>
+                查看详情&nbsp;>
               </view>
             </view>
             <!-- <view>1</view>
@@ -124,6 +149,7 @@ page {
   border: 2px solid black;
   left: 0;
   top: 0;
+  padding: 8px;
 }
 .wrapper {
   display: flex;
