@@ -186,6 +186,13 @@
           }
         },
         {
+          "path": "card/detail",
+          "type": "page",
+          "style": {
+            "navigationBarTitleText": "查看详情"
+          }
+        },
+        {
           "path": "card/list",
           "type": "page",
           "style": {

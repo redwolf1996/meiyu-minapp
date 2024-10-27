@@ -10,6 +10,11 @@ import { flatten } from 'lodash-es'
 const active = ref<number>(0)
 const scrollTop = ref<number>(0)
 const categories = ref<CatsItemsTree<CardList>[]>([])
+const cardImgName = { // 1->次卡，2->充值卡，3->折扣卡
+  1: 'bg_ck',
+  2: 'bg_czk',
+  3: 'bg_zkk',
+}
 
 onLoad(async () => {
   const res = await request.get<AllItems>('/business/goods_all', { storeId })
@@ -41,13 +46,17 @@ function handleChange({ value }) {
   })
 }
 
+function toDetail(id) {
+  uni.navigateTo({ url: `/pagesA/card/detail?id=${id}` })
+}
+
 function changeCheck() {
-  let servs = []
-  servs = categories.value.filter((v) => {
-    return v.items.length > 0
-  }).map(v1 => toRaw(v1.items))
-  servs = flatten(toRaw(servs))
-  checkedServs.value = servs.filter(v => v.checked)
+  // let servs = []
+  // servs = categories.value.filter((v) => {
+  //   return v.items.length > 0
+  // }).map(v1 => toRaw(v1.items))
+  // servs = flatten(toRaw(servs))
+  // checkedServs.value = servs.filter(v => v.checked)
 }
 </script>
 
@@ -77,10 +86,10 @@ function changeCheck() {
             <image
               style="width: 100%;height: 132px;"
               mode="aspectFit"
-              :src="`${IMG_BASE}/bg_czk.png`"
+              :src="`${IMG_BASE}/cards/${cardImgName[itm.type]}.png`"
             />
             <view class="txt" flex flex-y flex-bt>
-              <view>
+              <view p12px flex-grow-1>
                 <view flex flex-bt flex-ac>
                   <view fs-14px>
                     {{ itm.name }}
@@ -106,7 +115,7 @@ function changeCheck() {
                     <text>6-9折</text>
                   </template>
                 </view>
-                <view fs-12px mt-20px>
+                <view fs-12px mt-10px>
                   <text>有效期：</text>
                   <text v-if="itm.expires === 0">
                     永久有效
@@ -116,7 +125,12 @@ function changeCheck() {
                   </text>
                 </view>
               </view>
-              <view fs-12px flex flex-ac flex-xr>
+              <view
+                fs-12px
+                flex flex-ac flex-xr h30px w100% pr12px style="background-color: rgba(0, 0, 0, 0.2);
+              border-bottom-left-radius: 4px;border-bottom-right-radius: 4px"
+                @click="toDetail(itm.id)"
+              >
                 查看详情&nbsp;>
               </view>
             </view>
@@ -146,10 +160,8 @@ page {
   height: 132px;
   width: 100%;
   z-index: 200;
-  border: 2px solid black;
   left: 0;
   top: 0;
-  padding: 8px;
 }
 .wrapper {
   display: flex;
