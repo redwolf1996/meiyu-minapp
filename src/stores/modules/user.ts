@@ -102,4 +102,6 @@ interface StoreInfo {
   province?: string
   city?: string
   county?: string
+  roleCode?: number
+  roleDesc?: string
 }

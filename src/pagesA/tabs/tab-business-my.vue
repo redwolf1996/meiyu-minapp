@@ -5,6 +5,9 @@ style:
 </route>
 
 <script lang="ts" setup>
+const userInfo = computed(() => useUserStore()?.userInfo)
+const storeInfo = computed(() => userInfo.value?.storeList?.[0])
+
 function toRenew() {
   uni.navigateTo({ url: '/pagesA/my/renew' })
 }
@@ -51,25 +54,25 @@ function toFeedBack() {
       />
       <view flex-1 flex flex-y flex-bt h64px pr>
         <view c-141414 f18>
-          Hailey
+          {{ userInfo.userName }}
         </view>
         <view flex flex-ac gap5px>
           <text class="yy">
             营业中
           </text>
           <text f14 c-969699>
-            18888888888
+            {{ userInfo.phone }}
           </text>
         </view>
         <view c-969699 f14>
-          店铺拥有者
+          {{ storeInfo.isOwner ? '店铺拥有者' : storeInfo.roleDesc }}
         </view>
         <view tc pa right-0 top-4px>
           <view c-969699 fs-20 mb2px>
             积分
           </view>
           <view f18>
-            100
+            {{ userInfo.orgInfo.integration }}
           </view>
         </view>
       </view>
@@ -88,7 +91,7 @@ function toFeedBack() {
             :src="`${IMG_BASE}/icon-v.png`"
           />
           <text color-white opacity-50 f12>
-            2024.10.14 到期
+            {{ userInfo.orgInfo.expiresTime }} 到期
           </text>
         </view>
         <view f12 color-white>
@@ -112,7 +115,7 @@ function toFeedBack() {
       <template #icon>
         <wd-icon name="home" size="18px" />
       </template>
-      <span f14 c-3B3D3D>美婷美甲美睫</span>
+      <span f14 c-3B3D3D>{{ storeInfo.storeName }}</span>
     </MyCell>
     <MyCell label="联系客服" noBorder @myclick="toServ()">
       <template #icon>
