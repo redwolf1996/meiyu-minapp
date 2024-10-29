@@ -44,45 +44,91 @@ onLoad(async (options) => {
         <view p12px flex-grow-1>
           <view flex flex-bt flex-ac>
             <view fs-14px>
-              {{ itm.name }}
+              {{ itm?.name }}
             </view>
             <view
               text-20rpx w-88rpx h-40rpx lh-40rpx tc flex flex-cc
               style="background: transparent;border-radius: 32rpx;border: 1px solid #fff;color: #fff"
             >
-              {{ CardTypeMap[itm.type] }}
+              {{ CardTypeMap[itm?.type] }}
             </view>
           </view>
           <view fs-14px mt-10px>
-            <template v-if="itm.type === 1">
-              <text>￥{{ itm.price }}&nbsp;</text>
-              <text>权益次数：{{ itm.gift }}次</text>
+            <template v-if="itm?.type === 1">
+              <text>￥{{ itm?.price }}&nbsp;</text>
+              <text>权益次数：{{ itm?.gift }}次</text>
             </template>
-            <template v-if="itm.type === 2">
-              <text>本金￥{{ itm.price }}&nbsp;</text>
-              <text>赠金￥{{ itm.gift }}</text>
+            <template v-if="itm?.type === 2">
+              <text>本金￥{{ itm?.price }}&nbsp;</text>
+              <text>赠金￥{{ itm?.gift }}</text>
             </template>
-            <template v-if="itm.type === 3">
-              <text>￥{{ itm.price }}&nbsp;</text>
-              <text>6-9折</text>
+            <template v-if="itm?.type === 3">
+              <text>￥{{ itm?.price }}&nbsp;</text>
+              <text>{{ getDiscounts(itm) }}折</text>
             </template>
           </view>
           <view fs-12px mt-10px>
             <text>有效期：</text>
-            <text v-if="itm.expires === 0">
+            <text v-if="itm?.expires === 0">
               永久有效
             </text>
             <text v-else>
-              购买后{{ itm.expires }}天内有效
+              购买后{{ itm?.expires }}天内有效
             </text>
           </view>
         </view>
       </view>
     </view>
   </view>
+
+  <view px20px>
+    <view c-#807D7D fs-16px mb22px>
+      卡项权益
+    </view>
+    <view flex flex-y gap12px>
+      <template v-if="itm?.info?.length">
+        <view v-for="(item, index) in itm?.info" :key="`info-${index}`" flex flex-ac flex-bt>
+          <view flex flex-ac gap-10px>
+            <view fs-14px class="serv">
+              <text>{{ item?.serviceName ? '服务' : '产品' }}</text>
+            </view>
+            <view>{{ item?.serviceName || item?.productName }}&nbsp;￥{{ item?.price }}</view>
+          </view>
+          <view>
+            <text v-if="itm?.type === 1">
+              {{ item?.equity }}次
+            </text>
+            <text v-else>
+              {{ item?.equity }}折
+            </text>
+          </view>
+        </view>
+      </template>
+    </view>
+  </view>
+  <view class="h30px" />
+  <view px20px>
+    <view c-#807D7D fs-16px mb22px>
+      赠送权益
+    </view>
+    <view flex flex-ac flex-bt>
+      <view>赠送金额</view>
+      <view>￥{{ itm?.gift ?? 0 }}</view>
+    </view>
+  </view>
 </template>
 
 <style lang='scss' scoped>
+.serv {
+  text-align: center;
+  color: #3d3d3d;
+  border: 1px solid #000;
+  border-radius: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4px 10px;
+}
 .txt {
   color: #ffffff;
   position: absolute;

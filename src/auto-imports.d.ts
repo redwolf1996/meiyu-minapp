@@ -66,6 +66,7 @@ declare global {
   const get24HoursQuarter: typeof import('./utils/index')['get24HoursQuarter']
   const getCurrentInstance: typeof import('vue')['getCurrentInstance']
   const getCurrentScope: typeof import('vue')['getCurrentScope']
+  const getDiscounts: typeof import('./utils/index')['getDiscounts']
   const getMenuButtonInfo: typeof import('./utils/index')['getMenuButtonInfo']
   const getStoreId: typeof import('./utils/index')['getStoreId']
   const h: typeof import('vue')['h']
@@ -417,6 +418,7 @@ declare module 'vue' {
     readonly get2: UnwrapRef<typeof import('./utils/math')['get2']>
     readonly getCurrentInstance: UnwrapRef<typeof import('vue')['getCurrentInstance']>
     readonly getCurrentScope: UnwrapRef<typeof import('vue')['getCurrentScope']>
+    readonly getDiscounts: UnwrapRef<typeof import('./utils/index')['getDiscounts']>
     readonly getMenuButtonInfo: UnwrapRef<typeof import('./utils/index')['getMenuButtonInfo']>
     readonly getStoreId: UnwrapRef<typeof import('./utils/index')['getStoreId']>
     readonly h: UnwrapRef<typeof import('vue')['h']>

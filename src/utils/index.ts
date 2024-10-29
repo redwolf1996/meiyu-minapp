@@ -1,6 +1,7 @@
 import pinia from '@/stores/index'
 import { useUserStore } from '@/stores/modules/user'
 import dayjs from 'dayjs'
+import { max, min } from 'lodash-es'
 
 export const IMG_BASE = import.meta.env.VITE_APP_IMG_BASE
 
@@ -137,4 +138,19 @@ export function calculateEndTime(startTime: string, duration: number | string) {
  */
 export function sleep(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms))
+}
+
+/**
+ * 获取卡项服务折扣的范围 如6-9折
+ */
+export function getDiscounts(itm: any) {
+  if (!itm?.info?.length)
+    return '--'
+  const arr = itm.info?.map((v) => {
+    return v.equity
+  })
+  if (arr.length === 1)
+    return arr[0]
+  else
+    return `${min(arr)}-${max(arr)}`
 }

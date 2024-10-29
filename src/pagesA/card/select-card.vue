@@ -112,7 +112,7 @@ function changeCheck() {
                   </template>
                   <template v-if="itm.type === 3">
                     <text>￥{{ itm.price }}&nbsp;</text>
-                    <text>6-9折</text>
+                    <text>{{ getDiscounts(itm) }}折</text>
                   </template>
                 </view>
                 <view fs-12px mt-10px>
