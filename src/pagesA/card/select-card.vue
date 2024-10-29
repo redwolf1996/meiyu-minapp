@@ -50,13 +50,8 @@ function toDetail(id) {
   uni.navigateTo({ url: `/pagesA/card/detail?id=${id}` })
 }
 
-function changeCheck() {
-  // let servs = []
-  // servs = categories.value.filter((v) => {
-  //   return v.items.length > 0
-  // }).map(v1 => toRaw(v1.items))
-  // servs = flatten(toRaw(servs))
-  // checkedServs.value = servs.filter(v => v.checked)
+function selectItem(itm: any) {
+  console.log(itm)
 }
 </script>
 
@@ -89,7 +84,7 @@ function changeCheck() {
               :src="`${IMG_BASE}/cards/${cardImgName[itm.type]}.png`"
             />
             <view class="txt" flex flex-y flex-bt>
-              <view p12px flex-grow-1>
+              <view p12px flex-grow-1 @click="selectItem(itm)">
                 <view flex flex-bt flex-ac>
                   <view fs-14px>
                     {{ itm.name }}
