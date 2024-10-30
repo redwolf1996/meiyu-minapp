@@ -79,7 +79,8 @@ function toBookDetail(item) {
   const bookingId = item.bookingId
   uni.navigateTo({ url: `/pagesA/book/detail?id=${bookingId}` })
 }
-function toCashing() {
+function toCashing() { // 开单收银
+  curCustomer.value = null // 进入页面前清空store内容
   uni.navigateTo({ url: '/pagesA/billing/index' })
 }
 function toOrderList() {
