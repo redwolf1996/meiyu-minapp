@@ -7,6 +7,7 @@ style:
 <script lang="ts" setup>
 import type { ListStaff } from '../staff/types'
 import type { BillModel } from './types'
+import { sum } from 'lodash-es'
 
 const listStaff = ref<ListStaff[]>([])
 const visibleStaff = ref(false)
@@ -23,6 +24,12 @@ const form = ref<BillModel>({
   customerCardId: null,
 })
 const cusName = computed(() => curCustomer.value?.name ?? '')
+const totalToPay = computed(() => {
+  if (!form.value.billingGoods.length)
+    return 0
+  const arr = form.value.billingGoods.map(v => v.amount)
+  return sum(arr)
+}) // 待付款金额
 
 onShow(() => {
   getStaff()
@@ -248,7 +255,7 @@ function toAddProdServs() {
           待收款:
         </text>
         <text fs-40 c-#FA483C>
-          ￥18.00
+          ￥{{ totalToPay }}
         </text>
       </text>
     </view>
