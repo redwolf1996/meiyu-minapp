@@ -6,7 +6,7 @@ style:
 <script lang="ts" setup></script>
 
 <template>
-  <view>支付</view>
+  <view bg-white />
 </template>
 
 <style lang='scss' scoped></style>

@@ -43,6 +43,7 @@ declare global {
   const createSharedComposable: typeof import('@vueuse/core')['createSharedComposable']
   const createTemplatePromise: typeof import('@vueuse/core')['createTemplatePromise']
   const createUnrefFn: typeof import('@vueuse/core')['createUnrefFn']
+  const curBilling: typeof import('./stores/common')['curBilling']
   const curClassify: typeof import('./stores/classify')['curClassify']
   const curCustomer: typeof import('./stores/common')['curCustomer']
   const customRef: typeof import('vue')['customRef']
@@ -400,6 +401,7 @@ declare module 'vue' {
     readonly checkedServs: UnwrapRef<typeof import('./stores/sel-base-item')['checkedServs']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
     readonly createApp: UnwrapRef<typeof import('vue')['createApp']>
+    readonly curBilling: UnwrapRef<typeof import('./stores/common')['curBilling']>
     readonly curClassify: UnwrapRef<typeof import('./stores/classify')['curClassify']>
     readonly curCustomer: UnwrapRef<typeof import('./stores/common')['curCustomer']>
     readonly customRef: UnwrapRef<typeof import('vue')['customRef']>

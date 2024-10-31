@@ -125,7 +125,10 @@ async function payLater() {
   uni.redirectTo({ url: '/pagesA/tabs/tab-business-dashboard' })
 }
 
-function toPay() {}
+function toPay() {
+  curBilling.value = form.value
+  uni.navigateTo({ url: '/pagesA/billing/pay' })
+}
 </script>
 
 <template>
