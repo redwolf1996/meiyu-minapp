@@ -19,7 +19,7 @@ const form = ref<BillModel>({
   adviserId: null,
   notes: '',
   amount: 0,
-  payType: 1,
+  payType: 0,
   billingGoods: [],
   customerCardId: null,
 })
@@ -113,6 +113,15 @@ function toSelCus() {
 function toAddProdServs() {
   uni.navigateTo({ url: '/pagesA/prod-servs' })
 }
+
+async function payLater() {
+  await request.post('/business/billing', form.value)
+  uni.showToast({ title: '待客户支付后，可找到该订单再次进行支付' })
+  await sleep(1000)
+  uni.redirectTo({ url: '/pagesA/tabs/tab-business-dashboard' })
+}
+
+function toPay() {}
 </script>
 
 <template>
@@ -261,14 +270,14 @@ function toAddProdServs() {
     </view>
     <view class="footer-inner">
       <view w120px>
-        <wd-button size="large" :plain="true" block>
+        <wd-button size="large" :plain="true" block @click="payLater()">
           <view flex flex-cc>
             <text>稍后付款</text>
           </view>
         </wd-button>
       </view>
       <view w104px>
-        <wd-button size="large" custom-class="theme-bg" block>
+        <wd-button size="large" custom-class="theme-bg" block @click="toPay()">
           <view flex flex-cc>
             <text>收款</text>
           </view>
