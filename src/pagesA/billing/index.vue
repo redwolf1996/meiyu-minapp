@@ -8,13 +8,17 @@ style:
 import type { ListStaff } from '../staff/types'
 import type { BillModel } from './types'
 import { sum } from 'lodash-es'
+import dayjs from 'dayjs'
 
 const listStaff = ref<ListStaff[]>([])
 const visibleStaff = ref(false)
 const curIndex = ref(0) // 商品和服务列表当前选择项的索引
+const orderTime = ref('')
 const form = ref<BillModel>({
   storeId,
-  orderTime: null,
+  orderTime: computed(() => {
+    return orderTime.value ? dayjs(orderTime.value).format('YYYY-MM-DD HH:mm:ss') : ''
+  }),
   storeCustomerId: computed(() => curCustomer.value?.customerId ?? null),
   adviserId: null,
   notes: '',
@@ -161,7 +165,7 @@ function toPay() {}
   </wd-popup>
 
   <wd-cell-group :border="true">
-    <wd-calendar v-model="form.orderTime" :z-index="12000" label="开单时间" type="datetime" @confirm="handleConfirm" />
+    <wd-calendar v-model="orderTime" :z-index="12000" label="开单时间" type="datetime" @confirm="handleConfirm" />
     <wd-cell title="客户" is-link @click="toSelCus()">
       <view>
         <text v-if="!cusName" c-#B6BDBD>

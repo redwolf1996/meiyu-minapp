@@ -22,7 +22,7 @@ export interface BillModel {
   /**
    * 开单时间
    */
-  orderTime: string
+  orderTime: string | ComputedRef<string>
   /**
    * 支付方式，暂时只支持一种支付方式，不支持组合支付 0:稍后支付 1:微信支付
    */
