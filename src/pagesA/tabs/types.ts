@@ -33,6 +33,10 @@ export interface DashBoardData {
    */
   vipCustomerCount: number
   waitCount: number
+  /**
+   * 未读消息数量
+   */
+  unreadNotice: number
 }
 
 export interface TodayBookingList {

@@ -109,18 +109,19 @@ function toMsg() {
           <view px-24rpx>
             {{ storeInfo?.storeName || '--' }}
           </view>
-          <view flex flex-y flex-cc pr-20rpx pr @click="toMsg()">
+          <view flex flex-y flex-cc pr-24rpx pr @click="toMsg()">
             <wd-img
               :width="28"
               :height="28"
               :src="`${IMG_BASE}/icon-msg.png`"
             />
             <text
+              v-if="info?.unreadNotice"
               style="right: 16rpx;top: -6rpx;"
               pa top-0 w-30rpx h-30rpx lh-30rpx tc bg-FE502E
               round color-fff font-size-20rpx
             >
-              3
+              {{ info?.unreadNotice }}
             </text>
           </view>
         </view>
