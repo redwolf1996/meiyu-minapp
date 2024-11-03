@@ -59,6 +59,7 @@ export interface FormService {
    * 当前门店
    */
   storeId: number
+  id?: number
 }
 
 export interface Color {
@@ -107,6 +108,7 @@ export interface FormProduct {
    * 单位
    */
   unit: string
+  id?: number
 }
 
 export interface FormStaff {
@@ -147,6 +149,7 @@ export interface FormStaff {
    * 姓名
    */
   userName: string
+  id?: number
 }
 
 export interface Scheduling {

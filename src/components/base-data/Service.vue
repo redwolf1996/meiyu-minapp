@@ -8,6 +8,9 @@ const props = withDefaults(defineProps<{
   showSkip: false,
 })
 
+type Mode = 'edit' | 'copy' | null
+const mode = ref<Mode>(null) // 修改还是复制
+
 const formRef = ref()
 const imageValue = ref<any>([])
 const form = reactive<FormService>({
@@ -17,7 +20,7 @@ const form = reactive<FormService>({
   duration: null,
   durationUnit: 'minute',
   imgs: computed(() => {
-    return imageValue.value.map((v: any) => v.fileID)
+    return imageValue.value.map((v: any) => v.url)
   }),
   price: null,
   price2: null,
@@ -26,11 +29,12 @@ const form = reactive<FormService>({
   payType: 1,
   serviceColor: '#EC5428',
   serverToType: [2],
+  id: null,
 })
 const catName = computed(() => curClassify.value.name)
 const colors = ref<Color[]>([{
   value: '#EC5428',
-  isActive: true,
+  isActive: false,
 }, {
   value: '#2F4BEC',
   isActive: false,
@@ -60,44 +64,120 @@ const colors = ref<Color[]>([{
   isActive: false,
 }])
 
-const selects1: GrigSelectItem[] = [
+const selects1 = ref<GrigSelectItem[]>([
   {
     label: '展示',
     value: 1,
-    isActive: true,
+    isActive: false,
   },
   {
     label: '不展示',
     value: 0,
     isActive: false,
   },
-]
+])
 
-const selects2: GrigSelectItem[] = [
+const selects2 = ref<GrigSelectItem[]>([
   {
     label: '到店服务',
     value: 2,
-    isActive: true,
+    isActive: false,
   },
   {
     label: '上门服务',
     value: 1,
     isActive: false,
   },
-]
+])
 
-const selects3: GrigSelectItem[] = [
+const selects3 = ref<GrigSelectItem[]>([
   {
     label: '在线支付',
     value: 1,
-    isActive: true,
+    isActive: false,
   },
   {
     label: '到店支付',
     value: 2,
     isActive: false,
   },
-]
+])
+
+onLoad((options) => {
+  form.id = +options?.id
+  mode.value = options?.mode
+  console.log(form.id, mode.value)
+  if (!mode.value) {
+    colors.value[0].isActive = true
+    selects1.value[0].isActive = true
+    selects2.value[0].isActive = true
+    selects1.value[0].isActive = true
+  }
+  if (form?.id > 0) {
+    if (mode.value === 'edit') {
+      uni.setNavigationBarTitle({ title: '修改服务' })
+    }
+    if (mode.value === 'copy') {
+      uni.setNavigationBarTitle({ title: '复制服务' })
+    }
+    setFormInfo()
+  }
+})
+
+// 修改和复制的时候用
+async function setFormInfo() {
+  const res = await request.get<any>(`/business/service/${form.id}`)
+  const data = res.data
+
+  form.id = data.id
+  form.name = data.name
+  curClassify.value.id = data.categoryId
+  curClassify.value.name = data.categoryName
+  form.duration = data.duration
+  imageValue.value = data.imgs.map((v: any, i: any) => {
+    return {
+      name: i,
+      url: v,
+      extname: 'img',
+    }
+  })
+  form.price = data.price
+  form.price2 = data.price2
+  richData.value.content = data.desc
+  form.isShow = data.isShow
+  form.payType = data.payType
+  form.serverToType = data.serverToType
+  selects1.value.map((v) => {
+    if (v.value === form.isShow) {
+      v.isActive = true
+    }
+    else {
+      v.isActive = false
+    }
+  })
+  selects2.value.map((v) => {
+    if (form.serverToType.includes(v.value)) {
+      v.isActive = true
+    }
+    else {
+      v.isActive = false
+    }
+  })
+  selects3.value.map((v) => {
+    if (v.value === form.payType) {
+      v.isActive = true
+    }
+    else {
+      v.isActive = false
+    }
+  })
+  form.serviceColor = data.serviceColor
+  colors.value.map((v) => {
+    if (v.value === data.serviceColor) {
+      v.isActive = true
+    }
+  })
+}
 
 function onClickColor(item: Color) {
   colors.value.forEach((v) => {
@@ -114,10 +194,20 @@ function toRichEdit() {
 }
 
 async function save() {
-  await request.post<any>('/business/service', form)
+  if (mode.value === 'edit')
+    await request.put<any>('/business/service', form)
+  else
+    await request.post<any>('/business/service', form)
   useUserStore().setUserInfo({ orgInfo: {
     serviceCountStatus: 1,
   } })
+  let msg = '添加成功'
+  if (mode.value === 'edit')
+    msg = '修改成功'
+  if (mode.value === 'copy')
+    msg = '复制成功'
+  uni.showToast({ title: msg })
+  await sleep(1000)
   uni.navigateBack()
 }
 
@@ -184,6 +274,7 @@ function toCats() {
         <uni-file-picker
           v-model="imageValue"
           fileMediatype="image"
+          return-type="array"
           mode="grid"
           :limit="5"
         />
@@ -217,7 +308,7 @@ function toCats() {
         <text>服务说明</text>
       </view>
       <!-- 0是初始状态 11是清空后还包含空标签 <p><br></p>的字符数 -->
-      <rich-text v-if="richData.len !== 0 && richData.len !== 11" :nodes="richData.content" />
+      <rich-text v-if="richData.content" :nodes="richData.content" />
       <wd-textarea
         v-else
         readonly
