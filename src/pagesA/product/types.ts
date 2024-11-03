@@ -49,3 +49,26 @@ export interface List {
   unit?: string
   [property: string]: any
 }
+
+export interface ReqModel {
+  /**
+   * 分类id
+   */
+  categoryId?: number
+  /**
+   * 名称模糊查询
+   */
+  name?: string
+  /**
+   * 页码，默认1，页码，默认1
+   */
+  pageNum?: number
+  /**
+   * 每页条数，默认10，每页条数，默认10
+   */
+  pageSize?: number
+  /**
+   * 当前门店必填
+   */
+  storeId: number
+}
