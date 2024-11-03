@@ -91,7 +91,6 @@ function toWorkTimes() {
         label="姓名"
         placeholder="请输入"
         suffix-icon="arrow-right"
-        clearable
         :rules="[{ required: true, message: '请填写姓名' }]"
       />
       <wd-input
@@ -119,6 +118,7 @@ function toWorkTimes() {
         v-model="form.roleCode"
         label="角色"
         align-right :columns="columnsRole"
+        clearable
       />
     </wd-cell-group>
 
