@@ -23,6 +23,7 @@ watch(() => searchText.value, (newVal) => {
 })
 
 function toAdd() {
+  resetCurClassify()
   uni.navigateTo({ url: '/pagesA/product/add' })
 }
 </script>

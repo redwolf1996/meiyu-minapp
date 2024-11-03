@@ -58,8 +58,7 @@ onShow(() => {
 })
 
 function resetStoreData() {
-  curClassify.value.id = null
-  curClassify.value.name = null
+  resetCurClassify()
   richData.value.content = ''
   checkedProds.value = []
   checkedServs.value = []
