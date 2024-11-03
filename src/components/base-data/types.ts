@@ -133,7 +133,7 @@ export interface FormStaff {
   /**
    * 角色
    */
-  roleCode?: number
+  roleCode?: number | string
   /**
    * 工作时间
    */

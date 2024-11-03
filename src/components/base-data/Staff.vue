@@ -32,7 +32,7 @@ const form = reactive<FormStaff>({
   phone: null,
   gender: 2,
   jobCode: 1,
-  roleCode: 1,
+  roleCode: '',
   notes: '',
   scheduling: computed(() => staffScheduling.value),
   serviceCategory: computed(() => curClassify.value.id),
@@ -91,6 +91,7 @@ function toWorkTimes() {
         label="姓名"
         placeholder="请输入"
         suffix-icon="arrow-right"
+        clearable
         :rules="[{ required: true, message: '请填写姓名' }]"
       />
       <wd-input
@@ -136,7 +137,7 @@ function toWorkTimes() {
       </view>
       <wd-cell-group :border="true">
         <MyCellGroup>
-          <MyCell noBorder required label="工作时间" @myclick="toWorkTimes()">
+          <MyCell noBorder label="工作时间" @myclick="toWorkTimes()">
             <text v-if="!staffScheduling.length" f14 c-bfbfbf pr-5px>
               请选择
             </text>
@@ -146,7 +147,7 @@ function toWorkTimes() {
               </view>
             </view>
           </MyCell>
-          <MyCell noBorder borderTop required label="服务分类" @myclick="toCats()">
+          <MyCell noBorder borderTop label="服务分类" @myclick="toCats()">
             <text v-if="!catName" f14 c-bfbfbf pr-5px>
               请选择
             </text>
