@@ -106,7 +106,6 @@ const selects3 = ref<GrigSelectItem[]>([
 onLoad((options) => {
   form.id = +options?.id
   mode.value = options?.mode
-  console.log(form.id, mode.value)
   if (!mode.value) {
     colors.value[0].isActive = true
     selects1.value[0].isActive = true

@@ -45,13 +45,13 @@ function toAdd() {
   uni.navigateTo({ url: '/pagesA/service/add' })
 }
 
-async function dialogConfirm() { // 删除卡项
+async function dialogConfirm() { // 删除
   await request.delete<any>(`/business/service/${curItem.value.id}`)
   search()
   deleteDialogRef.value.close()
 }
 
-function selAction(e) { // 修改、删除、复制当前卡项
+function selAction(e) { // 修改、删除、复制
   if (e.index === 0) { // 修改
     uni.navigateTo({ url: `/pagesA/service/add?id=${curItem.value.id}&mode=edit` })
   }
@@ -86,7 +86,7 @@ function showItemMenu(item: List) {
           <view flex flex-ac>
             <view class="bd-left" />
             <view pl-10px>
-              卡项列表
+              服务列表
             </view>
             <span f14>
               （共<span style="color:#1A66FF">{{ total }}</span>项）
