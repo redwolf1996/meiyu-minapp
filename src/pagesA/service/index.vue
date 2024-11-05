@@ -42,6 +42,7 @@ onShow(() => {
 
 function toAdd() {
   resetCurClassify()
+  resetRichData()
   uni.navigateTo({ url: '/pagesA/service/add' })
 }
 

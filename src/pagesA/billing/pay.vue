@@ -172,7 +172,7 @@ function selectItem(code: number, index: number) {
   border: 1px solid #d8d8d8;
   padding: 14px;
   margin-top: 20px;
-  position: relative;
+  position: relative !important;
   &.active {
     border: 1px solid #2d60ff;
   }

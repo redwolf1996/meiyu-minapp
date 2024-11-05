@@ -42,6 +42,7 @@ onShow(() => {
 
 function toAdd() {
   resetCurClassify()
+  resetRichData()
   uni.navigateTo({ url: '/pagesA/product/add' })
 }
 
@@ -128,7 +129,7 @@ function showItemMenu(item: List) {
                 :height="16"
                 :src="`${IMG_BASE}/icon-stock.png`"
               />
-              <span f12>{{ item.duration }}分钟</span>
+              <span f12>{{ item.inventory }}</span>
             </view>
             <wd-img
               :width="20"
@@ -141,17 +142,8 @@ function showItemMenu(item: List) {
             {{ item.name }}
           </view>
           <view f12 color-9A9FA5>
-            <text>
-              {{ item.payType === 1 ? '在线付' : '到店付' }}
-            </text>
-            <text v-if="item.isToStore" pl5px>
-              支持到店
-            </text>
-            <text v-if="item.isToDoor" pl5px>
-              支持上门
-            </text>
-            <text v-if="!item.isShow" pl5px>
-              网店不可销售
+            <text pl5px>
+              {{ item.isShow ? '网店展示' : '网店不展示' }}
             </text>
           </view>
           <view>
