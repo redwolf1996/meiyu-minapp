@@ -57,6 +57,7 @@ const payTypes = ref([
     active: false,
   },
 ])
+const payMode = ref<1 | 2>(2) // 1线下记账收款 2储值卡支付
 
 function pay() {}
 
@@ -70,18 +71,18 @@ function selectItem(code: number, index: number) {
 </script>
 
 <template>
-  <view bg-white py20px px40px>
-    <view tc mb20px>
-      <text fs-14px>
-        待收款：
-      </text>
-      <text fs-20px c-#FA483C>
-        ￥18.00
-      </text>
-    </view>
-
-    <view class="pay-grid" gap20px mb20px>
-      <view v-for="(item, index) in payTypes" :key="`code-${index}`" class="item" @click="selectItem(item.code, index)">
+  <view tc bg-white py20px>
+    <text fs-14px>
+      待收款：
+    </text>
+    <text fs-20px c-#FA483C>
+      ￥18.00
+    </text>
+  </view>
+  <view h12px wp100 bg-#F6F6FB />
+  <view bg-white py20px px20px>
+    <view v-if="payMode === 1" class="pay-grid" gap20px mb20px>
+      <view v-for="(item, index) in payTypes" :key="`code-${index}`" class="item" :class="{ active: item.active }" @click="selectItem(item.code, index)">
         <text abs-cc fs-14px font-bold>
           {{ item.desc }}
         </text>
@@ -95,6 +96,56 @@ function selectItem(code: number, index: number) {
           :height="15.4"
           :src="`${IMG_BASE}/corner-right.png`"
         />
+      </view>
+    </view>
+
+    <view v-if="payMode === 2">
+      <view fs-16px>
+        会员余额
+      </view>
+      <view class="card-item active">
+        <view fs-16px mb10px>
+          VIP充值年卡
+        </view>
+        <view flex flex-ac mb10px>
+          <view fs-20px fb>
+            ￥12654.33
+          </view>
+          <view fs-14px c-#FA483C pl20px>
+            将消耗￥18.00
+          </view>
+        </view>
+        <view flex flex-ac fs-14px>
+          <view>本金￥1000</view>
+          <view pl20px>
+            赠金￥200
+          </view>
+        </view>
+        <wd-img
+          custom-class="corner"
+          :width="16"
+          :height="15.4"
+          :src="`${IMG_BASE}/corner-right.png`"
+        />
+      </view>
+      <view class="card-item">
+        <view fs-16px mb10px>
+          VIP充值年卡
+        </view>
+        <view flex flex-ac mb10px>
+          <view fs-20px fb>
+            ￥12654.33
+          </view>
+          <view fs-14px c-#FA483C pl20px>
+            将消耗￥18.00
+          </view>
+        </view>
+        <view flex flex-ac fs-14px c-#818181>
+          <view>本金￥1000</view>
+          <view pl20px>
+            赠金￥200
+          </view>
+        </view>
       </view>
     </view>
   </view>
@@ -117,6 +168,15 @@ function selectItem(code: number, index: number) {
 </style>
 
 <style lang='scss' scoped>
+.card-item {
+  border: 1px solid #d8d8d8;
+  padding: 14px;
+  margin-top: 20px;
+  position: relative;
+  &.active {
+    border: 1px solid #2d60ff;
+  }
+}
 .pay-grid {
   display: grid;
   grid-gap: 20rpx;
@@ -126,7 +186,6 @@ function selectItem(code: number, index: number) {
   border: 1px solid #d8d8d8;
   border-radius: 2px;
   position: relative;
-  // width: 50%;
   height: 60px;
   .abs-cc {
     display: block;
