@@ -9,6 +9,8 @@ const props = withDefaults(defineProps<{
   showSkip: false,
 })
 
+type Mode = 'edit' | 'copy' | null
+const mode = ref<Mode>(null) // 修改还是复制
 const formRef = ref()
 const imageValue = ref<any>([])
 const form = reactive<FormProduct>({
@@ -24,21 +26,71 @@ const form = reactive<FormProduct>({
   isShow: 1,
   unit: '',
   inventory: 0,
+  id: null,
 })
 const catName = computed(() => curClassify.value.name)
 
-const selects1: GrigSelectItem[] = [
+const selects1 = ref<GrigSelectItem[]>([
   {
     label: '展示',
     value: 1,
-    isActive: true,
+    isActive: false,
   },
   {
     label: '不展示',
     value: 0,
     isActive: false,
   },
-]
+])
+
+onLoad((options) => {
+  form.id = +options?.id
+  mode.value = options?.mode
+  if (!mode.value) {
+    selects1.value[0].isActive = true
+  }
+  if (form?.id > 0) {
+    if (mode.value === 'edit') {
+      uni.setNavigationBarTitle({ title: '修改产品' })
+    }
+    if (mode.value === 'copy') {
+      uni.setNavigationBarTitle({ title: '复制产品' })
+    }
+    setFormInfo()
+  }
+})
+
+// 修改和复制的时候用
+async function setFormInfo() {
+  const res = await request.get<any>(`/business/product/${form.id}`)
+  const data = res.data
+
+  form.id = data.id
+  form.name = data.name
+  curClassify.value.id = data.categoryId
+  curClassify.value.name = data.categoryName
+  form.unit = data.unit
+  form.inventory = data.inventory
+  imageValue.value = data.imgs.map((v: any, i: any) => {
+    return {
+      name: i,
+      url: v,
+      extname: 'img',
+    }
+  })
+  form.price = data.price
+  form.price2 = data.price2
+  richData.value.content = data.desc
+  form.isShow = data.isShow
+  selects1.value.map((v) => {
+    if (v.value === form.isShow) {
+      v.isActive = true
+    }
+    else {
+      v.isActive = false
+    }
+  })
+}
 
 function toRichEdit() {
   richData.value.key = 'product'
@@ -47,10 +99,20 @@ function toRichEdit() {
 }
 
 async function save() {
-  await request.post<any>('/business/product', form)
+  if (mode.value === 'edit')
+    await request.put<any>('/business/product', form)
+  else
+    await request.post<any>('/business/product', form)
   useUserStore().setUserInfo({ orgInfo: {
-    productCountStatus: 1,
+    serviceCountStatus: 1,
   } })
+  let msg = '添加成功'
+  if (mode.value === 'edit')
+    msg = '修改成功'
+  if (mode.value === 'copy')
+    msg = '复制成功'
+  uni.showToast({ title: msg })
+  await sleep(1000)
   uni.navigateBack()
 }
 
@@ -146,7 +208,7 @@ function toCats() {
         <text>产品说明</text>
       </view>
       <!-- 0是初始状态 11是清空后还包含空标签 <p><br></p>的字符数 -->
-      <rich-text v-if="richData.len !== 0 && richData.len !== 11" :nodes="richData.content" />
+      <rich-text v-if="richData.content" :nodes="richData.content" />
       <wd-textarea
         v-else
         readonly

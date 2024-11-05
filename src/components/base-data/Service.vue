@@ -110,7 +110,7 @@ onLoad((options) => {
     colors.value[0].isActive = true
     selects1.value[0].isActive = true
     selects2.value[0].isActive = true
-    selects1.value[0].isActive = true
+    selects3.value[0].isActive = true
   }
   if (form?.id > 0) {
     if (mode.value === 'edit') {
