@@ -4,6 +4,41 @@ style:
 </route>
 
 <script lang="ts" setup>
+import type { Staff } from './types'
+
+const id = ref(0)
+const detailInfo = ref<Staff>(null)
+const weeks = {
+  1: '周一',
+  2: '周二',
+  3: '周三',
+  4: '周四',
+  5: '周五',
+  6: '周六',
+  7: '周日',
+}
+const deleteDialogRef = ref()
+
+onLoad((options) => {
+  id.value = +options?.id
+})
+
+onShow(async () => {
+  const res = await request.get<Staff>(`/business/staff/${id.value}`)
+  detailInfo.value = res.data
+})
+
+async function dialogConfirm() { // 删除
+  deleteDialogRef.value.close()
+  await request.delete<any>(`/business/staff/${id.value}`)
+  uni.showToast({ title: '删除成功' })
+  await sleep(500)
+  uni.navigateBack()
+}
+
+function toDelete() {
+  deleteDialogRef.value.open()
+}
 </script>
 
 <template>
@@ -11,10 +46,10 @@ style:
     <text c-1A66FF>
       修改
     </text>
-    <text c-1A66FF>
+    <!-- <text c-1A66FF>
       邀请登录
-    </text>
-    <text c-F96229>
+    </text> -->
+    <text c-F96229 @click="toDelete()">
       删除
     </text>
   </view>
@@ -25,15 +60,15 @@ style:
         :height="104"
         mode="center"
         :round="true"
-        :src="`${IMG_BASE}/cat.png`"
+        :src="detailInfo?.avatar"
       />
     </view>
     <view mt-20rpx fb fs-40>
-      麦子欢
+      {{ detailInfo?.userName }}
     </view>
     <view mt-20rpx flex flex-cc gap-10rpx>
       <text c-95969D f12>
-        店铺拥有者
+        {{ detailInfo?.jobDesc }}
       </text>
       <wd-img
         :width="11"
@@ -41,13 +76,13 @@ style:
         :src="`${IMG_BASE}/icon-owner.png`"
       />
     </view>
-    <view f12 mt-10rpx>
+    <!-- <view f12 mt-10rpx>
       转移权限
-    </view>
+    </view> -->
     <view mt-40rpx flex flex-ac flex-cc gap-140rpx tc>
       <view>
         <view f16 fb>
-          2700
+          {{ detailInfo?.performance ?? '--' }}
         </view>
         <view h-20rpx />
         <view f12 fb c-95969D>
@@ -56,7 +91,7 @@ style:
       </view>
       <view>
         <view f16 fb>
-          19
+          {{ detailInfo?.bookingCount }}
         </view>
         <view h-20rpx />
         <view f12 fb c-95969D>
@@ -65,7 +100,7 @@ style:
       </view>
       <view>
         <view f16 fb>
-          14
+          {{ detailInfo?.customerCount }}
         </view>
         <view h-20rpx />
         <view f12 fb c-95969D>
@@ -90,7 +125,7 @@ style:
             姓名
           </text>
           <text class="val">
-            麦子欢
+            {{ detailInfo?.userName }}
           </text>
         </view>
         <view class="base">
@@ -98,7 +133,7 @@ style:
             性别
           </text>
           <text class="val">
-            女
+            {{ detailInfo?.gender }}
           </text>
         </view>
         <view class="base">
@@ -106,7 +141,7 @@ style:
             联系电话
           </text>
           <text class="val">
-            13800000000
+            {{ detailInfo?.phone }}
           </text>
         </view>
         <view class="base">
@@ -114,7 +149,7 @@ style:
             职位
           </text>
           <text class="val">
-            营销顾问
+            {{ detailInfo?.jobDesc }}
           </text>
         </view>
         <view class="base">
@@ -122,23 +157,23 @@ style:
             角色
           </text>
           <text class="val">
-            顾问
+            {{ detailInfo?.roleDesc }}
           </text>
         </view>
-        <view class="base">
+        <!-- <view class="base">
           <text class="label">
             账号
           </text>
           <text class="val">
             xxxxxxxx
           </text>
-        </view>
+        </view> -->
         <view class="base">
           <text class="label">
             备注
           </text>
           <text class="val">
-            麦子欢
+            {{ detailInfo?.notes }}
           </text>
         </view>
         <view class="base">
@@ -146,7 +181,7 @@ style:
             创建时间
           </text>
           <text class="val">
-            2024-04-12 10:45
+            {{ detailInfo?.createTime }}
           </text>
         </view>
       </view>
@@ -166,21 +201,32 @@ style:
           <text class="label">
             工作时间
           </text>
-          <text class="val">
-            周一至周日  09:00-21:00
-          </text>
+          <view class="val">
+            <view v-for="(item, index) in detailInfo?.scheduling" :key="`sad-${index}`">
+              {{ weeks[item.weekCode] }}&nbsp;&nbsp;{{ item.startTime }}-{{ item.endTime }}
+            </view>
+          </view>
         </view>
         <view class="base base2">
           <text class="label">
             服务分类
           </text>
           <text class="val">
-            基础护理，针灸，刮痧
+            {{ detailInfo?.serviceCategory?.map((v) => v.serviceCategoryName)?.join('，') }}
           </text>
         </view>
       </view>
     </view>
   </view>
+
+  <uni-popup ref="deleteDialogRef" type="dialog">
+    <uni-popup-dialog
+      type="warn"
+      cancelText="取消" confirmText="确定"
+      title="提示" content="删除后不可恢复，确定删除吗？"
+      @confirm="dialogConfirm"
+    />
+  </uni-popup>
 </template>
 
 <style lang='scss' scoped>

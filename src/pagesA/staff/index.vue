@@ -20,8 +20,8 @@ function toAdd() {
   uni.navigateTo({ url: '/pagesA/staff/add' })
 }
 
-function toStaffDetail() {
-  uni.navigateTo({ url: '/pagesA/staff/detail' })
+function toStaffDetail(id: number) {
+  uni.navigateTo({ url: `/pagesA/staff/detail?id=${id}` })
 }
 
 async function getList() {
@@ -45,7 +45,11 @@ async function getList() {
     </view>
   </view>
   <view px-20rpx py-10rpx>
-    <view v-for="(item, index) in dataList" :key="`ss-${index}`" py-30rpx pl-30rpx pr-40rpx flex flex-ac flex-bt mb20px class="border-gray" @click="toStaffDetail()">
+    <view
+      v-for="(item, index) in dataList" :key="`ss-${index}`"
+      py-30rpx pl-30rpx pr-40rpx flex flex-ac flex-bt mb20px class="border-gray"
+      @click="toStaffDetail(item.storeStaffId)"
+    >
       <view flex flex-ac flex-bt gap-40rpx>
         <wd-img
           :width="75"
