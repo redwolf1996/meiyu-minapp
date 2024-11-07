@@ -39,11 +39,15 @@ async function dialogConfirm() { // 删除
 function toDelete() {
   deleteDialogRef.value.open()
 }
+
+function toEdit() {
+  uni.navigateTo({ url: `/pagesA/staff/add?id=${id.value}` })
+}
 </script>
 
 <template>
   <view f14 flex flex-xr gap-40rpx px-50rpx pb-50rpx pt-20rpx>
-    <text c-1A66FF>
+    <text c-1A66FF @click="toEdit()">
       修改
     </text>
     <!-- <text c-1A66FF>
@@ -58,7 +62,7 @@ function toDelete() {
       <wd-img
         :width="104"
         :height="104"
-        mode="center"
+        mode="aspectFill"
         :round="true"
         :src="detailInfo?.avatar"
       />

@@ -6,6 +6,7 @@ style:
 <script lang="ts">
 import type { GeneralColumn } from '@/types'
 import type { FormStaff } from './types'
+import type { Staff } from '@/pagesA/staff/types'
 
 export default {
   options: {
@@ -27,6 +28,7 @@ const formRef = ref()
 const imageValue = ref<any>([])
 const form = reactive<FormStaff>({
   storeId,
+  storeStaffId: null,
   avatar: computed(() => imageValue.value.length ? imageValue.value[0]?.url : ''),
   userName: null,
   phone: null,
@@ -38,6 +40,36 @@ const form = reactive<FormStaff>({
   serviceCategory: computed(() => curClassify.value.id),
 })
 const catName = computed(() => curClassify.value.name)
+
+onLoad((options) => {
+  form.storeStaffId = +options?.id
+  if (options?.id) {
+    uni.setNavigationBarTitle({ title: '修改产品' })
+    setFormInfo()
+  }
+})
+
+async function setFormInfo() {
+  const res = await request.get<Staff>(`/business/staff/${form.storeStaffId}`)
+  const data = res.data
+
+  // scheduling: computed(() => staffScheduling.value),
+  // serviceCategory: computed(() => curClassify.value.id),
+
+  form.storeStaffId = data.storeStaffId
+  form.userName = data.userName
+  form.phone = data.phone
+  form.gender = +data.gender
+  form.jobCode = data.jobCode
+  form.roleCode = data.roleCode
+  form.notes = data.notes
+
+  imageValue.value = [{
+    name: 'ava',
+    url: data.avatar,
+    extname: 'img',
+  }]
+}
 
 async function save() {
   await request.post<any>('/business/staff', form)

@@ -150,6 +150,7 @@ export interface FormStaff {
    */
   userName: string
   id?: number
+  storeStaffId?: number
 }
 
 export interface Scheduling {
