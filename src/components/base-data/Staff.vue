@@ -64,6 +64,14 @@ async function setFormInfo() {
   form.roleCode = data.roleCode
   form.notes = data.notes
 
+  staffScheduling.value = data.scheduling?.map((v1) => {
+    return {
+      weekCode: v1.weekCode,
+      startTime: v1.startTime,
+      endTime: v1.endTime,
+    }
+  })
+
   imageValue.value = [{
     name: 'ava',
     url: data.avatar,

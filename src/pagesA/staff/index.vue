@@ -54,7 +54,7 @@ async function getList() {
         <wd-img
           :width="75"
           :height="75"
-          mode="center"
+          mode="aspectFill"
           :radius="12"
           :src="item.avatar"
         />
