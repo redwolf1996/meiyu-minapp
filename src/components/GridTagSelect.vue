@@ -24,6 +24,8 @@ function onClickTag(item: GrigSelectItem, index: number) {
       }
       else {
         model.value = e.value
+        if (item.isActive === false)
+          model.value = null
       }
     })
   }

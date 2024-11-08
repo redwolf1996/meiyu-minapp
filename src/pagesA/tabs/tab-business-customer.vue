@@ -7,18 +7,19 @@ style:
 
 <script lang="ts" setup>
 import type { CusList, CusModel, CusReqModel } from './types'
+import dayjs from 'dayjs'
 
 const filter = ref()
-const value1 = ref(0)
 const optionsVip = [
-  { label: '全部', value: 0 },
-  { label: '会员', value: 1 },
-  { label: '非会员', value: 2 },
+  { label: '全部', value: null },
+  { label: '会员', value: 2 },
+  { label: '非会员', value: 1 },
 ]
-const sources: any = [
-  { label: '当天生日', value: 1, isActive: true },
+const birthday = ref<any>(null)
+const sources = ref<any>([
+  { label: '当天生日', value: 1, isActive: false },
   { label: '当月生日', value: 2, isActive: false },
-]
+])
 // const sources2: any = [
 //   { label: '今天', value: 1, isActive: true },
 //   { label: '昨天', value: 2, isActive: false },
@@ -48,6 +49,7 @@ const reqParams = reactive<CusReqModel>({
   cardAll: '',
   cardIds: '',
   cardCIds: '',
+  level: null,
 })
 const paging = ref<ZPagingInstance<CusList> | null>(null)
 const dataList = ref<CusList[]>([])
@@ -64,13 +66,35 @@ function toAddCustomer() {
 }
 
 function search({ value }) {
-  console.log(value)
+  reqParams.keyword = value
+  paging.value?.reload()
 }
-function handleChangeVip() {
-
+function handleChangeVip() { // 会员 非会员筛选
+  paging.value?.reload()
 }
 function toDetail(item: CusList) {
   uni.navigateTo({ url: `/pagesA/customer/detail?id=${item.storeCustomerId}` })
+}
+
+function closeBirthday() {
+  filter.value.close()
+}
+
+function confirmBirthday() { // 搜索当天生日和当月生日
+  if (birthday.value === null) {
+    reqParams.birthdayS = null
+    reqParams.birthdayE = null
+  }
+  if (birthday.value === 1) { // 1当天生日 2当月生日
+    reqParams.birthdayS = dayjs().format('YYYY-MM-DD')
+    reqParams.birthdayE = dayjs().format('YYYY-MM-DD')
+  }
+  if (birthday.value === 2) {
+    reqParams.birthdayS = dayjs().startOf('month').format('YYYY-MM-DD')
+    reqParams.birthdayE = dayjs().endOf('month').format('YYYY-MM-DD')
+  }
+  filter.value.close()
+  paging.value?.reload()
 }
 </script>
 
@@ -95,14 +119,14 @@ function toDetail(item: CusList) {
         </view>
 
         <wd-drop-menu>
-          <wd-drop-menu-item v-model="value1" :options="optionsVip" @change="handleChangeVip" />
+          <wd-drop-menu-item v-model="reqParams.level" :options="optionsVip" @change="handleChangeVip" />
           <wd-drop-menu-item ref="filter" title="筛选">
             <view p-24rpx bg-F9F9F9>
               <view bg-white rd-10px p-24rpx>
                 <view f14 mb-16px>
                   生日
                 </view>
-                <GridTagSelect v-model="value1" :sources="sources" />
+                <GridTagSelect v-model="birthday" :sources="sources" />
                 <!-- <view flex flex-ac gap-32rpx mt-32rpx c-929292>
               <text>范围</text>
               <input placeholder-class="cus-input" w-150rpx px-10px bg-F2F3F5 h-32px lh-32px type="text">
@@ -154,7 +178,7 @@ function toDetail(item: CusList) {
               <!-- TODO 查询过于复杂先不做 -->
               <wd-action-sheet v-model="show" title="选择卡类型" @close="show = false">
                 <view p-40rpx>
-                  <GridTagSelect v-model="value1" :sources="sources3" :columns="3" />
+                  <GridTagSelect :sources="sources3" :columns="3" />
                   <button class="theme my-btn" wp100 mt-30px>
                     确定
                   </button>
@@ -227,11 +251,11 @@ function toDetail(item: CusList) {
               </wd-action-sheet>
 
               <view flex tc flex-cc mt-24rpx px-112rpx gap-20rpx>
-                <button class="my-btn normal" w-220rpx>
+                <button class="my-btn normal" w-220rpx @click="closeBirthday()">
                   <!-- 重置 -->
                   关闭
                 </button>
-                <button class="my-btn theme" w-220rpx>
+                <button class="my-btn theme" w-220rpx @click="confirmBirthday()">
                   <!-- 查看50个用户 -->
                   确定
                 </button>
@@ -283,7 +307,7 @@ function toDetail(item: CusList) {
                 上次消费：
               </text>
               <text c-00BB00>
-                {{ item.lastPayTime || '--' }}
+                {{ item?.lastPayTime?.split(' ')?.[0] || '--' }}
               </text>
             </view>
             <view>

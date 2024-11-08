@@ -172,6 +172,10 @@ export interface CusReqModel {
    * 当前门店id，当前门店id
    */
   storeId: number
+  /**
+   * 是否会员 1普通客户 2vip会员
+   */
+  level: number | null
 }
 
 export interface CusModel {
