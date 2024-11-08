@@ -72,16 +72,26 @@ async function openAdd() {
 async function getList() {
   const res = await request.get<CatItem[]>(`${typeUrl.value}?storeId=${storeId}`)
   if (res.data.length) {
-    list.value = res.data.map((v) => {
-      return {
-        ...v,
-        checked: curClassify.value.id === v.id,
-      }
-    })
+    if (!curClassify.value.multiple) { // 单选
+      list.value = res.data.map((v) => {
+        return {
+          ...v,
+          checked: curClassify.value.id === v.id,
+        }
+      })
+    }
+    else { // 多选
+      list.value = res.data.map((v) => {
+        return {
+          ...v,
+          checked: (curClassify.value.id as number[])?.includes(v.id),
+        }
+      })
+    }
   }
 }
 
-onMounted(() => {
+onShow(() => {
   getList()
   uni.setNavigationBarTitle({ title: `选择${typeName.value}分类` })
 })
