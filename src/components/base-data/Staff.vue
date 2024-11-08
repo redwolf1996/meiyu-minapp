@@ -44,7 +44,8 @@ const catName = computed(() => curClassify.value.name)
 onLoad((options) => {
   form.storeStaffId = +options?.id
   if (options?.id) {
-    uni.setNavigationBarTitle({ title: '修改产品' })
+    curClassify.value.multiple = true
+    uni.setNavigationBarTitle({ title: '修改员工' })
     setFormInfo()
   }
 })
@@ -52,10 +53,6 @@ onLoad((options) => {
 async function setFormInfo() {
   const res = await request.get<Staff>(`/business/staff/${form.storeStaffId}`)
   const data = res.data
-
-  // scheduling: computed(() => staffScheduling.value),
-  // serviceCategory: computed(() => curClassify.value.id),
-
   form.storeStaffId = data.storeStaffId
   form.userName = data.userName
   form.phone = data.phone
@@ -63,7 +60,6 @@ async function setFormInfo() {
   form.jobCode = data.jobCode
   form.roleCode = data.roleCode
   form.notes = data.notes
-
   staffScheduling.value = data.scheduling?.map((v1) => {
     return {
       weekCode: v1.weekCode,
@@ -71,6 +67,9 @@ async function setFormInfo() {
       endTime: v1.endTime,
     }
   })
+  curClassify.value.id = data.serviceCategory?.map(v => v.serviceCategoryId)
+  curClassify.value.name = data.serviceCategory?.map(v => v.serviceCategoryName).join('、')
+  curClassify.value.storeId = storeId
 
   imageValue.value = [{
     name: 'ava',
@@ -80,10 +79,20 @@ async function setFormInfo() {
 }
 
 async function save() {
-  await request.post<any>('/business/staff', form)
+  if (form.storeStaffId) {
+    await request.put<any>('/business/staff', form)
+  }
+  else {
+    await request.post<any>('/business/staff', form)
+  }
   useUserStore().setUserInfo({ orgInfo: {
     staffCountStatus: 1,
   } })
+  let msg = '添加成功'
+  if (form.storeStaffId)
+    msg = '修改成功'
+  uni.showToast({ title: msg })
+  await sleep(1000)
   uni.navigateBack()
 }
 
