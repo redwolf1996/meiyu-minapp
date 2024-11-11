@@ -68,6 +68,7 @@ export interface Customer {
    * 微信
    */
   wechatCode?: string
+  id?: string | number | null
 }
 
 export interface CustomerDetail {
@@ -146,7 +147,7 @@ export interface CustomerDetail {
   /**
    * 会员等级，1->普通客户，2->vip客户
    */
-  level: string
+  level: string | number
   /**
    * 姓名
    */

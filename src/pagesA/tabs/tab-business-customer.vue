@@ -192,6 +192,7 @@ function confirmBirthday() { // 搜索当天生日和当月生日
                     <wd-img
                       :width="86"
                       :height="75"
+                      mode="aspectFill"
                       :src="`${IMG_BASE}/img-cika.png`"
                     />
                     <view flex flex-y flex-bt gap-12rpx flex-1>

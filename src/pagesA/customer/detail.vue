@@ -1,10 +1,12 @@
 <route lang="yaml">
 style:
   navigationBarTitleText: 客户详情
+  # disableScroll: true
 </route>
 
 <script lang="ts" setup>
 import type { CustomerDetail } from './types'
+import dayjs from 'dayjs'
 
 defineOptions({ inheritAttrs: false })
 const showCard = ref(false)
@@ -31,63 +33,109 @@ const tabs = [{
   label: '会员档案',
   value: 2,
 }]
+const detail = ref<CustomerDetail>(null)
+const id = ref<number | null>(null)
+const deleteDialogRef = ref()
 
 onLoad((options) => {
-  getInfo(+options?.id)
+  id.value = +options?.id
+})
+
+onShow(() => {
+  getInfo(id.value)
 })
 
 async function getInfo(storeCustomerId: number) {
-  await request.get<CustomerDetail>(`/business/store-customer/${storeCustomerId}`)
+  const res = await request.get<CustomerDetail>(`/business/store-customer/${storeCustomerId}`)
+  detail.value = res.data
+}
+
+function call() {
+  uni.makePhoneCall({ phoneNumber: detail.value?.phone })
+}
+
+function getGender(gender: any) {
+  if (gender === 1)
+    return '男'
+  if (gender === 2)
+    return '女'
+  return '未知'
+}
+
+async function dialogConfirm() { // 删除
+  deleteDialogRef.value.close()
+  await request.delete<any>(`/business/staff/${id.value}`)
+  uni.showToast({ title: '删除成功' })
+  await sleep(500)
+  uni.navigateBack()
+}
+
+function toEdit() {
+  uni.navigateTo({ url: `/pagesA/customer/add?id=${id.value}` })
+}
+
+function toDel() {
+  deleteDialogRef.value.open()
 }
 </script>
 
 <template>
-  <view ps z-100 :class="isH5 ? 'top-44px' : 'top-0'">
+  <view ps z-100 :class="isH5 ? 'top-44px' : 'top-0'" style="border-bottom: 1px solid #eee;">
     <view flex flex-ac p-40rpx gap-40rpx bg-white>
       <wd-img
         :round="true"
         :width="64"
         :height="64"
-        :src="`${IMG_BASE}/cat.png`"
+        mode="aspectFill"
+        :src="`${detail?.avatar ? detail?.avatar : `${IMG_BASE}/cat.png`}`"
       />
-      <view h-136rpx flex-1 flex flex-bt flex-y>
-        <view f18>
-          李如霞
+      <view h-136rpx flex-1 flex flex-bt flex-y py8px>
+        <view flex flex-ac flex-bt>
+          <view>
+            <text f18 pr10px>
+              {{ detail?.name }}
+            </text>
+            <wd-img
+              v-if="detail?.level === 2"
+              :round="true"
+              :width="20"
+              :height="20"
+              :src="`${IMG_BASE}/icon-v.png`"
+            />
+          </view>
+          <view>
+            <text theme-color f14 lh-14px transform-translate-y--1px pr10px @click="toEdit()">
+              编辑
+            </text>
+            <text theme-red f14 lh-14px transform-translate-y--1px @click="toDel()">
+              删除
+            </text>
+          </view>
         </view>
-        <view flex flex-bt flex-ac>
-          <view f12>
-            18777777777
+        <view flex flex-ac>
+          <view f12 pr15px>
+            {{ detail?.phone }}
           </view>
           <wd-img
             :round="true"
             :width="16"
             :height="16"
             :src="`${IMG_BASE}/icon-call.png`"
+            @click="call()"
           />
-        </view>
-        <view flex flex-ac gap-10rpx>
-          <wd-img
-            :round="true"
-            :width="16"
-            :height="16"
-            :src="`${IMG_BASE}/icon-v.png`"
-          />
-          <view class="tag">
-            永久有效
-          </view>
         </view>
       </view>
     </view>
-    <view grid grid-cols-3 p-40rpx bg-white f14>
-      <view>
+    <view flex flex-ac flex-bt bg-white f14 p20px>
+      <view w-78px>
         <view c-818181>
           余额
         </view>
         <view mt-16rpx>
-          ￥1000.0
+          ￥{{ detail?.amount }}
         </view>
       </view>
-      <view>
+      <view w-78px>
         <view c-818181 flex flex-ac>
           会员卡
           <wd-img
@@ -97,10 +145,10 @@ async function getInfo(storeCustomerId: number) {
           />
         </view>
         <view mt-16rpx>
-          2
+          {{ detail?.cardC ?? 0 }}
         </view>
       </view>
-      <view>
+      <view w-78px>
         <view c-818181 flex flex-ac>
           可用积分
           <wd-img
@@ -110,13 +158,13 @@ async function getInfo(storeCustomerId: number) {
           />
         </view>
         <view mt-16rpx>
-          32
+          {{ detail?.integration ?? 0 }}
         </view>
       </view>
     </view>
-    <view class="bs" />
+    <!-- <view class="bs" /> -->
     <wd-tabs v-model="tab">
-      <block v-for="item in tabs" :key="item">
+      <block v-for="(item, index) in tabs" :key="`tb-${index}`">
         <wd-tab :title="item.label" />
       </block>
     </wd-tabs>
@@ -129,7 +177,7 @@ async function getInfo(storeCustomerId: number) {
       <view bg-white grid grid-cols-3 tc px-30px py-16px>
         <view>
           <view f14 mb10rpx>
-            ¥790
+            ¥{{ detail?.historyExpend ?? 0 }}
           </view>
           <view f13 c-818181>
             累计消费
@@ -137,7 +185,7 @@ async function getInfo(storeCustomerId: number) {
         </view>
         <view>
           <view f14 mb10rpx>
-            6
+            {{ detail?.expendC ?? 0 }}
           </view>
           <view f13 c-818181>
             消费次数
@@ -145,7 +193,7 @@ async function getInfo(storeCustomerId: number) {
         </view>
         <view>
           <view f14 mb10rpx>
-            2024-05-13
+            {{ detail?.lastPayTime ? dayjs(detail?.lastPayTime).format('YYYY-MM-DD') : '--' }}
           </view>
           <view f13 c-818181>
             上次消费
@@ -229,8 +277,8 @@ async function getInfo(storeCustomerId: number) {
         <view py20px px16px bg-white>
           <view flex flex-ac flex-bt mb16px>
             <view>基本档案</view>
-            <view flex flex-ac>
-              <text theme-color f14 lh-14px transform-translate-y--1px>
+            <!-- <view flex flex-ac>
+              <text theme-color f14 lh-14px transform-translate-y--1px @click="toEdit()">
                 编辑
               </text>
               <wd-img
@@ -238,51 +286,51 @@ async function getInfo(storeCustomerId: number) {
                 :height="16"
                 :src="`${IMG_BASE}/icon-arrow-right2.png`"
               />
-            </view>
+            </view> -->
           </view>
           <view c-434343 flex flex-ac flex-bt mb16px f14>
             <view>姓名：</view>
-            <view>麦子欢</view>
+            <view>{{ detail?.name }}</view>
           </view>
           <view c-434343 flex flex-ac flex-bt mb16px f14>
             <view>备注名：</view>
-            <view>麦子欢</view>
+            <view>{{ detail?.noteName }}</view>
           </view>
           <view c-434343 flex flex-ac flex-bt mb16px f14>
             <view>手机号：</view>
-            <view>麦子欢</view>
+            <view>{{ detail?.phone }}</view>
           </view>
           <view c-434343 flex flex-ac flex-bt mb16px f14>
             <view>客户来源：</view>
-            <view>麦子欢</view>
+            <view>{{ detail?.source }}</view>
           </view>
           <view c-434343 flex flex-ac flex-bt mb16px f14>
             <view>性别：</view>
-            <view>麦子欢</view>
+            <view>{{ getGender(detail?.gender) }}</view>
           </view>
           <view c-434343 flex flex-ac flex-bt mb16px f14>
             <view>生日：</view>
-            <view>麦子欢</view>
+            <view>{{ detail?.birthday }}</view>
           </view>
           <view c-434343 flex flex-ac flex-bt mb16px f14>
             <view>微信：</view>
-            <view>麦子欢</view>
+            <view>{{ detail?.wechatCode }}</view>
           </view>
           <view c-434343 flex flex-ac flex-bt mb16px f14>
             <view>地址：</view>
-            <view>麦子欢</view>
+            <view>{{ detail?.address }}</view>
           </view>
           <view c-434343 flex flex-ac flex-bt mb16px f14>
             <view>详细地址：</view>
-            <view>麦子欢</view>
+            <view>{{ detail?.address }}</view>
           </view>
           <view c-434343 flex flex-ac flex-bt mb16px f14>
             <view>营销顾问：</view>
-            <view>麦子欢</view>
+            <view>{{ detail?.adviserName }}</view>
           </view>
           <view c-434343 flex flex-ac flex-bt f14>
             <view>客户备注：</view>
-            <view>麦子欢</view>
+            <view>{{ detail?.notes }}</view>
           </view>
         </view>
       </view>
@@ -309,7 +357,7 @@ async function getInfo(storeCustomerId: number) {
 
   <view pf bottom-0 wp100 style="border-top: 1px solid #eee">
     <!-- <view h32rpx bg-F5F5FA /> -->
-    <view p-40rpx grid grid-cols-3 grid-gap-10px bg-white>
+    <view p50rpx grid grid-cols-3 grid-gap-10px bg-white>
       <view class="my-btn theme-out rd0" @click="showCard = true">
         开卡充值
       </view>
@@ -321,6 +369,15 @@ async function getInfo(storeCustomerId: number) {
       </view>
     </view>
   </view>
+
+  <uni-popup ref="deleteDialogRef" type="dialog">
+    <uni-popup-dialog
+      type="warn"
+      cancelText="取消" confirmText="确定"
+      title="提示" content="删除后不可恢复，确定删除吗？"
+      @confirm="dialogConfirm"
+    />
+  </uni-popup>
 </template>
 
 <style>

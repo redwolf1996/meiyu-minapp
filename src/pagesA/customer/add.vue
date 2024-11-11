@@ -30,19 +30,58 @@ const form = reactive<Customer>({
   county: '',
   address: '',
   notes: '',
+  id: null,
 })
 const staffList = ref<{ label: string, value: number }[]>([])
 const from = ref('tab')
 
 onLoad((options) => {
+  form.id = +options?.id
   from.value = options?.from ?? 'tab'
   setStaffList()
+
+  if (form?.id > 0) {
+    uni.setNavigationBarTitle({ title: '修改客户' })
+    setFormInfo()
+  }
 })
 
+// 修改时候初始化赋值
+async function setFormInfo() {
+  const res = await request.get<any>(`/business/store-customer/${form.id}`)
+  const data = res.data
+  form.id = data.id
+  form.name = data.name
+  form.noteName = data.noteName
+  form.phone = data.phone
+  form.source = data.source
+  form.artisanId = data.artisanId
+  form.adviserId = data.adviserId
+  form.level = data.level
+  form.gender = data.gender
+  form.birthday = data.birthday
+  form.wechatCode = data.wechatCode
+  form.province = data.province
+  form.city = data.city
+  form.county = data.county
+  form.address = data.address
+  form.notes = data.notes
+}
+
 async function save() {
-  await request.post<null>('/business/store-customer', form)
+  if (form?.id)
+    await request.put<any>('/business/store-customer', form)
+  else
+    await request.post<any>('/business/store-customer', form)
+
+  let msg = '添加成功'
+  if (form?.id)
+    msg = '修改成功'
+  uni.showToast({ title: msg })
+  await sleep(1000)
+
   if (from.value === 'tab')
-    uni.reLaunch({ url: '/pagesA/tabs/tab-business-customer' })
+    uni.redirectTo({ url: '/pagesA/tabs/tab-business-customer' })
   else
     uni.navigateBack()
 }
