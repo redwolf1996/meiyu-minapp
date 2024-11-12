@@ -80,7 +80,7 @@ function selectItem(itm: any) {
           <view v-for="(itm, idx) in item.items" :key="`itm-${idx}`" h132px mb12px pr>
             <image
               style="width: 100%;height: 132px;"
-              mode="aspectFit"
+              mode="aspectFill"
               :src="`${IMG_BASE}/cards/${cardImgName[itm.type]}.png`"
             />
             <view class="txt" flex flex-y flex-bt>
@@ -129,10 +129,6 @@ function selectItem(itm: any) {
                 查看详情&nbsp;>
               </view>
             </view>
-            <!-- <view>1</view>
-            <view>2</view>
-            <view>3</view>
-            <view>4</view> -->
           </view>
         </view>
       </scroll-view>

@@ -13,7 +13,7 @@ import dayjs from 'dayjs'
 const listStaff = ref<ListStaff[]>([])
 const visibleStaff = ref(false)
 const curIndex = ref(0) // 商品和服务列表当前选择项的索引
-const orderTime = ref('')
+const orderTime = ref(null)
 const form = ref<BillModel>({
   storeId,
   orderTime: computed(() => {

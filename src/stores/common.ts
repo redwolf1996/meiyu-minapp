@@ -6,3 +6,6 @@ export const curCustomer = ref<CusList>(null)
 
 /** 当前待支付的开单 */
 export const curBilling = ref<BillModel>(null)
+
+/** 当前选中的卡项 */
+export const curSelectedCard = ref(null)

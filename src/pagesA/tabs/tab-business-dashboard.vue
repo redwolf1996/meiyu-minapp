@@ -81,8 +81,11 @@ function toBookDetail(item) {
 }
 function toCashing() { // 开单收银
   curCustomer.value = null // 进入页面前清空store内容
+  checkedServs.value = []
+  checkedProds.value = []
   uni.navigateTo({ url: '/pagesA/billing/index' })
 }
+function toMakeCard() {} // 开卡
 function toOrderList() {
   uni.navigateTo({ url: '/pagesA/order/index' })
 }
@@ -279,7 +282,7 @@ function toMsg() {
             <i i-mdi-credit-card-check-outline fs-64 c-1563ff />
             <text>开单收银</text>
           </view>
-          <view @click="toCashing()">
+          <view @click="toMakeCard()">
             <i i-material-symbols-add-card-outline fs-64 c-1563ff />
             <text>开卡充值</text>
           </view>

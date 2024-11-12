@@ -46,6 +46,7 @@ declare global {
   const curBilling: typeof import('./stores/common')['curBilling']
   const curClassify: typeof import('./stores/classify')['curClassify']
   const curCustomer: typeof import('./stores/common')['curCustomer']
+  const curSelectedCard: typeof import('./stores/common')['curSelectedCard']
   const customRef: typeof import('vue')['customRef']
   const debouncedRef: typeof import('@vueuse/core')['debouncedRef']
   const debouncedWatch: typeof import('@vueuse/core')['debouncedWatch']
@@ -404,6 +405,7 @@ declare module 'vue' {
     readonly curBilling: UnwrapRef<typeof import('./stores/common')['curBilling']>
     readonly curClassify: UnwrapRef<typeof import('./stores/classify')['curClassify']>
     readonly curCustomer: UnwrapRef<typeof import('./stores/common')['curCustomer']>
+    readonly curSelectedCard: UnwrapRef<typeof import('./stores/common')['curSelectedCard']>
     readonly customRef: UnwrapRef<typeof import('vue')['customRef']>
     readonly defineAsyncComponent: UnwrapRef<typeof import('vue')['defineAsyncComponent']>
     readonly defineComponent: UnwrapRef<typeof import('vue')['defineComponent']>
