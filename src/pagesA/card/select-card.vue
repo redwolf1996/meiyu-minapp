@@ -4,8 +4,7 @@ style:
 </route>
 
 <script lang="ts" setup>
-import type { AllItems, CardList, CatsItemsTree } from '../types'
-import { flatten } from 'lodash-es'
+import type { AllItems, AvailableCard, CardList, CatsItemsTree } from '../types'
 
 const active = ref<number>(0)
 const scrollTop = ref<number>(0)
@@ -16,26 +15,34 @@ const cardImgName = { // 1->次卡，2->充值卡，3->折扣卡
   3: 'bg_zkk',
 }
 
-onLoad(async () => {
-  const res = await request.get<AllItems>('/business/goods_all', { storeId })
-  const cardCats = res.data.cardCategory!
-  cardCats.unshift({
-    id: 0,
-    name: '所有分类',
-    storeId: null,
-  })
-  const cards = res.data.cardList
-  categories.value = cardCats.map((v) => {
-    return {
-      id: v.id,
-      label: v.name,
-      items: v.id === 0
-        ? cards
-        : cards.filter(v1 => v.id === v1.categoryId).map((v2) => {
-          return { ...v2, checked: false }
-        }),
-    }
-  })
+onLoad(async (options) => {
+  const params = {
+    storeCustomerId: options.storeCustomerId,
+    goodsId: options.goodsId,
+    goodsType: options.goodsType,
+  }
+  const res = await request.get<AvailableCard>('/business/store-customer-card-valid', params)
+
+  console.log(res)
+
+  // const cardCats = res.data.cardCategory!
+  // cardCats.unshift({
+  //   id: 0,
+  //   name: '所有分类',
+  //   storeId: null,
+  // })
+  // const cards = res.data.cardList
+  // categories.value = cardCats.map((v) => {
+  //   return {
+  //     id: v.id,
+  //     label: v.name,
+  //     items: v.id === 0
+  //       ? cards
+  //       : cards.filter(v1 => v.id === v1.categoryId).map((v2) => {
+  //         return { ...v2, checked: false }
+  //       }),
+  //   }
+  // })
 })
 
 function handleChange({ value }) {
@@ -52,6 +59,7 @@ function toDetail(id) {
 
 function selectItem(itm: any) {
   console.log(itm)
+  curSelectedCard.value = itm
 }
 </script>
 

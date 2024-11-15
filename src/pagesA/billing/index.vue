@@ -19,7 +19,7 @@ const form = ref<BillModel>({
   orderTime: computed(() => {
     return orderTime.value ? dayjs(orderTime.value).format('YYYY-MM-DD HH:mm:ss') : ''
   }),
-  storeCustomerId: computed(() => curCustomer.value?.customerId ?? null),
+  storeCustomerId: computed(() => curCustomer.value?.storeCustomerId ?? null),
   adviserId: null,
   notes: '',
   amount: 0,
@@ -53,19 +53,29 @@ onShow(() => {
         cardId: null, // 卡id
         artisanId: null, // 手艺人id
         artisan: null, // 手艺人
+        cardShowName: null,
       }
     })
     form.value.billingGoods = tmp
-    form.value.billingGoods.forEach((item: any) => {
+    form.value.billingGoods.forEach((item: any, index: number) => {
       item.totalAmount = computed(() => {
         return func_mul(item.goodsPrice, item.goodsCount)
       })
       item.amount = computed(() => {
         return func_mul(func_sub(item.goodsPrice, item.cardReduceAmount), item.goodsCount)
       })
+      if (curIndex.value === index) {
+        item.cardShowName = getCardShowName()
+      }
     })
   }
 })
+
+function getCardShowName() {
+  const cardInfo = curSelectedCard.value
+  // console.log(cardInfo)
+  return 'xxx'
+}
 
 function saveStaff() {
   visibleStaff.value = false
@@ -101,9 +111,12 @@ function toSelectStaff(index: number) {
   visibleStaff.value = true
 }
 
-function toSelCard(index: number) {
+function toSelCard(item, index: number) {
+  const storeCustomerId = form.value.storeCustomerId
+  const goodsId = item.goodsId
+  const goodsType = item.goodsType
   curIndex.value = index
-  uni.navigateTo({ url: '/pagesA/card/select-card' })
+  uni.navigateTo({ url: `/pagesA/card/select-card?storeCustomerId=${storeCustomerId}&goodsId=${goodsId}&goodsType=${goodsType}` })
 }
 
 function toSelCus() {
@@ -222,14 +235,14 @@ function toPay() {
                 </text>
               </view>
             </wd-cell>
-            <wd-cell title="使用卡项" is-link @click="toSelCard(index)">
+            <wd-cell title="使用卡项" is-link @click="toSelCard(item, index)">
               <view>
-                <text v-if="!cusName" c-#B6BDBD>
+                <text v-if="!item.cardShowName" c-#B6BDBD>
                   请选择
                 </text>
-                <text v-else>
-                  {{ cusName }}
-                </text>
+                <view v-else>
+                  {{ item.cardShowName }}
+                </view>
               </view>
             </wd-cell>
           </wd-cell-group>

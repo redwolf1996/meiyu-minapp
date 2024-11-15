@@ -73,3 +73,75 @@ export interface CatsItemsTree<T> {
   label: string
   items: T[]
 }
+
+export interface AvailableCard {
+  amount: number
+  /**
+   * 卡id
+   */
+  cardId: number
+  /**
+   * 卡名称
+   */
+  cardName: string
+  /**
+   * 卡二级分类，次卡
+   */
+  cardSecondType: number
+  /**
+   * 卡分类
+   */
+  cardType: number
+  cardTypeDesc: string
+  /**
+   * 共用次数上限，无限次通卡
+   */
+  countLimit: number
+  /**
+   * 购卡id
+   */
+  customerCardId: number
+  /**
+   * 次卡表示数量，折扣充值卡表示折扣1.0-10.0
+   */
+  equity: number
+  /**
+   * 有效期结束
+   */
+  expiresTime: string
+  expiresTimeDesc: string
+  gift: number
+  /**
+   * 商品id
+   */
+  goodsId: number
+  /**
+   * 商品名
+   */
+  goodsName: string
+  /**
+   * 商品类型，1服务，2产品
+   */
+  goodsType: number
+  /**
+   * 是否长期有效
+   */
+  isLongTerm: number
+  /**
+   * 是否可用
+   */
+  isValid: number
+  /**
+   * 不可用原因
+   */
+  reason: string
+  /**
+   * 有效期开始
+   */
+  startTime: string
+  /**
+   * 储值卡总可用金额
+   */
+  totalAmount: number
+  [property: string]: any
+}

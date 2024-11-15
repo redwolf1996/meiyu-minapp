@@ -87,5 +87,9 @@ export interface BillingGood {
    * 服务或产品名称
    */
   name?: string
+  /**
+   * 使用卡项显示的名称 例：5折折扣卡-￥10.00
+   */
+  cardShowName?: string
   [property: string]: any
 }
