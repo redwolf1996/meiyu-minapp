@@ -37,13 +37,38 @@ const detail = ref<CustomerDetail>(null)
 const id = ref<number | null>(null)
 const deleteDialogRef = ref()
 
+const orders = ref([])
+const bookings = ref([])
+
 onLoad((options) => {
   id.value = +options?.id
 })
 
 onShow(() => {
   getInfo(id.value)
+  getOrders()
+  getBookings()
 })
+
+async function getOrders() {
+  const params = {
+    storeCustomerId: id.value,
+    pageNum: 1,
+    pageSize: 10000,
+  }
+  const res = await request.get<any>(`/business/store-customer/order`, params)
+  orders.value = res.data.list
+}
+
+async function getBookings() {
+  const params = {
+    storeCustomerId: id.value,
+    pageNum: 1,
+    pageSize: 10000,
+  }
+  const res = await request.get<any>(`/business/store-customer/booking`, params)
+  bookings.value = res.data.list
+}
 
 async function getInfo(storeCustomerId: number) {
   const res = await request.get<CustomerDetail>(`/business/store-customer/${storeCustomerId}`)
@@ -64,7 +89,7 @@ function getGender(gender: any) {
 
 async function dialogConfirm() { // 删除
   deleteDialogRef.value.close()
-  await request.delete<any>(`/business/staff/${id.value}`)
+  await request.delete<any>(`/business/store-customer/${id.value}`)
   uni.showToast({ title: '删除成功' })
   await sleep(500)
   uni.navigateBack()
@@ -269,7 +294,7 @@ function toDel() {
     </template>
     <!-- 预约记录 -->
     <template v-if="tab === 1">
-      <BookList :showTabs="false" />
+      <BookList :showTabs="false" :listData="bookings" />
     </template>
     <!-- 会员档案 -->
     <template v-if="tab === 2">
