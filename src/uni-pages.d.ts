@@ -46,6 +46,7 @@ interface NavigateToOptions {
        "/pagesA/msg/detail-renew" |
        "/pagesA/msg/list" |
        "/pagesA/my/about" |
+       "/pagesA/my/feedback" |
        "/pagesA/my/invite" |
        "/pagesA/my/my-invite" |
        "/pagesA/my/new-store" |

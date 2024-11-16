@@ -328,6 +328,13 @@
           }
         },
         {
+          "path": "my/feedback",
+          "type": "page",
+          "style": {
+            "navigationBarTitleText": "意见反馈"
+          }
+        },
+        {
           "path": "my/invite",
           "type": "page",
           "style": {

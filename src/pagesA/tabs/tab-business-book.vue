@@ -51,7 +51,9 @@ onLoad((options) => {
   const tab = options?.tab
   if (tab === 'list')
     mode.value = 1
+})
 
+onShow(() => {
   const today = dayjs().format('YYYY-MM-DD')
   getBookDashboard(today)
   getBookCount(today)
