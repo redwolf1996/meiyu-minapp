@@ -30,15 +30,16 @@ function toAbout() {
   uni.navigateTo({ url: '/pagesA/my/about' })
 }
 function toFeedBack() {
-  wx.openEmbeddedMiniProgram({
-    appId: 'wx8abaf00ee8c3202e',
-    extraData: {
-      id: '673474',
-      customData: {
-        clientInfo: `iPhone OS 10.3.1 / 3.2.0.43 / 0`,
-      },
-    },
-  })
+  // wx.openEmbeddedMiniProgram({
+  //   appId: 'wx8abaf00ee8c3202e',
+  //   extraData: {
+  //     id: '673474',
+  //     customData: {
+  //       clientInfo: `iPhone OS 10.3.1 / 3.2.0.43 / 0`,
+  //     },
+  //   },
+  // })
+  uni.navigateTo({ url: '/pagesA/my/feedback' })
 }
 </script>
 

@@ -186,6 +186,7 @@ export interface StoreList {
 export interface CashingRecords {
   list: CashList[]
   total: number
+  totalAmount: number
 }
 
 export interface CashList {
