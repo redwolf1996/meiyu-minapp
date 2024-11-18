@@ -67,7 +67,7 @@ function handleChange1() {
       <view class="h50px" />
     </template>
 
-    <view mx-32rpx my-32rpx px-32rpx py-24rpx bg-fff rd-16rpx>
+    <!-- <view mx-32rpx my-32rpx px-32rpx py-24rpx bg-fff rd-16rpx>
       <view py-24rpx flex flex-y gap48rpx>
         <view v-for="(item, index) in dataList" :key="`xx-${index}`">
           <view flex flex-ac flex-bt>
@@ -109,7 +109,7 @@ function handleChange1() {
           </view>
         </view>
       </view>
-    </view>
+    </view> -->
   </z-paging>
 </template>
 

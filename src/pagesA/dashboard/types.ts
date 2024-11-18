@@ -233,3 +233,41 @@ export interface CashList {
    */
   withdrawNo: string
 }
+
+export interface IncomeDetail {
+  /**
+   * 搜索条件统计支出
+   */
+  expend: number
+  /**
+   * 搜索条件统计收入
+   */
+  income: number
+  list: DetailList[]
+  total: number
+}
+
+export interface DetailList {
+  /**
+   * 金额
+   */
+  amount: number
+  createBy: number
+  /**
+   * 创建时间
+   */
+  createTime: string
+  id: number
+  orderId: number
+  orderNo: string
+  orgId: number
+  storeId: number
+  /**
+   * 类别，1收入，2支出
+   */
+  type: number
+  /**
+   * 类别名
+   */
+  typeDesc: string
+}

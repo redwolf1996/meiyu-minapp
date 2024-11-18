@@ -1,0 +1,35 @@
+export interface List {
+  /**
+   * 内容
+   */
+  content: string
+  /**
+   * 创建时间
+   */
+  createTime: null
+  /**
+   * 扩展字段暂无内容
+   */
+  ext: { [key: string]: any }
+  /**
+   * 主键id
+   */
+  id: number
+  /**
+   * 类型，1系统通知，2业务通知
+   */
+  noticeType: number
+  /**
+   * 状态，1未读，2已读
+   */
+  status: number
+  /**
+   * 标题
+   */
+  title: string
+  /**
+   * 已读时间
+   */
+  updateTime: null | string
+  [property: string]: any
+}
