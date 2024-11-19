@@ -274,6 +274,7 @@ function confirmBirthday() { // 搜索当天生日和当月生日
               :round="true"
               :width="48"
               :height="48"
+              mode="aspectFill"
               :src="`${IMG_BASE}/cat.png`"
             />
             <view>

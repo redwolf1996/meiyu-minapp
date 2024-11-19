@@ -108,6 +108,8 @@ function showSearch() {
   visableSearch.value = true
 }
 function createOrder() {
+  bookStime.value = ''
+  checkedServs.value = []
   uni.navigateTo({ url: '/pagesA/book/add' })
 }
 
