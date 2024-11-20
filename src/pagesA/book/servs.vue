@@ -14,7 +14,8 @@ const checkedCount = computed(() => {
   return checkedServs.value.length + checkedProds.value.length
 })
 
-onLoad(async () => {
+onShow(async () => {
+  console.log(checkedServs.value)
   const res = await request.get<AllItems>('/business/goods_all', { storeId })
   const serviceCats = res.data.serviceCategory!
   const services = res.data.serviceList
@@ -23,7 +24,13 @@ onLoad(async () => {
       id: v.id,
       label: v.name,
       items: services.filter(v1 => v.id === v1.categoryId).map((v2) => {
-        return { ...v2, checked: false }
+        if (checkedServs.value.find(v3 => v3.id === v2.id)) {
+          v2.checked = true
+        }
+        else {
+          v2.checked = false
+        }
+        return { ...v2 }
       }),
     }
   })
