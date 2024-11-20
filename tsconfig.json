@@ -22,7 +22,7 @@
     "sourceMap": true
   },
   "vueCompilerOptions": {
-    "target": 3,
+    // "target": 3, // 注释掉以解决 vue内嵌template报错的问题
     "plugins": ["@uni-helper/uni-types/volar-plugin"]
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "env.d.ts"]

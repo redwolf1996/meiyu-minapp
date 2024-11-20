@@ -36,10 +36,15 @@ const sources2: any = [
   { label: '小美', value: 3, isActive: false },
 ]
 const hours24h = get24Hours()
-const tableData = ['张三', '李四', '王五', '赵六']
-
+const tableData = ref<Books[]>([])
+const countInfo = ref<BookCount>({
+  all: 0,
+  wait: 0,
+  underway: 0,
+  finish: 0,
+})
 const multipleItemWidth = computed(() => {
-  const len = tableData.length
+  const len = tableData.value.length
   if (len === 0)
     return 0
   if (len >= 3)
@@ -80,10 +85,11 @@ const restHeight = computed(() => {
 })
 
 async function getBookDashboard(cDate: string) {
-  const res = await request.get<Books>('/business/booking-dashboard', {
+  const res = await request.get<Books[]>('/business/booking-dashboard', {
     storeId,
     cDate,
   })
+  tableData.value = res.data
 }
 
 async function getBookCount(cDate: string) {
@@ -91,6 +97,7 @@ async function getBookCount(cDate: string) {
     storeId,
     cDate,
   })
+  countInfo.value = res.data
 }
 
 function handleClickList() {
@@ -228,19 +235,19 @@ function scrollView(e: any) {
         <view flex flex-ac>
           <MySquare color="gray" />
           <text lh-24rpx pl-8rpx>
-            待服务(1)
+            待服务({{ countInfo.wait }})
           </text>
         </view>
         <view flex flex-ac>
           <MySquare color="orange" />
           <text lh-24rpx pl-8rpx>
-            服务中(2)
+            服务中({{ countInfo.underway }})
           </text>
         </view>
         <view flex flex-ac>
           <MySquare color="#00aa44" />
           <text lh-24rpx pl-8rpx>
-            已完成(3)
+            已完成({{ countInfo.finish }})
           </text>
         </view>
       </view>
@@ -275,12 +282,12 @@ function scrollView(e: any) {
         </view>
         <view dib hp100 pr z-150 flex-grow-1>
           <view h-32px lh-32px sticky top-0 z-180 flex f12 c-364250>
-            <view v-for="item in tableData" :key="item" bg-white tc flex-shrink-0 :style="{ flexBasis: `${multipleItemWidth}px` }">
-              {{ item }}
+            <view v-for="(item, index) in tableData" :key="`name-${index}`" bg-white tc flex-shrink-0 :style="{ flexBasis: `${multipleItemWidth}px` }">
+              {{ item.artisanName }}
             </view>
           </view>
           <view h-2880px class="table-content" flex>
-            <view v-for="item in tableData" :key="`k${item}`" pr bg-white tc flex-shrink-0 :style="{ flexBasis: `${multipleItemWidth}px` }">
+            <view v-for="(item, index) in tableData" :key="`k-${index}`" pr bg-white tc flex-shrink-0 :style="{ flexBasis: `${multipleItemWidth}px` }">
               <Grids96 />
               <view class="booking" :style="{ width: `${multipleItemWidth - 10}px` }">
                 <view f12>
