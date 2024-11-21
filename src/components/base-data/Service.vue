@@ -362,7 +362,7 @@ function toCats() {
         <text>日历中显示预约时使用，便于区分预约的服务</text>
       </view>
       <view h-28rpx />
-      <div class="big-color" :style="{ background: form.serviceColor }" />
+      <view class="big-color" :style="{ background: form.serviceColor }" />
       <view mt24px flex flex-bt gap-10px>
         <view
           v-for="item in colors"

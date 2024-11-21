@@ -163,7 +163,7 @@ function confirmBirthday() { // 搜索当天生日和当月生日
               <label f12><radio style="transform:scale(0.7)" value="3" color="#1a66ff" />指定类型卡</label>
             </radio-group>
             <MyCell label="请选择" noBorder @click="show2 = true">
-              <span f14 c-3B3D3D>09:00-21:00</span>
+              <text f14 c-3B3D3D>09:00-21:00</text>
             </MyCell>
             <view flex flex-wrap gap-20rpx>
               <view class="tag">

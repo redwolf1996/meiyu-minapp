@@ -162,7 +162,9 @@ function scrollView(e: any) {
           <view>
             <GridTagSelect v-model="val" :sources="sources" :columns="3" />
             <MyCell label="服务时段">
-              <span f14 c-3B3D3D>09:00-21:00</span>
+              <text f14 c-3B3D3D>
+                09:00-21:00
+              </text>
             </MyCell>
           </view>
         </view>

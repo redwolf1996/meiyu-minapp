@@ -23,7 +23,9 @@ const sources: any = [
   </view>
   <MyCellGroup>
     <MyCell label="每天可营业时段">
-      <span f14 c-3B3D3D>09:00-21:00</span>
+      <text f14 c-3B3D3D>
+        09:00-21:00
+      </text>
     </MyCell>
   </MyCellGroup>
 </template>

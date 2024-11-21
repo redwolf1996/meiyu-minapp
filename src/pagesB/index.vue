@@ -2,9 +2,9 @@
 </script>
 
 <template>
-  <div class="pagesB">
+  <view class="pagesB">
     这是分包B的内容
-  </div>
+  </view>
 </template>
 
 <style lang="scss" scoped></style>

@@ -15,7 +15,6 @@ const checkedCount = computed(() => {
 })
 
 onShow(async () => {
-  console.log(checkedServs.value)
   const res = await request.get<AllItems>('/business/goods_all', { storeId })
   const serviceCats = res.data.serviceCategory!
   const services = res.data.serviceList

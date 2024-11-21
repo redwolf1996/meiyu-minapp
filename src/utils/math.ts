@@ -52,10 +52,10 @@ export function func_div(a, b) {
 /**
  * 数组所有数相加
  */
-export function sumArray(arr, scale = 2) {
+export function sumArray(arr) {
   let sum = 0
   for (let i = 0; i < arr.length; i++) {
-    sum = Number(func_add(sum, arr[i], scale))
+    sum = Number(func_add(sum, arr[i]))
   }
   return sum
 }

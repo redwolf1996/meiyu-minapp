@@ -62,13 +62,19 @@ style:
       </view>
       <view class="h20px" />
       <MyCell label="订单支付方式" :showArrow="false">
-        <span f14>现金</span>
+        <text f14>
+          现金
+        </text>
       </MyCell>
       <MyCell label="退款方式">
-        <span f14>现金退款</span>
+        <text f14>
+          现金退款
+        </text>
       </MyCell>
       <MyCell label="退款金额" :showArrow="false">
-        <span f14>￥18.00</span>
+        <text f14>
+          ￥18.00
+        </text>
       </MyCell>
     </view>
   </view>

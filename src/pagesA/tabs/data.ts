@@ -21,6 +21,8 @@ const sortedArr = arr.sort((a, b) => sNumber(a.timeScope) - sNumber(b.timeScope)
     ...v,
     start: sNumber(v.timeScope),
     end: eNumber(v.timeScope),
+    top: sNumber(v.timeScope),
+    height: eNumber(v.timeScope) - sNumber(v.timeScope),
   }
 })
 
@@ -49,3 +51,5 @@ function dealSortedArr() {
 }
 
 dealSortedArr()
+
+console.log(finalArr)

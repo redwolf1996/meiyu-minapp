@@ -33,10 +33,14 @@ function toBWeChat() {
   <MyCellGroup>
     <MyCell label="企业微信" @myclick="toBWeChat()" />
     <MyCell label="客服电话">
-      <span f14 c-3B3D3D>13263301397</span>
+      <text f14 c-3B3D3D>
+        13263301397
+      </text>
     </MyCell>
     <MyCell label="客服邮箱">
-      <span f14 c-3B3D3D>support@xunhuazn.com</span>
+      <text f14 c-3B3D3D>
+        support@xunhuazn.com
+      </text>
     </MyCell>
     <MyCell label="问题留言" />
   </MyCellGroup>

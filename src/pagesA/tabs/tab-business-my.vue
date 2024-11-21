@@ -116,7 +116,9 @@ function toFeedBack() {
       <template #icon>
         <wd-icon name="home" size="18px" />
       </template>
-      <span f14 c-3B3D3D>{{ storeInfo.storeName }}</span>
+      <text f14 c-3B3D3D>
+        {{ storeInfo.storeName }}
+      </text>
     </MyCell>
     <MyCell label="联系客服" noBorder @myclick="toServ()">
       <template #icon>
@@ -127,7 +129,9 @@ function toFeedBack() {
       <template #icon>
         <wd-icon name="evaluation" size="18px" />
       </template>
-      <span f14 c-B6BDBD>欢迎反馈您使用中遇到的问题</span>
+      <text f14 c-B6BDBD>
+        欢迎反馈您使用中遇到的问题
+      </text>
     </MyCell>
     <MyCell label="关于我们" noBorder @myclick="toAbout()">
       <template #icon>

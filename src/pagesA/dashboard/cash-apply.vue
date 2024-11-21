@@ -9,7 +9,9 @@ style:
   <view p-32rpx>
     <view px-40rpx py-48rpx bg-blue h-340rpx color-fff pr>
       <view fs-36>
-        申请金额<span fs-28>（元）</span>
+        申请金额<text fs-28>
+          （元）
+        </text>
       </view>
       <view fs-64 fb tc abs-cc>
         ¥9985.88

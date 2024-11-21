@@ -89,9 +89,11 @@ function showItemMenu(item: List) {
             <view pl-10px>
               服务列表
             </view>
-            <span f14>
-              （共<span style="color:#1A66FF">{{ total }}</span>项）
-            </span>
+            <text f14>
+              （共<text style="color:#1A66FF">
+                {{ total }}
+              </text>项）
+            </text>
           </view>
           <view class="plus" @click="toAdd()">
             <wd-img
@@ -129,7 +131,9 @@ function showItemMenu(item: List) {
                 :height="16"
                 :src="`${IMG_BASE}/icon-time.png`"
               />
-              <span f12>{{ item.duration }}分钟</span>
+              <text f12>
+                {{ item.duration }}分钟
+              </text>
             </view>
             <wd-img
               :width="20"
@@ -156,7 +160,9 @@ function showItemMenu(item: List) {
             </text>
           </view>
           <view>
-            <span fb f12 px-12rpx py-7rpx bg-B5E4CA rd-12rpx>￥{{ item.price }}</span>
+            <text fb f12 px-12rpx py-7rpx bg-B5E4CA rd-12rpx>
+              ￥{{ item.price }}
+            </text>
           </view>
         </view>
       </view>

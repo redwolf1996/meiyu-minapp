@@ -22,7 +22,9 @@ style:
       <view class="h20px" />
       <view>
         <MyCell label="退款金额">
-          <span f14>￥18</span>
+          <text f14>
+            ￥18
+          </text>
         </MyCell>
         <view class="h12px" />
       </view>
