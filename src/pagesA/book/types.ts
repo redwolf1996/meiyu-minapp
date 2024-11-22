@@ -65,7 +65,7 @@ export interface Service {
   /**
    * 数量
    */
-  goodsCount: number
+  goodsCount?: number
   /**
    * 服务id
    */

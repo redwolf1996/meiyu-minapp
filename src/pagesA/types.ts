@@ -65,6 +65,7 @@ export interface ServiceList {
   storeId: number
   checked?: boolean
   prodType?: 2 // 1产品 2服务
+  goodsCount?: number // 购买数量
   [property: string]: any
 }
 

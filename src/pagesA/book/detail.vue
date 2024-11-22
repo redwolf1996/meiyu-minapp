@@ -1,6 +1,7 @@
 <route lang="yaml">
 style:
   navigationBarTitleText: 预约详情
+  layout: false
 </route>
 
 <script lang="ts" setup>

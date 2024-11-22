@@ -47,7 +47,7 @@ onShow(() => {
       storeServiceId: v.id,
       totalAmount: v.price,
       amount: v.price,
-      goodsCount: 1,
+      goodsCount: v.goodsCount || 1,
       name: v.name,
       duration: v.duration,
       price: v.price,
@@ -60,6 +60,12 @@ onShow(() => {
 function handleChange(item: Service) {
   item.amount = func_mul(item.price, item.goodsCount)
   item.totalAmount = func_mul(item.price, item.goodsCount)
+
+  checkedServs.value.forEach((v) => {
+    if (v.id === item.storeServiceId) {
+      v.goodsCount = item.goodsCount
+    }
+  })
 }
 
 async function getStaff() {
@@ -108,9 +114,16 @@ function toSelServTime() {
 
 function delServ(index) {
   model.service.splice(index, 1)
+  checkedServs.value.splice(index, 1)
 }
 
 async function save() {
+  if (!bookStime.value) {
+    return uni.showToast({
+      title: '请选择服务时间',
+      icon: 'none',
+    })
+  }
   bookInfo.value = {
     ...model,
     artName: artName.value,

@@ -29,6 +29,7 @@ onShow(async () => {
         else {
           v2.checked = false
         }
+
         return { ...v2 }
       }),
     }

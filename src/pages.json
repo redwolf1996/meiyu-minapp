@@ -111,7 +111,8 @@
           "path": "book/detail",
           "type": "page",
           "style": {
-            "navigationBarTitleText": "预约详情"
+            "navigationBarTitleText": "预约详情",
+            "layout": false
           }
         },
         {
