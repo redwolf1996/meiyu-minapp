@@ -7,8 +7,10 @@ style:
 </route>
 
 <script lang="ts" setup>
-import type { BookCount, Books } from './types'
+import type { BookCount, BookingList, Books } from './types'
+import { getFinalArr } from './data'
 import dayjs from 'dayjs'
+import type { transform } from 'lodash-es'
 
 const windowHeight = uni.getWindowInfo().windowHeight
 const screenWidth = uni.getWindowInfo().screenWidth
@@ -35,6 +37,21 @@ const sources2: any = [
   { label: '阿月', value: 3, isActive: false },
   { label: '小美', value: 3, isActive: false },
 ]
+const servStatusMap = {
+  1: {
+    name: '待分配',
+    color: '#FFCBE2',
+  },
+  2: {
+    name: '服务中',
+    color: '#FEE7D7',
+  },
+  3: {
+    name: '已完成',
+    color: '#D4D4D6',
+  },
+}
+
 const hours24h = get24Hours()
 const tableData = ref<Books[]>([])
 const countInfo = ref<BookCount>({
@@ -89,7 +106,14 @@ async function getBookDashboard(cDate: string) {
     storeId,
     cDate,
   })
-  tableData.value = res.data
+  tableData.value = res.data.map((item) => {
+    return {
+      ...item,
+      bookingListUse: getFinalArr(item.bookingList),
+    }
+  })
+
+  console.log(tableData.value)
 }
 
 async function getBookCount(cDate: string) {
@@ -235,19 +259,19 @@ function scrollView(e: any) {
       <view bg-white h-20rpx />
       <view flex flex-ac flex-cc gap-100rpx flex-rd f12 h-54rpx lh-54rpx bg-white class="status">
         <view flex flex-ac>
-          <MySquare color="gray" />
+          <MySquare color="#FFCBE2" />
           <text lh-24rpx pl-8rpx>
             待服务({{ countInfo.wait }})
           </text>
         </view>
         <view flex flex-ac>
-          <MySquare color="orange" />
+          <MySquare color="#FEE7D7" />
           <text lh-24rpx pl-8rpx>
             服务中({{ countInfo.underway }})
           </text>
         </view>
         <view flex flex-ac>
-          <MySquare color="#00aa44" />
+          <MySquare color="#D4D4D6" />
           <text lh-24rpx pl-8rpx>
             已完成({{ countInfo.finish }})
           </text>
@@ -291,15 +315,31 @@ function scrollView(e: any) {
           <view h-2880px class="table-content" flex>
             <view v-for="(item, index) in tableData" :key="`k-${index}`" pr bg-white tc flex-shrink-0 :style="{ flexBasis: `${multipleItemWidth}px` }">
               <Grids96 />
-              <view class="booking" :style="{ width: `${multipleItemWidth - 10}px` }">
-                <view f12>
-                  王乐乐
-                </view>
-                <view f10>
-                  基础护理
-                </view>
-                <view f10>
-                  8:00-8:30
+              <view
+                v-for="(itm, idx) in item.bookingListUse" :key="`kk-${index}-${idx}`" class="booking"
+                :style="{
+                  width: `${multipleItemWidth - 10}px`,
+                  top: `${itm[0].top}px`,
+                  height: `${itm.length === 1 ? itm.height : itm[itm.length - 1].end - itm[0].top}px`,
+                }"
+              >
+                <view
+                  v-for="(it, i) in itm" :key="`kkk-${index}-${idx}-${i}`" :style="{
+                    height: `${it.height}px`,
+                    transform: `translateY(${itm.length === 1 ? 0 : it.top - itm[0].top}px)`,
+                    background: servStatusMap[it.bookingStatus].color,
+                    width: `${(multipleItemWidth - 10) / itm.length}%`,
+                  }" class="booking-item"
+                >
+                  <view class="ch" f12 ellipsis>
+                    {{ it.storeCustomerName }}
+                  </view>
+                  <view v-for="(it1, i1) in it.serviceList" :key="`kkkk-${index}-${idx}-${i}-${i1}`" class="ch" ellipsis f10>
+                    {{ it1.serviceName }} x{{ it1.count }}
+                  </view>
+                  <view class="ch" ellipsis f10>
+                    {{ it.startTimeStr }}
+                  </view>
                 </view>
               </view>
             </view>
@@ -330,12 +370,26 @@ page {
 .booking {
   text-align: left;
   position: absolute;
-  height: 150px;
   left: 0;
-  top: 0;
-  background-color: #ffcbe2;
+  display: flex;
+  flex-wrap: nowrap;
+  // border: 1px solid blue;
+  // height: 150px;
+  // top: 0;
+  // background-color: #ffcbe2;
+  // padding: 6px;
+  // border-radius: 4px;
+}
+.booking-item {
+  // background-color: #ffcbe2;
   padding: 6px;
-  border-radius: 4px;
+  // flex: 1;
+  border-left: 3px solid #00aa44;
+  .ch {
+    width: 100%;
+  }
+  // height: 150px;
+  // transform: translateY(10px);
 }
 .plus {
   position: fixed;

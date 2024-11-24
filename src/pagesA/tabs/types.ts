@@ -262,6 +262,7 @@ export interface Books {
    * 预约列表
    */
   bookingList?: BookingList[]
+  bookingListUse?: BookingList[]
 }
 
 export interface BookingList {
@@ -316,6 +317,13 @@ export interface BookingList {
   [property: string]: any
 }
 
+export interface BookingListUse extends BookingList {
+  start?: number
+  end?: number
+  top?: number
+  height?: number
+}
+
 export interface ServiceList {
   /**
    * 服务时长分钟
@@ -333,6 +341,8 @@ export interface ServiceList {
    * 服务id
    */
   storeServiceId: number
+  count?: number
+  amount?: number
 }
 
 export interface BookCount {
