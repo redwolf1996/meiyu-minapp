@@ -16,7 +16,7 @@ export interface List {
    */
   id: number
   /**
-   * 类型，1系统通知，2业务通知
+   * 类型，1系统通知（续费信息），2业务通知 （预约），3系统通知（会员到期提醒）
    */
   noticeType: number
   /**
