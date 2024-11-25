@@ -7,10 +7,9 @@ style:
 </route>
 
 <script lang="ts" setup>
-import type { BookCount, BookingList, Books } from './types'
+import type { BookCount, Books } from './types'
 import { getFinalArr } from './data'
 import dayjs from 'dayjs'
-import type { transform } from 'lodash-es'
 
 const windowHeight = uni.getWindowInfo().windowHeight
 const screenWidth = uni.getWindowInfo().screenWidth
@@ -331,7 +330,7 @@ function scrollView(e: any) {
                     width: `${(multipleItemWidth - 10) / itm.length}%`,
                   }" class="booking-item"
                 >
-                  <view class="ch" f12 ellipsis>
+                  <view class="ch" f12 fb ellipsis>
                     {{ it.storeCustomerName }}
                   </view>
                   <view v-for="(it1, i1) in it.serviceList" :key="`kkkk-${index}-${idx}-${i}-${i1}`" class="ch" ellipsis f10>
