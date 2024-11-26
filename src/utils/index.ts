@@ -154,3 +154,17 @@ export function getDiscounts(itm: any) {
   else
     return `${min(arr)}-${max(arr)}`
 }
+
+/**
+ * 格式化消息推送的时间: 如果是当天显示时分，否则显示月日
+ */
+export function formatMsgTimeShow(timestr: string) {
+  const inputDate = dayjs(timestr)
+  const today = dayjs()
+
+  const isToday = inputDate.isSame(today, 'day')
+
+  return isToday
+    ? inputDate.format('HH:mm')
+    : inputDate.format('MM-DD')
+}

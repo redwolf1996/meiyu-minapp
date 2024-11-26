@@ -6,7 +6,7 @@ export interface List {
   /**
    * 创建时间
    */
-  createTime: null
+  createTime: string
   /**
    * 扩展字段暂无内容
    */
@@ -30,6 +30,6 @@ export interface List {
   /**
    * 已读时间
    */
-  updateTime: null | string
+  updateTime: string
   [property: string]: any
 }

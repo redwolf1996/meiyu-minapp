@@ -44,6 +44,7 @@ function search() {
 
 function handleClick({ index }) {
   reqParams.status = tabs[index].value
+  paging.value?.reload()
 }
 </script>
 
@@ -67,8 +68,10 @@ function handleClick({ index }) {
     </template>
 
     <view p-32rpx>
-      <MsgClock />
-      <MsgRing />
+      <template v-for="item in dataList" :key="item.id">
+        <MsgClock v-if="item.noticeType === 2" :data="item" />
+        <MsgRing v-else :data="item" />
+      </template>
     </view>
   </z-paging>
 </template>

@@ -1,4 +1,11 @@
 <script lang="ts" setup>
+import type { List } from '@/pagesA/msg/types'
+
+const props = defineProps<{
+  data: List
+}>()
+
+const data = props.data
 </script>
 
 <template>
@@ -12,15 +19,15 @@
       <view flex-grow-1>
         <view flex flex-bt flex-ac>
           <view f16 fb>
-            基础护肤名称
+            {{ data.title }}
           </view>
           <view color-999 text-size-22rpx tc w-64rpx>
-            14:00
+            {{ formatMsgTimeShow(data.createTime) }}
           </view>
         </view>
         <view flex flex-bt tc flex-ac mt-10rpx>
           <view f12>
-            2024/5/11 10:00- 11:00
+            {{ data.ext?.startTimeStr }}
           </view>
           <view f12 tc w-64rpx>
             <view w-20rpx h-20rpx round ma style="background-color: #FE502E;" />
@@ -33,11 +40,11 @@
       <view flex-grow-1>
         <view f12 flex tc flex-ac gap-10rpx>
           <view fb>
-            张阿萨
+            {{ data.ext?.artisanName }}
           </view>
           <view w-12rpx h-12rpx round style="background-color: #FE502E;" />
           <view color-white tc px-8rpx py-4rpx lh-24rpx bg-FE502E>
-            到店服务
+            {{ data.ext?.storeServiceTypeDesc }}
           </view>
         </view>
       </view>

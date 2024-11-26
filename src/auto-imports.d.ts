@@ -58,6 +58,7 @@ declare global {
   const fd: typeof import('./utils/index')['fd']
   const fdt: typeof import('./utils/index')['fdt']
   const formatDay: typeof import('./utils/index')['formatDay']
+  const formatMsgTimeShow: typeof import('./utils/index')['formatMsgTimeShow']
   const func_add: typeof import('./utils/math')['func_add']
   const func_div: typeof import('./utils/math')['func_div']
   const func_mul: typeof import('./utils/math')['func_mul']
@@ -412,6 +413,7 @@ declare module 'vue' {
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
     readonly fd: UnwrapRef<typeof import('./utils/index')['fd']>
     readonly fdt: UnwrapRef<typeof import('./utils/index')['fdt']>
+    readonly formatMsgTimeShow: UnwrapRef<typeof import('./utils/index')['formatMsgTimeShow']>
     readonly func_add: UnwrapRef<typeof import('./utils/math')['func_add']>
     readonly func_div: UnwrapRef<typeof import('./utils/math')['func_div']>
     readonly func_mul: UnwrapRef<typeof import('./utils/math')['func_mul']>
