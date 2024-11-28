@@ -6,10 +6,24 @@ const props = defineProps<{
 }>()
 
 const data = props.data
+
+function toDetail() {
+  storeMsgDetail.value = data
+  if (data.noticeType === 1) {
+    uni.navigateTo({
+      url: '/pagesA/msg/detail-renew',
+    })
+  }
+  else if (data.noticeType === 2) {
+    uni.navigateTo({
+      url: '/pagesA/msg/detail-expire',
+    })
+  }
+}
 </script>
 
 <template>
-  <view bg-white p-40rpx flex flex-bt flex-ac gap-14px rd-16rpx mb-40rpx>
+  <view bg-white p-40rpx flex flex-bt flex-ac gap-14px rd-16rpx mb-40rpx @click="toDetail()">
     <wd-img
       :width="32"
       :height="32"
@@ -30,7 +44,7 @@ const data = props.data
           {{ data.content }}
         </view>
         <view f12 tc w-64rpx>
-          <view w-20rpx h-20rpx round ma style="background-color: #FE502E;" />
+          <view v-if="data.status === 1" w-20rpx h-20rpx round ma style="background-color: #FE502E;" />
         </view>
       </view>
     </view>

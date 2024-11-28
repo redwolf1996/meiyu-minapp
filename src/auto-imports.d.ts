@@ -86,6 +86,7 @@ declare global {
   const isRef: typeof import('vue')['isRef']
   const makeDestructurable: typeof import('@vueuse/core')['makeDestructurable']
   const markRaw: typeof import('vue')['markRaw']
+  const msgDetail: typeof import('./stores/common')['msgDetail']
   const my: typeof import('./utils/index')['my']
   const nextTick: typeof import('vue')['nextTick']
   const onActivated: typeof import('vue')['onActivated']
@@ -163,6 +164,7 @@ declare global {
   const sleep: typeof import('./utils/index')['sleep']
   const staffScheduling: typeof import('./stores/work-time')['staffScheduling']
   const storeId: typeof import('./utils/index')['storeId']
+  const storeMsgDetail: typeof import('./stores/common')['storeMsgDetail']
   const stores: typeof import('./stores/index')['default']
   const sumArray: typeof import('./utils/math')['sumArray']
   const syncRef: typeof import('@vueuse/core')['syncRef']
@@ -490,6 +492,7 @@ declare module 'vue' {
     readonly sleep: UnwrapRef<typeof import('./utils/index')['sleep']>
     readonly staffScheduling: UnwrapRef<typeof import('./stores/work-time')['staffScheduling']>
     readonly storeId: UnwrapRef<typeof import('./utils/index')['storeId']>
+    readonly storeMsgDetail: UnwrapRef<typeof import('./stores/common')['storeMsgDetail']>
     readonly stores: UnwrapRef<typeof import('./stores/index')['default']>
     readonly sumArray: UnwrapRef<typeof import('./utils/math')['sumArray']>
     readonly themeColor: UnwrapRef<typeof import('./utils/index')['themeColor']>

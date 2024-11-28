@@ -1,9 +1,11 @@
 <route lang="yaml">
 style:
-  navigationBarTitleText: 消息
+  navigationBarTitleText: 会员到期提醒
 </route>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+
+</script>
 
 <template>
   <view px-32rpx py-40rpx>

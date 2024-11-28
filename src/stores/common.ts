@@ -1,6 +1,7 @@
 import type { CusList } from '@/pagesA/tabs/types'
 import type { BillModel } from '@/pagesA/billing/types'
 import type { CardList } from '@/pagesA/types'
+import type { List as MsgDetail } from '@/pagesA/msg/types'
 
 /** 当前选中的客户 */
 export const curCustomer = ref<CusList>(null)
@@ -10,3 +11,6 @@ export const curBilling = ref<BillModel>(null)
 
 /** 当前选中的卡项 */
 export const curSelectedCard = ref<CardList>(null)
+
+/** 当前在读的消息详情 */
+export const storeMsgDetail = ref<MsgDetail>(null)

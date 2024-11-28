@@ -6,10 +6,16 @@ const props = defineProps<{
 }>()
 
 const data = props.data
+async function toServDetail() {
+  await request.put(`/business/notice/${data.id}`)
+  uni.navigateTo({
+    url: `/pagesA/book/detail?id=${data.ext?.bookingId}`,
+  })
+}
 </script>
 
 <template>
-  <view bg-white p-40rpx rd-16rpx mb-40rpx>
+  <view bg-white p-40rpx rd-16rpx mb-40rpx @click="toServDetail()">
     <view flex flex-bt flex-ac gap-14px>
       <wd-img
         :width="32"
@@ -30,7 +36,7 @@ const data = props.data
             {{ data.ext?.startTimeStr }}
           </view>
           <view f12 tc w-64rpx>
-            <view w-20rpx h-20rpx round ma style="background-color: #FE502E;" />
+            <view v-if="data.status === 1" w-20rpx h-20rpx round ma style="background-color: #FE502E;" />
           </view>
         </view>
       </view>

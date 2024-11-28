@@ -8,14 +8,14 @@ export const request = {
       url: params ? `${url}?${qs.stringify(params)}` : url,
     })
   },
-  post<T>(url: string, params: any) {
+  post<T>(url: string, params?: any) {
     return http<T>({
       method: 'POST',
       url,
       data: params,
     })
   },
-  put<T>(url: string, params: any) {
+  put<T>(url: string, params?: any) {
     return http<T>({
       method: 'PUT',
       url,

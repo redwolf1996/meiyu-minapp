@@ -304,14 +304,14 @@
           "path": "msg/detail-expire",
           "type": "page",
           "style": {
-            "navigationBarTitleText": "消息"
+            "navigationBarTitleText": "会员到期提醒"
           }
         },
         {
           "path": "msg/detail-renew",
           "type": "page",
           "style": {
-            "navigationBarTitleText": "消息"
+            "navigationBarTitleText": "续费消息提醒"
           }
         },
         {
