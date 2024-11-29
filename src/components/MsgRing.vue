@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { List } from '@/pagesA/msg/types'
+import dayjs from 'dayjs'
 
 const props = defineProps<{
   data: List
@@ -14,7 +15,7 @@ function toDetail() {
       url: '/pagesA/msg/detail-renew',
     })
   }
-  else if (data.noticeType === 2) {
+  if (data.noticeType === 3) {
     uni.navigateTo({
       url: '/pagesA/msg/detail-expire',
     })
@@ -40,8 +41,12 @@ function toDetail() {
       </view>
       <view flex flex-bt tc flex-ac mt-10rpx>
         <view f12 color-999>
-          <!-- 你的账户将于2024.6.7号到期... -->
-          {{ data.content }}
+          <template v-if="data.noticeType === 3">
+            你的账户将于{{ dayjs(data.ext.expiresTime).format('YYYY-MM-DD') }}号到期...
+          </template>
+          <template v-else>
+            已成功续费--个月
+          </template>
         </view>
         <view f12 tc w-64rpx>
           <view v-if="data.status === 1" w-20rpx h-20rpx round ma style="background-color: #FE502E;" />
