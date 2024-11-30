@@ -26,6 +26,8 @@ interface NavigateToOptions {
        "/pagesA/card/card-add-chongzhika" |
        "/pagesA/card/card-add-cika" |
        "/pagesA/card/card-add-zhekouka" |
+       "/pagesA/card/cus-detail" |
+       "/pagesA/card/cus-list" |
        "/pagesA/card/detail" |
        "/pagesA/card/list" |
        "/pagesA/card/make" |

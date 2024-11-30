@@ -65,8 +65,8 @@ function toRenew() {
 function toScanCode() {
   toast.warning('开发中')
 }
-function toCard() {
-  uni.navigateTo({ url: '/pagesA/card/list' })
+function toCusCard() {
+  uni.navigateTo({ url: '/pagesA/card/cus-list' })
 }
 function toAddCustomer() {
   uni.navigateTo({ url: '/pagesA/customer/add' })
@@ -307,7 +307,7 @@ function toCardRecharge(type: number) {
             <i i-mingcute-shop-line fs-64 c-1563ff />
             <text>店务管理</text>
           </view>
-          <view @click="toCard()">
+          <view @click="toCusCard()">
             <i i-heroicons-outline-credit-card fs-64 c-1563ff />
             <text>会员卡项</text>
           </view>

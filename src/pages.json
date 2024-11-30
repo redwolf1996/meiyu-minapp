@@ -187,6 +187,20 @@
           }
         },
         {
+          "path": "card/cus-detail",
+          "type": "page",
+          "style": {
+            "navigationBarTitleText": "会员购卡详情"
+          }
+        },
+        {
+          "path": "card/cus-list",
+          "type": "page",
+          "style": {
+            "navigationBarTitleText": "会员购卡列表"
+          }
+        },
+        {
           "path": "card/detail",
           "type": "page",
           "style": {
