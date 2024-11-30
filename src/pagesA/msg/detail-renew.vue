@@ -1,6 +1,6 @@
 <route lang="yaml">
 style:
-  navigationBarTitleText: 续费消息提醒
+  navigationBarTitleText: 续费消息
 </route>
 
 <script lang="ts" setup>

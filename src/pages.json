@@ -311,7 +311,7 @@
           "path": "msg/detail-renew",
           "type": "page",
           "style": {
-            "navigationBarTitleText": "续费消息提醒"
+            "navigationBarTitleText": "续费消息"
           }
         },
         {
