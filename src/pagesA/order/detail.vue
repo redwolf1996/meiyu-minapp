@@ -3,7 +3,13 @@ style:
   navigationBarTitleText: 订单详情
 </route>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+function handleRefund() {
+  uni.navigateTo({
+    url: '/pagesA/order/refund',
+  })
+}
+</script>
 
 <template>
   <view px-30rpx py20rpx>
@@ -187,11 +193,16 @@ style:
   </view>
   <view class="h20px" />
   <view flex flex-cc>
-    <MyButton :borderWidth="2" radius="8rpx" fontSize="32rpx" width="208rpx" bgColor="transparent" color="#1A66FF" borderColor="#1A66FF">
+    <MyButton
+      :borderWidth="2" radius="8rpx" fontSize="32rpx"
+      width="208rpx" bgColor="transparent"
+      color="#1A66FF" borderColor="#1A66FF"
+      @click="handleRefund()"
+    >
       主动退款
     </MyButton>
   </view>
-  <view class="h20px" />
+  <view class="h50px" />
 </template>
 
 <style lang='scss' scoped></style>

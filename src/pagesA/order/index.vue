@@ -21,6 +21,12 @@ const items = [{
   label: '全部',
   value: 4,
 }]
+
+function toOrderDetail() {
+  uni.navigateTo({
+    url: '/pagesA/order/detail',
+  })
+}
 </script>
 
 <template>
@@ -30,7 +36,7 @@ const items = [{
     </block>
   </wd-tabs>
   <view p16px>
-    <view px16px py20px bg-white rd-8px>
+    <view px16px py20px bg-white rd-8px @click="toOrderDetail()">
       <view flex flex-ac flex-bt>
         <view f14>
           2024-04-20 17:34:20

@@ -3,7 +3,11 @@ style:
   navigationBarTitleText: 主动退款
 </route>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+function confirmRefund() {
+  uni.navigateTo({ url: '/pagesA/order/refund-detail' })
+}
+</script>
 
 <template>
   <view p-32rpx>
@@ -77,7 +81,68 @@ style:
         </text>
       </MyCell>
     </view>
+    <view class="h24rpx" />
+    <view pt40rpx bg-white rd-8rpx>
+      <view px20px>
+        退款说明
+      </view>
+      <view bg-white>
+        <wd-textarea
+          :maxlength="200"
+          placeholderStyle="font-size: 14px;color:#C9CDD4;"
+          placeholder="请输入要备注的内容，200字内"
+          clearable show-word-limit
+        />
+      </view>
+    </view>
+    <view class="h150px" />
+  </view>
+
+  <view class="footer">
+    <view>
+      <view flex flex-ac>
+        <text fs-14px>
+          合计退款金额：
+        </text>
+        <text fs-20px c-#FA483C>
+          ￥18.00
+        </text>
+      </view>
+    </view>
+    <!-- <wd-button plain :round="false" block>
+      确定退款
+    </wd-button> -->
+
+    <view bg-white tc h40px w136px flex flex-cc c-#1A66FF style="border: 1px solid #1A66FF;" @click="confirmRefund()">
+      确定退款
+    </view>
   </view>
 </template>
 
-<style lang='scss' scoped></style>
+<style lang='scss' scoped>
+:deep(textarea) {
+  height: 100px;
+}
+:deep(.wd-button) {
+  border-radius: 0;
+}
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 90px;
+  position: fixed;
+  padding: 0 20px;
+  width: 100%;
+  bottom: 0;
+  background-color: #fff;
+}
+.sp {
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  color: #1a66ff;
+  border: 1px solid #1a66ff;
+  border-radius: 4px;
+}
+</style>
