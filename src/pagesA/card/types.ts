@@ -149,3 +149,43 @@ export interface Info {
   productName?: string
   cardId?: number
 }
+
+export interface MakeCardModel {
+  /**
+   * 销售
+   */
+  adviserId?: number
+  /**
+   * 金额，充值卡售价
+   */
+  amount?: number
+  /**
+   * 卡id
+   */
+  cardId?: number
+  /**
+   * 备注
+   */
+  notes?: string
+  /**
+   * 下单时间
+   */
+  orderTime?: ComputedRef<string> | null
+  /**
+   * 支付方式
+   */
+  payType?: number
+  /**
+   * 客户id
+   */
+  storeCustomerId?: ComputedRef<number> | null
+  /**
+   * 购卡id
+   */
+  customerCardId?: number
+  /**
+   * 赠送金额
+   */
+  gift?: number
+  [property: string]: any
+}

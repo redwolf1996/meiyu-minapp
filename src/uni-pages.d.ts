@@ -28,6 +28,8 @@ interface NavigateToOptions {
        "/pagesA/card/card-add-zhekouka" |
        "/pagesA/card/detail" |
        "/pagesA/card/list" |
+       "/pagesA/card/make" |
+       "/pagesA/card/select-card-common" |
        "/pagesA/card/select-card" |
        "/pagesA/card/share" |
        "/pagesA/customer/add" |

@@ -201,6 +201,21 @@
           }
         },
         {
+          "path": "card/make",
+          "type": "page",
+          "layout": false,
+          "style": {
+            "navigationBarTitleText": "开卡充值"
+          }
+        },
+        {
+          "path": "card/select-card-common",
+          "type": "page",
+          "style": {
+            "navigationBarTitleText": "选择卡项"
+          }
+        },
+        {
           "path": "card/select-card",
           "type": "page",
           "style": {

@@ -18,6 +18,7 @@ const userInfo = computed(() => useUserStore()?.userInfo)
 const storeInfo = computed(() => userInfo.value?.storeList?.[0])
 const info = ref<DashBoardData>()
 const isOvertime = ref(false)
+const showCardRecharge = ref(false) // 显示开卡充值弹窗
 
 onShow(() => {
   initStore()
@@ -85,7 +86,10 @@ function toCashing() { // 开单收银
   checkedProds.value = []
   uni.navigateTo({ url: '/pagesA/billing/index' })
 }
-function toMakeCard() {} // 开卡
+function toMakeCard() { // 开卡及充值
+  console.log('xxxx')
+  showCardRecharge.value = true
+}
 function toOrderList() {
   uni.navigateTo({ url: '/pagesA/order/index' })
 }
@@ -100,6 +104,11 @@ function toInvite() {
 }
 function toMsg() {
   uni.navigateTo({ url: '/pagesA/msg/list' })
+}
+
+function toCardRecharge(type: number) {
+  curCardRechargeType.value = type
+  uni.navigateTo({ url: '/pagesA/card/make' })
 }
 </script>
 
@@ -309,6 +318,49 @@ function toMsg() {
     </view>
   </view>
 
+  <wd-popup v-model="showCardRecharge" position="bottom" closable :safe-area-inset-bottom="true" custom-style="border-radius:32rpx;">
+    <view style="height: 360px">
+      <view fb tc c-#232220 mt42px>
+        选择开卡/充值类型
+      </view>
+      <view class="h20px" />
+      <view px20px py12px>
+        <view mb30px>
+          <view fs-16px>
+            开卡
+          </view>
+          <view fs-14px flex flex-wrap gap20px mt20px>
+            <view class="card-item" @click="toCardRecharge(1)">
+              折扣卡
+            </view>
+            <view class="card-item" @click="toCardRecharge(2)">
+              充值卡
+            </view>
+            <view class="card-item" @click="toCardRecharge(3)">
+              通卡
+            </view>
+            <view class="card-item" @click="toCardRecharge(4)">
+              有限次卡
+            </view>
+            <view class="card-item" @click="toCardRecharge(5)">
+              不限次卡
+            </view>
+          </view>
+        </view>
+        <view>
+          <view fs-16px>
+            充值
+          </view>
+          <view fs-14px flex flex-wrap gap20px mt20px>
+            <view class="card-item" @click="toCardRecharge(6)">
+              充值
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </wd-popup>
+
   <!--  #ifdef  MP-WEIXIN -->
   <view wp-100 pf bottom-0 h-48px @click="toInvite()">
     <wd-img
@@ -332,6 +384,17 @@ function toMsg() {
 </template>
 
 <style lang="scss" scoped>
+.card-item {
+  height: 32px;
+  line-height: 32px;
+  text-align: center;
+  color: #303030;
+  background-color: #f6f6fb;
+  padding: 6px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .renew-btn {
   width: 144rpx;
   height: 48rpx;

@@ -60,3 +60,12 @@ export const GoodsTypeMap = {
   3: '会员卡',
   4: '预约',
 }
+
+export const CardRechargeMap = {
+  1: '折扣卡',
+  2: '充值卡',
+  3: '通卡',
+  4: '有限次卡',
+  5: '不限次卡',
+  6: '充值',
+}

@@ -14,3 +14,14 @@ export const curSelectedCard = ref<CardList>(null)
 
 /** 当前在读的消息详情 */
 export const storeMsgDetail = ref<MsgDetail>(null)
+
+/**
+ * 当前选中的开卡充值类型
+ * 1: '折扣卡'
+ * 2: '充值卡'
+ * 3: '通卡'
+ * 4: '有限次卡'
+ * 5: '不限次卡'
+ * 6: '充值'
+ */
+export const curCardRechargeType = ref<number>(null)

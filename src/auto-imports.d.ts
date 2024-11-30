@@ -7,6 +7,7 @@ export {}
 declare global {
   const BookingStatusMap: typeof import('./utils/consts')['BookingStatusMap']
   const CType: typeof import('./stores/classify')['CType']
+  const CardRechargeMap: typeof import('./utils/consts')['CardRechargeMap']
   const CardTypeMap: typeof import('./utils/consts')['CardTypeMap']
   const CatType: typeof import('./stores/classify')['CatType']
   const CustomerSourceMap: typeof import('./utils/consts')['CustomerSourceMap']
@@ -25,6 +26,7 @@ declare global {
   const bookInfo: typeof import('./stores/book-info')['bookInfo']
   const bookStime: typeof import('./stores/book')['bookStime']
   const calculateEndTime: typeof import('./utils/index')['calculateEndTime']
+  const cardRechargeMap: typeof import('./utils/consts')['cardRechargeMap']
   const checkedProds: typeof import('./stores/sel-base-item')['checkedProds']
   const checkedServs: typeof import('./stores/sel-base-item')['checkedServs']
   const computed: typeof import('vue')['computed']
@@ -44,8 +46,10 @@ declare global {
   const createTemplatePromise: typeof import('@vueuse/core')['createTemplatePromise']
   const createUnrefFn: typeof import('@vueuse/core')['createUnrefFn']
   const curBilling: typeof import('./stores/common')['curBilling']
+  const curCardRechargeType: typeof import('./stores/common')['curCardRechargeType']
   const curClassify: typeof import('./stores/classify')['curClassify']
   const curCustomer: typeof import('./stores/common')['curCustomer']
+  const curRechargeType: typeof import('./stores/common')['curRechargeType']
   const curSelectedCard: typeof import('./stores/common')['curSelectedCard']
   const customRef: typeof import('vue')['customRef']
   const debouncedRef: typeof import('@vueuse/core')['debouncedRef']
@@ -386,6 +390,7 @@ declare module 'vue' {
   interface GlobalComponents {}
   interface ComponentCustomProperties {
     readonly BookingStatusMap: UnwrapRef<typeof import('./utils/consts')['BookingStatusMap']>
+    readonly CardRechargeMap: UnwrapRef<typeof import('./utils/consts')['CardRechargeMap']>
     readonly CardTypeMap: UnwrapRef<typeof import('./utils/consts')['CardTypeMap']>
     readonly CatType: UnwrapRef<typeof import('./stores/classify')['CatType']>
     readonly CustomerSourceMap: UnwrapRef<typeof import('./utils/consts')['CustomerSourceMap']>
@@ -406,6 +411,7 @@ declare module 'vue' {
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
     readonly createApp: UnwrapRef<typeof import('vue')['createApp']>
     readonly curBilling: UnwrapRef<typeof import('./stores/common')['curBilling']>
+    readonly curCardRechargeType: UnwrapRef<typeof import('./stores/common')['curCardRechargeType']>
     readonly curClassify: UnwrapRef<typeof import('./stores/classify')['curClassify']>
     readonly curCustomer: UnwrapRef<typeof import('./stores/common')['curCustomer']>
     readonly curSelectedCard: UnwrapRef<typeof import('./stores/common')['curSelectedCard']>
