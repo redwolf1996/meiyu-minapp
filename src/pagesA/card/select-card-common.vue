@@ -15,34 +15,47 @@ const cardImgName = { // 1->次卡，2->充值卡，3->折扣卡
   3: 'bg_zkk',
 }
 
-onLoad(async (options) => {
-  const params = {
-    storeCustomerId: options.storeCustomerId,
-    goodsId: options.goodsId,
-    goodsType: options.goodsType,
-  }
-  const res = await request.get<AvailableCard>('/business/store-customer-card-valid', params)
+const cType = ref<number>(-1) // 1->次卡，2->充值卡，3->折扣卡
+const cSecondType = ref<number>(-1) // 0非次卡，1->有限次卡，2->不限次卡，3->通卡
 
-  console.log(res)
+onLoad(async () => {
+  /**
+   * 当前选中的开卡充值类型
+   * 1: '折扣卡'
+   * 2: '充值卡'
+   * 3: '通卡'
+   * 4: '有限次卡'
+   * 5: '不限次卡'
+   * 6: '充值'
+   */
+  if (curCardRechargeType.value === 1) { cType.value = 3; cSecondType.value = 0 }
+  if (curCardRechargeType.value === 2) { cType.value = 2; cSecondType.value = 0 }
+  if (curCardRechargeType.value === 3) { cType.value = 1; cSecondType.value = 3 }
+  if (curCardRechargeType.value === 4) { cType.value = 1; cSecondType.value = 1 }
+  if (curCardRechargeType.value === 5) { cType.value = 1; cSecondType.value = 2 }
+  if (curCardRechargeType.value === 6) { cType.value = 2; cSecondType.value = 0 }
 
-  // const cardCats = res.data.cardCategory!
-  // cardCats.unshift({
-  //   id: 0,
-  //   name: '所有分类',
-  //   storeId: null,
-  // })
-  // const cards = res.data.cardList
-  // categories.value = cardCats.map((v) => {
-  //   return {
-  //     id: v.id,
-  //     label: v.name,
-  //     items: v.id === 0
-  //       ? cards
-  //       : cards.filter(v1 => v.id === v1.categoryId).map((v2) => {
-  //         return { ...v2, checked: false }
-  //       }),
-  //   }
-  // })
+  const res = await request.get<AllItems>('/business/goods_all', { storeId })
+  const cardCats = res.data.cardCategory!
+  cardCats.unshift({
+    id: 0,
+    name: '所有分类',
+    storeId: null,
+  })
+  const cards = res.data.cardList.filter((v) => {
+    return v.type === cType.value && v.secondType === cSecondType.value
+  })
+  categories.value = cardCats.map((v) => {
+    return {
+      id: v.id,
+      label: v.name,
+      items: v.id === 0
+        ? cards
+        : cards.filter(v1 => v.id === v1.categoryId).map((v2) => {
+          return { ...v2, checked: false }
+        }),
+    }
+  })
 })
 
 function handleChange({ value }) {

@@ -15,7 +15,6 @@ const visibleStaff = ref(false)
 const curIndex = ref(0) // 商品和服务列表当前选择项的索引
 const orderTime = ref(null)
 const form = ref<MakeCardModel>({
-  storeId,
   orderTime: computed(() => {
     return orderTime.value ? dayjs(orderTime.value).format('YYYY-MM-DD HH:mm:ss') : ''
   }),
@@ -27,10 +26,7 @@ const form = ref<MakeCardModel>({
 })
 const cusName = computed(() => curCustomer.value?.name ?? '')
 const totalToPay = computed(() => {
-  if (!form.value.billingGoods.length)
-    return 0
-  const arr = form.value.billingGoods.map(v => v.amount)
-  return sum(arr)
+  return 100
 }) // 待付款金额
 
 onMounted(() => {
@@ -84,7 +80,7 @@ function toSelectStaff(index: number) {
 }
 
 function toSelCard() {
-  uni.navigateTo({ url: `/pagesA/card/select-card` })
+  uni.navigateTo({ url: `/pagesA/card/select-card-common` })
 }
 
 function toSelCus() {
@@ -164,7 +160,7 @@ function toPay() {
 
   <view>
     <view f12 mt12px mb8px pl20px c-#3D3D3D>
-      消费项目
+      开卡明细
     </view>
 
     <view bg-white py10px px20px pr h65px @click="toSelCard()">

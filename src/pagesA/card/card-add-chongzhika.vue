@@ -12,7 +12,7 @@ const expiresType = ref(0) // 0永久有效 1限期有效
 const form = ref<CardForm>({
   storeId,
   type: 2,
-  secondType: 1,
+  secondType: 0,
   gift: 0,
   name: '',
   categoryId: computed(() => curClassify.value.id),
