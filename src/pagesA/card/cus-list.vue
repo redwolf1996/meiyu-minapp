@@ -118,7 +118,7 @@ function showItemMenu(item: List) {
     @query="queryList"
   >
     <template #top>
-      <TopSearch v-model="reqParams.name" placeholder="请输入卡项名称" @search="search()" />
+      <TopSearch v-model="reqParams.name" placeholder="请输入客户姓名或手机号" @search="search()" />
       <view class="h16px" />
       <view mx-14px p-16px pb6px bg-white rd-t-8px>
         <view class="title">
