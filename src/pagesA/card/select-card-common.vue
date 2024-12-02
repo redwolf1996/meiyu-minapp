@@ -33,7 +33,7 @@ onLoad(async (option) => {
   if (curCardRechargeType.value === 6) {
     const storeCustomerId = option?.storeCustomerId
     const res = await request.get<AvailableCard[]>('/business/store-customer-card-valid', { storeCustomerId })
-    customerCashCardList.value = res.data
+    customerCashCardList.value = res.data.filter(v => v.cardType === 2)
   }
   else {
     if (curCardRechargeType.value === 1) { cType.value = 3; cSecondType.value = 0 }
@@ -80,6 +80,11 @@ function toDetail(id) {
 
 function selectItem(itm: any) {
   curSelectedCard.value = itm
+  uni.navigateBack()
+}
+
+function selectItem2(itm: any) {
+  curSelectedCardToCash.value = itm
   uni.navigateBack()
 }
 </script>
@@ -168,47 +173,36 @@ function selectItem(itm: any) {
 
     <!-- 充值 -->
     <template v-else>
-      <template v-if="customerCashCardList.length > 0">
-        <view v-for="(itm, idx) in customerCashCardList" :key="`itm-${idx}`" h132px mb12px pr>
+      <view v-if="customerCashCardList.length > 0" px20px py20px>
+        <view v-for="(itm, idx) in customerCashCardList" :key="`itm-${idx}`" h132px mb12px pr style="width: calc(100vw - 40px);">
           <image
-            style="width: 100%;height: 132px;"
+            style="width: calc(100vw - 40px);height: 132px;"
             mode="aspectFill"
-            :src="`${IMG_BASE}/cards/${cardImgName[itm.type]}.png`"
+            :src="`${IMG_BASE}/cards/bg_czk.png`"
           />
           <view class="txt" flex flex-y flex-bt>
-            <view p12px flex-grow-1 @click="selectItem(itm)">
+            <view p12px flex-grow-1 @click="selectItem2(itm)">
               <view flex flex-bt flex-ac>
                 <view fs-14px>
-                  {{ itm.name }}
+                  {{ itm.cardName }}
                 </view>
                 <view
                   text-20rpx w-88rpx h-40rpx lh-40rpx tc flex flex-cc
                   style="background: transparent;border-radius: 32rpx;border: 1px solid #fff;color: #fff"
                 >
-                  {{ CardTypeMap[itm.type] }}
+                  充值卡
                 </view>
               </view>
               <view fs-14px mt-10px>
-                <template v-if="itm.type === 1">
-                  <text>￥{{ itm.price }}&nbsp;</text>
-                  <text>权益次数：{{ itm.gift }}次</text>
-                </template>
-                <template v-if="itm.type === 2">
-                  <text>本金￥{{ itm.price }}&nbsp;</text>
-                  <text>赠金￥{{ itm.gift }}</text>
-                </template>
-                <template v-if="itm.type === 3">
-                  <text>￥{{ itm.price }}&nbsp;</text>
-                  <text>{{ getDiscounts(itm) }}折</text>
-                </template>
+                <text>剩余金额￥{{ itm.totalAmount }}&nbsp;</text>
               </view>
               <view fs-12px mt-10px>
                 <text>有效期：</text>
-                <text v-if="itm.expires === 0">
+                <text v-if="itm.isLongTerm === 1">
                   永久有效
                 </text>
                 <text v-else>
-                  购买后{{ itm.expires }}天内有效
+                  有效期：{{ itm.expiresTimeDesc }}
                 </text>
               </view>
             </view>
@@ -222,7 +216,7 @@ function selectItem(itm: any) {
             </view>
           </view>
         </view>
-      </template>
+      </view>
       <wd-status-tip v-else image="content" tip="暂无充值卡" />
     </template>
   </view>

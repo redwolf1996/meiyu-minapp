@@ -50,26 +50,22 @@ onMounted(() => {
 watch(() => curSelectedCard.value, () => {
   if (curSelectedCard.value) {
     form.value.cardId = curSelectedCard.value.id
-    form.value.customerCardId = curSelectedCard.value.id
-    if (curCardRechargeType.value === 6) { // 充值
-      form.value.amount = 0
-      form.value.gift = 0
-    }
-    else { // 开卡
-      form.value.amount = curSelectedCard.value.price
-      form.value.gift = curSelectedCard.value.gift || 0
-    }
+    form.value.amount = curSelectedCard.value.price
+    form.value.gift = curSelectedCard.value.gift || 0
+  }
+})
+
+watch(() => curSelectedCardToCash.value, () => {
+  if (curSelectedCardToCash.value) {
+    form.value.customerCardId = curSelectedCardToCash.value.customerCardId
+    form.value.amount = 0
+    form.value.gift = 0
   }
 })
 
 function handleConfirm({ value }) {
   console.log(value)
 }
-
-// function toSelectStaff(index: number) {
-//   curIndex.value = index
-//   visibleStaff.value = true
-// }
 
 function toSelCard() {
   if (!form.value.storeCustomerId)
@@ -80,10 +76,6 @@ function toSelCard() {
 function toSelCus() {
   uni.navigateTo({ url: '/pagesA/customer/list' })
 }
-
-// function save() {
-//   console.log(curCustomer.value)
-// }
 
 async function payLater() {
   form.value.amount = Number(form.value.amount)
@@ -144,40 +136,68 @@ function toPay() {
         />
         <view class="txt" flex flex-y flex-bt>
           <view p12px flex-grow-1>
-            <view flex flex-bt flex-ac>
-              <view fs-14px>
-                {{ curSelectedCard?.name }}
+            <template v-if="curCardRechargeType.value !== 6">
+              <view flex flex-bt flex-ac>
+                <view fs-14px>
+                  {{ curSelectedCard?.name }}
+                </view>
+                <view
+                  text-20rpx w-88rpx h-40rpx lh-40rpx tc flex flex-cc
+                  style="background: transparent;border-radius: 32rpx;border: 1px solid #fff;color: #fff"
+                >
+                  {{ CardTypeMap[curSelectedCard.type] }}
+                </view>
               </view>
-              <view
-                text-20rpx w-88rpx h-40rpx lh-40rpx tc flex flex-cc
-                style="background: transparent;border-radius: 32rpx;border: 1px solid #fff;color: #fff"
-              >
-                {{ CardTypeMap[curSelectedCard.type] }}
+              <view fs-14px mt-10px>
+                <template v-if="curSelectedCard.type === 1">
+                  <text>￥{{ curSelectedCard.price }}&nbsp;</text>
+                  <text>权益次数：{{ curSelectedCard.gift }}次</text>
+                </template>
+                <template v-if="curSelectedCard.type === 2">
+                  <text>本金￥{{ curSelectedCard.price }}&nbsp;</text>
+                  <text>赠金￥{{ curSelectedCard.gift }}</text>
+                </template>
+                <template v-if="curSelectedCard.type === 3">
+                  <text>￥{{ curSelectedCard.price }}&nbsp;</text>
+                  <text>{{ getDiscounts(curSelectedCard) }}折</text>
+                </template>
               </view>
-            </view>
-            <view fs-14px mt-10px>
-              <template v-if="curSelectedCard.type === 1">
-                <text>￥{{ curSelectedCard.price }}&nbsp;</text>
-                <text>权益次数：{{ curSelectedCard.gift }}次</text>
-              </template>
-              <template v-if="curSelectedCard.type === 2">
-                <text>本金￥{{ curSelectedCard.price }}&nbsp;</text>
-                <text>赠金￥{{ curSelectedCard.gift }}</text>
-              </template>
-              <template v-if="curSelectedCard.type === 3">
-                <text>￥{{ curSelectedCard.price }}&nbsp;</text>
-                <text>{{ getDiscounts(curSelectedCard) }}折</text>
-              </template>
-            </view>
-            <view fs-12px mt-10px>
-              <text>有效期：</text>
-              <text v-if="curSelectedCard.expires === 0">
-                永久有效
-              </text>
-              <text v-else>
-                购买后{{ curSelectedCard.expires }}天内有效
-              </text>
-            </view>
+              <view fs-12px mt-10px>
+                <text>有效期：</text>
+                <text v-if="curSelectedCard.expires === 0">
+                  永久有效
+                </text>
+                <text v-else>
+                  购买后{{ curSelectedCard.expires }}天内有效
+                </text>
+              </view>
+            </template>
+
+            <template v-else>
+              <view flex flex-bt flex-ac>
+                <view fs-14px>
+                  {{ curSelectedCardToCash?.cardName }}
+                </view>
+                <view
+                  text-20rpx w-88rpx h-40rpx lh-40rpx tc flex flex-cc
+                  style="background: transparent;border-radius: 32rpx;border: 1px solid #fff;color: #fff"
+                >
+                  充值卡
+                </view>
+              </view>
+              <view fs-14px mt-10px>
+                <text>剩余金额￥{{ curSelectedCardToCash.totalAmount }}&nbsp;</text>
+              </view>
+              <view fs-12px mt-10px>
+                <text>有效期：</text>
+                <text v-if="curSelectedCardToCash.isLongTerm">
+                  永久有效
+                </text>
+                <text v-else>
+                  有效期：{{ curSelectedCardToCash.expiresTimeDesc }}
+                </text>
+              </view>
+            </template>
           </view>
         </view>
       </view>
