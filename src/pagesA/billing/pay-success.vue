@@ -1,6 +1,6 @@
 <route lang="yaml">
 style:
-  navigationBarTitleText: 支付成功
+  navigationBarTitleText: 支付结果
 </route>
 
 <script lang="ts" setup>
@@ -39,7 +39,7 @@ function toOrderDetail() {
     </view>
     <view class="h25px" />
     <view tc fb fs-28px>
-      ￥3336
+      ￥{{ amount }}
     </view>
     <view class="h40px" />
     <view bg-white px12px py16px>
@@ -55,7 +55,7 @@ function toOrderDetail() {
         />
         <view flex flex-y flex-bt h46px>
           <view fb>
-            333积分
+            {{ points }}积分
           </view>
           <view c-#6C6666 fs-12px>
             当前已到账
