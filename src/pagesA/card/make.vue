@@ -136,7 +136,7 @@ function toPay() {
         />
         <view class="txt" flex flex-y flex-bt>
           <view p12px flex-grow-1>
-            <template v-if="curCardRechargeType.value !== 6">
+            <template v-if="curCardRechargeType !== 6">
               <view flex flex-bt flex-ac>
                 <view fs-14px>
                   {{ curSelectedCard?.name }}
