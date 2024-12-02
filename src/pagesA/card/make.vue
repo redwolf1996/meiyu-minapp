@@ -72,7 +72,9 @@ function handleConfirm({ value }) {
 // }
 
 function toSelCard() {
-  uni.navigateTo({ url: `/pagesA/card/select-card-common` })
+  if (!form.value.storeCustomerId)
+    return toast.warning('请先选择客户')
+  uni.navigateTo({ url: `/pagesA/card/select-card-common?storeCustomerId=${form.value.storeCustomerId}` })
 }
 
 function toSelCus() {

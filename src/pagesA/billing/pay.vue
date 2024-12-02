@@ -6,6 +6,7 @@ style:
 <script lang="ts" setup>
 import { PayModeEnum } from '@/utils/consts'
 
+const toast = useToast()
 const curCode = ref(4)
 const payTypes = ref([
   {
@@ -122,6 +123,7 @@ function selectItem(code: number, index: number) {
 </script>
 
 <template>
+  <wd-toast />
   <view tc bg-white py20px>
     <text fs-14px>
       待收款：

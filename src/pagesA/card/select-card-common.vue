@@ -18,7 +18,9 @@ const cardImgName = { // 1->次卡，2->充值卡，3->折扣卡
 const cType = ref<number>(-1) // 1->次卡，2->充值卡，3->折扣卡
 const cSecondType = ref<number>(-1) // 0非次卡，1->有限次卡，2->不限次卡，3->通卡
 
-onLoad(async () => {
+const customerCashCardList = ref<AvailableCard[]>([])
+
+onLoad(async (option) => {
   /**
    * 当前选中的开卡充值类型
    * 1: '折扣卡'
@@ -28,34 +30,40 @@ onLoad(async () => {
    * 5: '不限次卡'
    * 6: '充值'
    */
-  if (curCardRechargeType.value === 1) { cType.value = 3; cSecondType.value = 0 }
-  if (curCardRechargeType.value === 2) { cType.value = 2; cSecondType.value = 0 }
-  if (curCardRechargeType.value === 3) { cType.value = 1; cSecondType.value = 3 }
-  if (curCardRechargeType.value === 4) { cType.value = 1; cSecondType.value = 1 }
-  if (curCardRechargeType.value === 5) { cType.value = 1; cSecondType.value = 2 }
-  if (curCardRechargeType.value === 6) { cType.value = 2; cSecondType.value = 0 }
+  if (curCardRechargeType.value === 6) {
+    const storeCustomerId = option?.storeCustomerId
+    const res = await request.get<AvailableCard[]>('/business/store-customer-card-valid', { storeCustomerId })
+    customerCashCardList.value = res.data
+  }
+  else {
+    if (curCardRechargeType.value === 1) { cType.value = 3; cSecondType.value = 0 }
+    if (curCardRechargeType.value === 2) { cType.value = 2; cSecondType.value = 0 }
+    if (curCardRechargeType.value === 3) { cType.value = 1; cSecondType.value = 3 }
+    if (curCardRechargeType.value === 4) { cType.value = 1; cSecondType.value = 1 }
+    if (curCardRechargeType.value === 5) { cType.value = 1; cSecondType.value = 2 }
 
-  const res = await request.get<AllItems>('/business/goods_all', { storeId })
-  const cardCats = res.data.cardCategory!
-  cardCats.unshift({
-    id: 0,
-    name: '所有分类',
-    storeId: null,
-  })
-  const cards = res.data.cardList.filter((v) => {
-    return v.type === cType.value && v.secondType === cSecondType.value
-  })
-  categories.value = cardCats.map((v) => {
-    return {
-      id: v.id,
-      label: v.name,
-      items: v.id === 0
-        ? cards
-        : cards.filter(v1 => v.id === v1.categoryId).map((v2) => {
-          return { ...v2, checked: false }
-        }),
-    }
-  })
+    const res = await request.get<AllItems>('/business/goods_all', { storeId })
+    const cardCats = res.data.cardCategory!
+    cardCats.unshift({
+      id: 0,
+      name: '所有分类',
+      storeId: null,
+    })
+    const cards = res.data.cardList.filter((v) => {
+      return v.type === cType.value && v.secondType === cSecondType.value
+    })
+    categories.value = cardCats.map((v) => {
+      return {
+        id: v.id,
+        label: v.name,
+        items: v.id === 0
+          ? cards
+          : cards.filter(v1 => v.id === v1.categoryId).map((v2) => {
+            return { ...v2, checked: false }
+          }),
+      }
+    })
+  }
 })
 
 function handleChange({ value }) {
@@ -78,82 +86,145 @@ function selectItem(itm: any) {
 
 <template>
   <view class="wrapper">
-    <wd-sidebar v-model="active" @change="handleChange">
-      <wd-sidebar-item
-        v-for="(item, index) in categories"
-        :key="index"
-        :value="index"
-        :label="item.label"
-      />
-    </wd-sidebar>
-    <view class="content" :style="`transform: translateY(-${active * 100}%)`">
-      <scroll-view
-        v-for="(item, index) in categories"
-        :key="`cat-${index}`"
-        class="category"
-        scroll-y
-        scroll-with-animation
-        :show-scrollbar="true"
-        :scroll-top="scrollTop"
-        :throttle="false"
-      >
-        <view p12px>
-          <view v-for="(itm, idx) in item.items" :key="`itm-${idx}`" h132px mb12px pr>
-            <image
-              style="width: 100%;height: 132px;"
-              mode="aspectFill"
-              :src="`${IMG_BASE}/cards/${cardImgName[itm.type]}.png`"
-            />
-            <view class="txt" flex flex-y flex-bt>
-              <view p12px flex-grow-1 @click="selectItem(itm)">
-                <view flex flex-bt flex-ac>
-                  <view fs-14px>
-                    {{ itm.name }}
+    <!-- 开卡 -->
+    <template v-if="curCardRechargeType !== 6">
+      <wd-sidebar v-model="active" @change="handleChange">
+        <wd-sidebar-item
+          v-for="(item, index) in categories"
+          :key="index"
+          :value="index"
+          :label="item.label"
+        />
+      </wd-sidebar>
+      <view class="content" :style="`transform: translateY(-${active * 100}%)`">
+        <scroll-view
+          v-for="(item, index) in categories"
+          :key="`cat-${index}`"
+          class="category"
+          scroll-y
+          scroll-with-animation
+          :show-scrollbar="true"
+          :scroll-top="scrollTop"
+          :throttle="false"
+        >
+          <view p12px>
+            <view v-for="(itm, idx) in item.items" :key="`itm-${idx}`" h132px mb12px pr>
+              <image
+                style="width: 100%;height: 132px;"
+                mode="aspectFill"
+                :src="`${IMG_BASE}/cards/${cardImgName[itm.type]}.png`"
+              />
+              <view class="txt" flex flex-y flex-bt>
+                <view p12px flex-grow-1 @click="selectItem(itm)">
+                  <view flex flex-bt flex-ac>
+                    <view fs-14px>
+                      {{ itm.name }}
+                    </view>
+                    <view
+                      text-20rpx w-88rpx h-40rpx lh-40rpx tc flex flex-cc
+                      style="background: transparent;border-radius: 32rpx;border: 1px solid #fff;color: #fff"
+                    >
+                      {{ CardTypeMap[itm.type] }}
+                    </view>
                   </view>
-                  <view
-                    text-20rpx w-88rpx h-40rpx lh-40rpx tc flex flex-cc
-                    style="background: transparent;border-radius: 32rpx;border: 1px solid #fff;color: #fff"
-                  >
-                    {{ CardTypeMap[itm.type] }}
+                  <view fs-14px mt-10px>
+                    <template v-if="itm.type === 1">
+                      <text>￥{{ itm.price }}&nbsp;</text>
+                      <text>权益次数：{{ itm.gift }}次</text>
+                    </template>
+                    <template v-if="itm.type === 2">
+                      <text>本金￥{{ itm.price }}&nbsp;</text>
+                      <text>赠金￥{{ itm.gift }}</text>
+                    </template>
+                    <template v-if="itm.type === 3">
+                      <text>￥{{ itm.price }}&nbsp;</text>
+                      <text>{{ getDiscounts(itm) }}折</text>
+                    </template>
+                  </view>
+                  <view fs-12px mt-10px>
+                    <text>有效期：</text>
+                    <text v-if="itm.expires === 0">
+                      永久有效
+                    </text>
+                    <text v-else>
+                      购买后{{ itm.expires }}天内有效
+                    </text>
                   </view>
                 </view>
-                <view fs-14px mt-10px>
-                  <template v-if="itm.type === 1">
-                    <text>￥{{ itm.price }}&nbsp;</text>
-                    <text>权益次数：{{ itm.gift }}次</text>
-                  </template>
-                  <template v-if="itm.type === 2">
-                    <text>本金￥{{ itm.price }}&nbsp;</text>
-                    <text>赠金￥{{ itm.gift }}</text>
-                  </template>
-                  <template v-if="itm.type === 3">
-                    <text>￥{{ itm.price }}&nbsp;</text>
-                    <text>{{ getDiscounts(itm) }}折</text>
-                  </template>
-                </view>
-                <view fs-12px mt-10px>
-                  <text>有效期：</text>
-                  <text v-if="itm.expires === 0">
-                    永久有效
-                  </text>
-                  <text v-else>
-                    购买后{{ itm.expires }}天内有效
-                  </text>
-                </view>
-              </view>
-              <view
-                fs-12px
-                flex flex-ac flex-xr h30px w100% pr12px style="background-color: rgba(0, 0, 0, 0.2);
+                <view
+                  fs-12px
+                  flex flex-ac flex-xr h30px w100% pr12px style="background-color: rgba(0, 0, 0, 0.2);
               border-bottom-left-radius: 4px;border-bottom-right-radius: 4px"
-                @click="toDetail(itm.id)"
-              >
-                查看详情&nbsp;>
+                  @click="toDetail(itm.id)"
+                >
+                  查看详情&nbsp;>
+                </view>
               </view>
             </view>
           </view>
+        </scroll-view>
+      </view>
+    </template>
+
+    <!-- 充值 -->
+    <template v-else>
+      <template v-if="customerCashCardList.length > 0">
+        <view v-for="(itm, idx) in customerCashCardList" :key="`itm-${idx}`" h132px mb12px pr>
+          <image
+            style="width: 100%;height: 132px;"
+            mode="aspectFill"
+            :src="`${IMG_BASE}/cards/${cardImgName[itm.type]}.png`"
+          />
+          <view class="txt" flex flex-y flex-bt>
+            <view p12px flex-grow-1 @click="selectItem(itm)">
+              <view flex flex-bt flex-ac>
+                <view fs-14px>
+                  {{ itm.name }}
+                </view>
+                <view
+                  text-20rpx w-88rpx h-40rpx lh-40rpx tc flex flex-cc
+                  style="background: transparent;border-radius: 32rpx;border: 1px solid #fff;color: #fff"
+                >
+                  {{ CardTypeMap[itm.type] }}
+                </view>
+              </view>
+              <view fs-14px mt-10px>
+                <template v-if="itm.type === 1">
+                  <text>￥{{ itm.price }}&nbsp;</text>
+                  <text>权益次数：{{ itm.gift }}次</text>
+                </template>
+                <template v-if="itm.type === 2">
+                  <text>本金￥{{ itm.price }}&nbsp;</text>
+                  <text>赠金￥{{ itm.gift }}</text>
+                </template>
+                <template v-if="itm.type === 3">
+                  <text>￥{{ itm.price }}&nbsp;</text>
+                  <text>{{ getDiscounts(itm) }}折</text>
+                </template>
+              </view>
+              <view fs-12px mt-10px>
+                <text>有效期：</text>
+                <text v-if="itm.expires === 0">
+                  永久有效
+                </text>
+                <text v-else>
+                  购买后{{ itm.expires }}天内有效
+                </text>
+              </view>
+            </view>
+            <view
+              fs-12px
+              flex flex-ac flex-xr h30px w100% pr12px style="background-color: rgba(0, 0, 0, 0.2);
+              border-bottom-left-radius: 4px;border-bottom-right-radius: 4px"
+              @click="toDetail(itm.id)"
+            >
+              查看详情&nbsp;>
+            </view>
+          </view>
         </view>
-      </scroll-view>
-    </view>
+      </template>
+      <wd-status-tip v-else image="content" tip="暂无充值卡" />
+    </template>
   </view>
 </template>
 
