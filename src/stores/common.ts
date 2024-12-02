@@ -2,6 +2,7 @@ import type { CusList } from '@/pagesA/tabs/types'
 import type { BillModel } from '@/pagesA/billing/types'
 import type { CardList } from '@/pagesA/types'
 import type { List as MsgDetail } from '@/pagesA/msg/types'
+import type { MakeCardModel } from '@/pagesA/card/types'
 
 /** 当前选中的客户 */
 export const curCustomer = ref<CusList>(null)
@@ -25,3 +26,6 @@ export const storeMsgDetail = ref<MsgDetail>(null)
  * 6: '充值'
  */
 export const curCardRechargeType = ref<number>(null)
+
+/** 当前待提交的开卡充值表单数据 */
+export const curCardRechargeFormData = ref<MakeCardModel>(null)

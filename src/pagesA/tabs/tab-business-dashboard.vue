@@ -86,8 +86,7 @@ function toCashing() { // 开单收银
   checkedProds.value = []
   uni.navigateTo({ url: '/pagesA/billing/index' })
 }
-function toMakeCard() { // 开卡及充值
-  console.log('xxxx')
+async function toMakeCard() { // 开卡及充值
   showCardRecharge.value = true
 }
 function toOrderList() {
@@ -108,6 +107,8 @@ function toMsg() {
 
 function toCardRecharge(type: number) {
   curCardRechargeType.value = type
+  curSelectedCard.value = null
+  curCustomer.value = null
   uni.navigateTo({ url: '/pagesA/card/make' })
 }
 </script>

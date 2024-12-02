@@ -4,7 +4,9 @@ style:
 </route>
 
 <script lang="ts" setup>
-const curCode = ref(0)
+import { PayModeEnum } from '@/utils/consts'
+
+const curCode = ref(4)
 const payTypes = ref([
   {
     code: 1,
@@ -24,7 +26,7 @@ const payTypes = ref([
   {
     code: 4,
     desc: '微信(手工)',
-    active: false,
+    active: true,
   },
   {
     code: 5,
@@ -57,9 +59,58 @@ const payTypes = ref([
     active: false,
   },
 ])
-const payMode = ref<1 | 2>(2) // 1线下记账收款 2储值卡支付
+const refundTypes = ref([
+  {
+    code: 20,
+    desc: '原路退回',
+  },
+  {
+    code: 1,
+    desc: '现金',
+  },
+  {
+    code: 4,
+    desc: '微信',
+  },
+  {
+    code: 5,
+    desc: '支付宝',
+  },
+])
+const payMode = ref<1 | 2>(1) // 1线下记账收款 2储值卡支付
 
-function pay() {}
+const curMode = ref(0)
+const postUrl = ref('')
+const formData = ref<any>(null)
+
+onLoad((option) => {
+  const mode = Number(option?.mode)
+  if (mode) {
+    curMode.value = mode
+    if (mode === PayModeEnum.MakeOrder) {
+      formData.value = curBilling.value
+      postUrl.value = '/business/billing'
+    }
+
+    if (mode === PayModeEnum.MakeCard) {
+      formData.value = curCardRechargeFormData.value
+      postUrl.value = '/business/store-customer-card'
+    }
+
+    if (mode === PayModeEnum.Recharge) {
+      formData.value = curCardRechargeFormData.value
+      postUrl.value = '/business/value-card-recharge'
+    }
+  }
+})
+
+async function pay() {
+  formData.value.payType = curCode.value
+  await request.post(postUrl.value, formData.value)
+  toast.info('支付成功')
+  await sleep(1000)
+  uni.redirectTo({ url: '/pagesA/billing/pay-success' })
+}
 
 function selectItem(code: number, index: number) {
   curCode.value = code
@@ -76,7 +127,7 @@ function selectItem(code: number, index: number) {
       待收款：
     </text>
     <text fs-20px c-#FA483C>
-      ￥18.00
+      ￥{{ curMode === PayModeEnum.MakeOrder ? curBilling.amount : curCardRechargeFormData.amount }}
     </text>
   </view>
   <view h12px wp100 bg-#F6F6FB />

@@ -71,8 +71,8 @@ function toDetail(id) {
 }
 
 function selectItem(itm: any) {
-  console.log(itm)
   curSelectedCard.value = itm
+  uni.navigateBack()
 }
 </script>
 

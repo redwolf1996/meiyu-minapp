@@ -69,3 +69,32 @@ export const CardRechargeMap = {
   5: '不限次卡',
   6: '充值',
 }
+
+/**
+ * 1: 'bg_ck',
+ * 2: 'bg_czk',
+ * 3: 'bg_zkk',
+ */
+export const CardRechargeBgMap = {
+  1: 'bg_zkk',
+  2: 'bg_czk',
+  3: 'bg_ck',
+  4: 'bg_ck',
+  5: 'bg_ck',
+  6: 'bg_czk',
+}
+
+export const CardRechargeMap2 = {
+  1: '折扣卡',
+  2: '充值卡',
+  3: '次卡',
+  4: '次卡',
+  5: '次卡',
+  6: '充值卡',
+}
+
+export enum PayModeEnum {
+  MakeOrder = 1,
+  MakeCard = 2,
+  Recharge = 3,
+}

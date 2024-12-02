@@ -7,7 +7,9 @@ export {}
 declare global {
   const BookingStatusMap: typeof import('./utils/consts')['BookingStatusMap']
   const CType: typeof import('./stores/classify')['CType']
+  const CardRechargeBgMap: typeof import('./utils/consts')['CardRechargeBgMap']
   const CardRechargeMap: typeof import('./utils/consts')['CardRechargeMap']
+  const CardRechargeMap2: typeof import('./utils/consts')['CardRechargeMap2']
   const CardTypeMap: typeof import('./utils/consts')['CardTypeMap']
   const CatType: typeof import('./stores/classify')['CatType']
   const CustomerSourceMap: typeof import('./utils/consts')['CustomerSourceMap']
@@ -15,6 +17,8 @@ declare global {
   const GenderMap: typeof import('./utils/consts')['GenderMap']
   const GoodsTypeMap: typeof import('./utils/consts')['GoodsTypeMap']
   const IMG_BASE: typeof import('./utils/index')['IMG_BASE']
+  const PayMode: typeof import('./utils/consts')['PayMode']
+  const PayModeEnum: typeof import('./utils/consts')['PayModeEnum']
   const PayStatusMap: typeof import('./utils/consts')['PayStatusMap']
   const TimesCardTypeMap: typeof import('./utils/consts')['TimesCardTypeMap']
   const TopSearch: typeof import('./components/TopSearch.vue')['default']
@@ -46,6 +50,7 @@ declare global {
   const createTemplatePromise: typeof import('@vueuse/core')['createTemplatePromise']
   const createUnrefFn: typeof import('@vueuse/core')['createUnrefFn']
   const curBilling: typeof import('./stores/common')['curBilling']
+  const curCardRechargeFormData: typeof import('./stores/common')['curCardRechargeFormData']
   const curCardRechargeType: typeof import('./stores/common')['curCardRechargeType']
   const curClassify: typeof import('./stores/classify')['curClassify']
   const curCustomer: typeof import('./stores/common')['curCustomer']
@@ -383,6 +388,9 @@ declare global {
   // @ts-ignore
   export type { CatType } from './stores/classify'
   import('./stores/classify')
+  // @ts-ignore
+  export type { PayModeEnum } from './utils/consts'
+  import('./utils/consts')
 }
 // for vue template auto import
 import { UnwrapRef } from 'vue'
@@ -390,6 +398,8 @@ declare module 'vue' {
   interface GlobalComponents {}
   interface ComponentCustomProperties {
     readonly BookingStatusMap: UnwrapRef<typeof import('./utils/consts')['BookingStatusMap']>
+    readonly CardRechargeBgMap: UnwrapRef<typeof import('./utils/consts')['CardRechargeBgMap']>
+    readonly CardRechargeMap2: UnwrapRef<typeof import('./utils/consts')['CardRechargeMap2']>
     readonly CardRechargeMap: UnwrapRef<typeof import('./utils/consts')['CardRechargeMap']>
     readonly CardTypeMap: UnwrapRef<typeof import('./utils/consts')['CardTypeMap']>
     readonly CatType: UnwrapRef<typeof import('./stores/classify')['CatType']>
@@ -398,6 +408,7 @@ declare module 'vue' {
     readonly GenderMap: UnwrapRef<typeof import('./utils/consts')['GenderMap']>
     readonly GoodsTypeMap: UnwrapRef<typeof import('./utils/consts')['GoodsTypeMap']>
     readonly IMG_BASE: UnwrapRef<typeof import('./utils/index')['IMG_BASE']>
+    readonly PayModeEnum: UnwrapRef<typeof import('./utils/consts')['PayModeEnum']>
     readonly PayStatusMap: UnwrapRef<typeof import('./utils/consts')['PayStatusMap']>
     readonly TimesCardTypeMap: UnwrapRef<typeof import('./utils/consts')['TimesCardTypeMap']>
     readonly VipLevelMap: UnwrapRef<typeof import('./utils/consts')['VipLevelMap']>
@@ -411,6 +422,7 @@ declare module 'vue' {
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
     readonly createApp: UnwrapRef<typeof import('vue')['createApp']>
     readonly curBilling: UnwrapRef<typeof import('./stores/common')['curBilling']>
+    readonly curCardRechargeFormData: UnwrapRef<typeof import('./stores/common')['curCardRechargeFormData']>
     readonly curCardRechargeType: UnwrapRef<typeof import('./stores/common')['curCardRechargeType']>
     readonly curClassify: UnwrapRef<typeof import('./stores/classify')['curClassify']>
     readonly curCustomer: UnwrapRef<typeof import('./stores/common')['curCustomer']>
