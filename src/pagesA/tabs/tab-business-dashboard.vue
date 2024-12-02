@@ -104,7 +104,7 @@ function toInvite() {
 function toMsg() {
   uni.navigateTo({ url: '/pagesA/msg/list' })
 }
-
+// 开卡/充值
 function toCardRecharge(type: number) {
   curCardRechargeType.value = type
   curSelectedCard.value = null

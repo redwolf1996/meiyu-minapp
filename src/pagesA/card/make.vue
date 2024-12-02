@@ -127,7 +127,7 @@ function toPay() {
         +&nbsp;选择{{ CardRechargeMap[curCardRechargeType] }}{{ curCardRechargeType === 6 ? '卡' : '' }}
       </view>
     </view>
-    <view v-if="curSelectedCard" bg-white py10px px20px pr>
+    <view v-if="curSelectedCard || curSelectedCardToCash" bg-white py10px px20px pr>
       <view h102px mb12px pr>
         <image
           style="width: 100%;height: 102px;"

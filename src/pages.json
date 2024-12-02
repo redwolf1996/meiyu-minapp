@@ -100,6 +100,13 @@
           }
         },
         {
+          "path": "billing/select-card-billing",
+          "type": "page",
+          "style": {
+            "navigationBarTitleText": "选择卡项"
+          }
+        },
+        {
           "path": "book/add",
           "type": "page",
           "layout": false,

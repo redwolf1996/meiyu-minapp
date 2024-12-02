@@ -14,6 +14,7 @@ interface NavigateToOptions {
        "/pagesA/billing/index" |
        "/pagesA/billing/pay-success" |
        "/pagesA/billing/pay" |
+       "/pagesA/billing/select-card-billing" |
        "/pagesA/book/add" |
        "/pagesA/book/detail" |
        "/pagesA/book/servs" |

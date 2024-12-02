@@ -10,10 +10,11 @@ import type { BillModel } from './types'
 import { sum } from 'lodash-es'
 import dayjs from 'dayjs'
 
+const toast = useToast()
 const listStaff = ref<ListStaff[]>([])
 const visibleStaff = ref(false)
 const curIndex = ref(0) // 商品和服务列表当前选择项的索引
-const orderTime = ref(null)
+const orderTime = ref(dayjs().valueOf())
 const form = ref<BillModel>({
   storeId,
   orderTime: computed(() => {
@@ -35,8 +36,11 @@ const totalToPay = computed(() => {
   return sum(arr)
 }) // 待付款金额
 
-onShow(() => {
+onLoad(() => {
   getStaff()
+})
+
+function mergeProdsAndServs() {
   if (checkedProds.value.length || checkedServs.value.length) {
     const arr: any = [...checkedProds.value, ...checkedServs.value]
     const tmp = arr.map((v) => {
@@ -64,17 +68,49 @@ onShow(() => {
       item.amount = computed(() => {
         return func_mul(func_sub(item.goodsPrice, item.cardReduceAmount), item.goodsCount)
       })
-      if (curIndex.value === index) {
-        item.cardShowName = getCardShowName()
-      }
     })
   }
+}
+
+watch(() => curSelectedCardToCash.value, () => {
+  form.value.billingGoods.forEach((item: any, index: number) => {
+    if (curIndex.value === index) {
+      item.cardShowName = getCardShowName()
+      item.customerCardId = curSelectedCardToCash.value?.customerCardId
+      item.cardId = curSelectedCardToCash.value?.cardId
+
+      if (curSelectedCardToCash.value?.cardType === 1) { // 1->次卡，2->充值卡，3->折扣卡
+        item.cardReduceAmount = 0
+      }
+      else {
+        item.cardReduceAmount = func_mul(item.goodsPrice, func_sub(1, func_div(curSelectedCardToCash.value?.equity, 10)))
+      }
+
+      item.totalAmount = computed(() => {
+        return func_mul(item.goodsPrice, item.goodsCount)
+      })
+      item.amount = computed(() => {
+        return func_mul(func_sub(item.goodsPrice, item.cardReduceAmount), item.goodsCount)
+      })
+      item.cardShowName = Number(item.cardReduceAmount) !== 0
+        ? `${curSelectedCardToCash.value?.cardName} -￥${item.cardReduceAmount}`
+        : curSelectedCardToCash.value?.cardName
+    }
+  })
+})
+
+watch(() => checkedProds.value, () => {
+  mergeProdsAndServs()
+})
+
+watch(() => checkedServs.value, () => {
+  mergeProdsAndServs()
 })
 
 function getCardShowName() {
-  const cardInfo = curSelectedCard.value
-  // console.log(cardInfo)
-  return 'xxx'
+  // const cardInfo = curSelectedCard.value
+  // // console.log(cardInfo)
+  // return 'xxx'
 }
 
 function saveStaff() {
@@ -112,20 +148,18 @@ function toSelectStaff(index: number) {
 }
 
 function toSelCard(item, index: number) {
+  if (!form.value.storeCustomerId)
+    return toast.warning('请先选择客户')
   const storeCustomerId = form.value.storeCustomerId
   const goodsId = item.goodsId
   const goodsType = item.goodsType
   curIndex.value = index
-  uni.navigateTo({ url: `/pagesA/card/select-card?storeCustomerId=${storeCustomerId}&goodsId=${goodsId}&goodsType=${goodsType}` })
+  uni.navigateTo({ url: `/pagesA/billing/select-card-billing?storeCustomerId=${storeCustomerId}&goodsId=${goodsId}&goodsType=${goodsType}` })
 }
 
 function toSelCus() {
   uni.navigateTo({ url: '/pagesA/customer/list' })
 }
-
-// function save() {
-//   console.log(curCustomer.value)
-// }
 
 function toAddProdServs() {
   uni.navigateTo({ url: '/pagesA/prod-servs' })
@@ -133,7 +167,7 @@ function toAddProdServs() {
 
 async function payLater() {
   await request.post('/business/billing', form.value)
-  uni.showToast({ title: '待客户支付后，可找到该订单再次进行支付' })
+  toast.info('待客户支付后，可找到该订单再次进行支付')
   await sleep(1000)
   uni.redirectTo({ url: '/pagesA/tabs/tab-business-dashboard' })
 }
@@ -146,6 +180,7 @@ function toPay() {
 
 <template>
   <page-meta :page-style="`overflow:${visibleStaff ? 'hidden' : 'visible'};`" />
+  <wd-toast />
   <wd-popup
     v-model="visibleStaff" :z-index="12000" :lock-scroll="true" :safe-area-inset-bottom="false" position="right"
     custom-style="height: 100vh;width: 80%;background: #F9F9F9;"

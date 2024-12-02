@@ -13,8 +13,10 @@ const active2 = ref<number>(0)
 const scrollTop = ref<number>(0)
 const categoriesServ = ref<CatsItemsTree<ServiceList>[]>([])
 const categoriesProd = ref<CatsItemsTree<ProductList>[]>([])
+const tmpCheckedServs = ref<ServiceList[]>([])
+const tmpCheckedProds = ref<ProductList[]>([])
 const checkedCount = computed(() => {
-  return checkedServs.value.length + checkedProds.value.length
+  return tmpCheckedServs.value.length + tmpCheckedProds.value.length
 })
 
 onLoad(async () => {
@@ -59,8 +61,6 @@ function handleChange2({ value }) {
   })
 }
 
-const tmpCheckedServs = ref<ServiceList[]>([])
-const tmpCheckedProds = ref<ProductList[]>([])
 function changeCheck() {
   let servs = []
   let prods = []
