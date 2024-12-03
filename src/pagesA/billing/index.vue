@@ -61,7 +61,7 @@ function mergeProdsAndServs() {
       }
     })
     form.value.billingGoods = tmp
-    form.value.billingGoods.forEach((item: any, index: number) => {
+    form.value.billingGoods.forEach((item: any) => {
       item.totalAmount = computed(() => {
         return func_mul(item.goodsPrice, item.goodsCount)
       })
@@ -136,10 +136,6 @@ async function getStaff() {
       active: false,
     }
   })
-}
-
-function handleConfirm({ value }) {
-  // console.log(value)
 }
 
 function toSelectStaff(index: number) {
@@ -222,7 +218,7 @@ function toPay() {
   </wd-popup>
 
   <wd-cell-group :border="true">
-    <wd-calendar v-model="orderTime" :z-index="12000" label="开单时间" type="datetime" @confirm="handleConfirm" />
+    <wd-calendar v-model="orderTime" :z-index="12000" label="开单时间" type="datetime" />
     <wd-cell title="客户" is-link @click="toSelCus()">
       <view>
         <text v-if="!cusName" c-#B6BDBD>
