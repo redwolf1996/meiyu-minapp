@@ -12,11 +12,11 @@ export const useUserStore = defineStore(
     })
 
     function setUserInfo(val: Partial<UserInfo>) {
-      if (val.orgInfo.productCount)
+      if (val?.orgInfo?.productCount)
         userInfo.value.guidStatus.productCountStatus = 1
-      if (val.orgInfo.serviceCount)
+      if (val?.orgInfo?.serviceCount)
         userInfo.value.guidStatus.serviceCountStatus = 1
-      if (val.orgInfo.staffCount)
+      if (val?.orgInfo?.staffCount)
         userInfo.value.guidStatus.staffCountStatus = 1
 
       userInfo.value = {

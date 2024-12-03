@@ -85,7 +85,7 @@ async function save() {
   else {
     await request.post<any>('/business/staff', form)
   }
-  useUserStore().setUserInfo({ orgInfo: {
+  useUserStore().setUserInfo({ guidStatus: {
     staffCountStatus: 1,
   } })
   let msg = '添加成功'
@@ -97,7 +97,7 @@ async function save() {
 }
 
 function skip() {
-  useUserStore().setUserInfo({ orgInfo: {
+  useUserStore().setUserInfo({ guidStatus: {
     staffCountStatus: 2,
   } })
   uni.navigateBack()

@@ -197,7 +197,7 @@ async function save() {
     await request.put<any>('/business/service', form)
   else
     await request.post<any>('/business/service', form)
-  useUserStore().setUserInfo({ orgInfo: {
+  useUserStore().setUserInfo({ guidStatus: {
     serviceCountStatus: 1,
   } })
   let msg = '添加成功'
@@ -211,7 +211,7 @@ async function save() {
 }
 
 function skip() {
-  useUserStore().setUserInfo({ orgInfo: {
+  useUserStore().setUserInfo({ guidStatus: {
     serviceCountStatus: 2,
   } })
   uni.navigateBack()
