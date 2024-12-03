@@ -76,51 +76,48 @@ async function handleClick({ index }) {
       <view class="h50px" />
     </template>
 
-    <view p-32rpx>
-      <template v-for="(item, index) in dataList" :key="item.id">
-        <view px16px py20px bg-white rd-8px @click="toOrderDetail(item.id)">
-          <view flex flex-ac flex-bt>
-            <view f14>
-              {{ item.createTime }}
-            </view>
-            <view class="my-status-tag end-service">
-              已完成(退款成功)
-            </view>
+    <view p-32rpx flex flex-y gap16px>
+      <view v-for="(item, index) in dataList" :key="item.id" px16px py20px bg-white rd-8px @click="toOrderDetail(item.id)">
+        <view flex flex-ac flex-bt>
+          <view f14>
+            {{ item.createTime }}
           </view>
-          <view mt20px flex flex-y gap-12px>
-            <template v-for="(item2, index2) in item.orderItem" :key="`k-${index}-${index2}`">
-              <view flex flex-ac flex-bt gap-8px>
-                <wd-img
-                  :width="40"
-                  :height="40"
-                  :radius="8"
-                  mode="aspectFill"
-                  :src="`${IMG_BASE}/cat.png`"
-                />
-                <view h40px flex flex-y flex-bt flex-1>
-                  <view c-28282B f14 flex-bt flex flex-ac>
-                    <view>面部清洁补水</view>
-                    <view>￥98</view>
-                  </view>
-                  <view c-717171 f12>
-                    x1
-                  </view>
-                </view>
+          <view class="my-status-tag end-service">
+            <!-- 已完成(退款成功) -->
+            {{ item.payStatusDesc }}
+          </view>
+        </view>
+        <view mt20px flex flex-y gap-12px>
+          <view v-for="(item2, index2) in item.orderItem" :key="`k-${index}-${index2}`" flex flex-ac flex-bt gap-8px>
+            <wd-img
+              :width="40"
+              :height="40"
+              :radius="8"
+              mode="aspectFill"
+              :src="item2.goodsCoverImg"
+            />
+            <view h40px flex flex-y flex-bt flex-1>
+              <view c-28282B f14 flex-bt flex flex-ac>
+                <view>{{ item2.goodsName }}</view>
+                <view>￥{{ item2.goodsPrice }}</view>
               </view>
-            </template>
-          </view>
-          <view h1px mt10px bg-EBEBF0 />
-          <view mt12px flex flex-bt flex-ac>
-            <view f12>
-              MY2024040910101000045
-            </view>
-            <view c-FF4070 f16>
-              合计收款：¥98
+              <view c-717171 f12>
+                x{{ item2.goodsCount }}
+              </view>
             </view>
           </view>
         </view>
-      </template>
-      <view px16px py20px bg-white rd-8px>
+        <view h1px mt10px bg-EBEBF0 />
+        <view mt12px flex flex-bt flex-ac>
+          <view f12>
+            {{ item.orderNo }}
+          </view>
+          <view c-FF4070 f16>
+            合计收款：¥{{ item.amount }}
+          </view>
+        </view>
+      </view>
+      <!-- <view px16px py20px bg-white rd-8px>
         <view flex flex-ac flex-bt>
           <view f14>
             2024-04-20 17:34:20
@@ -155,7 +152,7 @@ async function handleClick({ index }) {
             合计收款：¥98
           </view>
         </view>
-      </view>
+      </view> -->
     </view>
   </z-paging>
 
