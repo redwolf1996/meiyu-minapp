@@ -166,6 +166,9 @@ function toAddProdServs() {
 }
 
 async function payLater() {
+  form.value.amount = form.value.billingGoods.reduce((prev, cur) => {
+    return func_add(prev, cur.amount)
+  }, 0)
   await request.post('/business/billing', form.value)
   toast.info('待客户支付后，可找到该订单再次进行支付')
   await sleep(1000)
@@ -177,7 +180,7 @@ function toPay() {
     return func_add(prev, cur.amount)
   }, 0)
   curBilling.value = form.value
-  uni.navigateTo({ url: '/pagesA/billing/pay' })
+  uni.navigateTo({ url: `/pagesA/billing/pay?mode=${PayModeEnum.MakeOrder}` })
 }
 </script>
 
