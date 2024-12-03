@@ -139,7 +139,7 @@ async function getStaff() {
 }
 
 function handleConfirm({ value }) {
-  console.log(value)
+  // console.log(value)
 }
 
 function toSelectStaff(index: number) {

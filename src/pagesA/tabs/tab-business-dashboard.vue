@@ -11,11 +11,12 @@ import { getMenuButtonInfo } from '@/utils/index'
 // #endif
 
 import type { DashBoardData } from './types'
+import type { StoreList, UserInfo } from '@/stores/modules/user'
 
 const toast = useToast()
 const menuButtonWidth = ref(0)
-const userInfo = computed(() => useUserStore()?.userInfo)
-const storeInfo = computed(() => userInfo.value?.storeList?.[0])
+const userInfo = ref<Partial<UserInfo>>(null)
+const storeInfo = ref<Partial<StoreList>>(null)
 const info = ref<DashBoardData>()
 const isOvertime = ref(false)
 const showCardRecharge = ref(false) // 显示开卡充值弹窗
@@ -42,14 +43,16 @@ async function getInfo() {
 
 // 店铺初始化
 async function initStore() {
-  const res = await request.get<any>('/business/info')
+  const res = await request.get<UserInfo>('/business/info')
   useUserStore().setUserInfo(res.data)
+  userInfo.value = useUserStore().userInfo
+  const guidStatus = userInfo.value.guidStatus
 
-  const org = userInfo.value.orgInfo
-  if (!userInfo.value?.storeList?.length || !userInfo.value.storeList === null) { // 如果店铺未创建
+  if (userInfo.value.storeList === null || userInfo.value?.storeList?.length === 0) { // 如果店铺未创建
     return uni.navigateTo({ url: '/pagesA/init/steps/step1' })
   }
-  else if (!org.staffCountStatus || !org.productCountStatus || !org.serviceCountStatus) { // 如果新手引导未完成
+
+  if (!guidStatus.staffCountStatus || !guidStatus.productCountStatus || !guidStatus.serviceCountStatus) { // 如果新手引导未完成
     return uni.navigateTo({ url: '/pagesA/init/steps/index' })
   }
 
@@ -105,7 +108,7 @@ function toMsg() {
   uni.navigateTo({ url: '/pagesA/msg/list' })
 }
 // 开卡/充值
-function toCardRecharge(type: number) {
+function toCardRecharge(type: 1 | 2 | 3 | 4 | 5 | 6) {
   curCardRechargeType.value = type
   curSelectedCard.value = null
   curCustomer.value = null

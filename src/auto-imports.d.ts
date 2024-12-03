@@ -448,7 +448,6 @@ declare module 'vue' {
     readonly getCurrentScope: UnwrapRef<typeof import('vue')['getCurrentScope']>
     readonly getDiscounts: UnwrapRef<typeof import('./utils/index')['getDiscounts']>
     readonly getMenuButtonInfo: UnwrapRef<typeof import('./utils/index')['getMenuButtonInfo']>
-    readonly getStoreId: UnwrapRef<typeof import('./utils/index')['getStoreId']>
     readonly h: UnwrapRef<typeof import('vue')['h']>
     readonly http: UnwrapRef<typeof import('./utils/http')['http']>
     readonly inject: UnwrapRef<typeof import('vue')['inject']>

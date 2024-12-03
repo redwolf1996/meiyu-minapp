@@ -1,26 +1,32 @@
-import { merge } from 'lodash-es'
 import { defineStore } from 'pinia'
 
 export const useUserStore = defineStore(
   'user',
   () => {
     const userInfo = ref<Partial<UserInfo>>({
-      orgInfo: {
-        cardCountStatus: 0, // 0未添加 1已添加 2稍后添加
-        productCountStatus: 0,
+      guidStatus: {
+        productCountStatus: 0, // 0未添加 1已添加 2稍后添加
         serviceCountStatus: 0,
         staffCountStatus: 0,
       },
     })
 
-    function setUserInfo(val: any) {
-      userInfo.value = merge(userInfo.value, val)
+    function setUserInfo(val: Partial<UserInfo>) {
+      if (val.orgInfo.productCount)
+        userInfo.value.guidStatus.productCountStatus = 1
+      if (val.orgInfo.serviceCount)
+        userInfo.value.guidStatus.serviceCountStatus = 1
+      if (val.orgInfo.staffCount)
+        userInfo.value.guidStatus.staffCountStatus = 1
+
+      userInfo.value = {
+        ...userInfo.value,
+        ...val,
+      }
     }
     function clearUserInfo() {
-      userInfo.value = merge(userInfo.value, {
-        token: null,
-        storeList: null,
-      })
+      userInfo.value.token = null
+      userInfo.value.storeList = []
     }
 
     return {
@@ -43,65 +49,200 @@ export const useUserStore = defineStore(
   },
 )
 
-interface UserInfo {
-  token: string
-  isRegister: 1 | 0 // 1已注册 2未注册
-  avatar: string
-  birthday: string
-  businessId: string
-  createTime: string
-  email: string
-  gender: string
-  inviteCode: string // 我的邀请码
-  isExpires: 1 | 0 // 1已过期 0未过期
-  lastStoreId: number
-  loginDate: string
-  orgId: number
-  orgInfo: Partial<OrgInfo>
-  othersInviteCode: string // 被邀请的邀请码
-  phone: string
-  status: 1 | 2 // 1正常 2禁用
-  storeList: StoreInfo[] | null
-  updateTime: string
-  userName: string
+/**
+ * 引导页各模块添加的状态
+ */
+export interface GuidStatus {
+  productCountStatus: 0 | 1 | 2 // 0未添加 1已添加 2稍后添加
+  serviceCountStatus: 0 | 1 | 2 // 0未添加 1已添加 2稍后添加
+  staffCountStatus: 0 | 1 | 2 // 0未添加 1已添加 2稍后添加
 }
 
-interface OrgInfo {
-  adminId: number // 店铺所有者id
-  cardCount: number // 卡项数
-  cardCountStatus?: 0 | 1 | 2 // 0未添加 1已添加 2稍后添加
+export interface UserInfo {
+  token?: string
+  isRegister?: 1 | 0 // 1已注册 2未注册
+  guidStatus: Partial<GuidStatus>
+  /**
+   * 我关联的店铺
+   */
+  storeList: StoreList[]
+  /**
+   * 组织信息（owenr才返回），组织信息（owenr才返回）
+   */
+  orgInfo: OrgInfo
+  /**
+   * 头像url，头像
+   */
+  avatar: string
+  /**
+   * 生日，生日
+   */
+  birthday: string
+  /**
+   * 商户id，登录人的唯一标识
+   */
+  businessId: number
+  /**
+   * 创建时间
+   */
+  createTime: string
+  /**
+   * 邮箱，邮箱
+   */
+  email: string
+  /**
+   * 性别
+   */
+  gender: string
+  /**
+   * 我的邀请码
+   */
+  inviteCode: string
+  /**
+   * 是否过期，0未过期，1已过期
+   */
+  isExpires: number
+  /**
+   * 最近登录门店id
+   */
+  lastStoreId: number
+  /**
+   * 最近登录门店id
+   */
+  lastStoreName: string
+  /**
+   * 最近登录时间
+   */
+  loginDate: string
+  /**
+   * 我的组织id，店铺拥有者才有值
+   */
+  orgId: number
+  /**
+   * 被邀请的邀请码
+   */
+  othersInviteCode: string
+  /**
+   * 手机号，手机号：为空标识未完善信息
+   */
+  phone: string
+  /**
+   * 状态，1->正常，2->禁用
+   */
+  status: number
+  updateTime: string
+  /**
+   * 用户名，姓名
+   */
+  userName: string
+  [property: string]: any
+}
+
+/**
+ * 组织信息（owenr才返回），组织信息（owenr才返回）
+ */
+export interface OrgInfo {
+  /**
+   * owner
+   */
+  adminId: number
+  /**
+   * 卡数
+   */
+  cardCount: number
   createTime: string
   expiresTime: string
-  historyIntegration: number // 累计积分
+  /**
+   * 累计积分
+   */
+  historyIntegration: number
   id: number
-  integration: number // 可用积分
-  productCount: number // 产品数
-  productCountStatus: 0 | 1 | 2 // 0未添加 1已添加 2稍后添加
-  serviceCount: number // 服务数
-  serviceCountStatus: 0 | 1 | 2 // 0未添加 1已添加 2稍后添加
-  staffCount: number // 员工数
-  staffCountStatus: 0 | 1 | 2 // 0未添加 1已添加 2稍后添加
-  storeCount: number // 店铺数
+  /**
+   * 可用积分
+   */
+  integration: number
+  /**
+   * 产品数
+   */
+  productCount: number
+  /**
+   * 服务数
+   */
+  serviceCount: number
+  /**
+   * 员工数
+   */
+  staffCount: number
+  /**
+   * 店铺数量
+   */
+  storeCount: number
+  [property: string]: any
 }
 
-interface StoreInfo {
-  address: string
-  amount: number // 累计收入
-  createTime: string
-  desc: string
-  isOwner: 1 | 0
-  logo: string
-  orgId: 1
-  phone: string
-  platformAccount: string // 可提现余额
-  status: 1 | 2 // 1营业中 2停业
-  storeId: number
-  storeName: string
-  updateBy: number
-  updateTime: string
-  province?: string
+export interface StoreList {
+  /**
+   * 地址
+   */
+  address?: string
+  /**
+   * 市
+   */
   city?: string
+  /**
+   * 区
+   */
   county?: string
+  createTime?: string
+  /**
+   * 简介
+   */
+  desc?: string
+  /**
+   * 是否店铺拥有者，1是，0否
+   */
+  isOwner?: number
+  locationX?: string
+  locationY?: string
+  /**
+   * 门店logo
+   */
+  logo?: string
+  /**
+   * 所属组织
+   */
+  orgId?: number
+  /**
+   * 联系电话
+   */
+  phone?: string
+  /**
+   * 可提现余额
+   */
+  platformAmount?: number
+  /**
+   * 省
+   */
+  province?: string
   roleCode?: number
   roleDesc?: string
+  /**
+   * 门店状态，1->营业中，2->停业
+   */
+  status?: number
+  /**
+   * 店铺id
+   */
+  storeId?: number
+  /**
+   * 店铺名
+   */
+  storeName?: string
+  /**
+   * 累计收入
+   */
+  totalAmount?: number
+  updateBy?: number
+  updateTime?: string
+  [property: string]: any
 }

@@ -82,18 +82,8 @@ export function safeBottom() {
   return uni.getSystemInfoSync().safeAreaInsets?.bottom
 }
 
-export function getStoreId() {
-  const lastStoreId = useUserStore(pinia).userInfo?.lastStoreId
-  // TODO [0]前面不加问号会导致一个大坑=》在开发者工具上不报错，到了真机调试的时候各种报错
-  const firstStoreId = useUserStore(pinia).userInfo?.storeList?.[0]?.storeId
-  if (lastStoreId !== 0)
-    return lastStoreId
-  if (firstStoreId)
-    return firstStoreId
-  return 0
-}
-
-export const storeId = getStoreId()
+export const storeId = useUserStore(pinia).userInfo?.lastStoreId
+  || useUserStore(pinia).userInfo?.storeList?.[0]?.storeId
 
 export const uniPlatform = uni.getSystemInfoSync().uniPlatform
 export const isH5 = uniPlatform === 'web'

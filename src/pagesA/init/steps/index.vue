@@ -4,8 +4,10 @@ style:
 </route>
 
 <script lang="ts" setup>
+import type { UserInfo } from '@/stores/modules/user'
+
 type Status = ComputedRef<0 | 1 | 2 | undefined>// 0 未添加 1 已添加 2 稍后添加
-const orgInfo = useUserStore().userInfo.orgInfo
+const userInfo = computed(() => useUserStore().userInfo)
 interface Step {
   step: string
   name: string
@@ -22,25 +24,16 @@ const arr = ref<Step[]>([
     desc: '创建你的第一个服务，方便客户预约',
     icon: 'i-material-symbols-edit-square',
     color: 'color-1a66ff',
-    status: computed(() => orgInfo?.serviceCountStatus),
+    status: computed(() => userInfo.value.guidStatus.serviceCountStatus),
     path: '/pagesA/init/steps/step2',
   },
-  // {
-  //   step: '二',
-  //   name: '添加卡项',
-  //   desc: '创建你的第一个会员卡：折扣卡、充值卡或者次卡',
-  //   icon: 'i-material-symbols-edit-square',
-  //   color: 'color-1a66ff',
-  //   status: computed(() => orgInfo?.cardCountStatus),
-  //   path: '/pagesA/init/steps/step3',
-  // },
   {
     step: '二',
     name: '添加产品',
     desc: '创建你的第一个产品，方便客户购买开单',
     icon: 'i-material-symbols-edit-square',
     color: 'color-1a66ff',
-    status: computed(() => orgInfo?.productCountStatus),
+    status: computed(() => userInfo.value.guidStatus.productCountStatus),
     path: '/pagesA/init/steps/step4',
   },
   {
@@ -49,15 +42,17 @@ const arr = ref<Step[]>([
     desc: '创建你的第一个手艺人，方便客户预约时指定手艺人',
     icon: 'i-material-symbols-edit-square',
     color: 'color-1a66ff',
-    status: computed(() => orgInfo?.staffCountStatus),
+    status: computed(() => userInfo.value.guidStatus.staffCountStatus),
     path: '/pagesA/init/steps/step5',
   },
 ])
 
-onShow(() => {
+onShow(async () => {
+  const res = await request.get<UserInfo>('/business/info')
+  useUserStore().setUserInfo(res.data)
   const userInfo = useUserStore()?.userInfo
-  const org = userInfo.orgInfo
-  if (org.staffCountStatus && org.productCountStatus && org.serviceCountStatus) { // 如果新手完成了
+  const guidStatus = userInfo.guidStatus
+  if (guidStatus.staffCountStatus && guidStatus.productCountStatus && guidStatus.serviceCountStatus) { // 如果新手完成了
     uni.navigateTo({ url: '/pagesA/init/steps/done' })
   }
 })
