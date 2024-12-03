@@ -10,10 +10,11 @@ const orderId = ref(0)
 const mode = ref(1) // 1 开单 2开卡 3充值
 
 onLoad((options) => {
-  orderId.value = options.orderId
-  mode.value = options.mode
-  amount.value = options.amount
-  points.value = options.points
+  console.log(options)
+  orderId.value = +options.orderId
+  mode.value = +options.mode
+  amount.value = +options.amount
+  points.value = +options.points
 })
 
 function toDashboard() {

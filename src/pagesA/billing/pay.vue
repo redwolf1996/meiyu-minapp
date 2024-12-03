@@ -8,6 +8,7 @@ import { PayModeEnum } from '@/utils/consts'
 
 const toast = useToast()
 const curCode = ref(4)
+const mode = ref(0) // 1 开单 2开卡 3充值
 const payTypes = ref([
   {
     code: 1,
@@ -85,20 +86,21 @@ const postUrl = ref('')
 const formData = ref<any>(null)
 
 onLoad((option) => {
-  const mode = Number(option?.mode)
-  if (mode) {
-    curMode.value = mode
-    if (mode === PayModeEnum.MakeOrder) {
+  if (option?.mode) {
+    mode.value = Number(option?.mode)
+  }
+  if (mode.value) {
+    if (mode.value === PayModeEnum.MakeOrder) {
       formData.value = curBilling.value
       postUrl.value = '/business/billing'
     }
 
-    if (mode === PayModeEnum.MakeCard) {
+    if (mode.value === PayModeEnum.MakeCard) {
       formData.value = curCardRechargeFormData.value
       postUrl.value = '/business/store-customer-card'
     }
 
-    if (mode === PayModeEnum.Recharge) {
+    if (mode.value === PayModeEnum.Recharge) {
       formData.value = curCardRechargeFormData.value
       postUrl.value = '/business/value-card-recharge'
     }
@@ -107,10 +109,15 @@ onLoad((option) => {
 
 async function pay() {
   formData.value.payType = curCode.value
-  await request.post(postUrl.value, formData.value)
+  const res = await request.post<any>(postUrl.value, formData.value)
+  console.log(res)
+  const orderId = res.data.orderId
+  const mode = curMode.value
+  const amount = res.data.payAmount
+  const points = res.data.gainIntegral
   toast.info('支付成功')
   await sleep(1000)
-  uni.redirectTo({ url: '/pagesA/billing/pay-success' })
+  uni.redirectTo({ url: `/pagesA/billing/pay-success?orderId=${orderId}&mode=${mode}&amount=${amount}&points=${points}` })
 }
 
 function selectItem(code: number, index: number) {
