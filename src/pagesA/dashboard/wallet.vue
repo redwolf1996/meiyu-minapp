@@ -14,7 +14,7 @@ onShow(() => {
 })
 
 async function getInfo() {
-  const res = await request.get<Wallet>(`/business/store-wallet/${storeId}`)
+  const res = await request.get<Wallet>(`/business/store-wallet/${storeId.value}`)
   info.value = res.data
 }
 

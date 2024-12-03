@@ -7,7 +7,7 @@ style:
 import type { ListStaff } from './types'
 
 const reqParams = reactive({
-  storeId,
+  storeId: storeId.value,
 })
 const dataList = ref<ListStaff[]>([])
 const total = ref(0)

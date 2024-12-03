@@ -1,3 +1,4 @@
+import { merge } from 'lodash-es'
 import { defineStore } from 'pinia'
 
 export const useUserStore = defineStore(
@@ -19,10 +20,7 @@ export const useUserStore = defineStore(
       if (val?.orgInfo?.staffCount)
         userInfo.value.guidStatus.staffCountStatus = 1
 
-      userInfo.value = {
-        ...userInfo.value,
-        ...val,
-      }
+      merge(userInfo.value, val)
     }
     function clearUserInfo() {
       userInfo.value.token = null

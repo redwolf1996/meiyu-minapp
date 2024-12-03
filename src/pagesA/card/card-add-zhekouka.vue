@@ -10,7 +10,7 @@ const userInfo = useUserStore()?.userInfo
 const storeInfo = userInfo?.storeList?.[0]
 const expiresType = ref(0) // 0永久有效 1限期有效
 const form = ref<CardForm>({
-  storeId,
+  storeId: storeId.value,
   type: 3,
   secondType: 0,
   gift: 0,

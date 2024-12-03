@@ -27,7 +27,7 @@ onShow(async () => {
 
 async function init() {
   const params = {
-    storeId,
+    storeId: storeId.value,
     artisanId: bookInfo.value?.artisanId,
     cDate: today,
   }

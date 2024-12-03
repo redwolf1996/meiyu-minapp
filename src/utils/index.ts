@@ -82,9 +82,6 @@ export function safeBottom() {
   return uni.getSystemInfoSync().safeAreaInsets?.bottom
 }
 
-export const storeId = useUserStore(pinia).userInfo?.lastStoreId
-  || useUserStore(pinia).userInfo?.storeList?.[0]?.storeId
-
 export const uniPlatform = uni.getSystemInfoSync().uniPlatform
 export const isH5 = uniPlatform === 'web'
 

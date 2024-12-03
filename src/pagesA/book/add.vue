@@ -21,7 +21,7 @@ const columns = ref<SelItem[]>([
   },
 ])
 const model = reactive<BookForm>({
-  storeId,
+  storeId: storeId.value,
   storeCustomerPhone: null,
   storeCustomerName: null,
   storeCustomerId: null,
@@ -70,7 +70,7 @@ function handleChange(item: Service) {
 
 async function getStaff() {
   // jobCode 职务,1店长，2手艺人，3销售
-  const res = await request.get<ListRes<ListStaff>>('/business/staff', { storeId, jobCode: 2 })
+  const res = await request.get<ListRes<ListStaff>>('/business/staff', { storeId: storeId.value, jobCode: 2 })
   listStaff.value = res.data.list.map((v) => {
     return {
       ...v,

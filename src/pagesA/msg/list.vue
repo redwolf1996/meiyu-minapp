@@ -19,7 +19,7 @@ const tabs = [{
 }]
 
 const reqParams = reactive({
-  storeId,
+  storeId: storeId.value,
   pageNum: 1,
   pageSize: 10,
   status: null, // 1未读 2已读 null全部

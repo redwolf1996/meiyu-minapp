@@ -29,18 +29,6 @@ onShow(() => {
   // #endif
 })
 
-async function getInfo() {
-  const res = await request.get<DashBoardData>(`/business/workbench/${storeId}`)
-  info.value = res.data
-
-  // 判断是否过期
-  const today = dayjs()
-  const expTime = dayjs(info.value.orgExpiresTime)
-  if (today.isAfter(expTime)) {
-    isOvertime.value = true
-  }
-}
-
 // 店铺初始化
 async function initStore() {
   const res = await request.get<UserInfo>('/business/info')
@@ -58,6 +46,18 @@ async function initStore() {
   }
 
   getInfo()
+}
+
+async function getInfo() {
+  const res = await request.get<DashBoardData>(`/business/workbench/${storeId.value}`)
+  info.value = res.data
+
+  // 判断是否过期
+  const today = dayjs()
+  const expTime = dayjs(info.value.orgExpiresTime)
+  if (today.isAfter(expTime)) {
+    isOvertime.value = true
+  }
 }
 
 function toWallet() {

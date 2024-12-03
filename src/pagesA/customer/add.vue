@@ -14,7 +14,7 @@ const { area, addressValue, columnChange, handleConfirmAddress } = useArea()
 const formRef = ref()
 const calendar = ref()
 const form = reactive<Customer>({
-  storeId,
+  storeId: storeId.value,
   name: '',
   phone: '',
   noteName: '',
@@ -87,7 +87,7 @@ async function save() {
 }
 
 async function setStaffList() {
-  const res = await api.getStaffList({ storeId })
+  const res = await api.getStaffList({ storeId: storeId.value })
   staffList.value = res.data.list?.map((v) => {
     return {
       label: v.userName,

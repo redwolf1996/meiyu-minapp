@@ -9,7 +9,7 @@ import type { CusList } from '../tabs/types'
 import { cloneDeep } from 'lodash-es'
 
 const reqParams = reactive({
-  storeId,
+  storeId: storeId.value,
   pageNum: 1,
   pageSize: 10000,
 })

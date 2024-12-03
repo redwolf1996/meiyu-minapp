@@ -27,7 +27,7 @@ const columnsRole: GeneralColumn[] = [{ label: '店长', value: 1 }, { label: '�
 const formRef = ref()
 const imageValue = ref<any>([])
 const form = reactive<FormStaff>({
-  storeId,
+  storeId: storeId.value,
   storeStaffId: null,
   avatar: computed(() => imageValue.value.length ? imageValue.value[0]?.url : ''),
   userName: null,
@@ -69,7 +69,7 @@ async function setFormInfo() {
   })
   curClassify.value.id = data.serviceCategory?.map(v => v.serviceCategoryId)
   curClassify.value.name = data.serviceCategory?.map(v => v.serviceCategoryName).join('、')
-  curClassify.value.storeId = storeId
+  curClassify.value.storeId = storeId.value
 
   imageValue.value = [{
     name: 'ava',

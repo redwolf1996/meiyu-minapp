@@ -25,7 +25,7 @@ const curItem = ref<CatItem>(null)
 const form = reactive({
   id: null,
   name: null,
-  storeId,
+  storeId: storeId.value,
 })
 
 async function dialogInputConfirm() {
@@ -113,7 +113,7 @@ function toggleCheck(item: CatItem) {
   curClassify.value.name = !curClassify.value.multiple
     ? item.name
     : list.value?.filter(v0 => v0.checked).map(v => v.name).join('、')
-  curClassify.value.storeId = storeId
+  curClassify.value.storeId = storeId.value
 }
 
 function selCat() {

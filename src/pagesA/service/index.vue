@@ -13,7 +13,7 @@ const actionList = ref<any>([
   { name: '复制' },
 ])
 const reqParams = reactive<ReqModel>({
-  storeId,
+  storeId: storeId.value,
   pageNum: 1,
   pageSize: 10,
   name: '',

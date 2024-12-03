@@ -16,7 +16,7 @@ const visibleStaff = ref(false)
 const curIndex = ref(0) // 商品和服务列表当前选择项的索引
 const orderTime = ref(dayjs().valueOf())
 const form = ref<BillModel>({
-  storeId,
+  storeId: storeId.value,
   orderTime: computed(() => {
     return orderTime.value ? dayjs(orderTime.value).format('YYYY-MM-DD HH:mm:ss') : ''
   }),

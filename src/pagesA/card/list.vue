@@ -25,7 +25,7 @@ const cardImg = {
   3: 'list-zhekou',
 }
 const reqParams = reactive<ReqModel>({
-  storeId,
+  storeId: storeId.value,
   pageNum: 1,
   pageSize: 10,
   name: '',

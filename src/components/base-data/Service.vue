@@ -14,7 +14,7 @@ const mode = ref<Mode>(null) // 修改还是复制
 const formRef = ref()
 const imageValue = ref<any>([])
 const form = reactive<FormService>({
-  storeId,
+  storeId: storeId.value,
   name: '',
   categoryId: computed(() => curClassify.value.id),
   duration: null,

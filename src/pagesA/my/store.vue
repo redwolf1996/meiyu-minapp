@@ -13,7 +13,7 @@ const imageValue = ref<any>([{
 }])
 const pccValue = ref<string[]>([storeInfo.value.province || '', storeInfo.value.city || '', storeInfo.value.county || ''])
 const form: any = reactive({
-  id: storeInfo.value.storeId,
+  id: storeId.value,
   storeName: storeInfo.value?.storeName || '',
   logo: computed(() => imageValue.value[0].url),
   phone: storeInfo.value.phone,

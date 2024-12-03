@@ -14,7 +14,7 @@ const option1 = ref<Record<string, any>[]>([
   { label: '近一年', value: 4 },
 ])
 const reqParams = reactive({
-  storeId,
+  storeId: storeId.value,
   pageNum: 1,
   pageSize: 10,
   timeType: 0,

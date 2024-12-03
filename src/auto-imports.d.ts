@@ -173,7 +173,7 @@ declare global {
   const shallowRef: typeof import('vue')['shallowRef']
   const sleep: typeof import('./utils/index')['sleep']
   const staffScheduling: typeof import('./stores/work-time')['staffScheduling']
-  const storeId: typeof import('./utils/index')['storeId']
+  const storeId: typeof import('./stores/common')['storeId']
   const storeMsgDetail: typeof import('./stores/common')['storeMsgDetail']
   const stores: typeof import('./stores/index')['default']
   const sumArray: typeof import('./utils/math')['sumArray']
@@ -510,7 +510,7 @@ declare module 'vue' {
     readonly shallowRef: UnwrapRef<typeof import('vue')['shallowRef']>
     readonly sleep: UnwrapRef<typeof import('./utils/index')['sleep']>
     readonly staffScheduling: UnwrapRef<typeof import('./stores/work-time')['staffScheduling']>
-    readonly storeId: UnwrapRef<typeof import('./utils/index')['storeId']>
+    readonly storeId: UnwrapRef<typeof import('./stores/common')['storeId']>
     readonly storeMsgDetail: UnwrapRef<typeof import('./stores/common')['storeMsgDetail']>
     readonly stores: UnwrapRef<typeof import('./stores/index')['default']>
     readonly sumArray: UnwrapRef<typeof import('./utils/math')['sumArray']>

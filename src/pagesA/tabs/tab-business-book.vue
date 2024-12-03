@@ -102,7 +102,7 @@ const restHeight = computed(() => {
 
 async function getBookDashboard(cDate: string) {
   const res = await request.get<Books[]>('/business/booking-dashboard', {
-    storeId,
+    storeId: storeId.value,
     cDate,
   })
   tableData.value = res.data.map((item) => {
@@ -117,7 +117,7 @@ async function getBookDashboard(cDate: string) {
 
 async function getBookCount(cDate: string) {
   const res = await request.get<BookCount>('/business/booking-count', {
-    storeId,
+    storeId: storeId.value,
     cDate,
   })
   countInfo.value = res.data

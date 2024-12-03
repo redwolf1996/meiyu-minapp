@@ -3,6 +3,8 @@ import type { BillModel } from '@/pagesA/billing/types'
 import type { AvailableCard, CardList } from '@/pagesA/types'
 import type { List as MsgDetail } from '@/pagesA/msg/types'
 import type { MakeCardModel } from '@/pagesA/card/types'
+import pinia from '@/stores/index'
+import { useUserStore } from '@/stores/modules/user'
 
 /** 当前选中的客户 */
 export const curCustomer = ref<CusList>(null)
@@ -32,3 +34,7 @@ export const curCardRechargeType = ref<number>(null)
 
 /** 当前待提交的开卡充值表单数据 */
 export const curCardRechargeFormData = ref<MakeCardModel>(null)
+
+export const storeId = computed(() => {
+  return useUserStore(pinia).userInfo?.lastStoreId || useUserStore(pinia).userInfo?.storeList?.[0]?.storeId
+})

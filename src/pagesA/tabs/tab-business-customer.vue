@@ -37,7 +37,7 @@ const sources3: any = [
 const show = ref(false)
 const show2 = ref(false)
 const reqParams = reactive<CusReqModel>({
-  storeId,
+  storeId: storeId.value,
   pageNum: 1,
   pageSize: 5,
   keyword: '',
