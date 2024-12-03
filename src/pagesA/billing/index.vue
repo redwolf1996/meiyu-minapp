@@ -173,6 +173,9 @@ async function payLater() {
 }
 
 function toPay() {
+  form.value.amount = form.value.billingGoods.reduce((prev, cur) => {
+    return func_add(prev, cur.amount)
+  }, 0)
   curBilling.value = form.value
   uni.navigateTo({ url: '/pagesA/billing/pay' })
 }

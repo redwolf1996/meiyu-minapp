@@ -135,7 +135,7 @@ function selectItem(code: number, index: number) {
       待收款：
     </text>
     <text fs-20px c-#FA483C>
-      ￥{{ curMode === PayModeEnum.MakeOrder ? curBilling.amount : curCardRechargeFormData.amount }}
+      ￥{{ curMode === PayModeEnum.MakeOrder ? curBilling?.amount : curCardRechargeFormData?.amount }}
     </text>
   </view>
   <view h12px wp100 bg-#F6F6FB />
