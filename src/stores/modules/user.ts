@@ -107,7 +107,7 @@ export interface UserInfo {
    */
   lastStoreId: number
   /**
-   * 最近登录门店id
+   * 最近登录门店名称
    */
   lastStoreName: string
   /**

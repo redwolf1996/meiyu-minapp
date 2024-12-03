@@ -16,7 +16,7 @@ import type { StoreList, UserInfo } from '@/stores/modules/user'
 const toast = useToast()
 const menuButtonWidth = ref(0)
 const userInfo = ref<Partial<UserInfo>>(null)
-const storeInfo = ref<Partial<StoreList>>(null)
+const storeName = ref('--')
 const info = ref<DashBoardData>()
 const isOvertime = ref(false)
 const showCardRecharge = ref(false) // 显示开卡充值弹窗
@@ -46,6 +46,7 @@ async function initStore() {
   const res = await request.get<UserInfo>('/business/info')
   useUserStore().setUserInfo(res.data)
   userInfo.value = useUserStore().userInfo
+  storeName.value = userInfo.value?.lastStoreName || userInfo.value.storeList?.[0]?.storeName
   const guidStatus = userInfo.value.guidStatus
 
   if (userInfo.value.storeList === null || userInfo.value?.storeList?.length === 0) { // 如果店铺未创建
@@ -123,7 +124,7 @@ function toCardRecharge(type: 1 | 2 | 3 | 4 | 5 | 6) {
       <template #title>
         <view flex flex-ac flex-bt :style="{ width: `calc(100% - ${menuButtonWidth}px)` }">
           <view px-24rpx>
-            {{ storeInfo?.storeName || '--' }}
+            {{ storeName }}
           </view>
           <view flex flex-y flex-cc pr-24rpx pr @click="toMsg()">
             <wd-img
