@@ -110,7 +110,6 @@ onLoad((option) => {
 async function pay() {
   formData.value.payType = curCode.value
   const res = await request.post<any>(postUrl.value, formData.value)
-  console.log(res)
   const orderId = res.data.orderId
   const mode = curMode.value
   const amount = res.data.payAmount

@@ -26,7 +26,7 @@ export interface BillModel {
   /**
    * 支付方式，暂时只支持一种支付方式，不支持组合支付 0:稍后支付 1:微信支付
    */
-  payType: 0 | 1
+  payType?: number
   /**
    * 门店客户id
    */
