@@ -82,9 +82,17 @@ async function handleClick({ index }) {
           <view f14>
             {{ item.createTime }}
           </view>
-          <view class="my-status-tag end-service">
-            <!-- 已完成(退款成功) -->
-            {{ item.payStatusDesc }}
+          <view v-if="item.payStatus === 1" class="my-status-tag to-service">
+            待支付
+          </view>
+          <view v-if="item.payStatus === 2" class="my-status-tag end-service">
+            已完成
+          </view>
+          <view v-if="item.payStatus === 4" class="my-status-tag end-service">
+            已完成(退款成功)
+          </view>
+          <view v-if="item.payStatus === 3" class="my-status-tag cancel-service">
+            已取消
           </view>
         </view>
         <view mt20px flex flex-y gap-12px>

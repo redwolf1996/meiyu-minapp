@@ -98,3 +98,23 @@ export enum PayModeEnum {
   MakeCard = 2,
   Recharge = 3,
 }
+
+export const PayTypesMap = {
+  1: '现金',
+  2: '银行卡',
+  3: '移动支付',
+  4: '微信(手工)',
+  5: '支付宝(手工)',
+  6: '其他',
+  7: '储值卡',
+  8: '美团',
+  9: '抖音',
+  10: '线下收款',
+}
+
+export const refundTypesMap = {
+  20: '原路退回',
+  1: '现金',
+  4: '微信',
+  5: '支付宝',
+}

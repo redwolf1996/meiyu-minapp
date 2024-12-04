@@ -20,6 +20,7 @@ declare global {
   const PayMode: typeof import('./utils/consts')['PayMode']
   const PayModeEnum: typeof import('./utils/consts')['PayModeEnum']
   const PayStatusMap: typeof import('./utils/consts')['PayStatusMap']
+  const PayTypesMap: typeof import('./utils/consts')['PayTypesMap']
   const TimesCardTypeMap: typeof import('./utils/consts')['TimesCardTypeMap']
   const TopSearch: typeof import('./components/TopSearch.vue')['default']
   const VipLevelMap: typeof import('./utils/consts')['VipLevelMap']
@@ -157,6 +158,7 @@ declare global {
   const refDefault: typeof import('@vueuse/core')['refDefault']
   const refThrottled: typeof import('@vueuse/core')['refThrottled']
   const refWithControl: typeof import('@vueuse/core')['refWithControl']
+  const refundTypesMap: typeof import('./utils/consts')['refundTypesMap']
   const request: typeof import('./utils/request')['default']
   const resetCurClassify: typeof import('./stores/classify')['resetCurClassify']
   const resetRichData: typeof import('./stores/rich-edit-data')['resetRichData']
@@ -411,6 +413,7 @@ declare module 'vue' {
     readonly IMG_BASE: UnwrapRef<typeof import('./utils/index')['IMG_BASE']>
     readonly PayModeEnum: UnwrapRef<typeof import('./utils/consts')['PayModeEnum']>
     readonly PayStatusMap: UnwrapRef<typeof import('./utils/consts')['PayStatusMap']>
+    readonly PayTypesMap: UnwrapRef<typeof import('./utils/consts')['PayTypesMap']>
     readonly TimesCardTypeMap: UnwrapRef<typeof import('./utils/consts')['TimesCardTypeMap']>
     readonly VipLevelMap: UnwrapRef<typeof import('./utils/consts')['VipLevelMap']>
     readonly WeekMap: UnwrapRef<typeof import('./utils/consts')['WeekMap']>
@@ -499,6 +502,7 @@ declare module 'vue' {
     readonly reactive: UnwrapRef<typeof import('vue')['reactive']>
     readonly readonly: UnwrapRef<typeof import('vue')['readonly']>
     readonly ref: UnwrapRef<typeof import('vue')['ref']>
+    readonly refundTypesMap: UnwrapRef<typeof import('./utils/consts')['refundTypesMap']>
     readonly request: UnwrapRef<typeof import('./utils/request')['default']>
     readonly resetCurClassify: UnwrapRef<typeof import('./stores/classify')['resetCurClassify']>
     readonly resetRichData: UnwrapRef<typeof import('./stores/rich-edit-data')['resetRichData']>
