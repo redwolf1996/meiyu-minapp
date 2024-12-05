@@ -81,13 +81,25 @@ const refundTypes = ref([
 ])
 const payMode = ref<1 | 2>(1) // 1线下记账收款 2储值卡支付
 
-const curMode = ref(0)
 const postUrl = ref('')
 const formData = ref<any>(null)
+const orderId = ref(0)
 
 onLoad((option) => {
-  if (option?.mode) {
+  // 1开单，2预约，3开卡，4充值
+  if (option?.createSource) {
+    if (option?.createSource === '1')
+      mode.value = 1
+    if (option?.createSource === '3')
+      mode.value = 2
+    if (option?.createSource === '4')
+      mode.value = 3
+  }
+  if (option?.mode) { // 1 开单 2开卡 3充值
     mode.value = Number(option?.mode)
+  }
+  if (option?.orderId) {
+    orderId.value = Number(option?.orderId)
   }
   if (mode.value) {
     if (mode.value === PayModeEnum.MakeOrder) {
@@ -109,15 +121,28 @@ onLoad((option) => {
 })
 
 async function pay() {
-  formData.value.payType = curCode.value
-  const res = await request.post<any>(postUrl.value, formData.value)
-  const orderId = res.data.orderId
-  const mode = curMode.value
-  const amount = res.data.payAmount
-  const points = res.data.gainIntegral
+  let amount = 0
+  let points = 0
+  if (orderId.value) { // 待支付订单支付
+    const res = await request.post<any>('/business/order/pay', {
+      orderId: orderId.value,
+      payType: curCode.value,
+      customerCardId: null,
+    })
+    amount = res.data?.payAmount
+    points = res.data?.gainIntegral
+  }
+  else { // 正常支付（mode  1 开单 2开卡 3充值）
+    formData.value.payType = curCode.value
+    const res = await request.post<any>(postUrl.value, formData.value)
+    orderId.value = res.data.orderId
+    amount = res.data.payAmount
+    points = res.data.gainIntegral
+  }
+
   toast.info('支付成功')
   await sleep(1000)
-  uni.redirectTo({ url: `/pagesA/billing/pay-success?orderId=${orderId}&mode=${mode}&amount=${amount}&points=${points}` })
+  uni.redirectTo({ url: `/pagesA/billing/pay-success?orderId=${orderId.value}&mode=${mode.value}&amount=${amount}&points=${points}` })
 }
 
 function selectItem(code: number, index: number) {

@@ -105,6 +105,10 @@ export interface Detail {
    */
   orderNo: string
   /**
+   * 创建源头，1开单，2预约，3开卡，4充值
+   */
+  createSource: number
+  /**
    * 支付状态，1待支付，2已支付，3未支付取消，4已退费
    */
   payStatus: number

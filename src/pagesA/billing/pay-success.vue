@@ -10,7 +10,6 @@ const orderId = ref(0)
 const mode = ref(1) // 1 开单 2开卡 3充值
 
 onLoad((options) => {
-  console.log(options)
   orderId.value = +options.orderId
   mode.value = +options.mode
   amount.value = +options.amount
@@ -26,6 +25,10 @@ function continueOrder() {
   checkedServs.value = []
   checkedProds.value = []
   uni.navigateTo({ url: '/pagesA/billing/index' })
+}
+
+function continueCardRecharge() {
+  uni.navigateTo({ url: '/pagesA/tabs/tab-business-dashboard' })
 }
 
 function toOrderDetail() {
@@ -70,6 +73,9 @@ function toOrderDetail() {
       </view>
       <view v-if="mode === 1" class="item mid" @click="continueOrder()">
         继续开单
+      </view>
+      <view v-else class="item mid" @click="continueCardRecharge()">
+        继续开卡/充值
       </view>
       <view class="item" @click="toDashboard()">
         返回工作台

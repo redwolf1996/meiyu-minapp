@@ -21,7 +21,7 @@ async function getDetail() {
 
 function toPay() {
   uni.navigateTo({
-    url: '/pagesA/order/pay',
+    url: `/pagesA/order/pay?orderId=${id.value}&createSource=${detail.value?.createSource}`,
   })
 }
 async function toCancel() {
