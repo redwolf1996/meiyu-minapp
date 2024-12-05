@@ -19,6 +19,7 @@ export default antfu(
       'vue/operator-linebreak': ['error', 'before'],
       'vue/attribute-hyphenation': ['off'],
       'vue/valid-attribute-name': ['off'],
+      'unocss/order': ['off'],
       'unocss/order-attributify': ['off'],
     },
   },

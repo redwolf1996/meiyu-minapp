@@ -24,12 +24,13 @@ function toPay() {
     url: '/pagesA/order/pay',
   })
 }
-function toCancel() {
-  uni.navigateTo({
-    url: '/pagesA/order/cancel',
-  })
+async function toCancel() {
+  await request.post('/business/order/cancel', { orderId: id.value })
+  uni.showToast({ title: '取消成功' })
+  await sleep(1000)
+  uni.navigateBack()
 }
-function toRefund() {
+async function toRefund() {
   uni.navigateTo({
     url: `/pagesA/order/refund?id=${id.value}`,
   })

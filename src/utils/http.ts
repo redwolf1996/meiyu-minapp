@@ -35,6 +35,7 @@ export function http<T>(options: UniApp.RequestOptions) {
     uni.request({
       ...options,
       success(res) {
+        console.log(res)
         const statusCode = res.statusCode
         if (statusCode >= 200 && statusCode < 300) {
           const data = res.data as Data<T>
@@ -46,10 +47,10 @@ export function http<T>(options: UniApp.RequestOptions) {
           else if (data.code !== 200) {
             uni.showToast({
               icon: 'none',
-              title: (res.data as Data<T>).msg,
+              title: (res.data as Data<T>).msg || '服务端错误',
               duration: 2000,
             })
-            reject(res)
+            return reject(res)
           }
           resolve(data)
         }
@@ -59,7 +60,7 @@ export function http<T>(options: UniApp.RequestOptions) {
             title: (res.data as Data<T>).msg || '请求错误',
             duration: 2000,
           })
-          reject(res)
+          return reject(res)
         }
       },
       fail(err) {
