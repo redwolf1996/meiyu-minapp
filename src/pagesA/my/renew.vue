@@ -7,6 +7,8 @@ style:
 <script lang="ts" setup>
 const vipList = ref<any>([])
 const curItem = ref()
+const protocalChecked = ref(false)
+
 function clickItem(item: any, index: any) {
   vipList.value.forEach((e: any, i: number) => {
     if (i !== index) {
@@ -31,6 +33,12 @@ onMounted(async () => {
 })
 
 async function renew() {
+  if (!protocalChecked.value) {
+    return uni.showToast({
+      title: '请先勾选并阅读协议',
+      icon: 'none',
+    })
+  }
   const res = await request.post<any>('/business/renew', {
     vipPackageId: curItem.value.id,
     payType: 3,
@@ -87,28 +95,29 @@ async function renew() {
     mode="heightFix"
     :src="`${IMG_BASE}/fuli.png`"
   />
-  <view h100px />
-  <view px20px py13px bg-white pf bottom-0 wp100>
+  <view h150px />
+  <view p20px bg-white pf bottom-0 wp100>
     <view flex flex-ac flex-bt>
       <view>
         <view f18 c-FF6B03>
           <!-- 一个月&nbsp;￥80 -->
           ￥{{ curItem?.price ?? '--' }}
         </view>
-        <view>
+        <!-- <view>
           <radio style="transform:scale(0.7) translate(-10px, 0)" value="3" color="#1a66ff" />
           <text dib c-999999 f12 style="transform: translateX(-8px);">
             积分100抵扣￥10.00
           </text>
-        </view>
+        </view> -->
       </view>
       <view class="btn" @click="renew()">
         立即购买
       </view>
     </view>
     <view flex mt10px>
-      <radio style="transform:scale(0.7) translate(-10px, 0)" value="3" color="#1a66ff" />
-      <text dib f12 style="transform: translateX(-8px);">
+      <!-- <radio style="transform:scale(0.7) translate(-10px, 0)" value="3" color="#1a66ff" /> -->
+      <wd-checkbox v-model="protocalChecked" />
+      <text dib f12 pl5px style="transform: translateX(-8px);">
         <text>开通前确认</text>
         <text c-1A66FF>
           《会员服务协议》

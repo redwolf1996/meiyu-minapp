@@ -21,7 +21,7 @@ async function getDetail() {
 
 function toPay() {
   uni.navigateTo({
-    url: `/pagesA/order/pay?orderId=${id.value}&createSource=${detail.value?.createSource}`,
+    url: `/pagesA/billing/pay?orderId=${id.value}&createSource=${detail.value?.createSource}`,
   })
 }
 async function toCancel() {
@@ -161,11 +161,11 @@ async function toRefund() {
           </view>
           <view flex flex-bt mb12px f14>
             <view>手艺人</view>
-            <view>xxx</view>
+            <view>{{ item?.artisanName ?? '--' }}</view>
           </view>
           <view flex flex-bt mb12px f14>
             <view>使用卡项</view>
-            <view>7980折扣卡5折</view>
+            <view>{{ item?.cardName ?? '--' }}</view>
           </view>
           <view flex flex-bt mb12px f14>
             <view />

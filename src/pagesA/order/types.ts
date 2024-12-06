@@ -27,6 +27,10 @@ export interface List {
 }
 
 export interface OrderItem {
+  artisanId?: number
+  artisanName?: string
+  cardName?: string
+  customerCardId?: number
   /**
    * 商品总价
    */

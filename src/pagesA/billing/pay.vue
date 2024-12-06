@@ -88,12 +88,7 @@ const orderId = ref(0)
 onLoad((option) => {
   // 1开单，2预约，3开卡，4充值
   if (option?.createSource) {
-    if (option?.createSource === '1')
-      mode.value = 1
-    if (option?.createSource === '3')
-      mode.value = 2
-    if (option?.createSource === '4')
-      mode.value = 3
+    mode.value = Number(option?.createSource)
   }
   if (option?.mode) { // 1 开单 2开卡 3充值
     mode.value = Number(option?.mode)
@@ -103,7 +98,6 @@ onLoad((option) => {
   }
   if (mode.value) {
     if (mode.value === PayModeEnum.MakeOrder) {
-      console.log(curBilling.value)
       formData.value = curBilling.value
       postUrl.value = '/business/billing'
     }
