@@ -84,11 +84,15 @@ const payMode = ref<1 | 2>(1) // 1线下记账收款 2储值卡支付
 const postUrl = ref('')
 const formData = ref<any>(null)
 const orderId = ref(0)
+const repayAmount = ref(0) // 稍后支付的订单金额
 
 onLoad((option) => {
-  // 1开单，2预约，3开卡，4充值
+  //  1 开单 2开卡 3充值 4预约
   if (option?.createSource) {
     mode.value = Number(option?.createSource)
+  }
+  if (option?.repayAmount) {
+    repayAmount.value = Number(option?.repayAmount)
   }
   if (option?.mode) { // 1 开单 2开卡 3充值
     mode.value = Number(option?.mode)
@@ -155,7 +159,7 @@ function selectItem(code: number, index: number) {
       待收款：
     </text>
     <text fs-20px c-#FA483C>
-      ￥{{ formData?.amount ?? 0 }}
+      ￥{{ repayAmount || formData?.amount }}
     </text>
   </view>
   <view h12px wp100 bg-#F6F6FB />
