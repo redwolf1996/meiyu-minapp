@@ -70,7 +70,7 @@ async function openAdd() {
 }
 
 async function getList() {
-  const res = await request.get<CatItem[]>(`${typeUrl.value}?storeId=${storeId}`)
+  const res = await request.get<CatItem[]>(`${typeUrl.value}?storeId=${storeId.value}`)
   if (res.data.length) {
     if (!curClassify.value.multiple) { // 单选
       list.value = res.data.map((v) => {

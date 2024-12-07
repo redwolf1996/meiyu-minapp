@@ -25,7 +25,7 @@ onShow(async () => {
 })
 
 async function getStaff() {
-  const res = await request.get<ListRes<ListStaff>>('/business/staff', { storeId })
+  const res = await request.get<ListRes<ListStaff>>('/business/staff', { store : storeId.value })
   listStaff.value = res.data.list.map((v) => {
     return {
       ...v,

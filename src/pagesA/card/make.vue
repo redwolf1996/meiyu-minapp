@@ -31,7 +31,7 @@ const isPickerOpen = ref(false)
 const cusName = computed(() => curCustomer.value?.name ?? '')
 
 async function setStaffList() {
-  const res = await request.get<StaffModel>('/business/staff', { storeId })
+  const res = await request.get<StaffModel>('/business/staff', { store : storeId.value })
   staffList.value = res.data.list?.map((v) => {
     return {
       label: v.userName,

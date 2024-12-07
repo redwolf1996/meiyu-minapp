@@ -20,7 +20,7 @@ const checkedCount = computed(() => {
 })
 
 onLoad(async () => {
-  const res = await request.get<AllItems>('/business/goods_all', { storeId })
+  const res = await request.get<AllItems>('/business/goods_all', { store: storeId.value })
   const serviceCats = res.data.serviceCategory!
   const services = res.data.serviceList
   const productCats = res.data.productCategory!

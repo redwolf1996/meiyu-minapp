@@ -23,8 +23,6 @@ onLoad(async (options) => {
   }
   const res = await request.get<AvailableCard>('/business/store-customer-card-valid', params)
 
-  console.log(res)
-
   // const cardCats = res.data.cardCategory!
   // cardCats.unshift({
   //   id: 0,
@@ -58,7 +56,6 @@ function toDetail(id) {
 }
 
 function selectItem(itm: any) {
-  console.log(itm)
   curSelectedCard.value = itm
 }
 </script>

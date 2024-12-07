@@ -35,7 +35,6 @@ export function http<T>(options: UniApp.RequestOptions) {
     uni.request({
       ...options,
       success(res) {
-        console.log(res)
         const statusCode = res.statusCode
         if (statusCode >= 200 && statusCode < 300) {
           const data = res.data as Data<T>
