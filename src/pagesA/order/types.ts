@@ -139,3 +139,46 @@ export interface Detail {
   storeCustomerId: number
   storeId: number
 }
+
+export interface RefundDetail {
+  /**
+   * 退单创建时间
+   */
+  createTime: string
+  /**
+   * 备注
+   */
+  notes: string
+  /**
+   * 退款金额
+   */
+  refundAmount: number
+  /**
+   * 退卡权益次数
+   */
+  refundCardEquity: number
+  /**
+   * 退款编号
+   */
+  refundNo: string
+  /**
+   * 退款状态，1待支付，2已支付，3未支付取消
+   */
+  refundStatus: number
+  /**
+   * 退款状态
+   */
+  refundStatusDesc: string
+  /**
+   * 退单付款时间
+   */
+  refundTime: string
+  /**
+   * 支付方式
+   */
+  refundType: number
+  /**
+   * 支付方式
+   */
+  refundTypeDesc: string
+}

@@ -4,79 +4,126 @@ style:
 </route>
 
 <script lang="ts" setup>
+import { useMessage, useQueue } from 'wot-design-uni'
+import type { Detail } from './types'
+
+const message = useMessage('wd-message-box-slot')
+const { closeOutside } = useQueue()
+const showRefundTypes = ref(false)
 const refundTypes = ref([
   {
     code: 20,
-    desc: '原路退回',
+    name: '原路退回',
   },
   {
     code: 1,
-    desc: '现金',
+    name: '现金',
   },
   {
     code: 4,
-    desc: '微信',
+    name: '微信',
   },
   {
     code: 5,
-    desc: '支付宝',
+    name: '支付宝',
   },
 ])
+const curItem = ref<{ code: number, name: string }>(null)
+const id = ref(0)
+const detail = ref<Detail>(null)
+const form = reactive({
+  orderId: computed(() => id.value),
+  refundType: computed(() => curItem.value?.code),
+  refundAmount: computed(() => detail.value?.refundAmount),
+  notes: '',
+})
+
+onLoad((option) => {
+  id.value = +option.id
+  getDetail()
+})
+
+async function getDetail() {
+  const res = await request.get<Detail>(`/business/order/${id.value}`)
+  detail.value = res.data
+}
 
 function confirmRefund() {
-  uni.navigateTo({ url: '/pagesA/order/refund-detail' })
+  message
+    .confirm({
+      title: '提示',
+    })
+    .then(async () => {
+      const res = await request.post<any>('/business/order/refund', form)
+      const refundId = res.data.refundId
+      uni.showToast({ title: '退款成功', icon: 'success' })
+      await sleep(1000)
+      uni.navigateTo({ url: `/pagesA/order/refund-detail?refundId=${refundId}` })
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+}
+
+function showActions() {
+  showRefundTypes.value = true
+}
+
+function close() {
+  showRefundTypes.value = false
+}
+function select({ item }) {
+  curItem.value = item
 }
 </script>
 
 <template>
-  <view p-32rpx>
+  <view p-32rpx @click="closeOutside">
+    <wd-message-box selector="wd-message-box-slot">
+      <view tl mb5px>
+        1、退款成功后，订单将变成已退款状态
+      </view>
+      <view tl>
+        2、本次退款为记账退款，系统仅做记录，资金不会自动退回，门店请在线下使用其他方式退款给客户
+      </view>
+    </wd-message-box>
+
+    <wd-action-sheet v-model="showRefundTypes" :actions="refundTypes" @close="close" @select="select" />
+
     <view py40rpx px32rpx bg-white rd-8rpx flex flex-y gap28rpx>
-      <view flex gap20rpx pb14px style="border-bottom: 1px solid #eeeeee;">
-        <wd-img
-          :width="76"
-          :height="76"
-          :src="`${IMG_BASE}/cat.png`"
-        />
-        <view flex-1 h76px flex flex-y flex-bt>
-          <view>
-            <view f14 mb2px>
-              产品名称1
-            </view>
-            <view f12 flex flex-ac flex-bt>
-              <view c-7973F9>
-                产品
+      <template v-if="detail?.orderItem.length">
+        <view v-for="(item, index) in detail?.orderItem" :key="`refund-${index}`" flex gap20rpx pb14px style="border-bottom: 1px solid #eeeeee;">
+          <wd-img
+            :width="76"
+            :height="76"
+            :src="item?.goodsCoverImg"
+          />
+          <view flex-1 h76px flex flex-y flex-bt>
+            <view>
+              <view f14 mb2px>
+                {{ item?.goodsName }}
               </view>
-              <view>x1</view>
+              <view f12 flex flex-ac flex-bt>
+                <view c-7973F9>
+                  <text v-if="item?.goodsType === 1">
+                    服务
+                  </text>
+                  <text v-if="item?.goodsType === 2">
+                    产品
+                  </text>
+                  <text v-if="item?.goodsType === 3">
+                    会员卡
+                  </text>
+                </view>
+                <view>x{{ item?.goodsCount }}</view>
+              </view>
             </view>
-          </view>
-          <view flex flex-xr f14>
-            <text>可退款金额&nbsp;&nbsp;￥9.00</text>
+            <view flex flex-xr f14>
+              <text>可退款金额&nbsp;&nbsp;￥{{ item?.amount }}</text>
+            </view>
           </view>
         </view>
-      </view>
-      <view flex gap20rpx pb14px style="border-bottom: 1px solid #eeeeee;">
-        <wd-img
-          :width="76"
-          :height="76"
-          :src="`${IMG_BASE}/cat.png`"
-        />
-        <view flex-1 h76px flex flex-y flex-bt>
-          <view>
-            <view f14 mb2px>
-              产品名称1
-            </view>
-            <view f12 flex flex-ac flex-bt>
-              <view c-7973F9>
-                产品
-              </view>
-              <view>x1</view>
-            </view>
-          </view>
-          <view flex flex-xr f14>
-            <text>可退款金额&nbsp;&nbsp;￥9.00</text>
-          </view>
-        </view>
-      </view>
+      </template>
     </view>
     <view class="h24rpx" />
     <view py40rpx px32rpx bg-white rd-8rpx>
@@ -86,17 +133,42 @@ function confirmRefund() {
       <view class="h20px" />
       <MyCell label="订单支付方式" :showArrow="false">
         <text f14>
-          现金
+          {{ PayTypesMap[detail?.payType] }}
         </text>
       </MyCell>
-      <MyCell label="退款方式">
-        <text f14>
-          现金退款
-        </text>
-      </MyCell>
+
+      <view
+        py-20rpx
+        flex
+        flex-bt flex-ac class="cell"
+      >
+        <view c-3B3D3D fw-500 font-size-14px flex flex-ac gap4px>
+          <text>退款方式</text>
+          <wd-popover use-content-slot placement="bottom-start" :offset="-40">
+            <template #content>
+              <view class="pop-content">
+                <view mb5px>
+                  1、原路退款：该笔订单的付款将原路退款到买家账户。
+                </view>
+                <view mb5px>
+                  2、现金退款：该笔订单的付款金额将以现金的方式退款给顾客，系统仅做记录，资金不会自动退回，门店请在线下使用其他方式退款给客户。
+                </view>
+                <view>3、其他退款：该笔订单仅做退款标记，无法回退，门店请使用其他方式退款给顾客。</view>
+              </view>
+            </template>
+            <wd-icon name="help-circle" size="15px" color="#979797" />
+          </wd-popover>
+        </view>
+        <view flex flex-ac gap-6px style="max-width: 60%" @click="showActions">
+          <text fs-14px>
+            {{ curItem?.name || '' }}
+          </text>
+          <wd-icon name="arrow-right" size="16px" color="#bfbfbf" />
+        </view>
+      </view>
       <MyCell label="退款金额" :showArrow="false">
         <text f14>
-          ￥18.00
+          ￥{{ detail?.refundAmount || 0 }}
         </text>
       </MyCell>
     </view>
@@ -107,6 +179,7 @@ function confirmRefund() {
       </view>
       <view bg-white>
         <wd-textarea
+          v-model="form.notes"
           :maxlength="200"
           placeholderStyle="font-size: 14px;color:#C9CDD4;"
           placeholder="请输入要备注的内容，200字内"
@@ -124,7 +197,7 @@ function confirmRefund() {
           合计退款金额：
         </text>
         <text fs-20px c-#FA483C>
-          ￥18.00
+          ￥{{ detail?.refundAmount || 0 }}
         </text>
       </view>
     </view>
@@ -139,6 +212,30 @@ function confirmRefund() {
 </template>
 
 <style lang='scss' scoped>
+:deep(.wd-popover__arrow-up) {
+  left: 64.5px !important;
+}
+.pop-content {
+  /* 必填 开始 */
+  position: relative;
+  z-index: 500;
+  border-radius: 4px;
+  /* 必填 结束 */
+  background: #fff;
+  padding: 10px;
+  width: 70vw;
+  text-align: left;
+  border: 1px solid #ebeef1;
+}
+.cell {
+  border-bottom: 1rpx solid #ebeef1;
+}
+.border-top {
+  border-top: 1rpx solid #ebeef1;
+}
+.no-border {
+  border-bottom: 1px solid transparent;
+}
 :deep(textarea) {
   height: 100px;
 }

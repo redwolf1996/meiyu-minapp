@@ -5,12 +5,14 @@ const props = withDefaults(defineProps<{
   borderTop?: boolean
   required?: boolean
   showArrow?: boolean
+  labelGap?: string
 }>(), {
   label: '请输入标题',
   noBorder: false,
   borderTop: false,
   required: false,
   showArrow: true,
+  labelGap: '8px',
 })
 
 const emits = defineEmits(['myclick'])
@@ -23,12 +25,13 @@ const emits = defineEmits(['myclick'])
     :class="{ 'no-border': props.noBorder, 'border-top': props.borderTop }"
     @click="emits('myclick', $event)"
   >
-    <view c-3B3D3D fw-500 font-size-14px flex flex-ac gap8px>
+    <view c-3B3D3D fw-500 font-size-14px flex flex-ac :style="{ gap: props.labelGap }">
       <slot name="icon" />
       <text>{{ props.label }}</text>
       <text v-if="props.required" class="required">
         *
       </text>
+      <slot name="icon-right" />
     </view>
     <view flex flex-ac gap-6px style="max-width: 60%">
       <slot />
@@ -47,10 +50,10 @@ const emits = defineEmits(['myclick'])
   top: 5px !important;
 }
 .cell {
-  border-bottom: 1rpx solid var(--wot-color-border-light, #e8e8e8);
+  border-bottom: 1rpx solid #ebeef1;
 }
 .border-top {
-  border-top: 1rpx solid var(--wot-color-border-light, #e8e8e8);
+  border-top: 1rpx solid #ebeef1;
 }
 .no-border {
   border-bottom: 1px solid transparent;
