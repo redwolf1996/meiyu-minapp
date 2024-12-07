@@ -28,13 +28,16 @@ const refundTypes = ref([
     name: '支付宝',
   },
 ])
-const curItem = ref<{ code: number, name: string }>(null)
+const curItem = ref<{ code: number, name: string }>({
+  code: 1,
+  name: '现金',
+})
 const id = ref(0)
 const detail = ref<Detail>(null)
 const form = reactive({
   orderId: computed(() => id.value),
   refundType: computed(() => curItem.value?.code),
-  refundAmount: computed(() => detail.value?.refundAmount),
+  refundAmount: 0,
   notes: '',
 })
 
@@ -167,9 +170,7 @@ function select({ item }) {
         </view>
       </view>
       <MyCell label="退款金额" :showArrow="false">
-        <text f14>
-          ￥{{ detail?.refundAmount || 0 }}
-        </text>
+        ￥<wd-input-number v-model="form.refundAmount" :min="0" input-width="70px" />
       </MyCell>
     </view>
     <view class="h24rpx" />
@@ -197,7 +198,7 @@ function select({ item }) {
           合计退款金额：
         </text>
         <text fs-20px c-#FA483C>
-          ￥{{ detail?.refundAmount || 0 }}
+          ￥{{ form?.refundAmount }}
         </text>
       </view>
     </view>
