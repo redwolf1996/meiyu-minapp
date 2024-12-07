@@ -4,6 +4,25 @@ style:
 </route>
 
 <script lang="ts" setup>
+const refundTypes = ref([
+  {
+    code: 20,
+    desc: '原路退回',
+  },
+  {
+    code: 1,
+    desc: '现金',
+  },
+  {
+    code: 4,
+    desc: '微信',
+  },
+  {
+    code: 5,
+    desc: '支付宝',
+  },
+])
+
 function confirmRefund() {
   uni.navigateTo({ url: '/pagesA/order/refund-detail' })
 }

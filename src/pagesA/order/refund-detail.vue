@@ -24,6 +24,10 @@ style:
         <text>现金(已完成)</text>
         <text>￥100</text>
       </view>
+      <view flex flex-ac flex-bt fs-14px>
+        <text>退还卡项权益</text>
+        <text>1次</text>
+      </view>
     </view>
     <view bg-white mb12px p16px flex flex-y gap16px fs-14px>
       <view flex gap16px>

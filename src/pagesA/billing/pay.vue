@@ -61,24 +61,6 @@ const payTypes = ref([
     active: false,
   },
 ])
-const refundTypes = ref([
-  {
-    code: 20,
-    desc: '原路退回',
-  },
-  {
-    code: 1,
-    desc: '现金',
-  },
-  {
-    code: 4,
-    desc: '微信',
-  },
-  {
-    code: 5,
-    desc: '支付宝',
-  },
-])
 const payMode = ref<1 | 2>(1) // 1线下记账收款 2储值卡支付
 
 const postUrl = ref('')
