@@ -189,3 +189,113 @@ export interface MakeCardModel {
   gift?: number
   [property: string]: any
 }
+
+export interface ApifoxModel {
+  code: number
+  data: Data
+  msg: string
+  [property: string]: any
+}
+
+export interface Data {
+  list: List[]
+  total: number
+  [property: string]: any
+}
+
+export interface CusList {
+  /**
+   * 充值卡剩余金额
+   */
+  amount: number
+  /**
+   * 卡id
+   */
+  cardId: number
+  /**
+   * 卡名称
+   */
+  cardName: string
+  /**
+   * 卡类别
+   */
+  cardType: number
+  /**
+   * 卡类别
+   */
+  cardTypeDesc: string
+  /**
+   * 不限次卡次数上限；有限次卡总次数
+   */
+  countLimit: number
+  /**
+   * 创建时间
+   */
+  createTime: string
+  /**
+   * 客户头像
+   */
+  customerAvatar: string
+  /**
+   * 客户id
+   */
+  customerId: number
+  /**
+   * 客户名
+   */
+  customerName: string
+  /**
+   * 客户手机号
+   */
+  customerPhone: string
+  /**
+   * 有效期结束时间
+   */
+  expiresTime: string
+  /**
+   * 到期时间
+   */
+  expiresTimeDesc: string
+  /**
+   * 充值卡剩余赠送
+   */
+  gift: number
+  id: number
+  /**
+   * 是否长期卡
+   */
+  isLongTerm: number
+  /**
+   * 1有效，0无效
+   */
+  isValid: number
+  /**
+   * 订单id
+   */
+  orderId: number
+  /**
+   * 购买实付（储值卡首次支付金额）
+   */
+  payAmount: number
+  /**
+   * 有效开始时间
+   */
+  startTime: string
+  /**
+   * 门店客户id
+   */
+  storeCustomerId: number
+  storeId: number
+  /**
+   * 累计充值
+   */
+  totalAmount: number
+  /**
+   * 累计赠送
+   */
+  totalGift: number
+  /**
+   * 次卡使用次数
+   */
+  useCount: number
+}
