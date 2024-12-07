@@ -62,13 +62,6 @@ onShow(() => {
               </text>项）
             </text>
           </view>
-          <view class="plus" @click="visCardType = true">
-            <wd-img
-              :width="14"
-              :height="14"
-              :src="`${IMG_BASE}/icon-usr.png`"
-            />
-          </view>
         </view>
       </view>
     </template>
@@ -96,9 +89,11 @@ onShow(() => {
               <wd-img
                 :width="16"
                 :height="16"
-                :src="`${IMG_BASE}/icon-star.png`"
+                :src="`${IMG_BASE}/icon-usr.png`"
               />
-              <text>王丽丽(1266632323)</text>
+              <text fs-12px>
+                王丽丽(1266632323)
+              </text>
             </view>
           </view>
           <view fb f16>
