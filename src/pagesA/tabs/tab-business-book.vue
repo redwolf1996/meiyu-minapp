@@ -7,9 +7,28 @@ style:
 </route>
 
 <script lang="ts" setup>
-import type { BookCount, Books } from './types'
+import type { BookCount, BookListAll, Books } from './types'
 import { getFinalArr } from './data'
 import dayjs from 'dayjs'
+
+const searchForm = reactive({
+  storeId: storeId.value,
+  status: 1, // 1待服务，2服务中，3已完成，4已取消
+  artisanId: '', // 手艺人id
+  sTime: null, // 服务开始时间
+  eTime: null, // 服务结束时间
+  sDate: null, // 服务开始日期
+  eDate: null, // 服务开始日期
+  keyword: '', // 关键字
+})
+// 预约列表各状态数量
+const bookCountsAll = ref({
+  all: 0,
+  wait: 0,
+  underway: 0,
+  finish: 0,
+})
+const bookListDataAll = ref<BookListAll[]>([])
 
 const windowHeight = uni.getWindowInfo().windowHeight
 const screenWidth = uni.getWindowInfo().screenWidth
@@ -22,7 +41,6 @@ const headHeight = ref(0)
 const tabHeight = ref(0)
 const navHeight = getMenuButtonInfo().navHeight // 只能通过系统方法获取navHeight，通过dom获取不到
 const scrollTop = ref(800)
-const txt = ref('xxx')
 const val = ref()
 const sources: any = [
   { label: '全部', value: 1, isActive: true },
@@ -78,6 +96,7 @@ onShow(() => {
   const today = dayjs().format('YYYY-MM-DD')
   getBookDashboard(today)
   getBookCount(today)
+  getBookCount()
 })
 
 onMounted(async () => {
@@ -111,16 +130,22 @@ async function getBookDashboard(cDate: string) {
       bookingListUse: getFinalArr(item.bookingList),
     }
   })
-
-  console.log(tableData.value)
 }
 
-async function getBookCount(cDate: string) {
-  const res = await request.get<BookCount>('/business/booking-count', {
-    storeId: storeId.value,
-    cDate,
-  })
-  countInfo.value = res.data
+async function getBookCount(cDate?: string) {
+  if (cDate) {
+    const res = await request.get<BookCount>('/business/booking-count', {
+      storeId: storeId.value,
+      cDate,
+    })
+    countInfo.value = res.data
+  }
+  else {
+    const res = await request.get<BookCount>('/business/booking-count', {
+      storeId: storeId.value,
+    })
+    bookCountsAll.value = res.data
+  }
 }
 
 function handleClickList() {
@@ -169,7 +194,7 @@ function scrollView(e: any) {
           </view>
           <view>
             <wd-input
-              v-model="txt"
+              v-model="searchForm.keyword"
               placeholder="请输入预约人姓名或手机号"
               custom-class="cus-input"
               :no-border="true"
@@ -351,7 +376,7 @@ function scrollView(e: any) {
         </view>
       </view>
     </scroll-view>
-    <BookList v-if="mode === 1" />
+    <BookList v-if="mode === 1" :bookCount="bookCountsAll" :listData="bookListDataAll" />
   </view>
   <MyTabBar :tab-index="1" />
 </template>

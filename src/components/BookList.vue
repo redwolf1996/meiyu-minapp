@@ -2,25 +2,36 @@
 const props = withDefaults(defineProps<{
   showTabs?: boolean // 是否展示tabs
   listData?: any
+  bookCount?: any
 }>(), {
   showTabs: true,
   listData: [],
+  bookCount: {
+    all: 0,
+    wait: 0,
+    underway: 0,
+    finish: 0,
+  },
 })
 
 const tab = ref<number>(0)
-const items = [{
+const items = ref([{
   label: '待服务',
+  count: computed(() => props.bookCount?.wait || 0),
   value: 0,
 }, {
   label: '服务中',
+  count: computed(() => props.bookCount?.underway || 0),
   value: 1,
 }, {
   label: '已完成',
+  count: computed(() => props.bookCount?.finish || 0),
   value: 2,
 }, {
   label: '全部',
+  count: computed(() => props.bookCount?.all || 0),
   value: 3,
-}]
+}])
 
 const servMap = {
   1: 'to-service',
@@ -33,7 +44,7 @@ const servMap = {
 <template>
   <wd-tabs v-if="props.showTabs" v-model="tab" :lineHeight="2" :lineWidth="24" color="#1A66FF">
     <block v-for="item in items" :key="`t${item.value}`">
-      <wd-tab :title="item.label" />
+      <wd-tab :title="`${item.label}(${item.count})`" />
     </block>
   </wd-tabs>
   <view px-50rpx py-32rpx>

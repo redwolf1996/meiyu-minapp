@@ -363,3 +363,61 @@ export interface BookCount {
    */
   wait: number
 }
+
+export interface BookListAll {
+  /**
+   * 手艺人
+   */
+  artisanId: number
+  artisanName: string
+  artisanPhone: string
+  /**
+   * 预约id
+   */
+  bookingId: number
+  /**
+   * 预约状态
+   */
+  bookingStatus: number
+  /**
+   * 预约状态中文
+   */
+  bookingStatusDesc: string
+  /**
+   * 时长
+   */
+  duration: number
+  /**
+   * 预约联系电话
+   */
+  phone: string
+  /**
+   * 服务
+   */
+  serviceList: ServiceList[]
+  /**
+   * 开始时间
+   */
+  startTime: string
+  /**
+   * 开始时间拼接
+   */
+  startTimeStr: string
+  /**
+   * 门店客户id
+   */
+  storeCustomerId: number
+  /**
+   * 门店客户名
+   */
+  storeCustomerName: string
+  /**
+   * 服务类别，到店，2上门
+   */
+  storeServiceType: number
+  /**
+   * 服务类别中文
+   */
+  storeServiceTypeDesc: string
+  storeStaffId: number
+}
