@@ -1,8 +1,11 @@
 <script lang="ts" setup>
+import type { BookListAll } from '@/pagesA/tabs/types'
+
 const props = withDefaults(defineProps<{
   showTabs?: boolean // 是否展示tabs
   listData?: any
   bookCount?: any
+  searchForm?: any
 }>(), {
   showTabs: true,
   listData: [],
@@ -11,6 +14,16 @@ const props = withDefaults(defineProps<{
     wait: 0,
     underway: 0,
     finish: 0,
+  },
+  searchForm: {
+    storeId: storeId.value,
+    status: 1, // 1待服务，2服务中，3已完成，4已取消
+    artisanId: '', // 手艺人id
+    sTime: null, // 服务开始时间
+    eTime: null, // 服务结束时间
+    sDate: null, // 服务开始日期
+    eDate: null, // 服务开始日期
+    keyword: '', // 关键字
   },
 })
 
@@ -48,7 +61,7 @@ const servMap = {
     </block>
   </wd-tabs>
   <view px-50rpx py-32rpx>
-    <template v-if="listData?.length">
+    <template v-if="props?.listData?.length">
       <view v-for="(item, index) in listData" :key="`sds-${index}`" px-48rpx py-40rpx bg-white rd-10px mb-32rpx>
         <view flex flex-ac flex-bt>
           <view flex flex-y gap-10px>

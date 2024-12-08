@@ -376,7 +376,7 @@ export interface BookListAll {
    */
   bookingId: number
   /**
-   * 预约状态
+   * 预约状态 1待服务，2服务中，3已完成，4已取消
    */
   bookingStatus: number
   /**

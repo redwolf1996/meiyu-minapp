@@ -129,7 +129,7 @@ function clickItem(item: ListStaff) {
 }
 
 async function getStaff() {
-  const res = await request.get<ListRes<ListStaff>>('/business/staff', { store : storeId.value })
+  const res = await request.get<ListRes<ListStaff>>('/business/staff', { storeId: storeId.value })
   listStaff.value = res.data.list.map((v) => {
     return {
       ...v,
