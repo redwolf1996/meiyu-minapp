@@ -46,7 +46,7 @@ export function http<T>(options: UniApp.RequestOptions) {
           else if (data.code !== 200) {
             uni.showToast({
               icon: 'none',
-              title: (res.data as Data<T>).msg || '服务端错误',
+              title: data.code === 500 ? '服务端错误' : (res.data as Data<T>).msg,
               duration: 2000,
             })
             return reject(res)
