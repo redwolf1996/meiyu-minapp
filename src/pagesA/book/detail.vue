@@ -13,6 +13,7 @@ const bookingId = ref(0)
 const visibleStaff = ref(false)
 const listStaff = ref<ListStaff[]>([])
 const curStaff = ref<ListStaff>(null)
+const activeIndex = ref(0)
 
 onLoad((options) => {
   bookingId.value = Number(options?.id)
@@ -22,6 +23,7 @@ onLoad((options) => {
 onShow(async () => {
   const res = await request.get<BookDetail>(`/business/booking/${bookingId.value}`)
   bookDetail.value = res.data
+  activeIndex.value = getActiveIndex()
 })
 
 async function getStaff() {
@@ -64,6 +66,28 @@ async function cancelBooking() {
   }, 1000)
 }
 
+async function doComplete() {
+  await request.put(`/business/booking/status`, {
+    id: bookingId.value,
+    status: 3,
+  })
+  uni.showToast({ title: '已完成该笔订单' })
+  setTimeout(() => {
+    uni.navigateBack()
+  }, 1000)
+}
+
+async function doSign() {
+  await request.put(`/business/booking/status`, {
+    id: bookingId.value,
+    status: 2,
+  })
+  uni.showToast({ title: '签到成功' })
+  setTimeout(() => {
+    uni.navigateBack()
+  }, 1000)
+}
+
 function toOrder() {
   uni.navigateTo({ url: `/pagesA/order/detail?id=${bookingId.value}` })
 }
@@ -86,6 +110,18 @@ async function toEditTime() {
 
 function toEditArt() {
   visibleStaff.value = true
+}
+
+function getActiveIndex() {
+  if (bookDetail.value.bookingStatus === 1)
+    return 0
+  if (bookDetail.value.bookingStatus === 2)
+    return 1
+  if (bookDetail.value.bookingStatus === 3)
+    return 2
+  if (bookDetail.value.bookingStatus === 4)
+    return 1
+  return 0
 }
 </script>
 
@@ -191,7 +227,7 @@ function toEditArt() {
         预约时间：<text c-232220>
           {{ bookStime || fdt(bookDetail?.startTime) }}
         </text>
-        <text theme-color @click="toEditTime()">
+        <text v-if="bookDetail?.bookingStatus === 1" theme-color @click="toEditTime()">
           &nbsp;&nbsp;修改
         </text>
       </view>
@@ -209,7 +245,7 @@ function toEditArt() {
         手艺人：<text c-232220>
           {{ bookDetail?.artisanName || '未分配' }}
         </text>
-        <text theme-color @click="toEditArt()">
+        <text v-if="bookDetail?.bookingStatus === 1" theme-color @click="toEditArt()">
           &nbsp;&nbsp;修改
         </text>
       </view>
@@ -297,47 +333,84 @@ function toEditArt() {
         </view>
       </view>
       <view class="h-20px" />
-      <wd-steps :active="0" vertical dot>
+      <wd-steps :active="activeIndex" vertical dot>
         <wd-step>
           <template #title>
             创建
           </template>
           <template #description>
-            <text c-#808089>
-              商家&nbsp;2024/04/24 10:00
-            </text>
-          </template>
-        </wd-step>
-        <wd-step>
-          <template #title>
-            <text c-#27272A>
-              签到
-            </text>
-          </template>
-          <template #description>
-            <view c-#808089 fs-14px lh-22px>
-              客户到店后进行签到以记录服务开始时间，预约状态进入"服务中"
+            <view c-#808089>
+              商家创建
             </view>
-            <view mt10px>
-              <button class="my-btn complete" style="width: 80px;">
-                签到
-              </button>
+            <view c-#808089>
+              2024/04/24 10:00
             </view>
           </template>
         </wd-step>
-        <wd-step>
+        <wd-step v-if="bookDetail?.bookingStatus !== 4">
           <template #title>
-            完成
+            <text>
+              签到时间
+            </text>
           </template>
           <template #description>
-            <text>商家&nbsp;2024/04/24 10:00</text>
+            <template v-if="bookDetail?.bookingStatus === 1">
+              <view c-#808089 fs-14px lh-22px>
+                客户到店后进行签到以记录服务开始时间，预约状态进入"服务中"
+              </view>
+              <view mt10px>
+                <button class="my-btn complete" style="width: 80px;" @click="doSign()">
+                  签到
+                </button>
+              </view>
+            </template>
+            <view v-else c-#808089>
+              2024/04/24 10:00
+            </view>
+          </template>
+        </wd-step>
+        <wd-step v-if="bookDetail?.bookingStatus !== 4">
+          <template #title>
+            <text>
+              完成时间
+            </text>
+          </template>
+          <template #description>
+            <template v-if="bookDetail?.bookingStatus === 1 || bookDetail?.bookingStatus === 2">
+              <view c-#808089 fs-14px lh-22px>
+                服务完成后点击结束，预约状态进入"已完成"
+              </view>
+              <view mt10px>
+                <button class="my-btn complete" style="width: 80px;" @click="doComplete()">
+                  完成
+                </button>
+              </view>
+            </template>
+            <view v-else c-#808089>
+              2024/04/24 10:00
+            </view>
+          </template>
+        </wd-step>
+        <wd-step v-if="bookDetail?.bookingStatus === 4">
+          <template #title>
+            <text>
+              取消时间
+            </text>
+          </template>
+          <template #description>
+            <view c-#808089>
+              商家取消
+            </view>
+            <view c-#808089>
+              2024/04/24 10:00
+            </view>
           </template>
         </wd-step>
       </wd-steps>
     </view>
 
     <view flex flex-cc mt-16px px-60rpx gap10px>
-      <button class="my-btn cancel" @click="cancelBooking()">
+      <button v-if="bookDetail?.bookingStatus === 1" class="my-btn cancel" @click="cancelBooking()">
         取消
       </button>
       <button class="my-btn complete" @click="toOrder()">
@@ -350,6 +423,9 @@ function toEditArt() {
 
 <style lang='scss' scoped>
 :deep(.wd-step__icon.is-dot) {
-  border: none;
+  border: none !important;
+}
+:deep(.wd-step.is-finished > .wd-step__header > .wd-step__line) {
+  background: #1a66ff !important;
 }
 </style>
