@@ -56,7 +56,7 @@ async function toRefund() {
       <view v-if="detail?.payStatus === 4">
         <MyCell label="退款金额">
           <text f14>
-            ￥18
+            ￥{{ detail?.refundAmount }}
           </text>
         </MyCell>
         <view class="h12px" />
@@ -151,7 +151,7 @@ async function toRefund() {
               <text c-1A66FF>
                 {{ index > 9 ? index + 1 : `0${index + 1}` }}
               </text>
-              <text>水乳套装</text>
+              <text>{{ item?.goodsName }}</text>
             </view>
             <view>x{{ item?.goodsCount }}</view>
           </view>

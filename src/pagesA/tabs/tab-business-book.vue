@@ -140,6 +140,7 @@ onShow(() => {
   getBookDashboard(today)
   getBookCount(today)
   getBookCount()
+  paging.value?.reload()
 })
 
 onMounted(async () => {
