@@ -11,6 +11,8 @@ import type { BookCount, BookListAll, Books } from './types'
 import { getFinalArr } from './data'
 import dayjs from 'dayjs'
 
+const refCancel = ref()
+const refDel = ref()
 // 预约列表各状态数量
 const bookCountsAll = ref({
   all: 0,
@@ -57,6 +59,7 @@ const reqParams = reactive({
 
 const paging = ref<ZPagingInstance<BookListAll> | null>(null)
 const dataList = ref<BookListAll[]>([])
+const curItem = ref<BookListAll>({} as BookListAll)
 
 async function queryList(page: number, pageSize: number) {
   reqParams.pageNum = page
@@ -181,11 +184,15 @@ async function getBookCount(cDate?: string) {
     countInfo.value = res.data
   }
   else {
-    const res = await request.get<BookCount>('/business/booking-count', {
-      storeId: storeId.value,
-    })
-    bookCountsAll.value = res.data
+    getCountsAll()
   }
+}
+
+async function getCountsAll() {
+  const res = await request.get<BookCount>('/business/booking-count', {
+    storeId: storeId.value,
+  })
+  bookCountsAll.value = res.data
 }
 
 function handleClickList() {
@@ -210,6 +217,49 @@ function createOrder() {
 
 function scrollView(e: any) {
   scrollTop.value = e.detail.scrollTop
+}
+
+function toDel(item: BookListAll) {
+  curItem.value = item
+  refDel.value.open()
+}
+async function doDel() {
+  await request.delete(`/business/booking/${curItem.value.bookingId}`)
+  refDel.value.close()
+  paging.value?.reload()
+  getCountsAll()
+}
+
+function toCancel(item: BookListAll) {
+  curItem.value = item
+  refCancel.value.open()
+}
+async function doCancel() {
+  await request.put(`/business/booking/status`, {
+    id: curItem.value.bookingId,
+    status: 4,
+  })
+  refCancel.value.close()
+  paging.value?.reload()
+  getCountsAll()
+}
+async function doComplete(item: BookListAll) {
+  await request.put(`/business/booking/status`, {
+    id: item.bookingId,
+    status: 3,
+  })
+  uni.showToast({ title: '已完成该笔订单' })
+  paging.value?.reload()
+  getCountsAll()
+}
+async function doSign(item: BookListAll) {
+  await request.put(`/business/booking/status`, {
+    id: item.bookingId,
+    status: 2,
+  })
+  uni.showToast({ title: '签到成功' })
+  paging.value?.reload()
+  getCountsAll()
 }
 </script>
 
@@ -458,6 +508,18 @@ function scrollView(e: any) {
               <view class="my-status-tag" :class="[servMap[item?.bookingStatus]]">
                 {{ item?.bookingStatusDesc }}
               </view>
+              <!-- <text class="my-status-tag to-service">
+          待服务
+        </text>
+        <text class="my-status-tag in-service">
+          服务中
+        </text>
+        <text class="my-status-tag end-service">
+          已完成
+        </text>
+        <text class="my-status-tag cancel-service">
+          已取消
+        </text> -->
             </view>
             <view h-32rpx />
             <view>
@@ -484,28 +546,6 @@ function scrollView(e: any) {
                   </view>
                 </view>
               </template>
-
-              <view flex gap-15px flex-ac mb-20rpx>
-                <wd-img
-                  :width="44"
-                  :height="44"
-                  mode="aspectFill"
-                  :src="`${IMG_BASE}/cat.png`"
-                />
-                <view flex-1 flex flex-y gap-20rpx>
-                  <view flex flex-bt>
-                    <text c-0D0D26 f14 fb>
-                      面部清洁补水
-                    </text>
-                    <text c-3A3A3A f14>
-                      x1
-                    </text>
-                  </view>
-                  <view c-161719 fs-20>
-                    1小时
-                  </view>
-                </view>
-              </view>
             </view>
             <view flex flex-bt>
               <view />
@@ -524,144 +564,41 @@ function scrollView(e: any) {
             </view>
 
             <view flex flex-xr mt-34rpx gap-14px>
-              <button class="my-btn delete">
+              <button v-if="item?.bookingStatus === 4" class="my-btn delete" @click="toDel(item)">
                 删除
               </button>
-              <button v-if="item?.bookingStatus === 1" class="my-btn cancel">
+              <button v-if="item?.bookingStatus === 1" class="my-btn cancel" @click="toCancel(item)">
                 取消
               </button>
-              <button v-if="item?.bookingStatus === 2" class="my-btn complete">
+              <button v-if="item?.bookingStatus === 2" class="my-btn complete" @click="doComplete(item)">
                 完成
               </button>
-              <button v-if="item?.bookingStatus === 1" class="my-btn complete">
+              <button v-if="item?.bookingStatus === 1" class="my-btn complete" @click="doSign(item)">
                 签到
               </button>
-            <!-- <text class="my-status-tag to-service">
-          待服务
-        </text>
-        <text class="my-status-tag in-service">
-          服务中
-        </text>
-        <text class="my-status-tag end-service">
-          已完成
-        </text>
-        <text class="my-status-tag cancel-service">
-          已取消
-        </text> -->
-            </view>
-          </view>
-
-          <view px-48rpx py-40rpx bg-white rd-10px mb-32rpx>
-            <view flex flex-ac flex-bt>
-              <view flex flex-y gap-10px>
-                <view c-404143 f14 lh-14px>
-                  2023.11.22 8:00-10:00
-                </view>
-                <view f12 flex tc flex-ac gap-10rpx f10>
-                  <view fb>
-                    张硕
-                  </view>
-                  <view w-12rpx h-12rpx round style="background-color: #91919F;" />
-                  <view color-white tc px-8rpx py-4rpx lh-24rpx bg-FE502E>
-                    到店服务
-                  </view>
-                </view>
-              </view>
-              <view class="my-status-tag to-service">
-                待服务
-              </view>
-            </view>
-            <view h-32rpx />
-            <view>
-              <view flex gap-15px flex-ac mb-20rpx>
-                <wd-img
-                  :width="44"
-                  :height="44"
-                  mode="aspectFill"
-                  :src="`${IMG_BASE}/cat.png`"
-                />
-                <view flex-1 flex flex-y gap-20rpx>
-                  <view flex flex-bt>
-                    <text c-0D0D26 f14 fb>
-                      面部清洁补水
-                    </text>
-                    <text c-3A3A3A f14>
-                      x1
-                    </text>
-                  </view>
-                  <view c-161719 fs-20>
-                    1小时
-                  </view>
-                </view>
-              </view>
-              <view flex gap-15px flex-ac mb-20rpx>
-                <wd-img
-                  :width="44"
-                  :height="44"
-                  mode="aspectFill"
-                  :src="`${IMG_BASE}/cat.png`"
-                />
-                <view flex-1 flex flex-y gap-20rpx>
-                  <view flex flex-bt>
-                    <text c-0D0D26 f14 fb>
-                      面部清洁补水
-                    </text>
-                    <text c-3A3A3A f14>
-                      x1
-                    </text>
-                  </view>
-                  <view c-161719 fs-20>
-                    1小时
-                  </view>
-                </view>
-              </view>
-            </view>
-            <view flex flex-bt>
-              <view />
-              <view flex flex-ac gap-5px font-size-20rpx>
-                <wd-img
-                  :width="20"
-                  :height="20"
-                  :src="`${IMG_BASE}/icon-people.png`"
-                />
-                <view fb>
-                  王乐乐
-                </view>
-                <view w-10rpx h-10rpx round ma style="background-color: #000;" />
-                <view>13952768882</view>
-              </view>
-            </view>
-
-            <view flex flex-xr mt-34rpx gap-14px>
-              <button class="my-btn delete">
-                删除
-              </button>
-              <button class="my-btn cancel">
-                取消
-              </button>
-              <button class="my-btn complete">
-                完成
-              </button>
-            <!-- <button class="my-btn complete">
-          签到
-        </button> -->
-            <!-- <text class="my-status-tag to-service">
-          待服务
-        </text>
-        <text class="my-status-tag in-service">
-          服务中
-        </text>
-        <text class="my-status-tag end-service">
-          已完成
-        </text>
-        <text class="my-status-tag cancel-service">
-          已取消
-        </text> -->
             </view>
           </view>
         </view>
       </z-paging>
     </template>
+
+    <uni-popup ref="refDel" type="dialog">
+      <uni-popup-dialog
+        type="warn"
+        cancelText="取消" confirmText="确定"
+        title="提示" content="删除后不可恢复，确定删除吗？"
+        @confirm="doDel"
+      />
+    </uni-popup>
+
+    <uni-popup ref="refCancel" type="dialog">
+      <uni-popup-dialog
+        type="warn"
+        cancelText="取消" confirmText="确定"
+        title="提示" content="取消后不可恢复，确定取消本次预约吗？"
+        @confirm="doCancel"
+      />
+    </uni-popup>
 
     <!-- <BookList v-if="mode === 1" :bookCount="bookCountsAll" :listData="bookListDataAll" :searchForm="searchForm" /> -->
   </view>
