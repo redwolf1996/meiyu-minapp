@@ -261,6 +261,11 @@ async function doSign(item: BookListAll) {
   paging.value?.reload()
   getCountsAll()
 }
+function toDetail(item: BookListAll) {
+  uni.navigateTo({
+    url: `/pagesA/book/detail?id=${item.bookingId}`,
+  })
+}
 </script>
 
 <template>
@@ -490,76 +495,66 @@ async function doSign(item: BookListAll) {
 
         <view px-50rpx py-32rpx>
           <view v-for="(item, index) in dataList" :key="`sds-${index}`" px-48rpx py-40rpx bg-white rd-10px mb-32rpx>
-            <view flex flex-ac flex-bt>
-              <view flex flex-y gap-10px>
-                <view c-404143 f14 lh-14px>
-                  {{ item?.startTime ? fd(item?.startTime) : '--' }}&nbsp;{{ item?.startTimeStr }}
+            <view @click="toDetail(item)">
+              <view flex flex-ac flex-bt>
+                <view flex flex-y gap-10px>
+                  <view c-404143 f14 lh-14px>
+                    {{ item?.startTime ? fd(item?.startTime) : '--' }}&nbsp;{{ item?.startTimeStr }}
+                  </view>
+                  <view f12 flex tc flex-ac gap-10rpx f10>
+                    <view fb>
+                      {{ item?.storeCustomerName }}
+                    </view>
+                    <view w-12rpx h-12rpx round style="background-color: #91919F;" />
+                    <view color-white tc px-8rpx py-4rpx lh-24rpx bg-FE502E>
+                      {{ item?.storeServiceTypeDesc }}
+                    </view>
+                  </view>
                 </view>
-                <view f12 flex tc flex-ac gap-10rpx f10>
-                  <view fb>
-                    {{ item?.storeCustomerName }}
-                  </view>
-                  <view w-12rpx h-12rpx round style="background-color: #91919F;" />
-                  <view color-white tc px-8rpx py-4rpx lh-24rpx bg-FE502E>
-                    {{ item?.storeServiceTypeDesc }}
-                  </view>
+                <view class="my-status-tag" :class="[servMap[item?.bookingStatus]]">
+                  {{ item?.bookingStatusDesc }}
                 </view>
               </view>
-              <view class="my-status-tag" :class="[servMap[item?.bookingStatus]]">
-                {{ item?.bookingStatusDesc }}
+              <view h-32rpx />
+              <view>
+                <template v-if="item?.serviceList?.length">
+                  <view v-for="(itm, idx) in item.serviceList" :key="`sd22-${index}-${idx}`" flex gap-15px flex-ac mb-20rpx>
+                    <wd-img
+                      :width="44"
+                      :height="44"
+                      mode="aspectFill"
+                      :src="itm?.serviceCoverImg"
+                    />
+                    <view flex-1 flex flex-y gap-20rpx>
+                      <view flex flex-bt>
+                        <text c-0D0D26 f14 fb>
+                          {{ itm?.serviceName }}
+                        </text>
+                        <text c-3A3A3A f14>
+                          x1
+                        </text>
+                      </view>
+                      <view c-161719 fs-20>
+                        {{ itm?.duration ?? '--' }}分钟
+                      </view>
+                    </view>
+                  </view>
+                </template>
               </view>
-              <!-- <text class="my-status-tag to-service">
-          待服务
-        </text>
-        <text class="my-status-tag in-service">
-          服务中
-        </text>
-        <text class="my-status-tag end-service">
-          已完成
-        </text>
-        <text class="my-status-tag cancel-service">
-          已取消
-        </text> -->
-            </view>
-            <view h-32rpx />
-            <view>
-              <template v-if="item?.serviceList?.length">
-                <view v-for="(itm, idx) in item.serviceList" :key="`sd22-${index}-${idx}`" flex gap-15px flex-ac mb-20rpx>
+              <view flex flex-bt>
+                <view />
+                <view flex flex-ac gap-5px font-size-20rpx>
                   <wd-img
-                    :width="44"
-                    :height="44"
-                    mode="aspectFill"
-                    :src="itm?.serviceCoverImg"
+                    :width="20"
+                    :height="20"
+                    :src="`${IMG_BASE}/icon-people.png`"
                   />
-                  <view flex-1 flex flex-y gap-20rpx>
-                    <view flex flex-bt>
-                      <text c-0D0D26 f14 fb>
-                        {{ itm?.serviceName }}
-                      </text>
-                      <text c-3A3A3A f14>
-                        x1
-                      </text>
-                    </view>
-                    <view c-161719 fs-20>
-                      {{ itm?.duration ?? '--' }}分钟
-                    </view>
+                  <view fb>
+                    {{ item?.artisanName }}
                   </view>
+                  <view w-10rpx h-10rpx round ma style="background-color: #000;" />
+                  <view> {{ item?.artisanPhone }}</view>
                 </view>
-              </template>
-            </view>
-            <view flex flex-bt>
-              <view />
-              <view flex flex-ac gap-5px font-size-20rpx>
-                <wd-img
-                  :width="20"
-                  :height="20"
-                  :src="`${IMG_BASE}/icon-people.png`"
-                />
-                <view fb>
-                  {{ item?.artisanName }}
-                </view>
-                <view w-10rpx h-10rpx round ma style="background-color: #000;" />
-                <view> {{ item?.artisanPhone }}</view>
               </view>
             </view>
 
