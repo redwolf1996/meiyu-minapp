@@ -297,10 +297,42 @@ function toEditArt() {
         </view>
       </view>
       <view class="h-20px" />
-      <wd-steps :active="1" vertical>
-        <wd-step description="注册1个账号" />
-        <wd-step description="登录账号并绑定手机" />
-        <wd-step description="完善个人信息" />
+      <wd-steps :active="0" vertical dot>
+        <wd-step>
+          <template #title>
+            创建
+          </template>
+          <template #description>
+            <text c-#808089>
+              商家&nbsp;2024/04/24 10:00
+            </text>
+          </template>
+        </wd-step>
+        <wd-step>
+          <template #title>
+            <text c-#27272A>
+              签到
+            </text>
+          </template>
+          <template #description>
+            <view c-#808089 fs-14px lh-22px>
+              客户到店后进行签到以记录服务开始时间，预约状态进入"服务中"
+            </view>
+            <view mt10px>
+              <button class="my-btn complete" style="width: 80px;">
+                签到
+              </button>
+            </view>
+          </template>
+        </wd-step>
+        <wd-step>
+          <template #title>
+            完成
+          </template>
+          <template #description>
+            <text>商家&nbsp;2024/04/24 10:00</text>
+          </template>
+        </wd-step>
       </wd-steps>
     </view>
 
@@ -316,4 +348,8 @@ function toEditArt() {
   <wu-safe-bottom />
 </template>
 
-<style lang='scss' scoped></style>
+<style lang='scss' scoped>
+:deep(.wd-step__icon.is-dot) {
+  border: none;
+}
+</style>
