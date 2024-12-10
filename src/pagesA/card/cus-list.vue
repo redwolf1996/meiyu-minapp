@@ -92,20 +92,28 @@ onShow(() => {
                 :src="`${IMG_BASE}/icon-usr.png`"
               />
               <text fs-12px>
-                王丽丽(1266632323)
+                {{ item?.customerName }}({{ item?.customerPhone }})
               </text>
             </view>
           </view>
           <view fb f16>
-            7980面部精雕30次
+            {{ item?.cardName }}
           </view>
           <view f12 color-9A9FA5>
-            2024/3/1 - 永久
+            {{ item?.expiresTimeDesc }}
           </view>
-          <view>
-            <text fb f12 px-12rpx py-7rpx bg-B5E4CA rd-12rpx>
+          <view flex flex-ac flex-bt>
+            <text f12 px-12rpx py-7rpx c-#1A66FF>
               ¥128/¥12000
             </text>
+            <view>
+              <text f12 px-16rpx py-8rpx c-#32C272 bg-#D6F3E3 flex flex-cc rd-30px>
+                使用中
+              </text>
+              <!-- <text f12 px-12rpx py-7rpx c-#A6A6B0 bg-#F5F5FA>
+                已失效
+              </text> -->
+            </view>
           </view>
         </view>
       </view>

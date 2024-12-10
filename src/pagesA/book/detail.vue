@@ -21,10 +21,14 @@ onLoad((options) => {
 })
 
 onShow(async () => {
+  getPageInfo()
+})
+
+async function getPageInfo() {
   const res = await request.get<BookDetail>(`/business/booking/${bookingId.value}`)
   bookDetail.value = res.data
   activeIndex.value = getActiveIndex()
-})
+}
 
 async function getStaff() {
   const res = await request.get<ListRes<ListStaff>>('/business/staff', { storeId: storeId.value })
@@ -61,9 +65,7 @@ async function cancelBooking() {
     title: '已取消预约',
     icon: 'none',
   })
-  setTimeout(() => {
-    uni.navigateBack()
-  }, 1000)
+  getPageInfo()
 }
 
 async function doComplete() {
@@ -72,9 +74,7 @@ async function doComplete() {
     status: 3,
   })
   uni.showToast({ title: '已完成该笔订单' })
-  setTimeout(() => {
-    uni.navigateBack()
-  }, 1000)
+  getPageInfo()
 }
 
 async function doSign() {
@@ -83,9 +83,7 @@ async function doSign() {
     status: 2,
   })
   uni.showToast({ title: '签到成功' })
-  setTimeout(() => {
-    uni.navigateBack()
-  }, 1000)
+  getPageInfo()
 }
 
 function toOrder() {
