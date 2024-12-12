@@ -103,16 +103,22 @@ onShow(() => {
             {{ item?.expiresTimeDesc }}
           </view>
           <view flex flex-ac flex-bt>
-            <text f12 px-12rpx py-7rpx c-#1A66FF>
-              ¥128/¥12000
-            </text>
             <view>
-              <text f12 px-16rpx py-8rpx c-#32C272 bg-#D6F3E3 flex flex-cc rd-30px>
+              <text v-if="item.cardType === 1" f12 px-12rpx py-7rpx c-#1A66FF>
+                {{ item?.useCount }}/{{ item?.countLimit }}
+              </text>
+              <text v-else f12 px-12rpx py-7rpx c-#1A66FF>
+                ¥{{ item?.amount }}/¥{{ item?.totalAmount }}
+              </text>
+            </view>
+
+            <view>
+              <text v-if="item.isValid" f12 px-16rpx py-8rpx c-#32C272 bg-#D6F3E3 flex flex-cc rd-30px>
                 使用中
               </text>
-              <!-- <text f12 px-12rpx py-7rpx c-#A6A6B0 bg-#F5F5FA>
+              <text v-else c-#A6A6B0 bg-#F5F5FA f12 px-16rpx py-8rpx flex flex-cc rd-30px>
                 已失效
-              </text> -->
+              </text>
             </view>
           </view>
         </view>

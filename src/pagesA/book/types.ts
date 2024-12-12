@@ -93,7 +93,7 @@ export interface BookDetail {
   /**
    * 预约操作记录
    */
-  bookingRecord: BookingRecord[]
+  bookingRecord: BookingRecord
   /**
    * 预约的服务列表
    */
@@ -163,29 +163,49 @@ export interface BookDetail {
 }
 
 export interface BookingRecord {
-  createBy?: number
   /**
-   * 操作时间
+   * 取消人
    */
-  createTime?: string
+  cancelHandleType: number
+  cancelHandleTypeDesc: string
   /**
-   * 操作人类型，1客户，2商家
+   * 取消时间
    */
-  handleType?: number
+  cancelTime: string
   /**
-   * 操作人类别名
+   * 创建人
    */
-  handleTypeDesc?: string
-  id?: number
+  createBy: string
   /**
-   * 类别，1创建，2签到，3完成，4取消
+   * 创建人类型
    */
-  type?: number
+  createHandleType: number
   /**
-   * 类别名
+   * 创建人类型
    */
-  typeDesc?: string
-  [property: string]: any
+  createHandleTypeDesc: string
+  /**
+   * 创建时间
+   */
+  createTime: string
+  /**
+   * 完成人
+   */
+  finishHandleType: number
+  finishHandleTypeDesc: string
+  /**
+   * 完成时间
+   */
+  finishTime: string
+  /**
+   * 签到人
+   */
+  signHandleType: number
+  signHandleTypeDesc: string
+  /**
+   * 签到时间
+   */
+  signTime: string
 }
 
 export interface BookingService {

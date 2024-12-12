@@ -74,8 +74,11 @@ function toOrderDetail() {
       <view v-if="mode === 1" class="item mid" @click="continueOrder()">
         继续开单
       </view>
+      <view v-else-if="mode === 2" class="item mid" @click="continueCardRecharge()">
+        继续开卡
+      </view>
       <view v-else class="item mid" @click="continueCardRecharge()">
-        继续开卡/充值
+        继续充值
       </view>
       <view class="item" @click="toDashboard()">
         返回工作台
