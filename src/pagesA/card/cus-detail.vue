@@ -5,6 +5,7 @@ style:
 
 <script lang="ts" setup>
 import type { CardEquity, CusCardDetail, CusRecord, CusRecordList } from './types'
+import dayjs from 'dayjs'
 
 const id = ref(0)
 const tab = ref(0)
@@ -18,15 +19,23 @@ const recordReqParams = reactive({
   page: 1,
   pageSize: 10,
 })
+
+const detail = ref<CusCardDetail>({} as CusCardDetail)
+const records = ref<CusRecordList[]>([])
 const cardName = ref('')
-const cardExpire = ref('')
+const timeArr = ref<any[]>([Date.now(), dayjs().add(1, 'year').valueOf()])
+const showSTime = computed(() => dayjs(timeArr.value[0]).format('YYYY-MM-DD'))
+const showETime = computed(() => dayjs(timeArr.value[1]).format('YYYY-MM-DD'))
+const cardExpire = ref({
+  id: computed(() => id.value),
+  startTime: computed(() => `${showSTime.value} 00:00:00`),
+  expiresTime: computed(() => `${showETime.value} 23:59:59`),
+})
 const cardEquity = ref<CardEquity[]>([])
 const visEditName = ref(false)
 const visEditExpire = ref(false)
 const visEditEquity = ref(false)
 
-const detail = ref<CusCardDetail>({} as CusCardDetail)
-const records = ref<CusRecordList[]>([])
 onLoad((option) => {
   id.value = option.id!
   getDetail()
@@ -36,6 +45,7 @@ onLoad((option) => {
 function getDetail() {
   request.get<CusCardDetail>(`/business/store-customer-card/${id.value}`).then((res) => {
     detail.value = res.data
+    cardName.value = res.data.cardName || ''
   })
 }
 
@@ -54,13 +64,24 @@ function toEditExpire() {
 function toEditEquity() {
   visEditEquity.value = true
 }
-function confirmName() {
-
+async function confirmName() {
+  await request.put('/business/store-customer-card/card-name', {
+    id: id.value,
+    cardName: cardName.value,
+  })
+  getDetail()
+  getRecords()
+  uni.showToast({ title: '修改成功' })
+  visEditName.value = false
 }
-function confirmExpire() {
-
+async function confirmExpire() {
+  await request.put('/business/store-customer-card/expires-time', cardExpire.value)
+  getDetail()
+  getRecords()
+  uni.showToast({ title: '修改成功' })
+  visEditExpire.value = false
 }
-function confirmEquity() {
+async function confirmEquity() {
 
 }
 
@@ -211,17 +232,28 @@ function toSee() {
     </view>
   </wd-popup>
 
-  <wd-popup v-model="visEditExpire" closable position="bottom">
-    <view tc mt10px fb>
+  <wd-popup
+    v-model="visEditExpire"
+    custom-style="border-radius:32rpx;height:270px"
+    closable position="bottom"
+  >
+    <view tc mt30px fb>
       修改有效期
     </view>
-    <view h-12px />
-    <view flex flex-cc gap-10px>
-      <wd-input v-model="cardExpire" type="text" placeholder="请输入卡名称" />
+    <view h-30px />
+    <view mx-40rpx>
+      <wd-datetime-picker v-model="timeArr" type="date" use-default-slot>
+        <view flex flex-ac flex-bt>
+          <input v-model="showSTime" style="background-color: #F6F6FB;padding:10px 20px;flex:1;" type="text" placeholder="开始时间">
+          <view w44px tc c-#929292 fs-12px>
+            至
+          </view>
+          <input v-model="showETime" style="background-color: #F6F6FB;padding:10px 20px;flex:1;" type="text" placeholder="结束时间">
+        </view>
+      </wd-datetime-picker>
     </view>
-
-    <view mx-40rpx mt-20rpx color-white @click="confirmExpire">
-      <wd-button size="large" custom-class="theme-bg" block>
+    <view mx-40rpx mt-44px color-white @click="confirmExpire">
+      <wd-button size="large" block plain>
         <view flex flex-cc>
           <text>确定</text>
         </view>
@@ -235,7 +267,7 @@ function toSee() {
     </view>
     <view h-12px />
     <view flex flex-cc gap-10px>
-      <wd-input v-model="cardExpire" type="text" placeholder="请输入卡名称" />
+      <wd-input type="text" placeholder="请输入卡名称" />
     </view>
 
     <view mx-40rpx mt-20rpx color-white @click="confirmEquity">
