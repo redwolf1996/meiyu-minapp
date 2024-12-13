@@ -299,3 +299,194 @@ export interface CusList {
    */
   useCount: number
 }
+
+export interface CusCardDetail {
+  /**
+   * 储值卡储值金额
+   */
+  amount: number
+  /**
+   * 卡id
+   */
+  cardId: number
+  /**
+   * 卡名
+   */
+  cardName: string
+  /**
+   * 次卡二级分类
+   */
+  cardSecondType: number
+  /**
+   * 卡类别
+   */
+  cardType: number
+  cardTypeDesc: string
+  /**
+   * 不限次卡，次数上限；有限次卡总次数
+   */
+  countLimit: number
+  /**
+   * 创建时间
+   */
+  createTime: string
+  /**
+   * 客户id
+   */
+  customerId: number
+  /**
+   * 权益说明
+   */
+  equityDesc: string
+  /**
+   * 过期时间
+   */
+  expiresTime: string
+  /**
+   * 过期时间
+   */
+  expiresTimeDesc: string
+  /**
+   * 储值赠送
+   */
+  gift: number
+  /**
+   * 是否长期有效
+   */
+  isLongTerm: number
+  /**
+   * 订单id
+   */
+  orderId: number
+  /**
+   * 订单编号
+   */
+  orderNo: string
+  /**
+   * 实付，储值卡首次充值金额
+   */
+  payAmount: number
+  /**
+   * 退费id
+   */
+  refundId: number
+  /**
+   * 退费订单编号
+   */
+  refundTime: null
+  /**
+   * 有效期开始时间
+   */
+  startTime: string
+  storeCustomerAvatar: string
+  /**
+   * 客户卡数量
+   */
+  storeCustomerCardC: number
+  /**
+   * 门店客户id
+   */
+  storeCustomerId: number
+  /**
+   * 客户名
+   */
+  storeCustomerName: string
+  /**
+   * 客户手机号
+   */
+  storeCustomerPhone: string
+  /**
+   * 储值卡卡累计充值
+   */
+  totalAmount: number
+  /**
+   * 储值卡卡累计赠送
+   */
+  totalGift: number
+}
+
+export interface CusRecord {
+  list: CusRecordList[]
+  /**
+   * 次卡剩余次数，折扣卡抵扣金额，储值卡剩余金额
+   */
+  surplus: string
+  total: number
+  /**
+   * 次卡折扣卡使用次数，储值卡使用金额
+   */
+  use: string
+}
+
+export interface CusRecordList {
+  /**
+   * 用卡优惠金额
+   */
+  cardReduceAmount: number
+  /**
+   * 时间
+   */
+  createTime: string
+  /**
+   * 商品数量
+   */
+  goodsCount: number
+  goodsId: number
+  /**
+   * 商品名
+   */
+  goodsName: string
+  /**
+   * 商品类别，1服务，2产品，3卡，4预约，5充值
+   */
+  goodsType: number
+  id: number
+  /**
+   * 备注
+   */
+  notes: string
+  /**
+   * 订单id
+   */
+  orderId: number
+  /**
+   * 储值卡消耗金额
+   */
+  orderItemAmount: number
+  /**
+   * 子订单id
+   */
+  orderItemId: number
+  /**
+   * 订单编号
+   */
+  orderNo: string
+  payStatus: number
+  /**
+   * 描述
+   */
+  recordDesc: string
+}
+
+export interface CardEquity {
+  /**
+   * 服务次数，产品卡折扣1-100
+   */
+  equity: number
+  /**
+   * 商品id
+   */
+  goodsId: number
+  /**
+   * 商品名称
+   */
+  goodsName: string
+  /**
+   * 商品类型
+   */
+  goodsType: number
+  /**
+   * 详情得到的id
+   */
+  id: number
+}

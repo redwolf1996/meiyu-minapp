@@ -3,10 +3,281 @@ style:
   navigationBarTitleText: 会员购卡详情
 </route>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import type { CardEquity, CusCardDetail, CusRecord, CusRecordList } from './types'
+
+const id = ref(0)
+const tab = ref(0)
+const tabs = [{
+  label: '购卡详情',
+}, {
+  label: '使用记录',
+}]
+const recordReqParams = reactive({
+  customerCardId: computed(() => id.value),
+  page: 1,
+  pageSize: 10,
+})
+const cardName = ref('')
+const cardExpire = ref('')
+const cardEquity = ref<CardEquity[]>([])
+const visEditName = ref(false)
+const visEditExpire = ref(false)
+const visEditEquity = ref(false)
+
+const detail = ref<CusCardDetail>({} as CusCardDetail)
+const records = ref<CusRecordList[]>([])
+onLoad((option) => {
+  id.value = option.id!
+  getDetail()
+  getRecords()
+})
+
+function getDetail() {
+  request.get<CusCardDetail>(`/business/store-customer-card/${id.value}`).then((res) => {
+    detail.value = res.data
+  })
+}
+
+function getRecords() {
+  request.get<CusRecord>('/business/store-customer-card/record', recordReqParams).then((res) => {
+    records.value = res.data.list
+  })
+}
+
+function toEditName() {
+  visEditName.value = true
+}
+function toEditExpire() {
+  visEditExpire.value = true
+}
+function toEditEquity() {
+  visEditEquity.value = true
+}
+function confirmName() {
+
+}
+function confirmExpire() {
+
+}
+function confirmEquity() {
+
+}
+
+function toSee() {
+  uni.navigateTo({
+    url: `/pagesA/order/detail?id=${detail.value.orderId}`,
+  })
+}
+</script>
 
 <template>
-  <view>会员购卡详情</view>
+  <wd-tabs v-model="tab">
+    <block v-for="item in tabs" :key="item.label">
+      <wd-tab :title="item.label" />
+    </block>
+  </wd-tabs>
+  <view v-if="tab === 0" p-32rpx>
+    <view bg-white px-34rpx py-40rpx>
+      <view flex flex-ac gap-20rpx>
+        <wd-img
+          :width="18"
+          :height="18"
+          :src="`${IMG_BASE}/icon-cus.png`"
+        />
+        <text fs-34>
+          客户
+        </text>
+      </view>
+      <view rd-16rpx mt-20rpx bg-F0F0F0 py-18rpx px-32rpx flex flex-ac gap-32rpx>
+        <wd-img
+          :width="48"
+          :height="48"
+          :round="true"
+          :src="`${IMG_BASE}/cat.png`"
+        />
+        <view flex flex-y flex-bt flex-1 gap-20rpx>
+          <view f16>
+            {{ detail?.storeCustomerName }}
+          </view>
+          <view flex flex-ac flex-bt>
+            <view flex flex-ac gap-16rpx>
+              <text c-929292 fs-28 lh-28rpx>
+                {{ detail?.storeCustomerPhone }}
+              </text>
+              <wd-img
+                :width="16"
+                :height="16"
+                :src="`${IMG_BASE}/icon-v1.png`"
+              />
+            </view>
+            <view f12>
+              <text c-929292>
+                会员卡
+              </text>
+              <text c-00BB00>
+                {{ detail?.storeCustomerCardC }}张
+              </text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view bg-white px-34rpx py-40rpx mt-16px>
+      <view flex flex-ac gap-20rpx>
+        <wd-img
+          :width="18"
+          :height="18"
+          :src="`${IMG_BASE}/icon-book.png`"
+        />
+        <text fs-34>
+          卡详情
+        </text>
+      </view>
+      <view c-#3A3A3A fb mt18px>
+        {{ detail?.cardName }}
+      </view>
+
+      <view c-#434343 fs-14px flex flex-y gap10px mt10px>
+        <view flex flex-bt>
+          <view>卡类型：</view>
+          <view>{{ detail?.cardTypeDesc }}</view>
+        </view>
+        <view flex flex-bt>
+          <view>有效期：</view>
+          <view>{{ detail?.expiresTimeDesc }}</view>
+        </view>
+        <view flex flex-bt>
+          <view>实付：</view>
+          <view>￥{{ detail?.payAmount }}</view>
+        </view>
+        <view flex flex-bt>
+          <view>购卡权益：</view>
+          <view>{{ detail?.equityDesc }}</view>
+        </view>
+      </view>
+    </view>
+    <view bg-white px-34rpx py-40rpx mt-16px fs-12px>
+      <view flex flex-ac flex-bt>
+        <view c-#818181>
+          订单编号：&nbsp;&nbsp;<text>{{ detail?.orderNo || detail?.refundTime }}</text>
+        </view>
+        <view class="toSee" @click="toSee">
+          查看
+        </view>
+      </view>
+      <view c-#818181 mt10px>
+        购买时间：&nbsp;&nbsp;<text>{{ fdt(detail?.createTime) }}</text>
+      </view>
+      <!-- <view c-#818181>取消时间：<text>xxxxxxxx</text> </view> -->
+    </view>
+
+    <view class="menu" mt40px>
+      <view class="item" @click="toEditName()">
+        修改名称
+      </view>
+      <view class="item mid" @click="toEditExpire()">
+        修改有效期
+      </view>
+      <view class="item" @click="toEditEquity()">
+        修改权益
+      </view>
+    </view>
+  </view>
+  <view v-else>
+    records
+  </view>
+
+  <wd-popup
+    v-model="visEditName"
+    custom-style="border-radius:32rpx;height:270px"
+    closable position="bottom"
+  >
+    <view tc mt30px fb>
+      修改名称
+    </view>
+    <view h-30px />
+
+    <view mx-40rpx>
+      <input v-model="cardName" style="background-color: #F6F6FB;padding:10px 20px;" type="text" placeholder="请输入卡名称">
+    </view>
+
+    <view mx-40rpx mt-44px color-white @click="confirmName">
+      <wd-button size="large" block plain>
+        <view flex flex-cc>
+          <text>确定</text>
+        </view>
+      </wd-button>
+    </view>
+  </wd-popup>
+
+  <wd-popup v-model="visEditExpire" closable position="bottom">
+    <view tc mt10px fb>
+      修改有效期
+    </view>
+    <view h-12px />
+    <view flex flex-cc gap-10px>
+      <wd-input v-model="cardExpire" type="text" placeholder="请输入卡名称" />
+    </view>
+
+    <view mx-40rpx mt-20rpx color-white @click="confirmExpire">
+      <wd-button size="large" custom-class="theme-bg" block>
+        <view flex flex-cc>
+          <text>确定</text>
+        </view>
+      </wd-button>
+    </view>
+  </wd-popup>
+
+  <wd-popup v-model="visEditEquity" closable position="bottom">
+    <view tc mt10px fb>
+      修改权益
+    </view>
+    <view h-12px />
+    <view flex flex-cc gap-10px>
+      <wd-input v-model="cardExpire" type="text" placeholder="请输入卡名称" />
+    </view>
+
+    <view mx-40rpx mt-20rpx color-white @click="confirmEquity">
+      <wd-button size="large" custom-class="theme-bg" block plain>
+        <view flex flex-cc>
+          <text>确定</text>
+        </view>
+      </wd-button>
+    </view>
+  </wd-popup>
 </template>
 
-<style lang='scss' scoped></style>
+<style lang='scss' scoped>
+.pop {
+  height: 150px;
+  border-radius: 32rpx;
+}
+.menu {
+  display: flex;
+  justify-content: center;
+  color: #1a66ff;
+  font-size: 12px;
+  align-items: center;
+  .item {
+    text-align: center;
+    padding: 0 20px;
+  }
+  .mid {
+    border-left: 1px solid #e9eaec;
+    border-right: 1px solid #e9eaec;
+  }
+}
+.toSee {
+  color: #6a6a69;
+  font-size: 24rpx;
+  line-height: 40rpx;
+  height: 40rpx;
+  text-align: center;
+  border: 1px solid #818181;
+  border-radius: 20px;
+  padding: 4px 10px;
+  display: flex;
+  align-items: center;
+}
+</style>

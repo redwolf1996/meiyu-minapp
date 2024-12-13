@@ -6,7 +6,6 @@ style:
 <script lang="ts" setup>
 import type { CusList as List } from './types'
 
-const visCardType = ref(false)
 const cardImg = {
   1: 'list-cika',
   2: 'list-chongzhi',
@@ -28,6 +27,12 @@ async function queryList(page: number, pageSize: number) {
   const res = await request.get<ListRes<List>>('/business/store-customer-card', reqParams)
   total.value = res.data.total
   paging.value.complete(res.data.list)
+}
+
+function toDetail(id: number) {
+  uni.navigateTo({
+    url: `/pagesA/card/cus-detail?id=${id}`,
+  })
 }
 
 function search() {
@@ -75,15 +80,16 @@ onShow(() => {
         v-for="(item, index) in dataList" :key="`card-${index}`"
         mt-12px flex flex-bt flex-ac gap-40rpx
         pb-10px style="border-bottom: 1px solid #EFEFEF;"
+        @click="toDetail(item.id)"
       >
         <wd-img
-          :width="100"
-          :height="100"
-          mode="widthFix"
+          :width="96"
+          :height="72"
+          mode="aspectFill"
           :radius="12"
           :src="`${IMG_BASE}/detail/${cardImg[item.cardType]}.png`"
         />
-        <view flex flex-y flex-bt flex-1 h-108px>
+        <view flex flex-y flex-bt flex-1 h-86px>
           <view flex flex-bt>
             <view flex flex-ac gap-5px>
               <wd-img
@@ -96,18 +102,18 @@ onShow(() => {
               </text>
             </view>
           </view>
-          <view fb f16>
+          <view fb fs-16px lh-16px>
             {{ item?.cardName }}
           </view>
-          <view f12 color-9A9FA5>
+          <view fs-12px lh-12px color-9A9FA5>
             {{ item?.expiresTimeDesc }}
           </view>
-          <view flex flex-ac flex-bt>
+          <view flex flex-ac flex-bt fs-12px lh-12px>
             <view>
-              <text v-if="item.cardType === 1" f12 px-12rpx py-7rpx c-#1A66FF>
+              <text v-if="item.cardType === 1" px-12rpx py-7rpx c-#1A66FF pr left--6px>
                 {{ item?.useCount }}/{{ item?.countLimit }}
               </text>
-              <text v-else f12 px-12rpx py-7rpx c-#1A66FF>
+              <text v-else px-12rpx py-7rpx c-#1A66FF pr left--6px>
                 ¥{{ item?.amount }}/¥{{ item?.totalAmount }}
               </text>
             </view>
