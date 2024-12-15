@@ -21,6 +21,8 @@ const recordReqParams = reactive({
 })
 
 const detail = ref<CusCardDetail>({} as CusCardDetail)
+const countUse = ref()
+const countSurplus = ref()
 const records = ref<CusRecordList[]>([])
 const cardName = ref('')
 const timeArr = ref<any[]>([Date.now(), dayjs().add(1, 'year').valueOf()])
@@ -52,6 +54,8 @@ function getDetail() {
 function getRecords() {
   request.get<CusRecord>('/business/store-customer-card/record', recordReqParams).then((res) => {
     records.value = res.data.list
+    countUse.value = res.data.use
+    countSurplus.value = res.data.surplus
   })
 }
 
@@ -61,8 +65,10 @@ function toEditName() {
 function toEditExpire() {
   visEditExpire.value = true
 }
-function toEditEquity() {
+async function toEditEquity() {
   visEditEquity.value = true
+  const res = await request.get<CardEquity[]>(`/business/store-customer-card/info/${id.value}`)
+  cardEquity.value = res.data
 }
 async function confirmName() {
   await request.put('/business/store-customer-card/card-name', {
@@ -210,7 +216,33 @@ function toProdServs() { // 商品和服务列表页面
     </view>
   </view>
   <view v-else>
-    records
+    <view bg-white fs-15px h56px flex flex-ac flex-rd m15px c-#3A3A3A style="box-shadow: 0px 4px 10px 0px rgba(90, 90, 90, 0.1);">
+      <view>
+        <text v-if="detail?.cardType !== 2">
+          使用次数
+        </text>
+        <text v-else>
+          使用金额
+        </text>
+        <text c-#1A66FF>
+          {{ detail?.cardType === 2 ? '￥' : '' }}{{ countUse }}
+        </text>
+      </view>
+      <view>
+        <text v-if="detail?.cardType === 1">
+          剩余次数
+        </text>
+        <text v-if="detail?.cardType === 2">
+          抵扣金额
+        </text>
+        <text v-if="detail?.cardType === 3">
+          余额
+        </text>
+        <text c-#1A66FF>
+          {{ detail?.cardType !== 1 ? '￥' : '' }}{{ countSurplus }}
+        </text>
+      </view>
+    </view>
   </view>
 
   <wd-popup
@@ -285,7 +317,7 @@ function toProdServs() { // 商品和服务列表页面
 
   <wd-popup
     v-model="visEditEquity"
-    custom-style="border-radius:32rpx;height:370px"
+    custom-style="border-radius:32rpx;min-height:370px"
     closable position="bottom"
   >
     <view tc mt30px fb>
@@ -305,7 +337,7 @@ function toProdServs() { // 商品和服务列表页面
             <view>
               <text>{{ item.goodsName }}</text>
               <text theme-red pl5px>
-                <!-- ¥{{ item.price2 }} -->
+                ¥{{ item.goodsPrice }}
               </text>
             </view>
 

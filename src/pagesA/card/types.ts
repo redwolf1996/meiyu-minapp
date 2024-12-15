@@ -318,7 +318,7 @@ export interface CusCardDetail {
    */
   cardSecondType: number
   /**
-   * 卡类别
+   * 卡类别 1->次卡，2->充值卡，3->折扣卡
    */
   cardType: number
   cardTypeDesc: string
@@ -410,12 +410,12 @@ export interface CusRecord {
   /**
    * 次卡剩余次数，折扣卡抵扣金额，储值卡剩余金额
    */
-  surplus: string
+  surplus: string | number
   total: number
   /**
    * 次卡折扣卡使用次数，储值卡使用金额
    */
-  use: string
+  use: string | number
 }
 
 export interface CusRecordList {
@@ -485,6 +485,10 @@ export interface CardEquity {
    * 商品类型
    */
   goodsType: number
+  /**
+   * 商品价格
+   */
+  goodsPrice: string | number
   /**
    * 详情得到的id
    */

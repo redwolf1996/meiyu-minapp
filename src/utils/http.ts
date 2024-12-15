@@ -1,6 +1,7 @@
 const baseUrl = import.meta.env.VITE_BASE_URL
 const userStore = useUserStore()
 
+const accountInfo = uni.getAccountInfoSync()
 const httpInterceptor = {
   invoke(options: UniApp.RequestOptions) {
     const urls = [
@@ -13,7 +14,9 @@ const httpInterceptor = {
     options.timeout = 30000
     options.header = {
       ...options?.header,
-      client: 'minapp',
+      'client': 'minapp',
+      'envVersion': accountInfo.miniProgram.envVersion,
+      'B-Store-Id': storeId.value,
     }
     const token = userStore.userInfo?.token
     if (token) {
