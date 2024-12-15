@@ -26,7 +26,7 @@ function handleSubmit() {
     .then(async ({ valid }) => {
       if (valid) {
         const url = role.value === 'business' ? '/business/info' : '/business/staff-info'
-        const res = await request.post<{ token: string, isRegister: number }>(url, form)
+        const res = await request.post<{ token: string, isRegister: 0 | 1 }>(url, form)
         const { token, isRegister } = res.data
         useUserStore().setUserInfo({ token, isRegister })
         uni.redirectTo({ url: '/pagesA/tabs/tab-business-dashboard' })

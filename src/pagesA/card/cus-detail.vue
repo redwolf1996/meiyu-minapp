@@ -90,6 +90,10 @@ function toSee() {
     url: `/pagesA/order/detail?id=${detail.value.orderId}`,
   })
 }
+
+function toProdServs() { // 商品和服务列表页面
+  uni.navigateTo({ url: '/pagesA/prod-servs' })
+}
 </script>
 
 <template>
@@ -272,6 +276,56 @@ function toSee() {
 
     <view mx-40rpx mt-20rpx color-white @click="confirmEquity">
       <wd-button size="large" custom-class="theme-bg" block plain>
+        <view flex flex-cc>
+          <text>确定</text>
+        </view>
+      </wd-button>
+    </view>
+  </wd-popup>
+
+  <wd-popup
+    v-model="visEditEquity"
+    custom-style="border-radius:32rpx;height:370px"
+    closable position="bottom"
+  >
+    <view tc mt30px fb>
+      修改权益
+    </view>
+    <view h-30px />
+
+    <view mx-40rpx>
+      <wd-cell-group :border="false">
+        <wd-cell title="购卡权益" is-link @click="toProdServs()">
+          <text c-#B6BDBD>
+            选择商品
+          </text>
+        </wd-cell>
+        <template v-if="cardEquity?.length">
+          <view v-for="(item, index) in cardEquity" :key="`ck-${index}`" flex flex-bt flex-ac f13 h-96rpx px20px>
+            <view>
+              <text>{{ item.goodsName }}</text>
+              <text theme-red pl5px>
+                <!-- ¥{{ item.price2 }} -->
+              </text>
+            </view>
+
+            <view flex flex-ac gap5px>
+              <template v-if="detail?.cardType === 1">
+                <wd-input-number v-model="item.equity" :step="1" :min="1" :precision="0" />
+                <text>次</text>
+              </template>
+              <template v-else>
+                <wd-input-number v-model="item.equity" :step="0.1" :min="1" :max="10" :precision="1" />
+                <text>折</text>
+              </template>
+            </view>
+          </view>
+        </template>
+      </wd-cell-group>
+    </view>
+
+    <view mx-40rpx mt-44px color-white @click="confirmEquity">
+      <wd-button size="large" block plain>
         <view flex flex-cc>
           <text>确定</text>
         </view>
