@@ -23,18 +23,23 @@ const reqParams = reactive({
 const paging = ref<ZPagingInstance<CusRecordList> | null>(null)
 const dataList = ref<CusRecordList[]>([])
 const total = ref(0)
+const countUse = ref()
+const countSurplus = ref()
 
 async function queryList(page: number, pageSize: number) {
   reqParams.pageNum = page
   reqParams.pageSize = pageSize
-  const res = await request.get<ListRes<CusRecordList>>('/business/store-customer-card', reqParams)
+  const res = await request.get<CusRecord>('/business/store-customer-card/record', reqParams)
   total.value = res.data.total
+  dataList.value = res.data.list
+  countUse.value = res.data.use
+  countSurplus.value = res.data.surplus
+
   paging.value.complete(res.data.list)
 }
 
 const detail = ref<CusCardDetail>({} as CusCardDetail)
-const countUse = ref()
-const countSurplus = ref()
+
 const cardName = ref('')
 const timeArr = ref<any[]>([Date.now(), dayjs().add(1, 'year').valueOf()])
 const showSTime = computed(() => dayjs(timeArr.value[0]).format('YYYY-MM-DD'))
@@ -63,11 +68,7 @@ function getDetail() {
 }
 
 function getRecords() {
-  request.get<CusRecord>('/business/store-customer-card/record', reqParams).then((res) => {
-    dataList.value = res.data.list
-    countUse.value = res.data.use
-    countSurplus.value = res.data.surplus
-  })
+  paging.value?.reload()
 }
 
 function toEditName() {
@@ -267,59 +268,21 @@ function toProdServs() { // 商品和服务列表页面
         </view>
       </view>
     </view>
-    <view v-else>
-      <view bg-white class="item">
-        <view px16px py10px>
-          <view flex flex-ac flex-bt fs-16px mb5px>
-            <text c-#343331>
-              产品名称
-            </text>
-            <text c-#F53F3F>
-              -1
-            </text>
-          </view>
-          <view fs-12px c-#9B9B9B>
-            2024.5.30 10:24
-          </view>
-          <view fs-12px c-#9B9B9B>
-            MY2024040910101000045
-          </view>
+    <view v-else px16px bg-white>
+      <view v-for="(item, index) in dataList" :key="index" class="item" py10px>
+        <view flex flex-ac flex-bt fs-16px mb5px>
+          <text c-#343331>
+            {{ item?.goodsName }}&nbsp;{{ item?.goodsCount ? `x${item?.goodsCount}` : '' }}
+          </text>
+          <text c-#F53F3F>
+            -{{ item?.cardReduceAmount || item?.orderItemAmount || 1 }}
+          </text>
         </view>
-      </view>
-      <view bg-white class="item">
-        <view px16px py10px>
-          <view flex flex-ac flex-bt fs-16px mb5px>
-            <text c-#343331>
-              产品名称
-            </text>
-            <text c-#F53F3F>
-              -1
-            </text>
-          </view>
-          <view fs-12px c-#9B9B9B>
-            2024.5.30 10:24
-          </view>
-          <view fs-12px c-#9B9B9B>
-            MY2024040910101000045
-          </view>
+        <view fs-12px c-#9B9B9B>
+          {{ item?.createTime }}
         </view>
-      </view>
-      <view bg-white class="item">
-        <view px16px py10px>
-          <view flex flex-ac flex-bt fs-16px mb5px>
-            <text c-#343331>
-              产品名称
-            </text>
-            <text c-#F53F3F>
-              -1
-            </text>
-          </view>
-          <view fs-12px c-#9B9B9B>
-            2024.5.30 10:24
-          </view>
-          <view fs-12px c-#9B9B9B>
-            MY2024040910101000045
-          </view>
+        <view fs-12px c-#9B9B9B>
+          {{ item?.orderNo }}
         </view>
       </view>
     </view>
