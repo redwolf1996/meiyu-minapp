@@ -40,8 +40,6 @@ function search() {
 }
 
 onShow(() => {
-  console.log(uni.getAppBaseInfo())
-
   search()
 })
 </script>

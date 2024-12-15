@@ -50,11 +50,10 @@ async function renew() {
     package: res.data.packageVal,
     signType: res.data.signType,
     paySign: res.data.paySign,
-    success(res) {
-      console.log(res)
+    success() {
     },
     fail(res) {
-      console.log(res)
+      console.error(res)
     },
   })
 }

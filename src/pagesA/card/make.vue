@@ -63,10 +63,6 @@ watch(() => curSelectedCardToCash.value, () => {
   }
 })
 
-function handleConfirm({ value }) {
-  console.log(value)
-}
-
 function toSelCard() {
   if (!form.value.storeCustomerId)
     return toast.warning('请先选择客户')
@@ -100,7 +96,7 @@ function toPay() {
   <wd-toast />
 
   <wd-cell-group :border="true">
-    <wd-calendar v-model="orderTime" :z-index="12000" label="开单时间" type="datetime" @confirm="handleConfirm" />
+    <wd-calendar v-model="orderTime" :z-index="12000" label="开单时间" type="datetime" />
     <wd-cell title="客户" is-link @click="toSelCus()">
       <view>
         <text v-if="!cusName" c-#B6BDBD>

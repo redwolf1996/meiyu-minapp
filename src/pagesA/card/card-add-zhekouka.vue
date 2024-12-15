@@ -145,10 +145,6 @@ async function save() {
   await sleep(1000)
   uni.navigateBack()
 }
-
-function changeEquity(val) {
-  console.log(val)
-}
 </script>
 
 <template>
@@ -198,7 +194,7 @@ function changeEquity(val) {
           </view>
           <!-- 折扣卡 -->
           <view flex flex-ac gap5px>
-            <wd-input-number v-model="item.equity" :step="0.1" :min="1" :max="10" :precision="1" @change="changeEquity" />
+            <wd-input-number v-model="item.equity" :step="0.1" :min="1" :max="10" :precision="1" />
             <text>折</text>
           </view>
         </view>

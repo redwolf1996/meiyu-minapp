@@ -64,7 +64,7 @@ function confirmRefund() {
       uni.navigateTo({ url: `/pagesA/order/refund-detail?refundId=${refundId}` })
     })
     .catch((error) => {
-      console.log(error)
+      console.error(error)
     })
 }
 

@@ -75,7 +75,6 @@ function mergeProdsAndServs() {
 watch(() => curSelectedCardToCash.value, () => {
   form.value.billingGoods.forEach((item: any, index: number) => {
     if (curIndex.value === index) {
-      item.cardShowName = getCardShowName()
       item.customerCardId = curSelectedCardToCash.value?.customerCardId
       item.cardId = curSelectedCardToCash.value?.cardId
 
@@ -106,12 +105,6 @@ watch(() => checkedProds.value, () => {
 watch(() => checkedServs.value, () => {
   mergeProdsAndServs()
 })
-
-function getCardShowName() {
-  // const cardInfo = curSelectedCard.value
-  // // console.log(cardInfo)
-  // return 'xxx'
-}
 
 function saveStaff() {
   visibleStaff.value = false

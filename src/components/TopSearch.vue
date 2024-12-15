@@ -8,11 +8,6 @@ const props = withDefaults(defineProps<{
 const emit = defineEmits(['search'])
 const model: any = defineModel<any>()
 
-// function onChangeInput(e: HTMLInputElement) {
-//   console.log(e.value)
-//   model.value = e.value
-// }
-
 function onClickSearch() {
   emit('search')
 }
