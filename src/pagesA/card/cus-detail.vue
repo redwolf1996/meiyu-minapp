@@ -100,7 +100,11 @@ async function confirmExpire() {
   visEditExpire.value = false
 }
 async function confirmEquity() {
-
+  await request.put('/business/store-customer-card/info', { id: id.value, info: cardEquity.value })
+  getDetail()
+  getRecords()
+  uni.showToast({ title: '修改成功' })
+  visEditEquity.value = false
 }
 
 function toSee() {
@@ -119,6 +123,8 @@ function toProdServs() { // 商品和服务列表页面
     ref="paging"
     v-model="dataList"
     lower-threshold="100" auto-show-back-to-top :default-page-size="10"
+    :hide-empty-view="tab === 0"
+    :loading-more-enabled="tab !== 0"
     @query="queryList"
   >
     <template #top>
@@ -269,7 +275,7 @@ function toProdServs() { // 商品和服务列表页面
       </view>
     </view>
     <view v-else px16px bg-white>
-      <view v-for="(item, index) in dataList" :key="index" class="item" py10px>
+      <view v-for="(item, index) in dataList" :key="index" class="item2" py10px>
         <view flex flex-ac flex-bt fs-16px mb5px>
           <text c-#343331>
             {{ item?.goodsName }}&nbsp;{{ item?.goodsCount ? `x${item?.goodsCount}` : '' }}
@@ -392,7 +398,7 @@ function toProdServs() { // 商品和服务列表页面
 </template>
 
 <style lang='scss' scoped>
-.item:not(:last-child) {
+.item2:not(:last-child) {
   border-bottom: 1px solid #ebebf0;
 }
 .pop {
