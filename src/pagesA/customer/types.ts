@@ -184,3 +184,36 @@ export interface CustomerDetail {
    */
   wechatCode: string
 }
+
+export interface ListPoints {
+  /**
+   * 时间
+   */
+  createTime: string
+  customerId: number
+  id: number
+  /**
+   * 积分数
+   */
+  integration: number
+  notes: string
+  orderId: number
+  /**
+   * 订单类别
+   */
+  orderNo: string
+  /**
+   * 订单支付状态
+   */
+  orderPayStatus: number
+  orgId: number
+  /**
+   * 门店客户id
+   */
+  storeCustomerId: number
+  storeId: number
+  /**
+   * 类别，1得到，2扣除
+   */
+  type: number
+}

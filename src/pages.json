@@ -274,6 +274,13 @@
           }
         },
         {
+          "path": "customer/points",
+          "type": "page",
+          "style": {
+            "navigationBarTitleText": "积分账单"
+          }
+        },
+        {
           "path": "dashboard/cash-apply",
           "type": "page",
           "style": {

@@ -5,6 +5,7 @@ style:
 </route>
 
 <script lang="ts" setup>
+import qs from 'qs'
 import type { CustomerDetail } from './types'
 import dayjs from 'dayjs'
 
@@ -106,6 +107,17 @@ function toDel() {
 function toCusCardList(phone) {
   uni.navigateTo({ url: `/pagesA/card/cus-list?phone=${phone}` })
 }
+
+function toPoints() {
+  const params = {
+    id: detail.value?.id,
+    name: detail.value?.name,
+    points: detail.value?.integration,
+    avatar: detail.value?.avatar,
+  }
+  cusPointsParams.value = params
+  uni.navigateTo({ url: `/pagesA/customer/points` })
+}
 </script>
 
 <template>
@@ -177,7 +189,7 @@ function toCusCardList(phone) {
           {{ detail?.cardC ?? 0 }}
         </view>
       </view>
-      <view w-78px>
+      <view w-78px @click="toPoints()">
         <view c-818181 flex flex-ac>
           可用积分
           <wd-img

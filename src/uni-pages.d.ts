@@ -38,6 +38,7 @@ interface NavigateToOptions {
        "/pagesA/customer/add" |
        "/pagesA/customer/detail" |
        "/pagesA/customer/list" |
+       "/pagesA/customer/points" |
        "/pagesA/dashboard/cash-apply" |
        "/pagesA/dashboard/cashing-records" |
        "/pagesA/dashboard/income-detail" |

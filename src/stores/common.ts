@@ -38,3 +38,10 @@ export const curCardRechargeFormData = ref<MakeCardModel>(null)
 export const storeId = computed(() => {
   return useUserStore(pinia).userInfo?.lastStoreId || useUserStore(pinia).userInfo?.storeList?.[0]?.storeId || null
 })
+
+export const cusPointsParams = ref<{
+  id: number | string
+  name: number | string
+  avatar: string
+  points: number | string
+}>(null)
