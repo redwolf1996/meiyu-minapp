@@ -102,6 +102,10 @@ function toEdit() {
 function toDel() {
   deleteDialogRef.value.open()
 }
+
+function toCusCardList(phone) {
+  uni.navigateTo({ url: `/pagesA/card/cus-list?phone=${phone}` })
+}
 </script>
 
 <template>
@@ -116,7 +120,7 @@ function toDel() {
       />
       <view h-136rpx flex-1 flex flex-bt flex-y py8px>
         <view flex flex-ac flex-bt>
-          <view>
+          <view flex flex-ac>
             <text f18 pr10px>
               {{ detail?.name }}
             </text>
@@ -160,7 +164,7 @@ function toDel() {
           ￥{{ detail?.amount }}
         </view>
       </view>
-      <view w-78px>
+      <view w-78px @click="toCusCardList(detail.phone)">
         <view c-818181 flex flex-ac>
           会员卡
           <wd-img

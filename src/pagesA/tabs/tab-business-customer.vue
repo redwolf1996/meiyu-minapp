@@ -96,6 +96,10 @@ function confirmBirthday() { // 搜索当天生日和当月生日
   filter.value.close()
   paging.value?.reload()
 }
+
+onShow(() => {
+  paging.value?.reload()
+})
 </script>
 
 <template>

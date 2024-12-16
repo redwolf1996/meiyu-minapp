@@ -39,6 +39,12 @@ function search() {
   paging.value?.reload()
 }
 
+onLoad((option) => {
+  if (option?.phone) {
+    reqParams.keyword = option.phone
+  }
+})
+
 onShow(() => {
   search()
 })
