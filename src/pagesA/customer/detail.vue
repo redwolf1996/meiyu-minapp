@@ -5,9 +5,9 @@ style:
 </route>
 
 <script lang="ts" setup>
-import qs from 'qs'
 import type { CustomerDetail } from './types'
 import dayjs from 'dayjs'
+import { areaList } from '@vant/area-data'
 
 defineOptions({ inheritAttrs: false })
 const showCard = ref(false)
@@ -359,7 +359,7 @@ function toPoints() {
           </view>
           <view c-434343 flex flex-ac flex-bt mb16px f14>
             <view>地址：</view>
-            <view>{{ detail?.address }}</view>
+            <view>{{ areaList.province_list[detail?.province] }}{{ areaList.city_list[detail?.city] }}{{ areaList.county_list[detail?.county] }}</view>
           </view>
           <view c-434343 flex flex-ac flex-bt mb16px f14>
             <view>详细地址：</view>

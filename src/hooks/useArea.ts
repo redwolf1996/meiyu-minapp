@@ -11,7 +11,8 @@ export function useArea() {
     }),
   ])
 
-  function columnChange({ selectedItem, resolve, finish }) {
+  async function columnChange({ selectedItem, resolve, finish }) {
+    await sleep(1) // 模拟异步请求
     const areaData = findChildrenByCode(colPickerData, selectedItem.value)
     if (areaData && areaData.length) {
       resolve(

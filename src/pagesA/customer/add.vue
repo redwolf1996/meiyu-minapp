@@ -66,6 +66,7 @@ async function setFormInfo() {
   form.county = data.county
   form.address = data.address
   form.notes = data.notes
+  addressValue.value = [data.province, data.city, data.county]
 }
 
 async function save() {
@@ -177,7 +178,7 @@ function openCalendar() {
         placeholder="请输入"
         suffix-icon="arrow-right"
       />
-      <wd-col-picker v-model="addressValue" align-right label="地址" :columns="area" :column-change="columnChange" @confirm="handleConfirmAddress(form)" />
+      <wd-col-picker v-model="addressValue" auto-complete align-right label="地址" :columns="area" :column-change="columnChange" @confirm="handleConfirmAddress(form)" />
       <wd-input
         v-model="form.address"
         label="详细地址"
