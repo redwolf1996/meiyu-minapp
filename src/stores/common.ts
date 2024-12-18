@@ -7,7 +7,7 @@ import pinia from '@/stores/index'
 import { useUserStore } from '@/stores/modules/user'
 
 /** 当前选中的客户 */
-export const curCustomer = ref<CusList>(null)
+export const curCustomer = ref<Partial<CusList>>(null)
 
 /** 当前待支付的开单 */
 export const curBilling = ref<BillModel>(null)

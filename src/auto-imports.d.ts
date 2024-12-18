@@ -13,6 +13,7 @@ declare global {
   const CardTypeMap: typeof import('./utils/consts')['CardTypeMap']
   const CatType: typeof import('./stores/classify')['CatType']
   const CustomerSourceMap: typeof import('./utils/consts')['CustomerSourceMap']
+  const DEFAULT_AVATAR: typeof import('./utils/index')['DEFAULT_AVATAR']
   const EffectScope: typeof import('vue')['EffectScope']
   const GenderMap: typeof import('./utils/consts')['GenderMap']
   const GoodsTypeMap: typeof import('./utils/consts')['GoodsTypeMap']
@@ -408,6 +409,7 @@ declare module 'vue' {
     readonly CardTypeMap: UnwrapRef<typeof import('./utils/consts')['CardTypeMap']>
     readonly CatType: UnwrapRef<typeof import('./stores/classify')['CatType']>
     readonly CustomerSourceMap: UnwrapRef<typeof import('./utils/consts')['CustomerSourceMap']>
+    readonly DEFAULT_AVATAR: UnwrapRef<typeof import('./utils/index')['DEFAULT_AVATAR']>
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
     readonly GenderMap: UnwrapRef<typeof import('./utils/consts')['GenderMap']>
     readonly GoodsTypeMap: UnwrapRef<typeof import('./utils/consts')['GoodsTypeMap']>

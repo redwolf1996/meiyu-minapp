@@ -179,7 +179,7 @@ function clickTab({ index }) {
   console.log(index)
 }
 
-// 开卡/充值
+// 去开卡/充值
 function toCardRecharge(type: 1 | 2 | 3 | 4 | 5 | 6) {
   curCardRechargeType.value = type
   curSelectedCard.value = null
@@ -187,10 +187,12 @@ function toCardRecharge(type: 1 | 2 | 3 | 4 | 5 | 6) {
   uni.navigateTo({ url: `/pagesA/card/make?customerId=${id.value}` })
 }
 
+// 去开单(商品、服务结算)
 function toBilling() {
   uni.navigateTo({ url: `/pagesA/billing/index?customerId=${id.value}` })
 }
 
+// 去预约
 function toBooking() {
   uni.navigateTo({ url: `/pagesA/book/add?customerId=${id.value}` })
 }

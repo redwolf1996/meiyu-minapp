@@ -51,7 +51,7 @@ async function queryList(page: number, pageSize: number) {
             :height="64"
             :round="true"
             mode="aspectFill"
-            :src="cusPointsParams.avatar"
+            :src="cusPointsParams.avatar || DEFAULT_AVATAR"
           />
           <view h48px flex flex-y flex-bt>
             <view fs-18px>

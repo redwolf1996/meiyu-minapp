@@ -9,6 +9,7 @@ import { PayModeEnum } from '@/utils/consts'
 import type { StaffModel } from '../api'
 import type { MakeCardModel } from './types'
 import dayjs from 'dayjs'
+import type { CustomerDetail } from '../customer/types'
 
 const toast = useToast()
 const visibleStaff = ref(false)
@@ -29,6 +30,17 @@ const form = ref<MakeCardModel>({
 })
 const isPickerOpen = ref(false)
 const cusName = computed(() => curCustomer.value?.name ?? '')
+const fromCustomer = ref(false)
+
+onLoad(async (option) => {
+  if (option?.customerId) {
+    curCustomer.value.storeCustomerId = option.customerId
+    fromCustomer.value = true
+    const res = await request.get<CustomerDetail>(`/business/store-customer/${option.customerId}`)
+    curCustomer.value.name = res.data.name
+    console.log(curCustomer.value)
+  }
+})
 
 async function setStaffList() {
   const res = await request.get<StaffModel>('/business/staff', { storeId: storeId.value })

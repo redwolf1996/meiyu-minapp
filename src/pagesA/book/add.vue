@@ -8,6 +8,7 @@ style:
 import { bookInfo } from '@/stores/book-info'
 import type { ListStaff } from '../staff/types'
 import type { BookForm, Service } from './types'
+import type { CustomerDetail } from '../customer/types'
 
 const form = ref()
 const columns = ref<SelItem[]>([
@@ -36,8 +37,16 @@ const model = reactive<BookForm>({
 const artName = ref('')
 const listStaff = ref<ListStaff[]>([])
 const visibleStaff = ref(false)
+const fromCustomer = ref(false)
 
-onLoad(() => {
+onLoad(async (option) => {
+  if (option?.customerId) {
+    model.storeCustomerId = option.customerId
+    fromCustomer.value = true
+    const res = await request.get<CustomerDetail>(`/business/store-customer/${option.customerId}`)
+    model.storeCustomerName = res.data.name
+    model.storeCustomerPhone = res.data.phone
+  }
   getStaff()
 })
 
@@ -171,6 +180,7 @@ async function save() {
     <wd-cell-group :border="true">
       <wd-input
         v-model="model.storeCustomerPhone"
+        :disabled="fromCustomer"
         type="number"
         :maxlength="11"
         label="联系电话"
@@ -180,6 +190,7 @@ async function save() {
       />
       <wd-input
         v-model="model.storeCustomerName"
+        :disabled="fromCustomer"
         label="联系人"
         placeholder="请输入"
         suffix-icon="arrow-right"

@@ -5,6 +5,8 @@ import { max, min } from 'lodash-es'
 
 export const IMG_BASE = import.meta.env.VITE_APP_IMG_BASE
 
+export const DEFAULT_AVATAR = `${IMG_BASE}/avatar-default.png`
+
 export function getMenuButtonInfo() {
   // 获取距上
   const barTop = uni.getSystemInfoSync().statusBarHeight
