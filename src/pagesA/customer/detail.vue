@@ -11,18 +11,6 @@ import { areaList } from '@vant/area-data'
 
 defineOptions({ inheritAttrs: false })
 const showCard = ref(false)
-const cardValue = ref(1)
-const value = ref(0)
-const sources: any = [
-  { label: '充值', value: 1, isActive: false },
-]
-const sources3: any = [
-  { label: '折扣卡', value: 1, isActive: true },
-  { label: '充值卡', value: 2, isActive: false },
-  { label: '通卡', value: 3, isActive: true },
-  { label: '有限次卡', value: 4, isActive: false },
-  { label: '不限次卡', value: 5, isActive: true },
-]
 const tab = ref<number>(2)
 const tabs = [{
   label: '订单记录',
@@ -37,9 +25,13 @@ const tabs = [{
 const detail = ref<CustomerDetail>(null)
 const id = ref<number | null>(null)
 const deleteDialogRef = ref()
-
+const scrollTop = ref(0)
 const orders = ref([])
 const bookings = ref([])
+const topH = ref(0)
+
+const instance = getCurrentInstance()
+const query = uni.createSelectorQuery().in(instance.proxy)
 
 onLoad((options) => {
   id.value = +options?.id
@@ -49,6 +41,16 @@ onShow(() => {
   getInfo(id.value)
   getOrders()
   getBookings()
+})
+
+onMounted(async () => {
+  await nextTick()
+  query
+    .select('#top')
+    .boundingClientRect((data: any) => {
+      topH.value = data.height
+    })
+    .exec()
 })
 
 async function getOrders() {
@@ -118,10 +120,32 @@ function toPoints() {
   cusPointsParams.value = params
   uni.navigateTo({ url: `/pagesA/customer/points` })
 }
+
+function clickTab({ index }) {
+  // 通过1px的差距实现顺利渲染 切换tab的时候滚动到顶部
+  scrollTop.value = scrollTop.value ? 0 : 1
+  console.log(index)
+}
+
+// 开卡/充值
+function toCardRecharge(type: 1 | 2 | 3 | 4 | 5 | 6) {
+  curCardRechargeType.value = type
+  curSelectedCard.value = null
+  curCustomer.value = null
+  uni.navigateTo({ url: `/pagesA/card/make?customerId=${id.value}` })
+}
+
+function toBilling() {
+  uni.navigateTo({ url: `/pagesA/billing/index?customerId=${id.value}` })
+}
+
+function toBooking() {
+  uni.navigateTo({ url: `/pagesA/book/add?customerId=${id.value}` })
+}
 </script>
 
 <template>
-  <view ps z-100 :class="isH5 ? 'top-44px' : 'top-0'" style="border-bottom: 1px solid #eee;">
+  <view id="top" ps z-100 :class="isH5 ? 'top-44px' : 'top-0'" style="border-bottom: 1px solid #eee;">
     <view flex flex-ac p-40rpx gap-40rpx bg-white>
       <wd-img
         :round="true"
@@ -204,7 +228,7 @@ function toPoints() {
       </view>
     </view>
     <!-- <view class="bs" /> -->
-    <wd-tabs v-model="tab">
+    <wd-tabs v-model="tab" @change="clickTab">
       <block v-for="(item, index) in tabs" :key="`tb-${index}`">
         <wd-tab :title="item.label" />
       </block>
@@ -212,7 +236,7 @@ function toPoints() {
   </view>
 
   <!-- 内容区 -->
-  <view>
+  <scroll-view id="content" :scroll-top="scrollTop" scroll-with-animation scroll-y :style="{ height: `calc(100vh - ${topH + 82}px)` }">
     <!-- 订单记录 -->
     <template v-if="tab === 0">
       <view bg-white grid grid-cols-3 tc px-30px py-16px>
@@ -376,10 +400,11 @@ function toPoints() {
         </view>
       </view>
     </template>
-  </view>
-  <view h-100px />
 
-  <wd-action-sheet v-model="showCard" title="选择开卡/充值类型" @close="showCard = false">
+    <view h-20px />
+  </scroll-view>
+
+  <!-- <wd-action-sheet v-model="showCard" title="选择开卡/充值类型" @close="showCard = false">
     <view p-40rpx>
       <view mb20px>
         开卡
@@ -394,18 +419,61 @@ function toPoints() {
         确定
       </button>
     </view>
-  </wd-action-sheet>
+  </wd-action-sheet> -->
 
-  <view pf bottom-0 wp100 style="border-top: 1px solid #eee">
+  <wd-popup v-model="showCard" position="bottom" closable :safe-area-inset-bottom="true" custom-style="border-radius:32rpx;">
+    <view style="height: 360px">
+      <view fb tc c-#232220 mt42px>
+        选择开卡/充值类型
+      </view>
+      <view class="h20px" />
+      <view px20px py12px>
+        <view mb30px>
+          <view fs-16px>
+            开卡
+          </view>
+          <view fs-14px flex flex-wrap gap20px mt20px>
+            <view class="card-item" @click="toCardRecharge(1)">
+              折扣卡
+            </view>
+            <view class="card-item" @click="toCardRecharge(2)">
+              充值卡
+            </view>
+            <view class="card-item" @click="toCardRecharge(3)">
+              通卡
+            </view>
+            <view class="card-item" @click="toCardRecharge(4)">
+              有限次卡
+            </view>
+            <view class="card-item" @click="toCardRecharge(5)">
+              不限次卡
+            </view>
+          </view>
+        </view>
+        <view>
+          <view fs-16px>
+            充值
+          </view>
+          <view fs-14px flex flex-wrap gap20px mt20px>
+            <view class="card-item" @click="toCardRecharge(6)">
+              充值
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </wd-popup>
+
+  <view pf bottom-0 wp100 h82px style="border-top: 1px solid #eee">
     <!-- <view h32rpx bg-F5F5FA /> -->
-    <view p50rpx grid grid-cols-3 grid-gap-10px bg-white>
+    <view p25px grid grid-cols-3 grid-gap-10px bg-white>
       <view class="my-btn theme-out rd0" @click="showCard = true">
         开卡充值
       </view>
-      <view class="my-btn theme-out rd0">
+      <view class="my-btn theme-out rd0" @click="toBilling">
         开单
       </view>
-      <view class="my-btn theme rd0">
+      <view class="my-btn theme rd0" @click="toBooking">
         预约
       </view>
     </view>
@@ -431,6 +499,17 @@ function toPoints() {
 </style>
 
 <style lang='scss' scoped>
+.card-item {
+  height: 32px;
+  line-height: 32px;
+  text-align: center;
+  color: #303030;
+  background-color: #f6f6fb;
+  padding: 6px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .bs {
   height: 1px;
   box-shadow:
