@@ -224,7 +224,7 @@ onMounted(async () => {
         :width="64"
         :height="64"
         mode="aspectFill"
-        :src="`${detail?.avatar ? detail?.avatar : `${IMG_BASE}/cat.png`}`"
+        :src="detail?.avatar || DEFAULT_AVATAR"
       />
       <view h-136rpx flex-1 flex flex-bt flex-y py8px>
         <view flex flex-ac flex-bt>
