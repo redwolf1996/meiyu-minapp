@@ -7,7 +7,7 @@ style:
 import dayjs from 'dayjs'
 import type { ListPoints } from './types'
 
-const timeArr = ref<any[]>([Date.now(), dayjs().add(1, 'year').valueOf()])
+const timeArr = ref<any[]>([dayjs().subtract(1, 'year').valueOf(), Date.now()])
 const showSTime = computed(() => dayjs(timeArr.value[0]).format('YYYY-MM-DD'))
 const showETime = computed(() => dayjs(timeArr.value[1]).format('YYYY-MM-DD'))
 
@@ -15,6 +15,8 @@ const reqParams = reactive({
   storeCustomerId: computed(() => cusPointsParams.value?.id),
   pageNum: 1,
   pageSize: 10,
+  sDate: computed(() => dayjs(timeArr.value[0]).format('YYYY-MM-DD')),
+  eDate: computed(() => dayjs(timeArr.value[1]).format('YYYY-MM-DD')),
 })
 
 const paging = ref<ZPagingInstance<ListPoints> | null>(null)
@@ -82,7 +84,7 @@ async function queryList(page: number, pageSize: number) {
             {{ item?.type === 1 ? '获得' : '消耗' }}积分
           </text>
           <text c-#F53F3F>
-            {{ item?.type === 1 ? '+' : '-' }}&nbsp;{{ item?.integration }}
+            {{ item?.type === 1 ? '+' : '-' }}{{ item?.integration }}
           </text>
         </view>
         <view fs-12px c-#9B9B9B>
