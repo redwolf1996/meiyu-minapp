@@ -6,6 +6,8 @@ style:
 
 <script lang="ts" setup>
 import type { CustomerDetail } from './types'
+import type { List as ListOrder } from '@/pagesA/order/types'
+import type { BookListAll, BookListAll as ListBook } from '@/pagesA/tabs/types'
 import dayjs from 'dayjs'
 import { areaList } from '@vant/area-data'
 
@@ -22,55 +24,105 @@ const tabs = [{
   label: '会员档案',
   value: 2,
 }]
+const servMap = {
+  1: 'to-service',
+  2: 'in-service',
+  3: 'end-service',
+  4: 'cancel-service',
+}
 const detail = ref<CustomerDetail>(null)
 const id = ref<number | null>(null)
 const deleteDialogRef = ref()
+const refDel = ref()
+const refCancel = ref()
 const scrollTop = ref(0)
-const orders = ref([])
-const bookings = ref([])
 const topH = ref(0)
+const curItem = ref<BookListAll>({} as BookListAll)
 
 const instance = getCurrentInstance()
 const query = uni.createSelectorQuery().in(instance.proxy)
 
-onLoad((options) => {
-  id.value = +options?.id
+const reqParams1 = reactive({
+  storeId: storeId.value,
+  pageNum: 1,
+  pageSize: 10,
+  storeCustomerId: computed(() => id.value),
 })
-
-onShow(() => {
-  getInfo(id.value)
-  getOrders()
-  getBookings()
+const reqParams2 = reactive({
+  storeId: storeId.value,
+  pageNum: 1,
+  pageSize: 10,
+  storeCustomerId: computed(() => id.value),
 })
+const paging1 = ref<ZPagingInstance<ListOrder> | null>(null)
+const dataList1 = ref<ListOrder[]>([])
 
-onMounted(async () => {
-  await nextTick()
-  query
-    .select('#top')
-    .boundingClientRect((data: any) => {
-      topH.value = data.height
-    })
-    .exec()
-})
+const paging2 = ref<ZPagingInstance<ListBook> | null>(null)
+const dataList2 = ref<ListBook[]>([])
 
-async function getOrders() {
-  const params = {
-    storeCustomerId: id.value,
-    pageNum: 1,
-    pageSize: 10000,
-  }
-  const res = await request.get<any>(`/business/store-customer/order`, params)
-  orders.value = res.data.list
+async function queryList1(page: number, pageSize: number) {
+  reqParams1.pageNum = page
+  reqParams1.pageSize = pageSize
+  const res = await request.get<ListRes<ListOrder>>('/business/order', reqParams1)
+  paging1.value.complete(res.data.list)
 }
 
-async function getBookings() {
-  const params = {
-    storeCustomerId: id.value,
-    pageNum: 1,
-    pageSize: 10000,
-  }
-  const res = await request.get<any>(`/business/store-customer/booking`, params)
-  bookings.value = res.data.list
+async function queryList2(page: number, pageSize: number) {
+  reqParams1.pageNum = page
+  reqParams1.pageSize = pageSize
+  const res = await request.get<ListRes<ListBook>>('/business/booking', reqParams2)
+  paging2.value.complete(res.data.list)
+}
+
+function toOrderDetail(id) {
+  uni.navigateTo({
+    url: `/pagesA/order/detail?id=${id}`,
+  })
+}
+
+function toBookDetail(item: ListBook) {
+  uni.navigateTo({
+    url: `/pagesA/book/detail?id=${item.bookingId}`,
+  })
+}
+
+function toDelBook(item: BookListAll) {
+  curItem.value = item
+  refDel.value.open()
+}
+async function doDel() {
+  await request.delete(`/business/booking/${curItem.value.bookingId}`)
+  refDel.value.close()
+  paging2.value?.reload()
+}
+
+function toCancel(item: BookListAll) {
+  curItem.value = item
+  refCancel.value.open()
+}
+async function doCancel() {
+  await request.put(`/business/booking/status`, {
+    id: curItem.value.bookingId,
+    status: 4,
+  })
+  refCancel.value.close()
+  paging2.value?.reload()
+}
+async function doComplete(item: BookListAll) {
+  await request.put(`/business/booking/status`, {
+    id: item.bookingId,
+    status: 3,
+  })
+  uni.showToast({ title: '已完成该笔订单' })
+  paging2.value?.reload()
+}
+async function doSign(item: BookListAll) {
+  await request.put(`/business/booking/status`, {
+    id: item.bookingId,
+    status: 2,
+  })
+  uni.showToast({ title: '签到成功' })
+  paging2.value?.reload()
 }
 
 async function getInfo(storeCustomerId: number) {
@@ -142,6 +194,24 @@ function toBilling() {
 function toBooking() {
   uni.navigateTo({ url: `/pagesA/book/add?customerId=${id.value}` })
 }
+
+onLoad((options) => {
+  id.value = +options?.id
+})
+
+onShow(() => {
+  getInfo(id.value)
+})
+
+onMounted(async () => {
+  await nextTick()
+  query
+    .select('#top')
+    .boundingClientRect((data: any) => {
+      topH.value = data.height
+    })
+    .exec()
+})
 </script>
 
 <template>
@@ -239,103 +309,196 @@ function toBooking() {
   <scroll-view id="content" :scroll-top="scrollTop" scroll-with-animation scroll-y :style="{ height: `calc(100vh - ${topH + 82}px)` }">
     <!-- 订单记录 -->
     <template v-if="tab === 0">
-      <view bg-white grid grid-cols-3 tc px-30px py-16px>
-        <view>
-          <view f14 mb10rpx>
-            ¥{{ detail?.historyExpend ?? 0 }}
-          </view>
-          <view f13 c-818181>
-            累计消费
-          </view>
-        </view>
-        <view>
-          <view f14 mb10rpx>
-            {{ detail?.expendC ?? 0 }}
-          </view>
-          <view f13 c-818181>
-            消费次数
-          </view>
-        </view>
-        <view>
-          <view f14 mb10rpx>
-            {{ detail?.lastPayTime ? dayjs(detail?.lastPayTime).format('YYYY-MM-DD') : '--' }}
-          </view>
-          <view f13 c-818181>
-            上次消费
-          </view>
-        </view>
-      </view>
-      <view p32rpx>
-        <view px-16px py-20px bg-white rd-8px mb-12px>
-          <view flex flex-ac flex-bt>
-            <text>2024-04-20 17:34:20</text>
-            <text class="my-status-tag end-service">
-              已完成
-            </text>
-          </view>
-          <view flex flex-ac mt20px gap-8px pb-10px>
-            <wd-img
-              :width="40"
-              :height="40"
-              radius="8px"
-              :src="`${IMG_BASE}/cat.png`"
-            />
-            <view flex-1 flex flex-y flex-bt h-42px>
-              <view f14 flex flex-bt>
-                <view>面部清洁补水</view>
-                <view>￥98</view>
+      <z-paging
+        ref="paging1"
+        v-model="dataList1"
+        :fixed="false"
+        lower-threshold="100" auto-show-back-to-top :default-page-size="10"
+        @query="queryList1"
+      >
+        <template #top>
+          <view bg-white grid grid-cols-3 tc px-30px py-16px>
+            <view>
+              <view f14 mb10rpx>
+                ¥{{ detail?.historyExpend ?? 0 }}
               </view>
-              <view f12 c-717171>
-                基础版 x1
+              <view f13 c-818181>
+                累计消费
+              </view>
+            </view>
+            <view>
+              <view f14 mb10rpx>
+                {{ detail?.expendC ?? 0 }}
+              </view>
+              <view f13 c-818181>
+                消费次数
+              </view>
+            </view>
+            <view>
+              <view f14 mb10rpx>
+                {{ detail?.lastPayTime ? dayjs(detail?.lastPayTime).format('YYYY-MM-DD') : '--' }}
+              </view>
+              <view f13 c-818181>
+                上次消费
               </view>
             </view>
           </view>
-          <view h-1px bg-EBEBF0 />
-          <view flex flex-ac flex-bt pt-12px>
-            <view>MY2024040910101000045</view>
-            <view c-FF4070>
-              实付：￥98
+        </template>
+
+        <template #bottom>
+          <view class="h20px" />
+        </template>
+
+        <view p-32rpx flex flex-y gap16px>
+          <view v-for="(item, index) in dataList1" :key="item.id" px16px py20px bg-white rd-8px @click="toOrderDetail(item.id)">
+            <view flex flex-ac flex-bt>
+              <view f14>
+                {{ item.createTime }}
+              </view>
+              <view v-if="item.payStatus === 1" class="my-status-tag to-service">
+                待支付
+              </view>
+              <view v-if="item.payStatus === 2" class="my-status-tag end-service">
+                已完成
+              </view>
+              <view v-if="item.payStatus === 4" class="my-status-tag end-service">
+                已完成(退款成功)
+              </view>
+              <view v-if="item.payStatus === 3" class="my-status-tag cancel-service">
+                已取消
+              </view>
+            </view>
+            <view mt20px flex flex-y gap-12px>
+              <view v-for="(item2, index2) in item.orderItem" :key="`k-${index}-${index2}`" flex flex-ac flex-bt gap-8px>
+                <wd-img
+                  :width="40"
+                  :height="40"
+                  :radius="8"
+                  mode="aspectFill"
+                  :src="item2.goodsCoverImg"
+                />
+                <view h40px flex flex-y flex-bt flex-1>
+                  <view c-28282B f14 flex-bt flex flex-ac>
+                    <view>{{ item2.goodsName }}</view>
+                    <view>￥{{ item2.goodsPrice }}</view>
+                  </view>
+                  <view c-717171 f12>
+                    x{{ item2.goodsCount }}
+                  </view>
+                </view>
+              </view>
+            </view>
+            <view h1px mt10px bg-EBEBF0 />
+            <view mt12px flex flex-bt flex-ac>
+              <view f12>
+                {{ item.orderNo }}
+              </view>
+              <view c-FF4070 f16>
+                合计收款：¥{{ item.amount }}
+              </view>
             </view>
           </view>
         </view>
-        <view px-16px py-20px bg-white rd-8px mb-12px>
-          <view flex flex-ac flex-bt>
-            <text>2024-04-20 17:34:20</text>
-            <text class="my-status-tag end-service">
-              已完成
-            </text>
-          </view>
-          <view flex flex-ac mt20px gap-8px pb-10px>
-            <wd-img
-              :width="40"
-              :height="40"
-              radius="8px"
-              :src="`${IMG_BASE}/cat.png`"
-            />
-            <view flex-1 flex flex-y flex-bt h-42px>
-              <view f14 flex flex-bt>
-                <view>面部清洁补水</view>
-                <view>￥98</view>
-              </view>
-              <view f12 c-717171>
-                基础版 x1
-              </view>
-            </view>
-          </view>
-          <view h-1px bg-EBEBF0 />
-          <view flex flex-ac flex-bt pt-12px>
-            <view>MY2024040910101000045</view>
-            <view c-FF4070>
-              实付：￥98
-            </view>
-          </view>
-        </view>
-      </view>
+      </z-paging>
     </template>
+
     <!-- 预约记录 -->
     <template v-if="tab === 1">
-      <BookList :showTabs="false" :listData="bookings" />
+      <z-paging
+        ref="paging2"
+        v-model="dataList2"
+        :fixed="false"
+        lower-threshold="100" auto-show-back-to-top :default-page-size="10"
+        @query="queryList2"
+      >
+        <template #bottom>
+          <view class="h20px" />
+        </template>
+
+        <view px-50rpx py-32rpx>
+          <view v-for="(item, index) in dataList2" :key="`sxs-${index}`" px-48rpx py-40rpx bg-white rd-10px mb-32rpx>
+            <view @click="toBookDetail(item)">
+              <view flex flex-ac flex-bt>
+                <view flex flex-y gap-10px>
+                  <view c-404143 f14 lh-14px>
+                    {{ item?.startTime ? fd(item?.startTime) : '--' }}&nbsp;{{ item?.startTimeStr }}
+                  </view>
+                  <view f12 flex tc flex-ac gap-10rpx f10>
+                    <view fb>
+                      {{ item?.storeCustomerName }}
+                    </view>
+                    <view w-12rpx h-12rpx round style="background-color: #91919F;" />
+                    <view color-white tc px-8rpx py-4rpx lh-24rpx bg-FE502E>
+                      {{ item?.storeServiceTypeDesc }}
+                    </view>
+                  </view>
+                </view>
+                <view class="my-status-tag" :class="[servMap[item?.bookingStatus]]">
+                  {{ item?.bookingStatusDesc }}
+                </view>
+              </view>
+              <view h-32rpx />
+              <view>
+                <template v-if="item?.serviceList?.length">
+                  <view v-for="(itm, idx) in item.serviceList" :key="`sd22-${index}-${idx}`" flex gap-15px flex-ac mb-20rpx>
+                    <wd-img
+                      :width="44"
+                      :height="44"
+                      mode="aspectFill"
+                      :src="itm?.serviceCoverImg"
+                    />
+                    <view flex-1 flex flex-y gap-20rpx>
+                      <view flex flex-bt>
+                        <text c-0D0D26 f14 fb>
+                          {{ itm?.serviceName }}
+                        </text>
+                        <text c-3A3A3A f14>
+                          x1
+                        </text>
+                      </view>
+                      <view c-161719 fs-20>
+                        {{ itm?.duration ?? '--' }}分钟
+                      </view>
+                    </view>
+                  </view>
+                </template>
+              </view>
+              <view flex flex-bt>
+                <view />
+                <view flex flex-ac gap-5px font-size-20rpx>
+                  <wd-img
+                    :width="20"
+                    :height="20"
+                    :src="`${IMG_BASE}/icon-people.png`"
+                  />
+                  <view fb>
+                    {{ item?.artisanName }}
+                  </view>
+                  <view w-10rpx h-10rpx round ma style="background-color: #000;" />
+                  <view> {{ item?.artisanPhone }}</view>
+                </view>
+              </view>
+            </view>
+
+            <view flex flex-xr mt-34rpx gap-14px>
+              <button v-if="item?.bookingStatus === 4" class="my-btn delete" @click="toDelBook(item)">
+                删除
+              </button>
+              <button v-if="item?.bookingStatus === 1" class="my-btn cancel" @click="toCancel(item)">
+                取消
+              </button>
+              <button v-if="item?.bookingStatus === 2" class="my-btn complete" @click="doComplete(item)">
+                完成
+              </button>
+              <button v-if="item?.bookingStatus === 1" class="my-btn complete" @click="doSign(item)">
+                签到
+              </button>
+            </view>
+          </view>
+        </view>
+      </z-paging>
     </template>
+
     <!-- 会员档案 -->
     <template v-if="tab === 2">
       <view p16px>
@@ -400,26 +563,7 @@ function toBooking() {
         </view>
       </view>
     </template>
-
-    <view h-20px />
   </scroll-view>
-
-  <!-- <wd-action-sheet v-model="showCard" title="选择开卡/充值类型" @close="showCard = false">
-    <view p-40rpx>
-      <view mb20px>
-        开卡
-      </view>
-      <GridTagSelect v-model="cardValue" :sources="sources3" :columns="3" />
-      <view class="h20px" />
-      <view mb20px>
-        充值
-      </view>
-      <GridTagSelect v-model="value" :sources="sources" :columns="3" />
-      <button class="my-btn theme" wp100 mt-30px>
-        确定
-      </button>
-    </view>
-  </wd-action-sheet> -->
 
   <wd-popup v-model="showCard" position="bottom" closable :safe-area-inset-bottom="true" custom-style="border-radius:32rpx;">
     <view style="height: 360px">
@@ -479,12 +623,33 @@ function toBooking() {
     </view>
   </view>
 
+  <!-- 删除客户 -->
   <uni-popup ref="deleteDialogRef" type="dialog">
     <uni-popup-dialog
       type="warn"
       cancelText="取消" confirmText="确定"
       title="提示" content="删除后不可恢复，确定删除吗？"
       @confirm="dialogConfirm"
+    />
+  </uni-popup>
+
+  <!-- 删除预约 -->
+  <uni-popup ref="refDel" type="dialog">
+    <uni-popup-dialog
+      type="warn"
+      cancelText="取消" confirmText="确定"
+      title="提示" content="删除后不可恢复，确定删除吗？"
+      @confirm="doDel"
+    />
+  </uni-popup>
+
+  <!-- 取消预约 -->
+  <uni-popup ref="refCancel" type="dialog">
+    <uni-popup-dialog
+      type="warn"
+      cancelText="取消" confirmText="确定"
+      title="提示" content="取消后不可恢复，确定取消本次预约吗？"
+      @confirm="doCancel"
     />
   </uni-popup>
 </template>
