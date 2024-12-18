@@ -23,6 +23,17 @@ const paging = ref<ZPagingInstance<ListPoints> | null>(null)
 const dataList = ref<ListPoints[]>([])
 const total = ref(0)
 
+watch(
+  () => timeArr.value,
+  async () => {
+    paging.value?.reload()
+  },
+  {
+    deep: true,
+    immediate: false,
+  },
+)
+
 async function queryList(page: number, pageSize: number) {
   reqParams.pageNum = page
   reqParams.pageSize = pageSize
