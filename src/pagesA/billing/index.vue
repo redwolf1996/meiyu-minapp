@@ -9,6 +9,7 @@ import type { ListStaff } from '../staff/types'
 import type { BillModel } from './types'
 import { sum } from 'lodash-es'
 import dayjs from 'dayjs'
+import type { CustomerDetail } from '../customer/types'
 
 const toast = useToast()
 const listStaff = ref<ListStaff[]>([])
@@ -35,9 +36,18 @@ const totalToPay = computed(() => {
   const arr = form.value.billingGoods.map(v => v.amount)
   return sum(arr)
 }) // 待付款金额
+const fromCustomer = ref(false) // 是否从客户详情进入
 
-onLoad(() => {
+onLoad(async (option) => {
   getStaff()
+  if (option?.customerId) {
+    fromCustomer.value = true
+    const res = await request.get<CustomerDetail>(`/business/store-customer/${option.customerId}`)
+    curCustomer.value = {
+      storeCustomerId: option.customerId,
+      name: res.data.name,
+    }
+  }
 })
 
 function mergeProdsAndServs() {
@@ -147,6 +157,8 @@ function toSelCard(item, index: number) {
 }
 
 function toSelCus() {
+  if (fromCustomer.value)
+    return false
   uni.navigateTo({ url: '/pagesA/customer/list' })
 }
 
@@ -212,7 +224,7 @@ function toPay() {
 
   <wd-cell-group :border="true">
     <wd-calendar v-model="orderTime" :z-index="12000" label="开单时间" type="datetime" />
-    <wd-cell title="客户" is-link @click="toSelCus()">
+    <wd-cell title="客户" :is-link="!fromCustomer" @click="toSelCus()">
       <view>
         <text v-if="!cusName" c-#B6BDBD>
           请选择或添加

@@ -34,11 +34,12 @@ const fromCustomer = ref(false)
 
 onLoad(async (option) => {
   if (option?.customerId) {
-    curCustomer.value.storeCustomerId = option.customerId
     fromCustomer.value = true
     const res = await request.get<CustomerDetail>(`/business/store-customer/${option.customerId}`)
-    curCustomer.value.name = res.data.name
-    console.log(curCustomer.value)
+    curCustomer.value = {
+      storeCustomerId: option.customerId,
+      name: res.data.name,
+    }
   }
 })
 
@@ -82,6 +83,8 @@ function toSelCard() {
 }
 
 function toSelCus() {
+  if (fromCustomer.value)
+    return false
   uni.navigateTo({ url: '/pagesA/customer/list' })
 }
 
@@ -109,7 +112,7 @@ function toPay() {
 
   <wd-cell-group :border="true">
     <wd-calendar v-model="orderTime" :z-index="12000" label="开单时间" type="datetime" />
-    <wd-cell title="客户" is-link @click="toSelCus()">
+    <wd-cell title="客户" :is-link="!fromCustomer" @click="toSelCus()">
       <view>
         <text v-if="!cusName" c-#B6BDBD>
           请选择或添加

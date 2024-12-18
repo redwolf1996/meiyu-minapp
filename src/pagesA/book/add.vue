@@ -180,20 +180,20 @@ async function save() {
     <wd-cell-group :border="true">
       <wd-input
         v-model="model.storeCustomerPhone"
-        :disabled="fromCustomer"
+        :readonly="fromCustomer"
         type="number"
         :maxlength="11"
         label="联系电话"
         placeholder="请输入"
-        suffix-icon="arrow-right"
+        :suffix-icon="fromCustomer ? '' : 'arrow-right'"
         :rules="[{ required: true, message: '请填写联系电话' }]"
       />
       <wd-input
         v-model="model.storeCustomerName"
-        :disabled="fromCustomer"
+        :readonly="fromCustomer"
         label="联系人"
         placeholder="请输入"
-        suffix-icon="arrow-right"
+        :suffix-icon="fromCustomer ? '' : 'arrow-right'"
         :rules="[{ required: true, message: '请填写联系人' }]"
       />
       <wd-picker v-model="model.storeServiceType" :rules="[{ required: true, message: '请选择服务方式' }]" label="服务方式" align-right :columns="columns" />
