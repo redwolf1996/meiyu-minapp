@@ -36,6 +36,7 @@ export const curCardRechargeType = ref<number>(null)
 export const curCardRechargeFormData = ref<MakeCardModel>(null)
 
 export const storeId = computed(() => {
+  console.log(useUserStore(pinia).userInfo)
   return useUserStore(pinia).userInfo?.lastStoreId || useUserStore(pinia).userInfo?.storeList?.[0]?.storeId || null
 })
 

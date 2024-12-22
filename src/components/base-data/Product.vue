@@ -104,7 +104,7 @@ async function save() {
   else
     await request.post<any>('/business/product', form)
   useUserStore().setUserInfo({ guidStatus: {
-    serviceCountStatus: 1,
+    productCountStatus: 1,
   } })
   let msg = '添加成功'
   if (mode.value === 'edit')

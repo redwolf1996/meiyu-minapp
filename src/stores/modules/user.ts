@@ -49,6 +49,7 @@ export const useUserStore = defineStore(
 
 /**
  * 引导页各模块添加的状态
+ * 0未添加 1已添加 2稍后添加
  */
 export interface GuidStatus {
   productCountStatus: 0 | 1 | 2 // 0未添加 1已添加 2稍后添加
