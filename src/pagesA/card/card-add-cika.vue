@@ -230,7 +230,7 @@ async function save() {
 
           <!-- 有限次卡 -->
           <view v-if="form.secondType === 1" flex flex-ac gap5px>
-            <wd-input-number v-model="item.equity" :min="0" :precision="0" />
+            <wd-input-number v-model="item.equity" :min="0" />
             <text>次</text>
           </view>
           <!-- 不限次卡 -->
