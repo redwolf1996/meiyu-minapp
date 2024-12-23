@@ -19,44 +19,70 @@ const checkedCount = computed(() => {
   return tmpCheckedServs.value.length + tmpCheckedProds.value.length
 })
 
-onLoad(async () => {
+onShow(async () => {
   const res = await request.get<AllItems>('/business/goods_all', { storeId: storeId.value })
   const serviceCats = res.data.serviceCategory!
   const services = res.data.serviceList
   const productCats = res.data.productCategory!
   const products = res.data.productList
+
+  const disabledIds = cusOriCardEquity.value.map(v => v.goodsId)
+  const checkedIds = [
+    ...checkedServs.value?.map(v1 => v1.id),
+    ...checkedProds.value?.map(v1 => v1.id),
+    ...disabledIds,
+  ]
+
   categoriesServ.value = serviceCats.map((v) => {
     return {
       id: v.id,
       label: v.name,
       items: services.filter(v1 => v.id === v1.categoryId).map((v2) => {
-        return { ...v2, checked: false }
+        return {
+          ...v2,
+          checked: checkedIds.includes(v2.id),
+          disabled: disabledIds.includes(v2.id),
+        }
       }),
     }
   })
-  categoriesServ.value.unshift({
-    id: 0,
-    label: '全部',
-    items: services.map((v2) => {
-      return { ...v2, checked: false }
-    }),
-  })
+  // categoriesServ.value.unshift({
+  //   id: 0,
+  //   label: '全部',
+  //   items: services.map((v2) => {
+  //     return {
+  //       ...v2,
+  //       checked: checkedIds.includes(v2.id),
+  //       disabled: disabledIds.includes(v2.id),
+  //     }
+  //   }),
+  // })
   categoriesProd.value = productCats.map((v) => {
     return {
       id: v.id,
       label: v.name,
       items: products.filter(v1 => v.id === v1.categoryId).map((v2) => {
-        return { ...v2, checked: false }
+        return {
+          ...v2,
+          checked: checkedIds.includes(v2.id),
+          disabled: disabledIds.includes(v2.id),
+        }
       }),
     }
   })
-  categoriesProd.value.unshift({
-    id: 0,
-    label: '全部',
-    items: products.map((v2) => {
-      return { ...v2, checked: false }
-    }),
-  })
+  // categoriesProd.value.unshift({
+  //   id: 0,
+  //   label: '全部',
+  //   items: products.map((v2) => {
+  //     return {
+  //       ...v2,
+  //       checked: checkedIds.includes(v2.id),
+  //       disabled: disabledIds.includes(v2.id),
+  //     }
+  //   }),
+  // })
+
+  changeCheck()
 })
 
 function handleChange1({ value }) {
@@ -79,10 +105,10 @@ function changeCheck() {
   let servs = []
   let prods = []
   servs = categoriesServ.value.filter((v) => {
-    return v.items.length > 0
+    return v.items.length > 0 && v.id !== 0
   }).map(v1 => toRaw(v1.items))
   prods = categoriesProd.value.filter((v) => {
-    return v.items.length > 0
+    return v.items.length > 0 && v.id !== 0
   }).map(v1 => toRaw(v1.items))
   servs = flatten(toRaw(servs))
   prods = flatten(toRaw(prods))
@@ -155,7 +181,7 @@ function confirm() {
                   </view>
                 </view>
                 <view flex flex-cc>
-                  <wd-checkbox v-model="itm.checked" size="large" @change="changeCheck" />
+                  <wd-checkbox v-model="itm.checked" :disabled="itm.disabled" size="large" @change="changeCheck()" />
                 </view>
               </view>
             </view>
@@ -208,7 +234,7 @@ function confirm() {
                   </view>
                 </view>
                 <view flex flex-cc>
-                  <wd-checkbox v-model="itm.checked" size="large" @change="changeCheck" />
+                  <wd-checkbox v-model="itm.checked" :disabled="itm.disabled" size="large" @change="changeCheck()" />
                 </view>
               </view>
             </view>

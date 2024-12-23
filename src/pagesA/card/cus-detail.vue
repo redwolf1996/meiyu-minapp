@@ -34,31 +34,7 @@ const cardExpire = ref({
   startTime: computed(() => `${showSTime.value} 00:00:00`),
   expiresTime: computed(() => `${showETime.value} 23:59:59`),
 })
-const cardEquity: ComputedRef<CardEquity[]> = computed(() => {
-  return [
-    ...cusOriCardEquity.value,
-    ...checkedServs.value?.map((v) => {
-      return {
-        equity: detail.value.cardType === 1 ? 1 : 10,
-        goodsId: v.id,
-        goodsName: v.name,
-        goodsType: v.prodType,
-        goodsPrice: v.price2,
-        editable: true,
-      }
-    }),
-    ...checkedProds.value?.map((v) => {
-      return {
-        equity: detail.value.cardType === 1 ? 1 : 10,
-        goodsId: v.id,
-        goodsName: v.name,
-        goodsType: v.prodType,
-        goodsPrice: v.price2,
-        editable: true,
-      }
-    }),
-  ]
-})
+const cardEquity = ref<CardEquity[]>([])
 const visEditName = ref(false)
 const visEditExpire = ref(false)
 const visEditEquity = ref(false)
@@ -74,6 +50,37 @@ async function queryList(page: number, pageSize: number) {
 
   paging.value.complete(res.data.list)
 }
+
+onShow(() => {
+  const disabledIds = cusOriCardEquity.value.map(v => v.goodsId)
+  cardEquity.value = [
+    ...cusOriCardEquity.value,
+    ...checkedServs.value?.filter((v0) => {
+      return !disabledIds.includes(v0.id)
+    })?.map((v) => {
+      return {
+        equity: null,
+        goodsId: v.id,
+        goodsName: v.name,
+        goodsType: v.prodType,
+        goodsPrice: v.price2,
+        editable: true,
+      }
+    }),
+    ...checkedProds.value?.filter((v0) => {
+      return !disabledIds.includes(v0.id)
+    })?.map((v) => {
+      return {
+        equity: null,
+        goodsId: v.id,
+        goodsName: v.name,
+        goodsType: v.prodType,
+        goodsPrice: v.price2,
+        editable: true,
+      }
+    }),
+  ]
+})
 
 onLoad((option) => {
   id.value = option.id!

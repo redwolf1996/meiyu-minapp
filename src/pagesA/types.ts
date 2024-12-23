@@ -26,6 +26,7 @@ export interface CardList {
    */
   type: 1 | 2 | 3
   checked?: boolean
+  disabled?: boolean
 }
 
 export interface ProductList {
@@ -42,7 +43,10 @@ export interface ProductList {
   storeId: number
   unit: string
   checked?: boolean
+  disabled?: boolean
   prodType?: 1 // 1产品 2服务
+  goodsCount?: number // 购买数量
+  equity?: number // 次卡表示数量，折扣充值卡表示折扣1.0-10.0
   [property: string]: any
 }
 
@@ -64,8 +68,10 @@ export interface ServiceList {
   serviceColor: string
   storeId: number
   checked?: boolean
+  disabled?: boolean
   prodType?: 2 // 1产品 2服务
   goodsCount?: number // 购买数量
+  equity?: number // 次卡表示数量，折扣充值卡表示折扣1.0-10.0
   [property: string]: any
 }
 
