@@ -2,7 +2,7 @@ import type { CusList } from '@/pagesA/tabs/types'
 import type { BillModel } from '@/pagesA/billing/types'
 import type { AvailableCard, CardList } from '@/pagesA/types'
 import type { List as MsgDetail } from '@/pagesA/msg/types'
-import type { MakeCardModel } from '@/pagesA/card/types'
+import type { CardEquity, MakeCardModel } from '@/pagesA/card/types'
 import pinia from '@/stores/index'
 import { useUserStore } from '@/stores/modules/user'
 
@@ -40,9 +40,13 @@ export const storeId = computed(() => {
   return useUserStore(pinia).userInfo?.lastStoreId || useUserStore(pinia).userInfo?.storeList?.[0]?.storeId || null
 })
 
+/** 当前积分查询参数 */
 export const cusPointsParams = ref<{
   id: number | string
   name: number | string
   avatar: string
   points: number | string
 }>(null)
+
+/** 当前购卡详情权益 */
+export const cusOriCardEquity = ref<CardEquity[]>([])

@@ -482,7 +482,7 @@ export interface CardEquity {
    */
   goodsName: string
   /**
-   * 商品类型
+   * 商品类型 1产品 2服务
    */
   goodsType: number
   /**
@@ -492,5 +492,9 @@ export interface CardEquity {
   /**
    * 详情得到的id
    */
-  id: number
+  id?: number
+  /**
+   * 是否权益可修改
+   */
+  editable?: boolean
 }

@@ -59,6 +59,7 @@ declare global {
   const curRechargeType: typeof import('./stores/common')['curRechargeType']
   const curSelectedCard: typeof import('./stores/common')['curSelectedCard']
   const curSelectedCardToCash: typeof import('./stores/common')['curSelectedCardToCash']
+  const cusOriCardEquity: typeof import('./stores/common')['cusOriCardEquity']
   const cusPointsParams: typeof import('./stores/common')['cusPointsParams']
   const customRef: typeof import('vue')['customRef']
   const debouncedRef: typeof import('@vueuse/core')['debouncedRef']
@@ -435,6 +436,7 @@ declare module 'vue' {
     readonly curCustomer: UnwrapRef<typeof import('./stores/common')['curCustomer']>
     readonly curSelectedCard: UnwrapRef<typeof import('./stores/common')['curSelectedCard']>
     readonly curSelectedCardToCash: UnwrapRef<typeof import('./stores/common')['curSelectedCardToCash']>
+    readonly cusOriCardEquity: UnwrapRef<typeof import('./stores/common')['cusOriCardEquity']>
     readonly cusPointsParams: UnwrapRef<typeof import('./stores/common')['cusPointsParams']>
     readonly customRef: UnwrapRef<typeof import('vue')['customRef']>
     readonly defineAsyncComponent: UnwrapRef<typeof import('vue')['defineAsyncComponent']>

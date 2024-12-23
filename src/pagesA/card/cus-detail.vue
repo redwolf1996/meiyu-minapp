@@ -34,8 +34,31 @@ const cardExpire = ref({
   startTime: computed(() => `${showSTime.value} 00:00:00`),
   expiresTime: computed(() => `${showETime.value} 23:59:59`),
 })
-const oriCardEquity = ref<CardEquity[]>([])
-const cardEquity = ref<CardEquity[]>([])
+const cardEquity: ComputedRef<CardEquity[]> = computed(() => {
+  return [
+    ...cusOriCardEquity.value,
+    ...checkedServs.value?.map((v) => {
+      return {
+        equity: detail.value.cardType === 1 ? 1 : 10,
+        goodsId: v.id,
+        goodsName: v.name,
+        goodsType: v.prodType,
+        goodsPrice: v.price2,
+        editable: true,
+      }
+    }),
+    ...checkedProds.value?.map((v) => {
+      return {
+        equity: detail.value.cardType === 1 ? 1 : 10,
+        goodsId: v.id,
+        goodsName: v.name,
+        goodsType: v.prodType,
+        goodsPrice: v.price2,
+        editable: true,
+      }
+    }),
+  ]
+})
 const visEditName = ref(false)
 const visEditExpire = ref(false)
 const visEditEquity = ref(false)
@@ -54,9 +77,7 @@ async function queryList(page: number, pageSize: number) {
 
 onLoad((option) => {
   id.value = option.id!
-  getDetail()
-  getRecords()
-  getOriCardEquity()
+  initPage()
 })
 
 function initPage() {
@@ -76,7 +97,12 @@ function getRecords() {
 }
 async function getOriCardEquity() {
   const res = await request.get<CardEquity[]>(`/business/store-customer-card/info/${id.value}`)
-  oriCardEquity.value = res.data
+  cusOriCardEquity.value = res.data.map((item) => {
+    return {
+      ...item,
+      editable: false,
+    }
+  })
 }
 function toEditName() {
   visEditName.value = true
@@ -92,22 +118,21 @@ async function confirmName() {
     id: id.value,
     cardName: cardName.value,
   })
-  getDetail()
-  getRecords()
+  initPage()
   uni.showToast({ title: '修改成功' })
   visEditName.value = false
 }
 async function confirmExpire() {
   await request.put('/business/store-customer-card/expires-time', cardExpire.value)
-  getDetail()
-  getRecords()
+  initPage()
   uni.showToast({ title: '修改成功' })
   visEditExpire.value = false
 }
 async function confirmEquity() {
   await request.put('/business/store-customer-card/info', { id: id.value, info: cardEquity.value })
-  getDetail()
-  getRecords()
+  initPage()
+  checkedProds.value = []
+  checkedServs.value = []
   uni.showToast({ title: '修改成功' })
   visEditEquity.value = false
 }
@@ -120,6 +145,16 @@ function toSee() {
 
 function toProdServs() { // 商品和服务列表页面
   uni.navigateTo({ url: '/pagesA/prod-servs' })
+}
+
+function delEquity(item: CardEquity) {
+  const goodsId = item.goodsId
+  if (checkedProds.value.length) {
+    checkedProds.value = checkedProds.value.filter(item => item.id !== goodsId)
+  }
+  if (checkedServs.value.length) {
+    checkedServs.value = checkedServs.value.filter(item => item.id !== goodsId)
+  }
 }
 </script>
 
@@ -381,11 +416,12 @@ function toProdServs() { // 商品和服务列表页面
               <template v-if="detail?.cardType === 1">
                 <wd-input-number v-model="item.equity" :step="1" :min="1" />
                 <text>次&nbsp;</text>
-                <wd-icon name="minus-circle" size="14px" color="red" />
+                <wd-icon v-if="item.editable" name="minus-circle" size="14px" color="red" @click="delEquity(item)" />
               </template>
               <template v-else>
                 <wd-input-number v-model="item.equity" :step="0.1" :min="1" :max="10" :precision="1" />
-                <text>折</text>
+                <text>折&nbsp;</text>
+                <wd-icon v-if="item.editable" name="minus-circle" size="14px" color="red" @click="delEquity(item)" />
               </template>
             </view>
           </view>
@@ -393,7 +429,7 @@ function toProdServs() { // 商品和服务列表页面
       </wd-cell-group>
     </view>
 
-    <view mx-40rpx mt-44px color-white @click="confirmEquity">
+    <view mx-40rpx mt-30px mb-30px color-white @click="confirmEquity">
       <wd-button size="large" block plain>
         <view flex flex-cc>
           <text>确定</text>
