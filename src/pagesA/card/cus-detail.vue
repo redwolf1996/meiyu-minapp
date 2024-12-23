@@ -19,12 +19,26 @@ const reqParams = reactive({
   pageNum: 1,
   pageSize: 10,
 })
-
 const paging = ref<ZPagingInstance<CusRecordList> | null>(null)
 const dataList = ref<CusRecordList[]>([])
 const total = ref(0)
 const countUse = ref()
 const countSurplus = ref()
+const detail = ref<CusCardDetail>({} as CusCardDetail)
+const cardName = ref('')
+const timeArr = ref<any[]>([Date.now(), dayjs().add(1, 'year').valueOf()])
+const showSTime = computed(() => dayjs(timeArr.value[0]).format('YYYY-MM-DD'))
+const showETime = computed(() => dayjs(timeArr.value[1]).format('YYYY-MM-DD'))
+const cardExpire = ref({
+  id: computed(() => id.value),
+  startTime: computed(() => `${showSTime.value} 00:00:00`),
+  expiresTime: computed(() => `${showETime.value} 23:59:59`),
+})
+const oriCardEquity = ref<CardEquity[]>([])
+const cardEquity = ref<CardEquity[]>([])
+const visEditName = ref(false)
+const visEditExpire = ref(false)
+const visEditEquity = ref(false)
 
 async function queryList(page: number, pageSize: number) {
   reqParams.pageNum = page
@@ -38,27 +52,18 @@ async function queryList(page: number, pageSize: number) {
   paging.value.complete(res.data.list)
 }
 
-const detail = ref<CusCardDetail>({} as CusCardDetail)
-
-const cardName = ref('')
-const timeArr = ref<any[]>([Date.now(), dayjs().add(1, 'year').valueOf()])
-const showSTime = computed(() => dayjs(timeArr.value[0]).format('YYYY-MM-DD'))
-const showETime = computed(() => dayjs(timeArr.value[1]).format('YYYY-MM-DD'))
-const cardExpire = ref({
-  id: computed(() => id.value),
-  startTime: computed(() => `${showSTime.value} 00:00:00`),
-  expiresTime: computed(() => `${showETime.value} 23:59:59`),
-})
-const cardEquity = ref<CardEquity[]>([])
-const visEditName = ref(false)
-const visEditExpire = ref(false)
-const visEditEquity = ref(false)
-
 onLoad((option) => {
   id.value = option.id!
   getDetail()
   getRecords()
+  getOriCardEquity()
 })
+
+function initPage() {
+  getDetail()
+  getRecords()
+  getOriCardEquity()
+}
 
 function getDetail() {
   request.get<CusCardDetail>(`/business/store-customer-card/${id.value}`).then((res) => {
@@ -66,11 +71,13 @@ function getDetail() {
     cardName.value = res.data.cardName || ''
   })
 }
-
 function getRecords() {
   paging.value?.reload()
 }
-
+async function getOriCardEquity() {
+  const res = await request.get<CardEquity[]>(`/business/store-customer-card/info/${id.value}`)
+  oriCardEquity.value = res.data
+}
 function toEditName() {
   visEditName.value = true
 }
@@ -79,8 +86,6 @@ function toEditExpire() {
 }
 async function toEditEquity() {
   visEditEquity.value = true
-  const res = await request.get<CardEquity[]>(`/business/store-customer-card/info/${id.value}`)
-  cardEquity.value = res.data
 }
 async function confirmName() {
   await request.put('/business/store-customer-card/card-name', {
@@ -269,7 +274,7 @@ function toProdServs() { // 商品和服务列表页面
         <view class="item mid" @click="toEditExpire()">
           修改有效期
         </view>
-        <view class="item" @click="toEditEquity()">
+        <view v-if="!dataList.length" class="item" @click="toEditEquity()">
           修改权益
         </view>
       </view>
@@ -356,7 +361,7 @@ function toProdServs() { // 商品和服务列表页面
     </view>
     <view h-30px />
 
-    <view mx-40rpx>
+    <view>
       <wd-cell-group :border="false">
         <wd-cell title="购卡权益" is-link @click="toProdServs()">
           <text c-#B6BDBD>
@@ -374,8 +379,9 @@ function toProdServs() { // 商品和服务列表页面
 
             <view flex flex-ac gap5px>
               <template v-if="detail?.cardType === 1">
-                <wd-input-number v-model="item.equity" :step="1" :min="1" :precision="0" />
-                <text>次</text>
+                <wd-input-number v-model="item.equity" :step="1" :min="1" />
+                <text>次&nbsp;</text>
+                <wd-icon name="minus-circle" size="14px" color="red" />
               </template>
               <template v-else>
                 <wd-input-number v-model="item.equity" :step="0.1" :min="1" :max="10" :precision="1" />

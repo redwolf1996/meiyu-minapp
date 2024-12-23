@@ -34,6 +34,13 @@ onLoad(async () => {
       }),
     }
   })
+  categoriesServ.value.unshift({
+    id: 0,
+    label: '全部',
+    items: services.map((v2) => {
+      return { ...v2, checked: false }
+    }),
+  })
   categoriesProd.value = productCats.map((v) => {
     return {
       id: v.id,
@@ -42,6 +49,13 @@ onLoad(async () => {
         return { ...v2, checked: false }
       }),
     }
+  })
+  categoriesProd.value.unshift({
+    id: 0,
+    label: '全部',
+    items: products.map((v2) => {
+      return { ...v2, checked: false }
+    }),
   })
 })
 
