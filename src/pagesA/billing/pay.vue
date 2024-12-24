@@ -109,13 +109,14 @@ onLoad((option) => {
 const cashCards = ref<CashCard[]>([])
 async function getAvailableCashCards(storeCustomerId, amount) {
   const res = await request.get<CashCard[]>('/business/store-customer-value-card', { storeCustomerId })
-  cashCards.value = res.data.filter(v => v.amount >= amount).map((v) => {
+  cashCards.value = res.data.filter(v => v.amount >= amount).map((v, i) => {
     return {
       ...v,
-      active: false,
+      active: i === 0,
     }
   })
   if (cashCards.value.length > 0) {
+    curCard.value = cashCards.value[0]
     payMode.value = 2
   }
 }
