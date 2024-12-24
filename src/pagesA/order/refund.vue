@@ -122,7 +122,7 @@ function select({ item }) {
               </view>
             </view>
             <view flex flex-xr f14>
-              <text>可退款金额&nbsp;&nbsp;￥{{ item?.amount }}</text>
+              <text>可退款金额&nbsp;&nbsp;￥{{ detail?.amount }}</text>
             </view>
           </view>
         </view>
