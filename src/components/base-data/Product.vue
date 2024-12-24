@@ -99,6 +99,9 @@ function toRichEdit() {
 }
 
 async function save() {
+  if (!form.price2) {
+    form.price2 = form.price
+  }
   if (mode.value === 'edit')
     await request.put<any>('/business/product', form)
   else
@@ -187,7 +190,6 @@ function toCats() {
         v-model="form.price"
         type="number"
         label="原价"
-        prop="value1"
         placeholder="请输入"
         suffix-icon="arrow-right"
         :rules="[{ required: true, message: '请填写原价' }]"
@@ -196,7 +198,6 @@ function toCats() {
         v-model="form.price2"
         type="number"
         label="优惠价"
-        prop="value23232"
         placeholder="若不填，则客户按原价购买"
         suffix-icon="arrow-right"
       />

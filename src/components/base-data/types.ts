@@ -34,7 +34,7 @@ export interface FormService {
   /**
    * 服务类型，1上门，2到店
    */
-  serverToType: number[]
+  serverToType: any[]
   /**
    * 服务名
    */
