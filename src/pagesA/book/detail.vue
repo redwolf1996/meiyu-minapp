@@ -215,12 +215,12 @@ function getActiveIndex() {
           预约信息
         </text>
       </view>
-      <view mt-36rpx dib px-8px c-00CCD8 bg-CCF3F6 fs-22 h-20px lh-20px tc>
+      <view v-if="bookDetail?.storeServiceType === 1" mt-36rpx dib px-8px c-FF5A5F bg-FCE8E9 fs-22 h-20px lh-20px tc>
+        预约到店
+      </view>
+      <view v-if="bookDetail?.storeServiceType === 2" mt-36rpx dib px-8px c-00CCD8 bg-CCF3F6 fs-22 h-20px lh-20px tc>
         预约上门
       </view>
-      <!-- <view mt-36rpx dib px-8px c-FF5A5F bg-FCE8E9 fs-22 h-20px lh-20px tc>
-        预约到店
-      </view> -->
       <view mt-10px f12 c-818181>
         预约时间：<text c-232220>
           {{ bookStime || fdt(bookDetail?.startTime) }}

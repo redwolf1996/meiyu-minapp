@@ -48,7 +48,7 @@ export interface FormService {
    */
   price: number
   /**
-   * 划线价两位小数
+   * 划线价两位小数（优惠后价格）
    */
   price2?: number
   /**
@@ -97,7 +97,7 @@ export interface FormProduct {
    */
   price: number
   /**
-   * 划线价两位小数
+   * 划线价两位小数（优惠后价格）
    */
   price2?: number
   /**
