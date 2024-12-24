@@ -5,6 +5,7 @@ style:
 
 <script lang="ts" setup>
 import { PayModeEnum } from '@/utils/consts'
+import type { CashCard } from './types'
 
 const toast = useToast()
 const curCode = ref(4)
@@ -40,11 +41,11 @@ const payTypes = ref([
     desc: '其他',
     active: false,
   },
-  {
-    code: 7,
-    desc: '储值卡',
-    active: false,
-  },
+  // {
+  //   code: 7,
+  //   desc: '储值卡',
+  //   active: false,
+  // },
   {
     code: 8,
     desc: '美团',
@@ -67,8 +68,10 @@ const postUrl = ref('')
 const formData = ref<any>(null)
 const orderId = ref(0)
 const repayAmount = ref(0) // 稍后支付的订单金额
+const curCard = ref<CashCard>(null)
 
 onLoad((option) => {
+  console.log(option)
   //  1 开单 2开卡 3充值 4预约
   if (option?.createSource) {
     mode.value = Number(option?.createSource)
@@ -86,6 +89,8 @@ onLoad((option) => {
     if (mode.value === PayModeEnum.MakeOrder) {
       formData.value = curBilling.value
       postUrl.value = '/business/billing'
+      const amount = repayAmount.value || curBilling.value.amount
+      getAvailableCashCards(option.storeCustomerId, amount)
     }
 
     if (mode.value === PayModeEnum.MakeCard) {
@@ -100,6 +105,21 @@ onLoad((option) => {
   }
 })
 
+// 过滤用户可用的储值卡，如果其中有一张可用则开启储值卡支付
+const cashCards = ref<CashCard[]>([])
+async function getAvailableCashCards(storeCustomerId, amount) {
+  const res = await request.get<CashCard[]>('/business/store-customer-value-card', { storeCustomerId })
+  cashCards.value = res.data.filter(v => v.amount >= amount).map((v) => {
+    return {
+      ...v,
+      active: false,
+    }
+  })
+  if (cashCards.value.length > 0) {
+    payMode.value = 2
+  }
+}
+
 async function pay() {
   let amount = 0
   let points = 0
@@ -107,13 +127,14 @@ async function pay() {
     const res = await request.post<any>('/business/order/pay', {
       orderId: orderId.value,
       payType: curCode.value,
-      customerCardId: null,
+      customerCardId: curCard.value?.id,
     })
     amount = res.data?.payAmount
     points = res.data?.gainIntegral
   }
   else { // 正常支付（mode  1 开单 2开卡 3充值）
     formData.value.payType = curCode.value
+    formData.value.customerCardId = curCard.value?.id
     const res = await request.post<any>(postUrl.value, formData.value)
     orderId.value = res.data.orderId
     amount = res.data.payAmount
@@ -131,6 +152,14 @@ function selectItem(code: number, index: number) {
     v.active = false
   })
   payTypes.value[index].active = true
+}
+
+function selectCard(card: CashCard) {
+  cashCards.value.map((v) => {
+    v.active = false
+  })
+  card.active = true
+  curCard.value = card
 }
 </script>
 
@@ -168,49 +197,31 @@ function selectItem(code: number, index: number) {
       <view fs-16px>
         会员余额
       </view>
-      <view class="card-item active">
+      <view v-for="(item, index) in cashCards" :key="`card-${index}`" class="card-item" :class="{ active: item?.active }" @click="selectCard(item)">
         <view fs-16px mb10px>
-          VIP充值年卡
+          {{ item?.cardName }}
         </view>
         <view flex flex-ac mb10px>
           <view fs-20px fb>
-            ￥12654.33
+            ￥{{ item?.totalAmount }}
           </view>
           <view fs-14px c-#FA483C pl20px>
-            将消耗￥18.00
+            将消耗￥{{ repayAmount || formData?.amount }}
           </view>
         </view>
         <view flex flex-ac fs-14px>
-          <view>本金￥1000</view>
+          <view>本金￥{{ item?.amount }}</view>
           <view pl20px>
-            赠金￥200
+            赠金￥{{ item?.gift }}
           </view>
         </view>
         <wd-img
+          v-if="item?.active"
           custom-class="corner"
           :width="16"
           :height="15.4"
           :src="`${IMG_BASE}/corner-right.png`"
         />
-      </view>
-      <view class="card-item">
-        <view fs-16px mb10px>
-          VIP充值年卡
-        </view>
-        <view flex flex-ac mb10px>
-          <view fs-20px fb>
-            ￥12654.33
-          </view>
-          <view fs-14px c-#FA483C pl20px>
-            将消耗￥18.00
-          </view>
-        </view>
-        <view flex flex-ac fs-14px c-#818181>
-          <view>本金￥1000</view>
-          <view pl20px>
-            赠金￥200
-          </view>
-        </view>
       </view>
     </view>
   </view>

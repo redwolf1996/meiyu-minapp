@@ -181,7 +181,7 @@ function toPay() {
     return func_add(prev, cur.amount)
   }, 0)
   curBilling.value = form.value
-  uni.navigateTo({ url: `/pagesA/billing/pay?mode=${PayModeEnum.MakeOrder}` })
+  uni.navigateTo({ url: `/pagesA/billing/pay?mode=${PayModeEnum.MakeOrder}&storeCustomerId=${form.value.storeCustomerId}` })
 }
 </script>
 

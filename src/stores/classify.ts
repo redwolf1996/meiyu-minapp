@@ -8,7 +8,7 @@ interface Classify {
   id: number | number[] | null
   storeId: number | null
   name: string | null
-  type: CatType.Service | CatType.Product | CatType.Card // 1服务 2产品 3卡项
+  type: CatType.Service | CatType.Product | CatType.Card // 0服务 1产品 2卡项
   multiple: boolean // 是否多选
 }
 
@@ -25,7 +25,7 @@ export function resetCurClassify() {
     id: null,
     storeId: null,
     name: null,
-    type: 0,
+    type: CatType.Service,
     multiple: false,
   })
 }

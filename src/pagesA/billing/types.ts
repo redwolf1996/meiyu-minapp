@@ -93,3 +93,52 @@ export interface BillingGood {
   cardShowName?: string
   [property: string]: any
 }
+
+export interface CashCard {
+  /**
+   * 充值金额
+   */
+  amount?: number
+  /**
+   * 卡id
+   */
+  cardId?: number
+  /**
+   * 卡名称
+   */
+  cardName?: string
+  /**
+   * 卡二级分类, 次卡
+   */
+  cardSecondType?: number
+  /**
+   * 卡分类
+   */
+  cardType?: number
+  createTime?: string
+  /**
+   * 有效期
+   */
+  expiresTime?: string
+  /**
+   * 赠送金额
+   */
+  gift?: number
+  /**
+   * 购卡id
+   */
+  id?: number
+  /**
+   * 是否长期有效
+   */
+  isLongTerm?: number
+  /**
+   * 有效期开始
+   */
+  startTime?: string
+  /**
+   * 可用总金额
+   */
+  totalAmount?: number
+  [property: string]: any
+}

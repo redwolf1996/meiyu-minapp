@@ -5,6 +5,7 @@ style:
 
 <script lang="ts" setup>
 import type { Detail } from './types'
+import qs from 'qs'
 
 const id = ref(0)
 const detail = ref<Detail>(null)
@@ -20,8 +21,14 @@ async function getDetail() {
 }
 
 function toPay() {
+  const params = qs.stringify({
+    orderId: id.value,
+    createSource: detail.value?.createSource,
+    repayAmount: detail.value?.amount,
+    storeCustomerId: detail.value?.storeCustomerId,
+  })
   uni.navigateTo({
-    url: `/pagesA/billing/pay?orderId=${id.value}&createSource=${detail.value?.createSource}&repayAmount=${detail.value?.amount}`,
+    url: `/pagesA/billing/pay?${params}`,
   })
 }
 async function toCancel() {

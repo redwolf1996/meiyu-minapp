@@ -48,6 +48,10 @@ onLoad((options) => {
     uni.setNavigationBarTitle({ title: '修改员工' })
     setFormInfo()
   }
+  else {
+    staffScheduling.value = []
+    resetCurClassify()
+  }
 })
 
 async function setFormInfo() {
