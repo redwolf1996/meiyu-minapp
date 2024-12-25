@@ -152,3 +152,11 @@ export interface AvailableCard {
   totalAmount: number
   [property: string]: any
 }
+
+/**
+ * 上一页面
+ * billing：开单
+ * card：卡项设置
+ * equity：修改卡项权益
+ */
+export type FromType = 'billing' | 'card' | 'equity'

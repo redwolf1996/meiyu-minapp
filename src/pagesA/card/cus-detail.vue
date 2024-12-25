@@ -151,7 +151,7 @@ function toSee() {
 }
 
 function toProdServs() { // 商品和服务列表页面
-  uni.navigateTo({ url: '/pagesA/prod-servs' })
+  uni.navigateTo({ url: '/pagesA/prod-servs?from=equity' })
 }
 
 function delEquity(item: CardEquity) {

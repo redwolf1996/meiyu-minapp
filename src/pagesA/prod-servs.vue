@@ -4,7 +4,7 @@ style:
 </route>
 
 <script lang="ts" setup>
-import type { AllItems, CatsItemsTree, ProductList, ServiceList } from './types'
+import type { AllItems, CatsItemsTree, FromType, ProductList, ServiceList } from './types'
 import { flatten } from 'lodash-es'
 
 const tab = ref<number>(0)
@@ -18,6 +18,14 @@ const tmpCheckedProds = ref<ProductList[]>([])
 const checkedCount = computed(() => {
   return tmpCheckedServs.value.length + tmpCheckedProds.value.length
 })
+const from = ref<FromType>('billing')
+
+onLoad((option) => {
+  from.value = option.from
+  if (from.value !== 'equity') {
+    cusOriCardEquity.value = []
+  }
+})
 
 onShow(async () => {
   const res = await request.get<AllItems>('/business/goods_all', { storeId: storeId.value })
@@ -26,7 +34,8 @@ onShow(async () => {
   const productCats = res.data.productCategory!
   const products = res.data.productList
 
-  const disabledIds = cusOriCardEquity.value.map(v => v.goodsId)
+  const disabledIds = cusOriCardEquity.value?.map(v => v.goodsId)
+  console.log(disabledIds)
   const checkedIds = [
     ...checkedServs.value?.map(v1 => v1.id),
     ...checkedProds.value?.map(v1 => v1.id),
@@ -41,7 +50,7 @@ onShow(async () => {
         return {
           ...v2,
           checked: checkedIds.includes(v2.id),
-          disabled: disabledIds.includes(v2.id),
+          disabled: from.value !== 'equity' ? false : disabledIds.includes(v2.id),
         }
       }),
     }
@@ -65,7 +74,7 @@ onShow(async () => {
         return {
           ...v2,
           checked: checkedIds.includes(v2.id),
-          disabled: disabledIds.includes(v2.id),
+          disabled: from.value !== 'equity' ? false : disabledIds.includes(v2.id),
         }
       }),
     }

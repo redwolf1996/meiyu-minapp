@@ -163,7 +163,7 @@ function toSelCus() {
 }
 
 function toAddProdServs() {
-  uni.navigateTo({ url: '/pagesA/prod-servs' })
+  uni.navigateTo({ url: '/pagesA/prod-servs?from=billing' })
 }
 
 async function payLater() {

@@ -176,7 +176,6 @@ function toPoints() {
 function clickTab({ index }) {
   // 通过1px的差距实现顺利渲染 切换tab的时候滚动到顶部
   scrollTop.value = scrollTop.value ? 0 : 1
-  console.log(index)
 }
 
 // 去开卡/充值

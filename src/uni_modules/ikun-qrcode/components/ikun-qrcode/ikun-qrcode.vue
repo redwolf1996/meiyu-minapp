@@ -25,7 +25,7 @@
 
 <script>
 	import UQRCode from './uqrcode_latest.js';
-	
+
 	export default {
 		name: 'ikunQrcode',
 		props: ['width', 'height', 'unit', 'data', 'color'],
@@ -75,25 +75,25 @@
 		justify-content: center;
 		align-items: center;
 	}
-	
+
 
 	.qr-loading {
 		width: 100%;
 		height: 100%;
 		text-align: center;
 	}
-	
+
 	.qr-loading-icon {
 		width: 50%;
 		height: 50%;
 	}
-	
+
 	.qr-content {
 		display: flex;
 		flex-direction: row;
 		justify-content: center;
 		align-items: center;
 	}
-	
-	
+
+
 </style>

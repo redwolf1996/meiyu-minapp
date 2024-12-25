@@ -71,7 +71,6 @@ const repayAmount = ref(0) // 稍后支付的订单金额
 const curCard = ref<CashCard>(null)
 
 onLoad((option) => {
-  console.log(option)
   //  1 开单 2开卡 3充值 4预约
   if (option?.createSource) {
     mode.value = Number(option?.createSource)
