@@ -117,14 +117,14 @@ async function renew() {
       <!-- <radio style="transform:scale(0.7) translate(-10px, 0)" value="3" color="#1a66ff" /> -->
       <wd-checkbox v-model="protocalChecked" />
       <text dib f12 pl5px style="transform: translateX(-8px);">
-        <text>开通前确认</text>
+        <text>开通前请确认</text>
         <text c-1A66FF>
-          《会员服务协议》
+          《服务协议》、
         </text>
-        <text>及</text>
         <text c-1A66FF>
-          《缴费协议》和
+          《缴费协议》
         </text>
+        <text>和</text>
         <text c-1A66FF>
           《隐私政策》
         </text>

@@ -7,6 +7,7 @@ interface NavigateToOptions {
   url: "/pages/index" |
        "/pagesA/cats" |
        "/pagesA/prod-servs" |
+       "/pagesA/protocol" |
        "/pagesA/rich-edit" |
        "/pagesA/billing/billing" |
        "/pagesA/billing/customer-list" |

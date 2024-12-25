@@ -50,6 +50,13 @@
           }
         },
         {
+          "path": "protocol",
+          "type": "page",
+          "style": {
+            "navigationBarTitleText": "协议"
+          }
+        },
+        {
           "path": "rich-edit",
           "type": "page",
           "style": {
