@@ -5,7 +5,8 @@ style:
 
 <script lang="ts" setup>
 import { sumBy } from 'lodash-es'
-import type { CardForm } from './types'
+import type { CardForm, Info } from './types'
+import type { BillingGood } from '../billing/types'
 
 const userInfo = useUserStore()?.userInfo
 const storeInfo = userInfo?.storeList?.[0]
@@ -82,6 +83,10 @@ onLoad((options) => {
 })
 
 onShow(() => {
+  setEquity()
+})
+
+function setEquity() {
   if (checkedProds.value.length || checkedServs.value.length) {
     const arr: any = [...checkedProds.value, ...checkedServs.value]
     form.value.info = arr.map((v) => {
@@ -95,7 +100,10 @@ onShow(() => {
       }
     })
   }
-})
+  else {
+    form.value.info = []
+  }
+}
 
 function resetSources() {
   sources.value.map((v) => {
@@ -171,6 +179,16 @@ async function save() {
   await sleep(1000)
   uni.navigateBack()
 }
+
+function delEquity(info: Info) {
+  if (checkedServs.value.length && info.serviceId) {
+    checkedServs.value = checkedServs.value.filter(item => item.id !== info.serviceId)
+  }
+  if (checkedProds.value.length && info.productId) {
+    checkedProds.value = checkedProds.value.filter(item => item.id !== info.productId)
+  }
+  setEquity()
+}
 </script>
 
 <template>
@@ -229,18 +247,27 @@ async function save() {
           </view>
 
           <!-- 有限次卡 -->
-          <view v-if="form.secondType === 1" flex flex-ac gap5px>
+          <view v-if="form.secondType === 1" flex flex-ac gap10px>
             <wd-input-number v-model="item.equity" :min="0" />
             <text>次</text>
+            <wd-icon name="minus-circle" size="16px" color="red" @click="delEquity(item)" />
           </view>
           <!-- 不限次卡 -->
-          <text v-if="form.secondType === 2">
-            不限次
-          </text>
+
+          <view v-if="form.secondType === 2" flex flex-ac gap10px>
+            <text>
+              不限次
+            </text>
+            <wd-icon name="minus-circle" size="16px" color="red" @click="delEquity(item)" />
+          </view>
+
           <!-- 通卡 -->
-          <text v-if="form.secondType === 3">
-            共用次数
-          </text>
+          <view v-if="form.secondType === 3" flex flex-ac gap10px>
+            <text>
+              共用次数
+            </text>
+            <wd-icon name="minus-circle" size="16px" color="red" @click="delEquity(item)" />
+          </view>
         </view>
       </template>
 

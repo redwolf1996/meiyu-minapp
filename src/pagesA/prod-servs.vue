@@ -34,13 +34,16 @@ onShow(async () => {
   const productCats = res.data.productCategory!
   const products = res.data.productList
 
-  const disabledIds = cusOriCardEquity.value?.map(v => v.goodsId)
-  console.log(disabledIds)
-  const checkedIds = [
-    ...checkedServs.value?.map(v1 => v1.id),
-    ...checkedProds.value?.map(v1 => v1.id),
-    ...disabledIds,
-  ]
+  // const checkedIds = [
+  //   ...checkedServs.value?.map(v1 => v1.id),
+  //   ...checkedProds.value?.map(v1 => v1.id),
+  //   ...disabledIds,
+  // ]
+
+  const checkedServIds = checkedServs.value?.map(v1 => v1.id)
+  const checkedProdIds = checkedProds.value?.map(v1 => v1.id)
+  const disabledServIds = cusOriCardEquity.value?.filter(v => v.goodsType === 2)?.map(v => v.goodsId)
+  const disabledProdIds = cusOriCardEquity.value?.filter(v => v.goodsType === 1)?.map(v => v.goodsId)
 
   categoriesServ.value = serviceCats.map((v) => {
     return {
@@ -49,8 +52,8 @@ onShow(async () => {
       items: services.filter(v1 => v.id === v1.categoryId).map((v2) => {
         return {
           ...v2,
-          checked: checkedIds.includes(v2.id),
-          disabled: from.value !== 'equity' ? false : disabledIds.includes(v2.id),
+          checked: checkedServIds.includes(v2.id),
+          disabled: from.value !== 'equity' ? false : disabledServIds.includes(v2.id),
         }
       }),
     }
@@ -73,8 +76,8 @@ onShow(async () => {
       items: products.filter(v1 => v.id === v1.categoryId).map((v2) => {
         return {
           ...v2,
-          checked: checkedIds.includes(v2.id),
-          disabled: from.value !== 'equity' ? false : disabledIds.includes(v2.id),
+          checked: checkedProdIds.includes(v2.id),
+          disabled: from.value !== 'equity' ? false : disabledProdIds.includes(v2.id),
         }
       }),
     }

@@ -156,11 +156,12 @@ function toProdServs() { // 商品和服务列表页面
 
 function delEquity(item: CardEquity) {
   const goodsId = item.goodsId
-  if (checkedProds.value.length) {
-    checkedProds.value = checkedProds.value.filter(item => item.id !== goodsId)
-  }
-  if (checkedServs.value.length) {
+  const goodsType = item.goodsType
+  if (checkedServs.value.length && goodsType === 1) {
     checkedServs.value = checkedServs.value.filter(item => item.id !== goodsId)
+  }
+  if (checkedProds.value.length && goodsType === 2) {
+    checkedProds.value = checkedProds.value.filter(item => item.id !== goodsId)
   }
 }
 </script>
@@ -423,12 +424,12 @@ function delEquity(item: CardEquity) {
               <template v-if="detail?.cardType === 1">
                 <wd-input-number v-model="item.equity" :step="1" :min="1" />
                 <text>次&nbsp;</text>
-                <wd-icon v-if="item.editable" name="minus-circle" size="14px" color="red" @click="delEquity(item)" />
+                <wd-icon v-if="item.editable" name="minus-circle" size="16px" color="red" @click="delEquity(item)" />
               </template>
               <template v-else>
                 <wd-input-number v-model="item.equity" :step="0.1" :min="1" :max="10" :precision="1" />
                 <text>折&nbsp;</text>
-                <wd-icon v-if="item.editable" name="minus-circle" size="14px" color="red" @click="delEquity(item)" />
+                <wd-icon v-if="item.editable" name="minus-circle" size="16px" color="red" @click="delEquity(item)" />
               </template>
             </view>
           </view>

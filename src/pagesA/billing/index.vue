@@ -6,7 +6,7 @@ style:
 
 <script lang="ts" setup>
 import type { ListStaff } from '../staff/types'
-import type { BillModel } from './types'
+import type { BillModel, BillingGood } from './types'
 import { sum } from 'lodash-es'
 import dayjs from 'dayjs'
 import type { CustomerDetail } from '../customer/types'
@@ -79,6 +79,9 @@ function mergeProdsAndServs() {
         return func_mul(func_sub(item.goodsPrice, item.cardReduceAmount), item.goodsCount)
       })
     })
+  }
+  else {
+    form.value.billingGoods = []
   }
 }
 
@@ -183,6 +186,17 @@ function toPay() {
   curBilling.value = form.value
   uni.navigateTo({ url: `/pagesA/billing/pay?mode=${PayModeEnum.MakeOrder}&storeCustomerId=${form.value.storeCustomerId}` })
 }
+
+function delEquity(item: BillingGood) {
+  const goodsId = item.goodsId
+  const goodsType = item.goodsType
+  if (checkedServs.value.length && goodsType === 1) {
+    checkedServs.value = checkedServs.value.filter(item => item.id !== goodsId)
+  }
+  if (checkedProds.value.length && goodsType === 2) {
+    checkedProds.value = checkedProds.value.filter(item => item.id !== goodsId)
+  }
+}
 </script>
 
 <template>
@@ -256,8 +270,9 @@ function toPay() {
               {{ item.name }}
             </text>
           </view>
-          <view>
+          <view flex flex-ac gap10px>
             <wd-input-number v-model="item.goodsCount" />
+            <wd-icon name="minus-circle" size="16px" color="red" @click="delEquity(item)" />
           </view>
         </view>
         <view flex flex-xr py10px pr20px>
