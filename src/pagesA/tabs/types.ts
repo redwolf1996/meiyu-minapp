@@ -16,6 +16,10 @@ export interface DashBoardData {
    */
   currentMonthDisburse: number
   /**
+   * 当月消耗
+   */
+  currentMonthUse: number
+  /**
    * 当月收入
    */
   currentMonthIncome: number

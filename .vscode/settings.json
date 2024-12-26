@@ -51,5 +51,6 @@
     "yml",
     "toml"
   ],
-  "unot.switchMagic": true
+  "unot.switchMagic": true,
+  "Codegeex.RepoIndex": true
 }

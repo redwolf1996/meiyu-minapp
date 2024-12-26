@@ -171,7 +171,7 @@ function toCardRecharge(type: 1 | 2 | 3 | 4 | 5 | 6) {
               本月消耗金额
             </view>
             <view f16 mt-12rpx>
-              {{ info?.currentMonthDisburse }}
+              {{ info?.currentMonthUse }}
             </view>
           </view>
           <view wp-33.3333>
