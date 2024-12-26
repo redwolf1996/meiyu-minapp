@@ -1,5 +1,3 @@
-import type { Service } from '../pagesA/book/types'
-
 interface BookTempInfo {
   /**
    * 分配的手艺人

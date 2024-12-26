@@ -60,8 +60,7 @@ onShow(() => {
 function resetStoreData() {
   resetCurClassify()
   richData.value.content = ''
-  checkedProds.value = []
-  checkedServs.value = []
+  resetGoods()
 }
 
 function selCard(e) { // 添加会员卡

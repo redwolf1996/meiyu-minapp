@@ -1,6 +1,6 @@
 import type { CusList } from '@/pagesA/tabs/types'
 import type { BillModel } from '@/pagesA/billing/types'
-import type { AvailableCard, CardList } from '@/pagesA/types'
+import type { AvailableCard, CardList, ProductList, ServiceList } from '@/pagesA/types'
 import type { List as MsgDetail } from '@/pagesA/msg/types'
 import type { CardEquity, MakeCardModel } from '@/pagesA/card/types'
 import pinia from '@/stores/index'
@@ -47,5 +47,33 @@ export const cusPointsParams = ref<{
   points: number | string
 }>(null)
 
+export interface WeekTime {
+  weekCode: number
+  startTime: string
+  endTime: string
+}
+
+/** 员工日程 */
+export const staffScheduling = ref<WeekTime[]>([])
+
+/** 当前选中的服务列表 */
+export const checkedServs = ref<ServiceList[]>([])
+
+/** 当前选中的产品列表 */
+export const checkedProds = ref<ProductList[]>([])
+
 /** 当前购卡详情权益 */
 export const cusOriCardEquity = ref<CardEquity[]>([])
+
+/** 重置选项卡产品服务选项卡内容 */
+export function resetGoods() {
+  checkedProds.value = []
+  checkedServs.value = []
+  cusOriCardEquity.value = []
+}
+
+/** 重置选项卡开卡充值选项卡内容 */
+export function resetCards() {
+  curSelectedCard.value = null
+  curSelectedCardToCash.value = null
+}

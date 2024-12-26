@@ -188,11 +188,13 @@ function toCardRecharge(type: 1 | 2 | 3 | 4 | 5 | 6) {
 
 // 去开单(商品、服务结算)
 function toBilling() {
+  resetGoods()
   uni.navigateTo({ url: `/pagesA/billing/index?customerId=${id.value}` })
 }
 
 // 去预约
 function toBooking() {
+  resetGoods()
   uni.navigateTo({ url: `/pagesA/book/add?customerId=${id.value}` })
 }
 

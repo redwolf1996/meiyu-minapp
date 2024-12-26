@@ -33,8 +33,8 @@ declare global {
   const bookStime: typeof import('./stores/book')['bookStime']
   const calculateEndTime: typeof import('./utils/index')['calculateEndTime']
   const cardRechargeMap: typeof import('./utils/consts')['cardRechargeMap']
-  const checkedProds: typeof import('./stores/sel-base-item')['checkedProds']
-  const checkedServs: typeof import('./stores/sel-base-item')['checkedServs']
+  const checkedProds: typeof import('./stores/common')['checkedProds']
+  const checkedServs: typeof import('./stores/common')['checkedServs']
   const computed: typeof import('vue')['computed']
   const computedAsync: typeof import('@vueuse/core')['computedAsync']
   const computedEager: typeof import('@vueuse/core')['computedEager']
@@ -163,7 +163,10 @@ declare global {
   const refWithControl: typeof import('@vueuse/core')['refWithControl']
   const refundTypesMap: typeof import('./utils/consts')['refundTypesMap']
   const request: typeof import('./utils/request')['default']
+  const resetCard: typeof import('./stores/common')['resetCard']
+  const resetCards: typeof import('./stores/common')['resetCards']
   const resetCurClassify: typeof import('./stores/classify')['resetCurClassify']
+  const resetGoods: typeof import('./stores/common')['resetGoods']
   const resetRichData: typeof import('./stores/rich-edit-data')['resetRichData']
   const resolveComponent: typeof import('vue')['resolveComponent']
   const resolveRef: typeof import('@vueuse/core')['resolveRef']
@@ -177,7 +180,7 @@ declare global {
   const shallowReadonly: typeof import('vue')['shallowReadonly']
   const shallowRef: typeof import('vue')['shallowRef']
   const sleep: typeof import('./utils/index')['sleep']
-  const staffScheduling: typeof import('./stores/work-time')['staffScheduling']
+  const staffScheduling: typeof import('./stores/common')['staffScheduling']
   const storeId: typeof import('./stores/common')['storeId']
   const storeMsgDetail: typeof import('./stores/common')['storeMsgDetail']
   const stores: typeof import('./stores/index')['default']
@@ -425,8 +428,8 @@ declare module 'vue' {
     readonly bookInfo: UnwrapRef<typeof import('./stores/book-info')['bookInfo']>
     readonly bookStime: UnwrapRef<typeof import('./stores/book')['bookStime']>
     readonly calculateEndTime: UnwrapRef<typeof import('./utils/index')['calculateEndTime']>
-    readonly checkedProds: UnwrapRef<typeof import('./stores/sel-base-item')['checkedProds']>
-    readonly checkedServs: UnwrapRef<typeof import('./stores/sel-base-item')['checkedServs']>
+    readonly checkedProds: UnwrapRef<typeof import('./stores/common')['checkedProds']>
+    readonly checkedServs: UnwrapRef<typeof import('./stores/common')['checkedServs']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
     readonly createApp: UnwrapRef<typeof import('vue')['createApp']>
     readonly curBilling: UnwrapRef<typeof import('./stores/common')['curBilling']>
@@ -510,7 +513,9 @@ declare module 'vue' {
     readonly ref: UnwrapRef<typeof import('vue')['ref']>
     readonly refundTypesMap: UnwrapRef<typeof import('./utils/consts')['refundTypesMap']>
     readonly request: UnwrapRef<typeof import('./utils/request')['default']>
+    readonly resetCards: UnwrapRef<typeof import('./stores/common')['resetCards']>
     readonly resetCurClassify: UnwrapRef<typeof import('./stores/classify')['resetCurClassify']>
+    readonly resetGoods: UnwrapRef<typeof import('./stores/common')['resetGoods']>
     readonly resetRichData: UnwrapRef<typeof import('./stores/rich-edit-data')['resetRichData']>
     readonly resolveComponent: UnwrapRef<typeof import('vue')['resolveComponent']>
     readonly richData: UnwrapRef<typeof import('./stores/rich-edit-data')['richData']>
@@ -519,7 +524,7 @@ declare module 'vue' {
     readonly shallowReadonly: UnwrapRef<typeof import('vue')['shallowReadonly']>
     readonly shallowRef: UnwrapRef<typeof import('vue')['shallowRef']>
     readonly sleep: UnwrapRef<typeof import('./utils/index')['sleep']>
-    readonly staffScheduling: UnwrapRef<typeof import('./stores/work-time')['staffScheduling']>
+    readonly staffScheduling: UnwrapRef<typeof import('./stores/common')['staffScheduling']>
     readonly storeId: UnwrapRef<typeof import('./stores/common')['storeId']>
     readonly storeMsgDetail: UnwrapRef<typeof import('./stores/common')['storeMsgDetail']>
     readonly stores: UnwrapRef<typeof import('./stores/index')['default']>

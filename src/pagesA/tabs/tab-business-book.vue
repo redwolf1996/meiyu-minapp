@@ -212,7 +212,7 @@ function showSearch() {
 }
 function createOrder() {
   bookStime.value = ''
-  checkedServs.value = []
+  resetGoods()
   uni.navigateTo({ url: '/pagesA/book/add' })
 }
 

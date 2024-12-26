@@ -138,8 +138,7 @@ async function confirmExpire() {
 async function confirmEquity() {
   await request.put('/business/store-customer-card/info', { id: id.value, info: cardEquity.value })
   initPage()
-  checkedProds.value = []
-  checkedServs.value = []
+  resetGoods()
   uni.showToast({ title: '修改成功' })
   visEditEquity.value = false
 }

@@ -22,8 +22,7 @@ function toDashboard() {
 
 function continueOrder() {
   curCustomer.value = null // 进入页面前清空store内容
-  checkedServs.value = []
-  checkedProds.value = []
+  resetGoods()
   uni.navigateTo({ url: '/pagesA/billing/index' })
 }
 

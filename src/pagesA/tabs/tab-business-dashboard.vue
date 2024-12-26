@@ -77,7 +77,7 @@ function toAddCustomer() {
 }
 function toAddBooking() {
   bookStime.value = ''
-  checkedServs.value = []
+  resetGoods()
   uni.navigateTo({ url: '/pagesA/book/add' })
 }
 function toBookDetail(item) {
@@ -86,11 +86,11 @@ function toBookDetail(item) {
 }
 function toCashing() { // 开单收银
   curCustomer.value = null // 进入页面前清空store内容
-  checkedServs.value = []
-  checkedProds.value = []
+  resetGoods()
   uni.navigateTo({ url: '/pagesA/billing/index' })
 }
 async function toMakeCard() { // 开卡及充值
+  resetCards()
   showCardRecharge.value = true
 }
 function toOrderList() {
