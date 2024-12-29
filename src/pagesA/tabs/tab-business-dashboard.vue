@@ -319,7 +319,7 @@ function toCardRecharge(type: 1 | 2 | 3 | 4 | 5 | 6) {
         </view>
       </view>
 
-      <view h-30px />
+      <view h-50px />
     </view>
   </view>
 

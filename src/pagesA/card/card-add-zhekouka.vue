@@ -25,7 +25,7 @@ const form = ref<CardForm>({
   countLimit: 0,
 })
 
-const sources2: any = [
+const sources2: any = ref([
   {
     label: '支持',
     value: 1,
@@ -36,7 +36,7 @@ const sources2: any = [
     value: 0,
     isActive: false,
   },
-]
+])
 
 const catName = computed(() => curClassify.value.name)
 

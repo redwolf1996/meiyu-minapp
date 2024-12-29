@@ -25,7 +25,7 @@ const form = ref<CardForm>({
   countLimit: 0,
   id: null,
 })
-const sources2: any = [
+const sources2: any = ref([
   {
     label: '支持',
     value: 1,
@@ -36,7 +36,7 @@ const sources2: any = [
     value: 0,
     isActive: false,
   },
-]
+])
 const catName = computed(() => curClassify.value.name)
 
 type Mode = 'edit' | 'copy' | null
@@ -106,7 +106,7 @@ async function setFormInfo() {
     sources2.value[1].isActive = true
   }
   form.value.countLimit = data.countLimit
-  form.value.info = data.info.map((v) => {
+  form.value.info = data.info?.map((v) => {
     return {
       equity: v.equity,
       productId: v.productId,
