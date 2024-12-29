@@ -4,13 +4,22 @@ style:
 </route>
 
 <script lang="ts" setup>
+import type { PayRefundType } from '../billing/types'
 import type { Detail } from './types'
 import qs from 'qs'
 
 const id = ref(0)
 const detail = ref<Detail>(null)
+const PayTypesMap = ref<any>({
+})
 
-onLoad((option) => {
+onLoad(async (option) => {
+  request.get<PayRefundType>('/pay-type-conf').then((res) => {
+    res.data.payType.forEach((v) => {
+      PayTypesMap.value[v.code] = v.desc
+    })
+  })
+
   id.value = +option.id
   getDetail()
 })
@@ -56,7 +65,7 @@ async function toRefund() {
         </view>
         <view class="my-status-tag end-service">
           <!-- 已完成(退款成功) -->
-          {{ PayStatusMap[detail?.payStatus] }}
+          {{ PayStatusMap?.[detail?.payStatus] }}
         </view>
       </view>
       <view class="h20px" />
@@ -188,7 +197,7 @@ async function toRefund() {
       <view v-if="detail?.payStatus === 2" f14 bg-white px-32rpx py-40rpx mb12px rd-4px>
         <view flex gap16px flex-ac mb12px>
           <view>付款方式</view>
-          <view>{{ detail?.payType ? PayTypesMap[detail?.payType] : '--' }}</view>&nbsp;&nbsp;￥{{ detail?.amount }}
+          <view>{{ detail?.payType ? PayTypesMap?.[detail?.payType] : '--' }}</view>&nbsp;&nbsp;￥{{ detail?.amount }}
         </view>
         <view flex gap16px flex-ac>
           <view>支付时间</view>

@@ -6,32 +6,16 @@ style:
 <script lang="ts" setup>
 import { useMessage, useQueue } from 'wot-design-uni'
 import type { Detail } from './types'
+import type { PayRefundType, RefundType } from '../billing/types'
 
+const toast = useToast()
 const message = useMessage('wd-message-box-slot')
 const { closeOutside } = useQueue()
 const showRefundTypes = ref(false)
-const refundTypes = ref([
-  {
-    code: 20,
-    name: '原路退回',
-  },
-  {
-    code: 1,
-    name: '现金',
-  },
-  {
-    code: 4,
-    name: '微信',
-  },
-  {
-    code: 5,
-    name: '支付宝',
-  },
-])
-const curItem = ref<{ code: number, name: string }>({
-  code: 1,
-  name: '现金',
+const refundTypes = ref<any[]>([])
+const PayTypesMap = ref<any>({
 })
+const curItem = ref<{ code: number, name: string }>({} as any)
 const id = ref(0)
 const detail = ref<Detail>(null)
 const form = reactive({
@@ -41,7 +25,20 @@ const form = reactive({
   notes: '',
 })
 
-onLoad((option) => {
+onLoad(async (option) => {
+  // 获取支付方式
+  await request.get<PayRefundType>('/pay-type-conf').then((res) => {
+    refundTypes.value = res.data.refundType?.map((v) => {
+      return {
+        name: v.desc,
+        code: v.code,
+      }
+    })
+    res.data.payType.forEach((v) => {
+      PayTypesMap.value[v.code] = v.desc
+    })
+  })
+
   id.value = +option.id
   getDetail()
 })
@@ -52,6 +49,8 @@ async function getDetail() {
 }
 
 function confirmRefund() {
+  if (!form.refundType)
+    return toast.warning('请选择退款方式')
   message
     .confirm({
       title: '提示',
@@ -81,6 +80,7 @@ function select({ item }) {
 </script>
 
 <template>
+  <wd-toast />
   <view p-32rpx @click="closeOutside">
     <wd-message-box selector="wd-message-box-slot">
       <view tl mb5px>
@@ -136,7 +136,7 @@ function select({ item }) {
       <view class="h20px" />
       <MyCell label="订单支付方式" :showArrow="false">
         <text f14>
-          {{ PayTypesMap[detail?.payType] }}
+          {{ PayTypesMap?.[detail?.payType] }}
         </text>
       </MyCell>
 

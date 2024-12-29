@@ -5,63 +5,12 @@ style:
 
 <script lang="ts" setup>
 import { PayModeEnum } from '@/utils/consts'
-import type { CashCard } from './types'
+import type { CashCard, PayRefundType, PayType } from './types'
 
 const toast = useToast()
-const curCode = ref(4)
+const curCode = ref<number | null >(null)
 const mode = ref(0) // 1 开单 2开卡 3充值
-const payTypes = ref([
-  {
-    code: 1,
-    desc: '现金',
-    active: false,
-  },
-  {
-    code: 2,
-    desc: '银行卡',
-    active: false,
-  },
-  {
-    code: 3,
-    desc: '移动支付',
-    active: false,
-  },
-  {
-    code: 4,
-    desc: '微信(手工)',
-    active: true,
-  },
-  {
-    code: 5,
-    desc: '支付宝(手工)',
-    active: false,
-  },
-  {
-    code: 6,
-    desc: '其他',
-    active: false,
-  },
-  // {
-  //   code: 7,
-  //   desc: '储值卡',
-  //   active: false,
-  // },
-  {
-    code: 8,
-    desc: '美团',
-    active: false,
-  },
-  {
-    code: 9,
-    desc: '抖音',
-    active: false,
-  },
-  {
-    code: 10,
-    desc: '线下收款',
-    active: false,
-  },
-])
+const payTypes = ref<PayType[]>([])
 const payMode = ref<1 | 2>(1) // 1线下记账收款 2储值卡支付
 
 const postUrl = ref('')
@@ -70,7 +19,17 @@ const orderId = ref(0)
 const repayAmount = ref(0) // 稍后支付的订单金额
 const curCard = ref<CashCard>(null)
 
-onLoad((option) => {
+onLoad(async (option) => {
+  // 获取支付方式
+  await request.get<PayRefundType>('/pay-type-conf').then((res) => {
+    payTypes.value = res.data.payType?.map((v) => {
+      return {
+        ...v,
+        active: false,
+      }
+    })
+  })
+
   //  1 开单 2开卡 3充值 4预约
   if (option?.createSource) {
     mode.value = Number(option?.createSource)
@@ -121,12 +80,16 @@ async function getAvailableCashCards(storeCustomerId, amount) {
 }
 
 async function pay() {
+  if (!curCode.value)
+    return toast.warning('请选择支付方式')
+
   let amount = 0
   let points = 0
   if (orderId.value) { // 待支付订单支付
     const res = await request.post<any>('/business/order/pay', {
       orderId: orderId.value,
       payType: curCode.value,
+
       customerCardId: curCard.value?.id,
     })
     amount = res.data?.payAmount

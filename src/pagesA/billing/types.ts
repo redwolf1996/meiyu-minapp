@@ -142,3 +142,26 @@ export interface CashCard {
   totalAmount?: number
   [property: string]: any
 }
+
+export interface PayRefundType {
+  /**
+   * 支付方式
+   */
+  payType: PayType[]
+  /**
+   * 退款方式
+   */
+  refundType: RefundType[]
+}
+
+export interface PayType {
+  code: number
+  desc: string
+  active?: boolean
+}
+
+export interface RefundType {
+  code: number
+  desc: string
+  active?: boolean
+}

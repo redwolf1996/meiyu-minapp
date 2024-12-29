@@ -41,8 +41,8 @@ async function renew() {
   }
   const res = await request.post<any>('/business/renew', {
     vipPackageId: curItem.value.id,
-    payType: 3,
-    amount: 0.01,
+    payType: 3, // 3: 微信支付
+    amount: curItem.value?.price || 0.01,
   })
   wx.requestPayment({
     timeStamp: res.data.timestamp,

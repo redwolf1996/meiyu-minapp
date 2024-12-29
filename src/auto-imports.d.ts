@@ -420,7 +420,6 @@ declare module 'vue' {
     readonly IMG_BASE: UnwrapRef<typeof import('./utils/index')['IMG_BASE']>
     readonly PayModeEnum: UnwrapRef<typeof import('./utils/consts')['PayModeEnum']>
     readonly PayStatusMap: UnwrapRef<typeof import('./utils/consts')['PayStatusMap']>
-    readonly PayTypesMap: UnwrapRef<typeof import('./utils/consts')['PayTypesMap']>
     readonly TimesCardTypeMap: UnwrapRef<typeof import('./utils/consts')['TimesCardTypeMap']>
     readonly VipLevelMap: UnwrapRef<typeof import('./utils/consts')['VipLevelMap']>
     readonly WeekMap: UnwrapRef<typeof import('./utils/consts')['WeekMap']>
@@ -511,7 +510,6 @@ declare module 'vue' {
     readonly reactive: UnwrapRef<typeof import('vue')['reactive']>
     readonly readonly: UnwrapRef<typeof import('vue')['readonly']>
     readonly ref: UnwrapRef<typeof import('vue')['ref']>
-    readonly refundTypesMap: UnwrapRef<typeof import('./utils/consts')['refundTypesMap']>
     readonly request: UnwrapRef<typeof import('./utils/request')['default']>
     readonly resetCards: UnwrapRef<typeof import('./stores/common')['resetCards']>
     readonly resetCurClassify: UnwrapRef<typeof import('./stores/classify')['resetCurClassify']>
