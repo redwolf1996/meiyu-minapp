@@ -5,7 +5,23 @@ style:
 
 <script lang="ts" setup>
 function toBWeChat() {
+  console.log('xxxxxx')
   uni.navigateTo({ url: '/pagesA/my/qiwei' })
+}
+
+function call() {
+  uni.makePhoneCall({ phoneNumber: '13263301397' })
+}
+
+function email() {
+  uni.setClipboardData({
+    data: 'support@xunhuazn.com', // 要被复制的内容
+    success: () => { // 复制成功的回调函数
+      uni.showToast({ // 提示
+        title: '复制邮箱成功',
+      })
+    },
+  })
 }
 </script>
 
@@ -17,7 +33,7 @@ function toBWeChat() {
      background-repeat: no-repeat;
     background-position: center"
   >
-    <view wp100 h276px px40rpx py24rpx color-white>
+    <view wp100 px40rpx py24rpx color-white>
       <view fs-36>
         Hi，
       </view>
@@ -30,20 +46,22 @@ function toBWeChat() {
     </view>
   </view>
   <view h18px />
-  <MyCellGroup>
-    <MyCell label="企业微信" @myclick="toBWeChat()" />
-    <MyCell label="客服电话">
-      <text f14 c-3B3D3D>
-        13263301397
-      </text>
-    </MyCell>
-    <MyCell label="客服邮箱">
-      <text f14 c-3B3D3D>
-        support@xunhuazn.com
-      </text>
-    </MyCell>
-    <MyCell label="问题留言" />
-  </MyCellGroup>
+  <view style="z-index: 999999;">
+    <MyCellGroup>
+      <MyCell label="企业微信" @myclick="toBWeChat" />
+      <MyCell label="客服电话" @myclick="call">
+        <text f14 c-3B3D3D>
+          13263301397
+        </text>
+      </MyCell>
+      <MyCell label="客服邮箱" @myclick="email">
+        <text f14 c-3B3D3D>
+          support@xunhuazn.com
+        </text>
+      </MyCell>
+    <!-- <MyCell label="问题留言" /> -->
+    </MyCellGroup>
+  </view>
 </template>
 
 <style lang='scss' scoped></style>
