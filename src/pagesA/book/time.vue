@@ -9,6 +9,8 @@ import type { Times } from '@/utils'
 import type { TimeOccupy } from './types'
 import { flatten } from 'lodash-es'
 
+const instance = getCurrentInstance()
+const query = uni.createSelectorQuery().in(instance.proxy)
 const today = fd(+new Date())
 const day = ref(fd(+new Date()))
 const stime = ref('')
@@ -48,6 +50,12 @@ async function init() {
 
   duration.value = tmpDuration
 }
+
+onMounted(() => {
+  query.select('#mytable').boundingClientRect((data: any) => {
+    console.log(data)
+  }).exec()
+})
 
 onHide(() => {
   bookInfo.value = null
@@ -98,7 +106,7 @@ async function save() {
         {{ bookInfo.artName ?? '未分配' }}
       </text>
     </view>
-    <view class="my-table">
+    <view id="mytable" class="my-table">
       <template v-for="item in times" :key="item.value">
         <view class="item pr" :class="{ selected: item.selected, disabled: item.disabled }" @click="clickItem(item)">
           {{ item.value }}
