@@ -24,9 +24,9 @@ const value2 = ref<string>('21:00')
 onShow(async () => {
   const res = await request.get<Data>(`/business/store/${storeId.value}`)
   info.value = res.data
-  val.value = info.value.workWeek
-  value1.value = info.value.workStime?.slice(0, -3)
-  value2.value = info.value.workEtime?.slice(0, -3)
+  val.value = info.value.toDoorWeek
+  value1.value = info.value.toDoorStime?.slice(0, -3)
+  value2.value = info.value.toDoorEtime?.slice(0, -3)
 })
 
 function showPicker() {
