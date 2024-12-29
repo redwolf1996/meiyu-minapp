@@ -58,6 +58,9 @@ onLoad((options) => {
     }
     setFormInfo()
   }
+  else {
+    resetCurClassify()
+  }
 })
 
 // 修改和复制的时候用

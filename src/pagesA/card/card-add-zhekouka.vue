@@ -58,6 +58,9 @@ onLoad((options) => {
     }
     setFormInfo()
   }
+  else {
+    resetCurClassify()
+  }
 })
 
 onShow(() => {
