@@ -135,7 +135,7 @@ function selectItem2(itm: any) {
                   <view fs-14px mt-10px>
                     <template v-if="itm.type === 1">
                       <text>￥{{ itm.price }}&nbsp;</text>
-                      <text>权益次数：{{ itm.gift }}次</text>
+                      <text>权益次数：{{ itm.totalCount }}次</text>
                     </template>
                     <template v-if="itm.type === 2">
                       <text>本金￥{{ itm.price }}&nbsp;</text>

@@ -14,19 +14,36 @@ export interface Category {
 }
 
 export interface CardList {
-  categoryId: number
-  expires: number
-  gift: number
   id: number
-  name: string
-  price: number
-  secondType: number
   /**
    * 卡类型 1->次卡，2->充值卡，3->折扣卡
    */
   type: 1 | 2 | 3
+  secondType: number
+  gift: number
+  name: string
+  categoryId: number
+  price: number
+  expires: number
+  countLimit?: number
+  isShow?: boolean
+  totalCount?: number
+  discount?: number
+  info?: Info[]
   checked?: boolean
   disabled?: boolean
+}
+
+export interface Info {
+  cardId: number
+  equity: number
+  price: number
+  price2: number
+  productId: number
+  productName: string
+  serviceId: number
+  serviceName: string
+  [property: string]: any
 }
 
 export interface ProductList {
