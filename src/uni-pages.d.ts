@@ -9,9 +9,6 @@ interface NavigateToOptions {
        "/pagesA/prod-servs" |
        "/pagesA/protocol" |
        "/pagesA/rich-edit" |
-       "/pagesA/billing/billing" |
-       "/pagesA/billing/customer-list" |
-       "/pagesA/billing/goods-list" |
        "/pagesA/billing/index" |
        "/pagesA/billing/pay-success" |
        "/pagesA/billing/pay" |
@@ -23,7 +20,6 @@ interface NavigateToOptions {
        "/pagesA/book/time" |
        "/pagesA/booking/d2dTime" |
        "/pagesA/booking/index" |
-       "/pagesA/booking/share" |
        "/pagesA/booking/storeTime" |
        "/pagesA/card/card-add-chongzhika" |
        "/pagesA/card/card-add-cika" |
@@ -35,7 +31,6 @@ interface NavigateToOptions {
        "/pagesA/card/make" |
        "/pagesA/card/select-card-common" |
        "/pagesA/card/select-card" |
-       "/pagesA/card/share" |
        "/pagesA/customer/add" |
        "/pagesA/customer/detail" |
        "/pagesA/customer/list" |
@@ -68,13 +63,9 @@ interface NavigateToOptions {
        "/pagesA/order/refund-detail" |
        "/pagesA/order/refund" |
        "/pagesA/product/add" |
-       "/pagesA/product/cat" |
        "/pagesA/product/list" |
-       "/pagesA/product/share" |
        "/pagesA/service/add" |
-       "/pagesA/service/cat" |
        "/pagesA/service/index" |
-       "/pagesA/service/share" |
        "/pagesA/staff/add" |
        "/pagesA/staff/detail" |
        "/pagesA/staff/index" |

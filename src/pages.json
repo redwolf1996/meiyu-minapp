@@ -64,27 +64,6 @@
           }
         },
         {
-          "path": "billing/billing",
-          "type": "page",
-          "style": {
-            "navigationBarTitleText": "开单明细"
-          }
-        },
-        {
-          "path": "billing/customer-list",
-          "type": "page",
-          "style": {
-            "navigationBarTitleText": "选择客户"
-          }
-        },
-        {
-          "path": "billing/goods-list",
-          "type": "page",
-          "style": {
-            "navigationBarTitleText": "服务产品列表"
-          }
-        },
-        {
           "path": "billing/index",
           "type": "page",
           "layout": false,
@@ -166,13 +145,6 @@
           }
         },
         {
-          "path": "booking/share",
-          "type": "page",
-          "style": {
-            "navigationBarTitleText": "店铺二维码"
-          }
-        },
-        {
           "path": "booking/storeTime",
           "type": "page",
           "style": {
@@ -248,13 +220,6 @@
           "type": "page",
           "style": {
             "navigationBarTitleText": "选择卡项"
-          }
-        },
-        {
-          "path": "card/share",
-          "type": "page",
-          "style": {
-            "navigationBarTitleText": "分享卡项"
           }
         },
         {
@@ -487,24 +452,10 @@
           }
         },
         {
-          "path": "product/cat",
-          "type": "page",
-          "style": {
-            "navigationBarTitleText": "选择产品分类"
-          }
-        },
-        {
           "path": "product/list",
           "type": "page",
           "style": {
             "navigationBarTitleText": "产品管理"
-          }
-        },
-        {
-          "path": "product/share",
-          "type": "page",
-          "style": {
-            "navigationBarTitleText": "分享产品"
           }
         },
         {
@@ -515,24 +466,10 @@
           }
         },
         {
-          "path": "service/cat",
-          "type": "page",
-          "style": {
-            "navigationBarTitleText": "选择服务分类"
-          }
-        },
-        {
           "path": "service/index",
           "type": "page",
           "style": {
             "navigationBarTitleText": "服务管理"
-          }
-        },
-        {
-          "path": "service/share",
-          "type": "page",
-          "style": {
-            "navigationBarTitleText": "分享服务"
           }
         },
         {
