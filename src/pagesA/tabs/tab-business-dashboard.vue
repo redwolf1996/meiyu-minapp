@@ -37,7 +37,7 @@ async function initStore() {
   storeName.value = userInfo.value?.lastStoreName || userInfo.value.storeList?.[0]?.storeName
   const guidStatus = userInfo.value.guidStatus
 
-  if (userInfo.value.storeList === null || userInfo.value?.storeList?.length === 0) { // 如果店铺未创建
+  if (!userInfo.value.orgInfo?.storeCount) { // 如果店铺未创建
     return uni.navigateTo({ url: '/pagesA/init/steps/step1' })
   }
 
