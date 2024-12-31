@@ -87,7 +87,7 @@ async function doSign() {
 }
 
 function toOrder() {
-  uni.navigateTo({ url: `/pagesA/order/detail?id=${bookingId.value}` })
+  uni.navigateTo({ url: `/pagesA/order/detail?id=${bookDetail.value.orderId}` })
 }
 
 async function toEditTime() {

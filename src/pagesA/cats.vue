@@ -143,7 +143,7 @@ function selCat() {
         </view>
       </view>
       <view class="h50px" />
-      <view color-white fixed bottom-50px style="width: calc(100% - 40px);" @click="selCat">
+      <view color-white fixed bottom-80px style="width: calc(100% - 40px);" @click="selCat">
         <wd-button size="large" custom-class="theme-bg" block>
           <view flex flex-cc>
             <text>确定</text>
