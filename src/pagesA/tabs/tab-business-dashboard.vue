@@ -243,7 +243,7 @@ function toCardRecharge(type: 1 | 2 | 3 | 4 | 5 | 6) {
 
       <view mt-30px>
         <view class="title">
-          今日预约({{ info?.todayBookingList?.length ?? 0 }})
+          今日待服务({{ info?.todayBookingList?.length ?? 0 }})
         </view>
         <view>
           <scroll-view v-if="info?.todayBookingList?.length" :scrollX="true" style="white-space: nowrap;">

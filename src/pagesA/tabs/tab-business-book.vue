@@ -429,7 +429,7 @@ function toDetail(item: BookListAll) {
         <view dib hp100 pr z-150 flex-grow-1>
           <view h-32px lh-32px sticky top-0 z-180 flex f12 c-364250>
             <view v-for="(item, index) in tableData" :key="`name-${index}`" bg-white tc flex-shrink-0 :style="{ flexBasis: `${multipleItemWidth}px` }">
-              {{ item.artisanName }}
+              {{ item.artisanName || '未分配' }}
             </view>
           </view>
           <view h-2880px class="table-content" flex>
