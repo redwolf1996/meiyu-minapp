@@ -51,6 +51,13 @@ async function renew() {
     signType: res.data.signType,
     paySign: res.data.paySign,
     success() {
+      uni.showToast({
+        title: '支付成功',
+        icon: 'success',
+      })
+      setTimeout(() => { // 返回工作台
+        uni.navigateTo({ url: '/pagesA/tabs/tab-business-dashboard' })
+      }, 1000)
     },
     fail(res) {
       console.error(res)

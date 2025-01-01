@@ -137,7 +137,7 @@ function toEdit() {
             性别
           </text>
           <text class="val">
-            {{ detailInfo?.gender }}
+            {{ GenderMap[detailInfo?.gender] }}
           </text>
         </view>
         <view class="base">
