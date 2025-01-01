@@ -52,7 +52,7 @@ function continueRecharge() {
 function continueBooking() {
   bookStime.value = ''
   resetGoods()
-  uni.navigateTo({ url: '/pagesA/tabs/tab-business-dashboard' })
+  uni.navigateTo({ url: '/pagesA/book/add' })
 }
 
 // 查看订单详情
