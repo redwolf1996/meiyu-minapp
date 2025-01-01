@@ -35,9 +35,9 @@ function selectItem2(itm: any) {
 <template>
   <view class="wrapper">
     <view v-if="customerCashCardList.length > 0" px20px py20px>
-      <view v-for="(itm, idx) in customerCashCardList" :key="`itm-${idx}`" h132px mb12px pr style="width: calc(100vw - 40px);">
+      <view v-for="(itm, idx) in customerCashCardList" :key="`itm-${idx}`" h102px mb12px pr style="width: calc(100vw - 40px);">
         <image
-          style="width: calc(100vw - 40px);height: 132px;"
+          style="width: calc(100vw - 40px);height: 102px;"
           mode="aspectFill"
           :src="`${IMG_BASE}/cards/${cardImgName[itm.cardType]}.png`"
         />
@@ -57,7 +57,7 @@ function selectItem2(itm: any) {
             <view fs-14px mt-10px>
               <template v-if="itm.cardType === 1">
                 <text>￥{{ itm.amount }}&nbsp;</text>
-                <text>权益次数：{{ itm.equity }}次</text>
+                <text>可用次数：{{ itm.equity }}次</text>
               </template>
               <template v-if="itm.cardType === 2">
                 <text>剩余金额￥{{ itm.totalAmount }}&nbsp;</text>
@@ -77,14 +77,14 @@ function selectItem2(itm: any) {
               </text>
             </view>
           </view>
-          <view
+          <!-- <view
             fs-12px
             flex flex-ac flex-xr h30px w100% pr12px style="background-color: rgba(0, 0, 0, 0.2);
               border-bottom-left-radius: 4px;border-bottom-right-radius: 4px"
             @click="toDetail(itm.cardId)"
           >
             查看详情&nbsp;>
-          </view>
+          </view> -->
         </view>
       </view>
     </view>

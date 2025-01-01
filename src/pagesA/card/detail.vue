@@ -29,10 +29,6 @@ onLoad(async (options) => {
     discounts.value = arr
   }
 })
-
-function getEquities() {
-  return itm.value?.info?.map((v: any) => v.equity).reduce((a, b) => a + b, 0)
-}
 </script>
 
 <template>
