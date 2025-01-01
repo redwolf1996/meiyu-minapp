@@ -3,7 +3,19 @@ style:
   navigationBarTitleText: 支付管理
 </route>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import type { PayRefundType } from '../billing/types'
+
+const payTypes = ref<PayRefundType['payType']>([])
+const refundTypes = ref<PayRefundType['refundType']>([])
+
+onLoad(async () => {
+  await request.get<PayRefundType>('/pay-type-conf').then((res) => {
+    payTypes.value = res.data.payType
+    refundTypes.value = res.data.refundType
+  })
+})
+</script>
 
 <template>
   <view px-20px py-30px>
@@ -15,16 +27,9 @@ style:
         </view>
       </view>
       <view class="list">
-        <view>现金</view>
-        <view>银行卡</view>
-        <view>移动支付</view>
-        <view>微信(手工)</view>
-        <view>支付宝(手工)</view>
-        <view>其他</view>
-        <view>储值卡</view>
-        <view>美团</view>
-        <view>抖音</view>
-        <view>线下收款</view>
+        <view v-for="item in payTypes" :key="item?.code">
+          {{ item?.desc }}
+        </view>
       </view>
     </view>
     <view mb-20px>
@@ -35,10 +40,9 @@ style:
         </view>
       </view>
       <view class="list">
-        <view>原路退回</view>
-        <view>现金</view>
-        <view>微信</view>
-        <view>支付宝</view>
+        <view v-for="item in refundTypes" :key="item?.code">
+          {{ item?.desc }}
+        </view>
       </view>
     </view>
   </view>
