@@ -57,7 +57,7 @@ function selectItem2(itm: any) {
             <view fs-14px mt-10px>
               <template v-if="itm.cardType === 1">
                 <text>￥{{ itm.amount }}&nbsp;</text>
-                <text>权益次数：{{ itm.gift }}次</text>
+                <text>权益次数：{{ itm.equity }}次</text>
               </template>
               <template v-if="itm.cardType === 2">
                 <text>剩余金额￥{{ itm.totalAmount }}&nbsp;</text>
@@ -73,7 +73,7 @@ function selectItem2(itm: any) {
                 永久有效
               </text>
               <text v-else>
-                有效期：{{ itm.expiresTimeDesc }}
+                {{ itm.expiresTimeDesc }}
               </text>
             </view>
           </view>
@@ -81,7 +81,7 @@ function selectItem2(itm: any) {
             fs-12px
             flex flex-ac flex-xr h30px w100% pr12px style="background-color: rgba(0, 0, 0, 0.2);
               border-bottom-left-radius: 4px;border-bottom-right-radius: 4px"
-            @click="toDetail(itm.id)"
+            @click="toDetail(itm.cardId)"
           >
             查看详情&nbsp;>
           </view>
@@ -113,7 +113,7 @@ page {
 .wrapper {
   display: flex;
   height: calc(100vh - 50px);
-  overflow: hidden;
+  overflow: auto;
 }
 .content {
   flex: 1;

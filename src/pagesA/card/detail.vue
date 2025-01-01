@@ -29,6 +29,10 @@ onLoad(async (options) => {
     discounts.value = arr
   }
 })
+
+function getEquities() {
+  return itm.value?.info?.map((v: any) => v.equity).reduce((a, b) => a + b, 0)
+}
 </script>
 
 <template>
@@ -56,7 +60,12 @@ onLoad(async (options) => {
           <view fs-14px mt-10px>
             <template v-if="itm?.type === 1">
               <text>￥{{ itm?.price }}&nbsp;</text>
-              <text>权益次数：{{ itm?.gift }}次</text>
+              <text v-if="itm?.secondType === 1">
+                权益次数：{{ itm?.info?.map((v) => v.equity) }}次
+              </text>
+              <text v-if="itm?.secondType === 2">
+                权益次数：{{ itm?.countLimit }}次
+              </text>
             </template>
             <template v-if="itm?.type === 2">
               <text>本金￥{{ itm?.price }}&nbsp;</text>

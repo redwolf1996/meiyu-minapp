@@ -45,7 +45,7 @@ function toDetail() {
             你的账户将于{{ dayjs(data.ext.expiresTime).format('YYYY-MM-DD') }}号到期...
           </template>
           <template v-else>
-            已成功续费--个月
+            已成功续费{{ data.ext.days }}天
           </template>
         </view>
         <view f12 tc w-64rpx>

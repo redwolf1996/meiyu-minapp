@@ -507,7 +507,7 @@ function toDetail(item: BookListAll) {
                     <view fb>
                       {{ item?.artisanName || '未分配' }}
                     </view>
-                    <view w-12rpx h-12rpx round style="background-color: #91919F;" />
+                    <view w-6rpx h-6rpx round style="background-color: #91919F;" />
                     <view color-white tc px-8rpx py-4rpx lh-24rpx bg-FE502E>
                       {{ item?.storeServiceTypeDesc }}
                     </view>
@@ -547,14 +547,14 @@ function toDetail(item: BookListAll) {
                 <view />
                 <view flex flex-ac gap-5px font-size-20rpx>
                   <wd-img
-                    :width="20"
-                    :height="20"
+                    :width="13"
+                    :height="13"
                     :src="`${IMG_BASE}/icon-people.png`"
                   />
                   <view fb>
                     {{ item?.storeCustomerName }}
                   </view>
-                  <view w-10rpx h-10rpx round ma style="background-color: #000;" />
+                  <view w-6rpx h-6rpx round ma style="background-color: #000;" />
                   <view> {{ item?.phone }}</view>
                 </view>
               </view>

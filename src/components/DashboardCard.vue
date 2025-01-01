@@ -29,7 +29,7 @@ const img = data.serviceList?.[0].serviceCoverImg
             <view fb>
               {{ data.artisanName || '未分配' }}
             </view>
-            <view w-12rpx h-12rpx round style="background-color: #FE502E;" />
+            <view w-6rpx h-6rpx round style="background-color: #FE502E;" />
             <view color-white tc px-8rpx py-4rpx lh-24rpx bg-FE502E>
               {{ data.storeServiceTypeDesc }}
             </view>
@@ -45,14 +45,14 @@ const img = data.serviceList?.[0].serviceCoverImg
     <view mt-10px lh-30px flex flex-bt flex-ac>
       <view flex flex-ac gap-5px font-size-20rpx>
         <wd-img
-          :width="26"
-          :height="26"
+          :width="13"
+          :height="13"
           :src="`${IMG_BASE}/icon-people.png`"
         />
         <view fb>
           {{ data.storeCustomerName }}
         </view>
-        <view w-10rpx h-10rpx round ma style="background-color: #000;" />
+        <view w-6rpx h-6rpx round ma style="background-color: #000;" />
         <view>{{ data.phone }}</view>
       </view>
       <view class="btn btn1">
