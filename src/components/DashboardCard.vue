@@ -27,7 +27,7 @@ const img = data.serviceList?.[0].serviceCoverImg
           </view>
           <view f12 flex tc flex-ac gap-10rpx f10>
             <view fb>
-              {{ data.artisanName }}
+              {{ data.artisanName || '未分配' }}
             </view>
             <view w-12rpx h-12rpx round style="background-color: #FE502E;" />
             <view color-white tc px-8rpx py-4rpx lh-24rpx bg-FE502E>

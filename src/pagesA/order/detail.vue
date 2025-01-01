@@ -177,7 +177,7 @@ async function toRefund() {
           </view>
           <view flex flex-bt mb12px f14>
             <view>手艺人</view>
-            <view>{{ item?.artisanName || '--' }}</view>
+            <view>{{ item?.artisanName || '未分配' }}</view>
           </view>
           <view flex flex-bt mb12px f14>
             <view>使用卡项</view>

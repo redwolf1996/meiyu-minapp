@@ -53,7 +53,7 @@ async function doSubmit() {
           手艺人：
         </text>
         <text pl10px>
-          到店分配
+          {{ bookInfo?.artName || '到店分配' }}
         </text>
       </view>
     </view>

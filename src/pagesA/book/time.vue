@@ -103,7 +103,7 @@ async function save() {
     <view f14 tc mt5px mb50rpx>
       <text>手艺人</text>
       <text c-1A66FF pl10px>
-        {{ bookInfo.artName ?? '未分配' }}
+        {{ bookInfo.artName || '未分配' }}
       </text>
     </view>
     <view id="mytable" class="my-table">

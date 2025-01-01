@@ -321,7 +321,7 @@ onShow(() => {
                 手艺人：
               </text>
               <text c-00BB00>
-                {{ item.artisanUserName || '--' }}
+                {{ item?.artisanUserName || '未分配' }}
               </text>
             </view>
             <view>
@@ -329,7 +329,7 @@ onShow(() => {
                 营销顾问：
               </text>
               <text c-00BB00>
-                {{ item.adviserUserName || '--' }}
+                {{ item?.adviserUserName || '未分配' }}
               </text>
             </view>
           </view>
