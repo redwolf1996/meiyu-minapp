@@ -187,7 +187,7 @@ async function save() {
     <wd-cell-group :border="true">
       <wd-cell title="客户" :is-link="!fromCustomer" @click="toSelCus()">
         <view>
-          <text v-if="!cusName" c-#B6BDBD>
+          <text v-if="!curCustomer?.storeCustomerId" c-#B6BDBD>
             请选择或添加
           </text>
           <text v-else>

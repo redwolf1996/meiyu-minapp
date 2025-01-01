@@ -66,7 +66,7 @@ function toAddCus() {
 <template>
   <view>
     <wd-search custom-class="search-fixed" placeholder="请输入客户姓名或手机号" cancel-txt="取消" @cancel="cancelSearch()" @change="changeSearch" />
-    <view tc mt10px mb10px font-size-14px theme-color @click="toAddCus()">
+    <view tc lh-40px font-size-14px theme-color bg-white @click="toAddCus()">
       +&nbsp;&nbsp;添加客户
     </view>
     <view v-for="(item, index) in list" :key="`sd-${index}`" flex flex-ac flex-bt bg-white px40rpx py20rpx style="border-bottom: 1px solid #DFDFDF" @click="clickItem(item)">
