@@ -211,6 +211,7 @@ function showSearch() {
   visableSearch.value = true
 }
 function createOrder() {
+  curCustomer.value = null
   bookStime.value = ''
   resetGoods()
   uni.navigateTo({ url: '/pagesA/book/add' })

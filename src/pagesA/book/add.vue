@@ -23,9 +23,9 @@ const columns = ref<SelItem[]>([
 ])
 const model = reactive<BookForm>({
   storeId: storeId.value,
-  storeCustomerPhone: null,
-  storeCustomerName: null,
-  storeCustomerId: null,
+  storeCustomerPhone: computed(() => curCustomer.value?.phone),
+  storeCustomerName: computed(() => curCustomer.value?.name),
+  storeCustomerId: computed(() => curCustomer.value?.storeCustomerId),
   storeServiceType: 1,
   startTime: computed(() => `${bookStime.value}:00`),
   artisanId: null,
@@ -38,6 +38,13 @@ const artName = ref('')
 const listStaff = ref<ListStaff[]>([])
 const visibleStaff = ref(false)
 const fromCustomer = ref(false)
+const cusName = computed(() => `${curCustomer.value?.name} ${curCustomer.value?.phone}` || '')
+
+function toSelCus() {
+  if (fromCustomer.value)
+    return false
+  uni.navigateTo({ url: '/pagesA/customer/list' })
+}
 
 onLoad(async (option) => {
   if (option?.customerId) {
@@ -178,7 +185,21 @@ async function save() {
   </wd-popup>
   <wd-form ref="form" :model="model">
     <wd-cell-group :border="true">
-      <wd-input
+      <wd-cell title="客户" :is-link="!fromCustomer" @click="toSelCus()">
+        <view>
+          <text v-if="!cusName" c-#B6BDBD>
+            请选择或添加
+          </text>
+          <text v-else>
+            {{ cusName }}
+          </text>
+        </view>
+
+        <template #icon>
+          <wd-icon name="user" size="16px" />
+        </template>
+      </wd-cell>
+      <!-- <wd-input
         v-model="model.storeCustomerPhone"
         :readonly="fromCustomer"
         type="number"
@@ -195,7 +216,7 @@ async function save() {
         placeholder="请输入"
         :suffix-icon="fromCustomer ? '' : 'arrow-right'"
         :rules="[{ required: true, message: '请填写联系人' }]"
-      />
+      /> -->
       <wd-picker v-model="model.storeServiceType" :rules="[{ required: true, message: '请选择服务方式' }]" label="服务方式" align-right :columns="columns" />
     </wd-cell-group>
     <MyCellGroup :py="0">

@@ -50,6 +50,7 @@ function continueRecharge() {
 
 // 继续预约
 function continueBooking() {
+  curCustomer.value = null
   bookStime.value = ''
   resetGoods()
   uni.navigateTo({ url: '/pagesA/book/add' })

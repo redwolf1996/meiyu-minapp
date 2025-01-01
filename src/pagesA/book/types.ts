@@ -26,15 +26,15 @@ export interface BookForm {
   /**
    * 手机号查询到的门店客户id
    */
-  storeCustomerId?: number
+  storeCustomerId?: any
   /**
    * 客户姓名
    */
-  storeCustomerName: string
+  storeCustomerName: any
   /**
    * 客户手机号
    */
-  storeCustomerPhone: string
+  storeCustomerPhone: any
   /**
    * 当前门店id，当前门店id
    */
