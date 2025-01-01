@@ -33,7 +33,7 @@ onLoad(async (option) => {
   if (curCardRechargeType.value === 6) {
     const storeCustomerId = option?.storeCustomerId
     const res = await request.get<AvailableCard[]>('/business/store-customer-card-valid', { storeCustomerId })
-    customerCashCardList.value = res.data.filter(v => v.cardType === 2)
+    customerCashCardList.value = res.data.filter(v => v.cardType === 2 && v.isValid)
   }
   else {
     if (curCardRechargeType.value === 1) { cType.value = 3; cSecondType.value = 0 }

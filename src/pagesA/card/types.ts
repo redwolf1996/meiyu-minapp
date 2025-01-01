@@ -67,6 +67,7 @@ export interface List {
   /**
    * 是否网店展示
    */
+  discountDesc?: string
   isShow: boolean
   info: Info[]
 }

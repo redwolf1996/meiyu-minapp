@@ -180,9 +180,7 @@ function showItemMenu(item: List) {
                 </text>
               </template>
               <template v-if="item.type === 3">
-                <text v-for="(it, idx) in item.info" :key="`zk-${index}-${idx}`" f12>
-                  {{ it.equity }}折&nbsp;
-                </text>
+                {{ item?.discountDesc }}
               </template>
               <template v-if="item.type === 2">
                 <text f12>

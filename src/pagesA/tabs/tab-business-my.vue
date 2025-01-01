@@ -51,7 +51,7 @@ function toFeedBack() {
         :round="true"
         :width="56"
         :height="56"
-        :src="`${IMG_BASE}/cat.png`"
+        :src="DEFAULT_AVATAR"
       />
       <view flex-1 flex flex-y flex-bt h64px pr>
         <view c-141414 f18>
