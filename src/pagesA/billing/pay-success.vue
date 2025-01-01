@@ -7,7 +7,7 @@ style:
 const amount = ref(0)
 const points = ref(0)
 const orderId = ref(0)
-const mode = ref(1) // 1 开单 2开卡 3充值
+const mode = ref(1) // 1 开单 2开卡 3充值 4预约
 
 onLoad((options) => {
   orderId.value = +options.orderId
@@ -16,20 +16,34 @@ onLoad((options) => {
   points.value = +options.points
 })
 
+// 返回首页
 function toDashboard() {
   uni.navigateTo({ url: '/pagesA/tabs/tab-business-dashboard' })
 }
 
+// 继续开单
 function continueOrder() {
   curCustomer.value = null // 进入页面前清空store内容
   resetGoods()
   uni.navigateTo({ url: '/pagesA/billing/index' })
 }
 
-function continueCardRecharge() {
+// 继续开卡
+function continueCard() {
   uni.navigateTo({ url: '/pagesA/tabs/tab-business-dashboard' })
 }
 
+// 继续充值
+function continueRecharge() {
+  uni.navigateTo({ url: '/pagesA/tabs/tab-business-dashboard' })
+}
+
+// 继续预约
+function continueBooking() {
+  uni.navigateTo({ url: '/pagesA/tabs/tab-business-dashboard' })
+}
+
+// 查看订单详情
 function toOrderDetail() {
   uni.navigateTo({ url: `/pagesA/order/detail?id=${orderId.value}` })
 }
@@ -73,11 +87,14 @@ function toOrderDetail() {
       <view v-if="mode === 1" class="item mid" @click="continueOrder()">
         继续开单
       </view>
-      <view v-else-if="mode === 2" class="item mid" @click="continueCardRecharge()">
+      <view v-else-if="mode === 2" class="item mid" @click="continueCard()">
         继续开卡
       </view>
-      <view v-else class="item mid" @click="continueCardRecharge()">
+      <view v-else-if="mode === 3" class="item mid" @click="continueRecharge()">
         继续充值
+      </view>
+      <view v-else-if="mode === 4" class="item mid" @click="continueBooking()">
+        继续预约
       </view>
       <view class="item" @click="toDashboard()">
         返回工作台

@@ -48,6 +48,7 @@ interface BookTempInfo {
    */
   artName: string
   bookId?: number
+  amount?: number
 }
 
 export const bookInfo = ref<Partial<BookTempInfo>>({
@@ -55,4 +56,5 @@ export const bookInfo = ref<Partial<BookTempInfo>>({
   artisanId: null,
   artName: null,
   service: [],
+  amount: 0,
 })

@@ -7,12 +7,14 @@ style:
 const totalAmount = sumArray(bookInfo.value.service.map(v => func_mul(v.price, v.goodsCount)))
 const totalAmount2 = sumArray(bookInfo.value.service.map(v => func_mul(v.price2, v.goodsCount)))
 async function doSubmit() {
-  const params = {
-    ...bookInfo.value,
-    amount: totalAmount2,
-  }
-  await request.post('/business/booking', params)
-  uni.redirectTo({ url: '/pagesA/tabs/tab-business-dashboard' })
+  // const params = {
+  //   ...bookInfo.value,
+  //   amount: totalAmount2,
+  // }
+  bookInfo.value.amount = totalAmount2
+  uni.navigateTo({ url: '/pagesA/billing/pay?createSource=4' })
+  // await request.post('/business/booking', params)
+  // uni.redirectTo({ url: '/pagesA/tabs/tab-business-dashboard' })
 }
 </script>
 
@@ -123,7 +125,7 @@ async function doSubmit() {
 
   <view :class="[safeBottom() ? 'py20px' : 'py10px']" bg-white px20px flex flex-bt flex-ac pf wp100 bottom-0px>
     <view f12 c-1A66FF>
-      {{ bookInfo.startTime ?? '--' }}到店
+      {{ fdt(bookInfo?.startTime) }}&nbsp;到店
     </view>
     <MyButton width="200rpx" @click="doSubmit()">
       提交预约

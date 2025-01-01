@@ -60,6 +60,11 @@ onLoad(async (option) => {
       formData.value = curCardRechargeFormData.value
       postUrl.value = '/business/value-card-recharge'
     }
+
+    if (mode.value === PayModeEnum.Booking) {
+      formData.value = bookInfo.value
+      postUrl.value = '/business/booking'
+    }
   }
 })
 
@@ -95,7 +100,7 @@ async function pay() {
     amount = res.data?.payAmount
     points = res.data?.gainIntegral
   }
-  else { // 正常支付（mode  1 开单 2开卡 3充值）
+  else { // 正常支付（mode  1 开单 2开卡 3充值 4预约）
     formData.value.payType = curCode.value
     formData.value.customerCardId = curCard.value?.id
     const res = await request.post<any>(postUrl.value, formData.value)

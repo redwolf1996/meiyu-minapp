@@ -97,6 +97,7 @@ export enum PayModeEnum {
   MakeOrder = 1,
   MakeCard = 2,
   Recharge = 3,
+  Booking = 4,
 }
 
 // export const PayTypesMap = {
