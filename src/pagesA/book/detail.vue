@@ -338,10 +338,10 @@ function getActiveIndex() {
           </template>
           <template #description>
             <view c-#808089>
-              {{ bookDetail.bookingRecord.createHandleTypeDesc ?? '--' }}创建
+              {{ bookDetail?.bookingRecord.createHandleTypeDesc ?? '--' }}创建
             </view>
             <view c-#808089>
-              {{ bookDetail.bookingRecord.createTime ?? '--' }}
+              {{ bookDetail?.bookingRecord.createTime ?? '--' }}
             </view>
           </template>
         </wd-step>
@@ -363,7 +363,7 @@ function getActiveIndex() {
               </view>
             </template>
             <view v-else c-#808089>
-              {{ bookDetail.bookingRecord.signTime ?? '--' }}
+              {{ bookDetail?.bookingRecord.signTime ?? '--' }}
             </view>
           </template>
         </wd-step>
@@ -385,11 +385,11 @@ function getActiveIndex() {
               </view>
             </template>
             <view v-else c-#808089>
-              {{ bookDetail.bookingRecord.finishTime ?? '--' }}
+              {{ bookDetail?.bookingRecord.finishTime ?? '--' }}
             </view>
           </template>
         </wd-step>
-        <wd-step v-if="bookDetail.bookingStatus === 4">
+        <wd-step v-if="bookDetail?.bookingStatus === 4">
           <template #title>
             <text>
               取消时间
@@ -400,7 +400,7 @@ function getActiveIndex() {
               商家取消
             </view>
             <view c-#808089>
-              {{ bookDetail.bookingRecord.cancelTime ?? '--' }}
+              {{ bookDetail?.bookingRecord.cancelTime ?? '--' }}
             </view>
           </template>
         </wd-step>
