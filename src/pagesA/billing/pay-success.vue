@@ -8,6 +8,7 @@ const amount = ref(0)
 const points = ref(0)
 const orderId = ref(0)
 const mode = ref(1) // 1 开单 2开卡 3充值 4预约
+const showCardRecharge = ref(false) // 显示开卡充值弹窗
 
 onLoad((options) => {
   orderId.value = +options.orderId
@@ -15,6 +16,14 @@ onLoad((options) => {
   amount.value = +options.amount
   points.value = +options.points
 })
+
+// 开卡/充值
+function toCardRecharge(type: 1 | 2 | 3 | 4 | 5 | 6) {
+  curCardRechargeType.value = type
+  curSelectedCard.value = null
+  curCustomer.value = null
+  uni.navigateTo({ url: '/pagesA/card/make' })
+}
 
 // 返回首页
 function toDashboard() {
@@ -30,16 +39,19 @@ function continueOrder() {
 
 // 继续开卡
 function continueCard() {
-  uni.navigateTo({ url: '/pagesA/tabs/tab-business-dashboard' })
+  resetCards()
+  showCardRecharge.value = true
 }
 
 // 继续充值
 function continueRecharge() {
-  uni.navigateTo({ url: '/pagesA/tabs/tab-business-dashboard' })
+  toCardRecharge(6)
 }
 
 // 继续预约
 function continueBooking() {
+  bookStime.value = ''
+  resetGoods()
   uni.navigateTo({ url: '/pagesA/tabs/tab-business-dashboard' })
 }
 
@@ -101,6 +113,39 @@ function toOrderDetail() {
       </view>
     </view>
   </view>
+
+  <wd-popup v-model="showCardRecharge" position="bottom" closable :safe-area-inset-bottom="true" custom-style="border-radius:32rpx;">
+    <view style="height: 360px">
+      <view fb tc c-#232220 mt42px>
+        选择开卡类型
+      </view>
+      <view class="h20px" />
+      <view px20px py12px>
+        <view mb30px>
+          <view fs-16px>
+            开卡
+          </view>
+          <view fs-14px flex flex-wrap gap20px mt20px>
+            <view class="card-item" @click="toCardRecharge(1)">
+              折扣卡
+            </view>
+            <view class="card-item" @click="toCardRecharge(2)">
+              充值卡
+            </view>
+            <view class="card-item" @click="toCardRecharge(3)">
+              通卡
+            </view>
+            <view class="card-item" @click="toCardRecharge(4)">
+              有限次卡
+            </view>
+            <view class="card-item" @click="toCardRecharge(5)">
+              不限次卡
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </wd-popup>
 </template>
 
 <style lang='scss' scoped>
