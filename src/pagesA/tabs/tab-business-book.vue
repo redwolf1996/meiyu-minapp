@@ -504,7 +504,7 @@ function toDetail(item: BookListAll) {
                   </view>
                   <view f12 flex tc flex-ac gap-10rpx f10>
                     <view fb>
-                      {{ item?.storeCustomerName }}
+                      {{ item?.artisanName || '未分配' }}
                     </view>
                     <view w-12rpx h-12rpx round style="background-color: #91919F;" />
                     <view color-white tc px-8rpx py-4rpx lh-24rpx bg-FE502E>
@@ -532,7 +532,7 @@ function toDetail(item: BookListAll) {
                           {{ itm?.serviceName }}
                         </text>
                         <text c-3A3A3A f14>
-                          x1
+                          x{{ itm?.count }}
                         </text>
                       </view>
                       <view c-161719 fs-20>
@@ -551,15 +551,15 @@ function toDetail(item: BookListAll) {
                     :src="`${IMG_BASE}/icon-people.png`"
                   />
                   <view fb>
-                    {{ item?.artisanName }}
+                    {{ item?.storeCustomerName }}
                   </view>
                   <view w-10rpx h-10rpx round ma style="background-color: #000;" />
-                  <view> {{ item?.artisanPhone }}</view>
+                  <view> {{ item?.phone }}</view>
                 </view>
               </view>
             </view>
 
-            <view flex flex-xr mt-34rpx gap-14px>
+            <view v-if="item?.bookingStatus !== 3" flex flex-xr mt-34rpx gap-14px>
               <button v-if="item?.bookingStatus === 4" class="my-btn delete" @click="toDel(item)">
                 删除
               </button>
