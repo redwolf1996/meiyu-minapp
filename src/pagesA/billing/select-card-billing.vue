@@ -22,9 +22,9 @@ onLoad(async (option) => {
   customerCashCardList.value = res.data
 })
 
-function toDetail(id) {
-  uni.navigateTo({ url: `/pagesA/card/detail?id=${id}` })
-}
+// function toDetail(id) {
+//   uni.navigateTo({ url: `/pagesA/card/detail?id=${id}` })
+// }
 
 function selectItem2(itm: any) {
   curSelectedCardToCash.value = itm
