@@ -60,10 +60,7 @@ function getEquities() {
           <view fs-14px mt-10px>
             <template v-if="itm?.type === 1">
               <text>￥{{ itm?.price }}&nbsp;</text>
-              <text v-if="itm?.secondType === 1">
-                权益次数：{{ itm?.info?.map((v) => v.equity) }}次
-              </text>
-              <text v-if="itm?.secondType === 2">
+              <text>
                 权益次数：{{ itm?.countLimit }}次
               </text>
             </template>
