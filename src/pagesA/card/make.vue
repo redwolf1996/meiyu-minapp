@@ -240,10 +240,17 @@ function toPay() {
         />
       </template>
 
-      <view v-else class="card-ext">
-        <view>金额</view>
-        <view>￥{{ form.amount }}</view>
-      </view>
+      <template v-else>
+        <view class="card-ext">
+          <view>金额</view>
+          <view>￥{{ form.amount }}</view>
+        </view>
+
+        <view v-if="curCardRechargeType === 2" class="card-ext">
+          <view>赠金</view>
+          <view>￥{{ form.gift }}</view>
+        </view>
+      </template>
 
       <view flex flex-xr>
         <view fs-14px>
