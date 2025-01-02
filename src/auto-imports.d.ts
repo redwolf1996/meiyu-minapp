@@ -32,6 +32,7 @@ declare global {
   const bookInfo: typeof import('./stores/book-info')['bookInfo']
   const bookStime: typeof import('./stores/book')['bookStime']
   const calculateEndTime: typeof import('./utils/index')['calculateEndTime']
+  const cardImg: typeof import('./utils/consts')['cardImg']
   const cardRechargeMap: typeof import('./utils/consts')['cardRechargeMap']
   const checkedProds: typeof import('./stores/common')['checkedProds']
   const checkedServs: typeof import('./stores/common')['checkedServs']
@@ -427,6 +428,7 @@ declare module 'vue' {
     readonly bookInfo: UnwrapRef<typeof import('./stores/book-info')['bookInfo']>
     readonly bookStime: UnwrapRef<typeof import('./stores/book')['bookStime']>
     readonly calculateEndTime: UnwrapRef<typeof import('./utils/index')['calculateEndTime']>
+    readonly cardImg: UnwrapRef<typeof import('./utils/consts')['cardImg']>
     readonly checkedProds: UnwrapRef<typeof import('./stores/common')['checkedProds']>
     readonly checkedServs: UnwrapRef<typeof import('./stores/common')['checkedServs']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>

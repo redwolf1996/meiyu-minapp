@@ -59,6 +59,10 @@ export interface OrderItem {
    * 订单项类别，1服务，2产品，3卡，4预约
    */
   goodsType: number
+  /**
+   * 商品卡类型，1次卡，2折扣卡 3充值卡
+   */
+  goodsCardType?: number
 }
 
 export interface Detail {

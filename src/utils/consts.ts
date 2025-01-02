@@ -93,6 +93,12 @@ export const CardRechargeMap2 = {
   6: '充值卡',
 }
 
+export const cardImg = {
+  1: 'list-cika',
+  2: 'list-chongzhi',
+  3: 'list-zhekou',
+}
+
 export enum PayModeEnum {
   MakeOrder = 1,
   MakeCard = 2,
