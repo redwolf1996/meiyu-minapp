@@ -8,8 +8,9 @@ const props = defineProps<{
 
 const data = props.data
 
-function toDetail() {
+async function toDetail() {
   storeMsgDetail.value = data
+  await request.put(`/business/notice/${data.id}`)
   if (data.noticeType === 1) {
     uni.navigateTo({
       url: '/pagesA/msg/detail-renew',
