@@ -152,7 +152,7 @@ function showItemMenu(item: List) {
           </view>
           <view>
             <text fb f12 px-12rpx py-7rpx bg-B5E4CA rd-12rpx>
-              ￥{{ item.price }}
+              ￥{{ item.price2 || item.price }}
             </text>
           </view>
         </view>

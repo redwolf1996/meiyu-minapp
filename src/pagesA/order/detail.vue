@@ -167,7 +167,7 @@ async function toRefund() {
               <text c-1A66FF>
                 {{ index > 9 ? index + 1 : `0${index + 1}` }}
               </text>
-              <text>{{ item?.goodsName }}</text>
+              <text>&nbsp;&nbsp;{{ item?.goodsName }}</text>
             </view>
             <view>x{{ item?.goodsCount }}</view>
           </view>
