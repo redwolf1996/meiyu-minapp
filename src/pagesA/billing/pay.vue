@@ -85,7 +85,7 @@ async function getAvailableCashCards(storeCustomerId, amount) {
 }
 
 async function pay() {
-  if (!curCode.value)
+  if (!curCode.value && !curCard.value?.id)
     return toast.warning('请选择支付方式')
 
   let amount = 0

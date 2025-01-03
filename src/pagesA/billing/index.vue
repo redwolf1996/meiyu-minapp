@@ -59,6 +59,7 @@ function mergeProdsAndServs() {
         goodsId: v.id,
         goodsCount: 1, // 商品数量
         goodsPrice: v.price, // 商品原价
+        goodsPrice2: v.price2, // 商品实际价(优惠价)
         cardReduceAmount: 0, // 卡优惠金额
         name: v.name, // 服务或产品名称
         totalAmount: null, // 商品原价总价
@@ -76,7 +77,7 @@ function mergeProdsAndServs() {
         return func_mul(item.goodsPrice, item.goodsCount)
       })
       item.amount = computed(() => {
-        return func_mul(func_sub(item.goodsPrice, item.cardReduceAmount), item.goodsCount)
+        return func_mul(func_sub(item.goodsPrice2, item.cardReduceAmount), item.goodsCount)
       })
     })
   }
@@ -86,13 +87,13 @@ function mergeProdsAndServs() {
 }
 
 watch(() => curSelectedCardToCash.value, () => {
-  form.value.billingGoods.forEach((item: any, index: number) => {
+  form.value.billingGoods.forEach((item: BillingGood, index: number) => {
     if (curIndex.value === index) {
       item.customerCardId = curSelectedCardToCash.value?.customerCardId
       item.cardId = curSelectedCardToCash.value?.cardId
 
       if (curSelectedCardToCash.value?.cardType === 1) { // 1->次卡，2->充值卡，3->折扣卡
-        item.cardReduceAmount = 0
+        item.cardReduceAmount = 1
       }
       else {
         item.cardReduceAmount = func_mul(item.goodsPrice, func_sub(1, func_div(curSelectedCardToCash.value?.equity, 10)))
@@ -102,14 +103,25 @@ watch(() => curSelectedCardToCash.value, () => {
         return func_mul(item.goodsPrice, item.goodsCount)
       })
       item.amount = computed(() => {
-        return func_mul(func_sub(item.goodsPrice, item.cardReduceAmount), item.goodsCount)
+        if (curSelectedCardToCash.value?.cardType === 1) {
+          return 0
+        }
+        return func_mul(func_sub(item.goodsPrice2, item.cardReduceAmount), item.goodsCount)
       })
-      item.cardShowName = Number(item.cardReduceAmount) !== 0
-        ? `${curSelectedCardToCash.value?.cardName} -￥${item.cardReduceAmount}`
-        : curSelectedCardToCash.value?.cardName
+
+      if (curSelectedCardToCash.value?.cardType === 1) {
+        item.cardShowName = `${curSelectedCardToCash.value?.cardName} -${item.cardReduceAmount}次`
+      }
+      else {
+        item.cardShowName = `${curSelectedCardToCash.value?.cardName} -￥${item.cardReduceAmount}`
+      }
     }
   })
 })
+
+function changeItemCount(item: BillingGood) {
+
+}
 
 watch(() => checkedProds.value, () => {
   mergeProdsAndServs()
@@ -271,7 +283,7 @@ function delEquity(item: BillingGood) {
             </text>
           </view>
           <view flex flex-ac gap10px>
-            <wd-input-number v-model="item.goodsCount" />
+            <wd-input-number v-model="item.goodsCount" @change="changeItemCount(item)" />
             <wd-icon name="minus-circle" size="16px" color="red" @click="delEquity(item)" />
           </view>
         </view>

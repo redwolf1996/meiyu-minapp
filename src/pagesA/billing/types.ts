@@ -58,7 +58,7 @@ export interface BillingGood {
   /**
    * 卡优惠金额
    */
-  cardReduceAmount?: number
+  cardReduceAmount?: ComputedRef<number> | number | null
   /**
    * 购卡id，符合已购卡优惠时填写
    */
@@ -75,6 +75,10 @@ export interface BillingGood {
    * 商品原价
    */
   goodsPrice?: number
+  /**
+   * 商品优惠后的价格
+   */
+  goodsPrice2?: number
   /**
    * 商品类型，1服务，2产品，3卡
    */
