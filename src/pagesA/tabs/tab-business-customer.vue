@@ -291,7 +291,7 @@ onShow(() => {
                   :round="true"
                   :width="18"
                   :height="18"
-                  :src="`${IMG_BASE}/icon-v1.png`"
+                  :src="`${IMG_BASE}/icon-v.png`"
                 />
               </view>
               <view c-929292 f12 mt-10px>
