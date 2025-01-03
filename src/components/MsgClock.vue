@@ -48,7 +48,7 @@ async function toServDetail() {
           <view fb>
             {{ data.ext?.artisanName || '未分配' }}
           </view>
-          <view w-12rpx h-12rpx round style="background-color: #FE502E;" />
+          <view w-6rpx h-6rpx round style="background-color: #91919F;" />
           <view color-white tc px-8rpx py-4rpx lh-24rpx bg-FE502E>
             {{ data.ext?.storeServiceTypeDesc }}
           </view>
