@@ -134,7 +134,7 @@ async function toRefund() {
                 <wd-img
                   :width="16"
                   :height="16"
-                  :src="`${IMG_BASE}/icon-v1.png`"
+                  :src="`${IMG_BASE}/icon-v.png`"
                 />
               </view>
               <view f12>
