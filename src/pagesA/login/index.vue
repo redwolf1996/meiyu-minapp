@@ -25,7 +25,9 @@ function wxlogin() {
           uni.reLaunch({ url: '/pagesA/tabs/tab-business-dashboard' })
         }
         else {
-          uni.navigateTo({ url: '/pagesA/login/role-select' })
+          // 跳转到商家完善信息页面（商家端和客户端已经分开）
+          uni.navigateTo({ url: '/pagesA/login/info?role=business' })
+          // uni.navigateTo({ url: '/pagesA/login/role-select' })
         }
       }
       else {
