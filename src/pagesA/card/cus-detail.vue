@@ -231,7 +231,7 @@ function delEquity(item: CardEquity) {
             :width="48"
             :height="48"
             :round="true"
-            :src="`${IMG_BASE}/cat.png`"
+            :src="DEFAULT_AVATAR"
           />
           <view flex flex-y flex-bt flex-1 gap-20rpx>
             <view f16>

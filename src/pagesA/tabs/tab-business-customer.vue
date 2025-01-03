@@ -279,7 +279,7 @@ onShow(() => {
               :width="48"
               :height="48"
               mode="aspectFill"
-              :src="`${IMG_BASE}/cat.png`"
+              :src="DEFAULT_AVATAR"
             />
             <view>
               <view flex flex-ac gap-4rpx>

@@ -175,8 +175,8 @@ function confirm() {
                   <wd-img
                     :width="72"
                     :height="72"
-                    mode="center"
-                    :src="`${IMG_BASE}/cat.png`"
+                    mode="aspectFill"
+                    :src="itm.coverImg"
                   />
                   <view>
                     <view f14>
@@ -229,7 +229,7 @@ function confirm() {
                     :width="72"
                     :height="72"
                     mode="center"
-                    :src="`${IMG_BASE}/cat.png`"
+                    :src="itm.coverImg"
                   />
                   <view>
                     <view f14>
