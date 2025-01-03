@@ -283,7 +283,7 @@ onMounted(async () => {
           />
         </view>
         <view mt-16rpx>
-          {{ detail?.cardC ?? 0 }}
+          {{ detail?.cardC ?? '--' }}
         </view>
       </view>
       <view w-78px @click="toPoints()">
@@ -296,7 +296,7 @@ onMounted(async () => {
           />
         </view>
         <view mt-16rpx>
-          {{ detail?.integration ?? 0 }}
+          {{ detail?.integration ?? '--' }}
         </view>
       </view>
     </view>
@@ -378,7 +378,7 @@ onMounted(async () => {
                   :height="40"
                   :radius="8"
                   mode="aspectFill"
-                  :src="item2.goodsCoverImg"
+                  :src="item2.goodsCoverImg || `${IMG_BASE}/detail/${cardImg[item2.goodsCardType]}.png`"
                 />
                 <view h40px flex flex-y flex-bt flex-1>
                   <view c-28282B f14 flex-bt flex flex-ac>
@@ -415,7 +415,7 @@ onMounted(async () => {
         @query="queryList2"
       >
         <template #bottom>
-          <view class="h20px" />
+          <view class="h10px" />
         </template>
 
         <view px-50rpx py-32rpx>
@@ -521,19 +521,19 @@ onMounted(async () => {
           </view>
           <view c-434343 flex flex-ac flex-bt mb16px f14>
             <view>姓名：</view>
-            <view>{{ detail?.name }}</view>
+            <view>{{ detail?.name || '--' }}</view>
           </view>
           <view c-434343 flex flex-ac flex-bt mb16px f14>
             <view>备注名：</view>
-            <view>{{ detail?.noteName }}</view>
+            <view>{{ detail?.noteName || '--' }}</view>
           </view>
           <view c-434343 flex flex-ac flex-bt mb16px f14>
             <view>手机号：</view>
-            <view>{{ detail?.phone }}</view>
+            <view>{{ detail?.phone || '--' }}</view>
           </view>
           <view c-434343 flex flex-ac flex-bt mb16px f14>
             <view>客户来源：</view>
-            <view>{{ detail?.source }}</view>
+            <view>{{ detail?.sourceDesc || '--' }}</view>
           </view>
           <view c-434343 flex flex-ac flex-bt mb16px f14>
             <view>性别：</view>
@@ -541,30 +541,36 @@ onMounted(async () => {
           </view>
           <view c-434343 flex flex-ac flex-bt mb16px f14>
             <view>生日：</view>
-            <view>{{ detail?.birthday }}</view>
+            <view>{{ detail?.birthday || '--' }}</view>
           </view>
           <view c-434343 flex flex-ac flex-bt mb16px f14>
             <view>微信：</view>
-            <view>{{ detail?.wechatCode }}</view>
+            <view>{{ detail?.wechatCode || '--' }}</view>
           </view>
           <view c-434343 flex flex-ac flex-bt mb16px f14>
             <view>地址：</view>
-            <view>{{ areaList.province_list[detail?.province] }}{{ areaList.city_list[detail?.city] }}{{ areaList.county_list[detail?.county] }}</view>
+            <view v-if="!detail?.province">
+              --
+            </view>
+            <view v-else>
+              {{ areaList.province_list[detail?.province] }}{{ areaList.city_list[detail?.city] }}{{ areaList.county_list[detail?.county] }}
+            </view>
           </view>
           <view c-434343 flex flex-ac flex-bt mb16px f14>
             <view>详细地址：</view>
-            <view>{{ detail?.address }}</view>
+            <view>{{ detail?.address || '--' }}</view>
           </view>
           <view c-434343 flex flex-ac flex-bt mb16px f14>
             <view>营销顾问：</view>
-            <view>{{ detail?.adviserName }}</view>
+            <view>{{ detail?.adviserName || '--' }}</view>
           </view>
           <view c-434343 flex flex-ac flex-bt f14>
             <view>客户备注：</view>
-            <view>{{ detail?.notes }}</view>
+            <view>{{ detail?.notes || '--' }}</view>
           </view>
         </view>
       </view>
+      <view h10px />
     </template>
   </scroll-view>
 

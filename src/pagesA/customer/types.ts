@@ -60,6 +60,7 @@ export interface Customer {
    * WALK_IN(4,"walk-in"),     OTHER(5,"其他"),;
    */
   source?: number
+  sourceDesc?: string | number
   /**
    * 当前门店id，当前门店id
    */
@@ -173,6 +174,7 @@ export interface CustomerDetail {
    * 来源
    */
   source: string
+  sourceDesc?: string | number
   /**
    * 店铺
    */
