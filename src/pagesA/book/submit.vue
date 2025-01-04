@@ -117,7 +117,7 @@ async function doSubmit() {
       </view>
       <view flex flex-xr mt10px>
         <text bg-FCE8E9 rd-2px c-FF5A5F h38rpx w98rpx tc flex flex-cc fs-22>
-          到店付
+          {{ bookInfo.storeServiceType === 1 ? '到店付' : '上门付' }}
         </text>
       </view>
     </view>
@@ -125,7 +125,7 @@ async function doSubmit() {
 
   <view :class="[safeBottom() ? 'py20px' : 'py10px']" bg-white px20px flex flex-bt flex-ac pf wp100 bottom-0px>
     <view f12 c-1A66FF>
-      {{ fdt(bookInfo?.startTime) }}&nbsp;到店
+      {{ fdt(bookInfo?.startTime) }}&nbsp;{{ bookInfo.storeServiceType === 1 ? '到店' : '上门' }}
     </view>
     <MyButton width="200rpx" @click="doSubmit()">
       提交预约

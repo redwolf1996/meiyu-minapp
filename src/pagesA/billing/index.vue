@@ -25,7 +25,7 @@ const form = ref<BillModel>({
   adviserId: null,
   notes: '',
   amount: 0,
-  payType: 0,
+  payType: null,
   billingGoods: [],
   customerCardId: null,
 })
@@ -119,10 +119,6 @@ watch(() => curSelectedCardToCash.value, () => {
   })
 })
 
-function changeItemCount(item: BillingGood) {
-
-}
-
 watch(() => checkedProds.value, () => {
   mergeProdsAndServs()
 })
@@ -188,7 +184,7 @@ async function payLater() {
   await request.post('/business/billing', form.value)
   toast.info('待客户支付后，可找到该订单再次进行支付')
   await sleep(1000)
-  uni.redirectTo({ url: '/pagesA/tabs/tab-business-dashboard' })
+  uni.navigateBack()
 }
 
 function toPay() {
@@ -283,7 +279,7 @@ function delEquity(item: BillingGood) {
             </text>
           </view>
           <view flex flex-ac gap10px>
-            <wd-input-number v-model="item.goodsCount" @change="changeItemCount(item)" />
+            <wd-input-number v-model="item.goodsCount" />
             <wd-icon name="minus-circle" size="16px" color="red" @click="delEquity(item)" />
           </view>
         </view>
