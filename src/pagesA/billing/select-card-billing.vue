@@ -56,14 +56,14 @@ function selectItem2(itm: any) {
             </view>
             <view fs-14px mt-10px>
               <template v-if="itm.cardType === 1">
-                <text>￥{{ itm.amount }}&nbsp;</text>
+                <!-- <text>￥{{ itm.amount }}&nbsp;</text> -->
                 <text>可用次数：{{ itm.equity }}次</text>
               </template>
               <template v-if="itm.cardType === 2">
                 <text>剩余金额￥{{ itm.totalAmount }}&nbsp;</text>
               </template>
               <template v-if="itm.cardType === 3">
-                <text>￥{{ itm.amount }}&nbsp;</text>
+                <!-- <text>￥{{ itm.amount }}&nbsp;</text> -->
                 <text>{{ itm.equity }}折</text>
               </template>
             </view>
