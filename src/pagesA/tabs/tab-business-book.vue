@@ -211,6 +211,7 @@ function showSearch() {
   visableSearch.value = true
 }
 function createOrder() {
+  curSelectedCard.value = null
   curCustomer.value = null
   bookStime.value = ''
   resetGoods()

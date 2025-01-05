@@ -254,8 +254,25 @@ async function save() {
         </view>
         <view f12 c-848486 flex flex-ac flex-bt>
           <view>价格</view>
-          <view>￥{{ item.amount }}</view>
+          <view>
+            <text c-#FF1919>
+              ￥{{ item.price2 }}&nbsp;&nbsp;
+            </text>
+            <text line-through>
+              ￥{{ item.price }}
+            </text>
+          </view>
         </view>
+        <!-- <wd-cell title="使用卡项" is-link @click="toSelCard(item, index)">
+          <view>
+            <text v-if="!item.cardShowName" c-#B6BDBD>
+              请选择
+            </text>
+            <view v-else>
+              {{ item.cardShowName }}
+            </view>
+          </view>
+        </wd-cell> -->
         <view h14px />
       </MyCellGroup>
     </view>

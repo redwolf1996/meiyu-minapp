@@ -194,6 +194,7 @@ function toBilling() {
 
 // 去预约
 function toBooking() {
+  curSelectedCard.value = null
   resetGoods()
   uni.navigateTo({ url: `/pagesA/book/add?customerId=${id.value}` })
 }

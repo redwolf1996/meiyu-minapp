@@ -50,6 +50,7 @@ function continueRecharge() {
 
 // 继续预约
 function continueBooking() {
+  curSelectedCard.value = null
   curCustomer.value = null
   bookStime.value = ''
   resetGoods()

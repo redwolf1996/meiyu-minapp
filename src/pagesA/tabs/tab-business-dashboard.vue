@@ -76,6 +76,7 @@ function toAddCustomer() {
   uni.navigateTo({ url: '/pagesA/customer/add' })
 }
 function toAddBooking() {
+  curSelectedCard.value = null
   curCustomer.value = null
   bookStime.value = ''
   resetGoods()
