@@ -26,7 +26,7 @@ const form = ref<MakeCardModel>({
   notes: '',
   amount: 0,
   gift: 0,
-  payType: 0,
+  payType: null,
 })
 const isPickerOpen = ref(false)
 const cusName = computed(() => curCustomer.value?.name ?? '')
@@ -91,7 +91,7 @@ function toSelCus() {
 async function payLater() {
   form.value.amount = Number(form.value.amount)
   form.value.gift = Number(form.value.gift)
-  form.value.payType = 0 // 稍后支付
+  form.value.payType = null // 稍后支付
   const url = curCardRechargeType.value === 6 ? '/business/value-card-recharge' : '/business/store-customer-card'
   await request.post(url, form.value)
   toast.info('待客户支付后，可找到该订单再次进行支付')

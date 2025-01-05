@@ -69,6 +69,10 @@ function search({ value }) {
   reqParams.keyword = value
   paging.value?.reload()
 }
+function clear() {
+  reqParams.keyword = ''
+  paging.value?.reload()
+}
 function handleChangeVip() { // 会员 非会员筛选
   paging.value?.reload()
 }
@@ -115,7 +119,7 @@ onShow(() => {
       <view py-12rpx px-32rpx>
         <view flex flex-bt flex-ac gap-32rpx>
           <view flex-1 pr>
-            <wd-search placeholder-left hide-cancel placeholder="搜索姓名/手机号" @search="search" />
+            <wd-search placeholder-left hide-cancel placeholder="搜索姓名/手机号" @clear="clear" @search="search" />
           </view>
           <view rd-2px w-28px h-28px lh-28px tc bg-F2F3F5 fs-32 fb @click="toAddCustomer()">
             +
