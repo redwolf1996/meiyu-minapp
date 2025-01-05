@@ -12,6 +12,7 @@ const imageValue = ref<any>([{
   url: storeInfo.value?.logo || '',
 }])
 const pccValue = ref<string[]>([storeInfo.value.province || '', storeInfo.value.city || '', storeInfo.value.county || ''])
+console.log(pccValue.value)
 const form: any = reactive({
   id: storeId.value,
   storeName: storeInfo.value?.storeName || '',
@@ -24,15 +25,15 @@ const form: any = reactive({
   county: storeInfo.value.county,
 })
 const area = ref<any[]>([
-  colPickerData.map((item) => {
-    return {
-      value: item.value,
-      label: item.text,
-    }
-  }),
+  // colPickerData.map((item) => {
+  //   return {
+  //     value: item.value,
+  //     label: item.text,
+  //   }
+  // }),
 ])
 
-function columnChange({ selectedItem, resolve, finish }) {
+async function columnChange({ selectedItem, resolve, finish }) {
   const areaData = findChildrenByCode(colPickerData, selectedItem.value)
   if (areaData && areaData.length) {
     resolve(
@@ -127,7 +128,7 @@ async function save() {
         *
       </text>
     </view>
-    <wd-col-picker v-model="pccValue" label="" :columns="area" :column-change="columnChange" @confirm="handleConfirm" />
+    <wd-col-picker v-model="pccValue" label="" :columns="area" :column-change="columnChange" auto-complete @confirm="handleConfirm" />
   </view>
 
   <view mt-40rpx>

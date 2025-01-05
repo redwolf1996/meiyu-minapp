@@ -110,6 +110,10 @@ export interface UserInfo {
    */
   lastStoreName: string
   /**
+   * 最近登录门店信息
+   */
+  lastStore: StoreList
+  /**
    * 最近登录时间
    */
   loginDate: string
