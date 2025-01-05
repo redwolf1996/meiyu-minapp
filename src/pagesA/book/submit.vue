@@ -4,17 +4,13 @@ style:
 </route>
 
 <script lang="ts" setup>
-const totalAmount = sumArray(bookInfo.value.service.map(v => func_mul(v.price, v.goodsCount)))
-const totalAmount2 = sumArray(bookInfo.value.service.map(v => func_mul(v.price2, v.goodsCount)))
+const totalAmount = sumArray(bookInfo.value.service.map(v => func_mul(v.price2, v.goodsCount)))
+// const totalAmount = sumArray(bookInfo.value.service.map(v => v.totalAmount))
+const totalAmount2 = sumArray(bookInfo.value.service.map(v => v.amount))
 async function doSubmit() {
-  // const params = {
-  //   ...bookInfo.value,
-  //   amount: totalAmount2,
-  // }
   bookInfo.value.amount = totalAmount2
+  // 预约支付
   uni.navigateTo({ url: '/pagesA/billing/pay?createSource=4' })
-  // await request.post('/business/booking', params)
-  // uni.redirectTo({ url: '/pagesA/tabs/tab-business-dashboard' })
 }
 </script>
 
@@ -64,35 +60,56 @@ async function doSubmit() {
       </view>
       <view flex flex-y gap13px>
         <view
-          v-for="(item, index) in bookInfo.service" :key="`k-${index}`" flex flex-ac gap-12px
+          v-for="(item, index) in bookInfo.service" :key="`k-${index}`" flex gap-12px
         >
           <wd-img
             radius="10px"
             :width="72"
             :height="72"
-            :src="item.coverImg"
+            :src="item.coverImg || DEFAULT_AVATAR"
           />
-          <view flex-1 flex flex-y flex-bt h72px>
-            <view>
-              <view f14 c-3B3D3D mb4px>
-                {{ item.name }}
-              </view>
-              <view fs-22 c-7C7C7C>
-                服务时长：{{ item.duration }}分钟
-              </view>
+          <view flex-1 flex flex-y flex-bt>
+            <view f14 c-3B3D3D mb4px flex flex-ac flex-bt>
+              <text>{{ item.name || '--' }}</text>
+              <text fs-22 c-7C7C7C>
+                {{ item.duration || '--' }}分钟
+              </text>
             </view>
             <view flex flex-ac flex-bt>
               <view flex flex-ac gap4px>
                 <text c-FF1919 f18>
-                  ￥{{ item.price2 }}
+                  ￥{{ item.price2 || '--' }}
                 </text>
                 <text line-through f12 c-D4D4D4>
-                  ￥{{ item.price }}
+                  ￥{{ item.price || '--' }}
                 </text>
               </view>
               <view f12 c-7C7C7C>
                 x{{ item.goodsCount ?? 1 }}
               </view>
+            </view>
+
+            <view v-if="item.cardName" flex flex-ac flex-bt>
+              <view f12 c-7C7C7C>
+                {{ item.cardName || '--' }}
+              </view>
+              <view f12 c-7C7C7C>
+                <text v-if="item.cardType === 1">
+                  -{{ item.cardReduceAmount }}次
+                </text>
+                <text v-else>
+                  -￥{{ item.cardReduceAmount }}
+                </text>
+              </view>
+            </view>
+
+            <view flex flex-xr>
+              <text>
+                <text>小计:</text>
+                <text c-#FA483C>
+                  ￥{{ item.amount }}
+                </text>
+              </text>
             </view>
           </view>
         </view>
@@ -109,7 +126,7 @@ async function doSubmit() {
       <view flex flex-ac flex-bt>
         <view />
         <view flex flex-ac gap6px>
-          <text>合计：</text>
+          <text>实付：</text>
           <text c-FF5A5F>
             ￥{{ totalAmount2 }}
           </text>
@@ -119,6 +136,13 @@ async function doSubmit() {
         <text bg-FCE8E9 rd-2px c-FF5A5F h38rpx w98rpx tc flex flex-cc fs-22>
           {{ bookInfo.storeServiceType === 1 ? '到店付' : '上门付' }}
         </text>
+      </view>
+    </view>
+
+    <view mb16px px12px py16px bg-white>
+      <view>备注</view>
+      <view flex flex-ac flex-bt>
+        {{ bookInfo.notes || '--' }}
       </view>
     </view>
   </view>

@@ -129,9 +129,10 @@ async function toRefund() {
             <view flex flex-ac flex-bt>
               <view flex flex-ac gap-16rpx>
                 <text c-929292 fs-28 lh-28rpx>
-                  {{ detail?.customerPhone }}
+                  {{ detail?.customerPhone || '--' }}
                 </text>
                 <wd-img
+                  v-if="detail?.customerCardCount"
                   :width="16"
                   :height="16"
                   :src="`${IMG_BASE}/icon-v.png`"

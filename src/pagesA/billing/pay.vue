@@ -9,7 +9,7 @@ import type { CashCard, PayRefundType, PayType } from './types'
 
 const toast = useToast()
 const curCode = ref<number | null >(null)
-const mode = ref(0) // 1 开单 2开卡 3充值
+const mode = ref(0) // 1 开单 2开卡 3充值 4预约
 const payTypes = ref<PayType[]>([])
 const payMode = ref<1 | 2>(1) // 1线下记账收款 2储值卡支付
 
@@ -129,6 +129,15 @@ function selectCard(card: CashCard) {
   card.active = true
   curCard.value = card
 }
+
+// 稍后支付（预约）
+async function payLater() {
+  formData.value.payType = null
+  await request.post('/business/booking', formData.value)
+  toast.info('待客户支付后，可找到该订单再次进行支付')
+  await sleep(1000)
+  uni.navigateTo({ url: '/pagesA/tabs/tab-business-dashboard' })
+}
 </script>
 
 <template>
@@ -194,12 +203,29 @@ function selectCard(card: CashCard) {
     </view>
   </view>
 
-  <view mx-40rpx mt-164rpx color-white @click="pay()">
-    <wd-button size="large" custom-class="theme-bg" block>
+  <view v-if="mode !== 4" mx-40rpx mt-164rpx color-white>
+    <wd-button size="large" custom-class="theme-bg" block @click="pay()">
       <view flex flex-cc>
         <text>结账</text>
       </view>
     </wd-button>
+  </view>
+
+  <view v-else mx-40rpx mt-164rpx color-white flex flex-cc gap10px>
+    <view w120px @click="payLater()">
+      <wd-button size="large" :plain="true" block>
+        <view flex flex-cc>
+          <text>稍后付款</text>
+        </view>
+      </wd-button>
+    </view>
+    <view w104px @click="pay()">
+      <wd-button size="large" custom-class="theme-bg" block>
+        <view flex flex-cc>
+          <text>结账</text>
+        </view>
+      </wd-button>
+    </view>
   </view>
 </template>
 

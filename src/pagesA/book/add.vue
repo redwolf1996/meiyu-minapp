@@ -186,6 +186,9 @@ watch(() => curSelectedCardToCash.value, () => {
         return func_mul(func_sub(item.price, item.cardReduceAmount), item.goodsCount)
       })
 
+      item.cardName = curSelectedCardToCash.value?.cardName
+      item.cardType = curSelectedCardToCash.value?.cardType
+
       if (curSelectedCardToCash.value?.cardType === 1) {
         item.cardShowName = `${curSelectedCardToCash.value?.cardName} -${item.cardReduceAmount}次`
       }

@@ -76,6 +76,8 @@ export interface Service {
   totalAmount: any
   /** 选择卡项并有优惠时候显示的名字 例: xxx卡项 -1次 */
   cardShowName?: string
+  cardName?: string // 卡项名称
+  cardType?: number // 卡项类型
   name?: string
   duration?: number
   price?: number
