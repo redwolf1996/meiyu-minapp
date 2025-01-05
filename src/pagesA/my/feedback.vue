@@ -62,6 +62,14 @@ function clickItem(item) {
 }
 
 async function save() {
+  if (!form.categoryId) {
+    uni.showToast({ title: '请选择反馈类型', icon: 'none' })
+    return
+  }
+  if (!form.content) {
+    uni.showToast({ title: '请填写反馈内容', icon: 'none' })
+    return
+  }
   await request.post('/business/suggestion', form)
   uni.showToast({ title: '提交成功' })
   await sleep(1000)

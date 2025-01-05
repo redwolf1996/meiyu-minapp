@@ -27,6 +27,15 @@ function changeBar(index: number) {
     :value="tabbar" active-color="#1A66FF" inactive-color="#A7A8AC"
     @change="changeBar"
   >
+    <uv-tabbar-item text="首页">
+      <template #active-icon>
+        <image class="icon" src="https://cdn.uviewui.com/uview/common/bell-selected.png" />
+      </template>
+      <template #inactive-icon>
+        <image class="icon" src="https://cdn.uviewui.com/uview/common/bell.png" />
+      </template>
+    </uv-tabbar-item>
+
     <uv-tabbar-item text="工作台" icon="home" />
     <uv-tabbar-item text="预约" icon="phone" />
     <uv-tabbar-item text="客户" icon="account-fill" />
