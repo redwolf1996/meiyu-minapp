@@ -187,6 +187,7 @@ function getActiveIndex() {
                 {{ bookDetail?.storeCustomerPhone }}
               </text>
               <wd-img
+                v-if="bookDetail?.customerCardC"
                 :width="16"
                 :height="16"
                 :src="`${IMG_BASE}/icon-v.png`"

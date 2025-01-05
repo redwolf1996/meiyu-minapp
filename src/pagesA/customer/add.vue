@@ -19,8 +19,8 @@ const form = reactive<Customer>({
   phone: '',
   noteName: '',
   source: 1,
-  artisanId: '',
-  adviserId: '',
+  artisanId: null,
+  adviserId: null,
   level: 1,
   gender: 2,
   birthday: '',
@@ -33,6 +33,7 @@ const form = reactive<Customer>({
   id: null,
 })
 const staffList = ref<{ label: string, value: number }[]>([])
+const staffList2 = ref<{ label: string, value: number }[]>([])
 const from = ref('tab')
 
 onLoad((options) => {
@@ -89,11 +90,13 @@ async function save() {
 
 async function setStaffList() {
   const res = await api.getStaffList({ storeId: storeId.value })
-  staffList.value = res.data.list?.map((v) => {
-    return {
-      label: v.userName,
-      value: v.staffId,
-    }
+  const artList = res.data.list?.filter(v => v.jobCode === 2)
+  const saleList = res.data.list?.filter(v => v.jobCode === 3)
+  staffList.value = artList?.map((v) => {
+    return { label: v.userName, value: v.storeStaffId }
+  })
+  staffList2.value = saleList?.map((v) => {
+    return { label: v.userName, value: v.storeStaffId }
   })
 }
 
@@ -143,7 +146,7 @@ function openCalendar() {
         />
         <wd-picker
           v-model="form.adviserId"
-          label="营销顾问" align-right :columns="staffList"
+          label="营销顾问" align-right :columns="staffList2"
         />
       </view>
     </wd-cell-group>

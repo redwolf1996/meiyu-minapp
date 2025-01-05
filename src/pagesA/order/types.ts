@@ -126,6 +126,10 @@ export interface Detail {
    */
   payType: number
   /**
+   * 支付类型
+   */
+  payTypeDesc: string
+  /**
    * 退款金额
    */
   refundAmount: number

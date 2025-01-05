@@ -179,7 +179,7 @@ async function toRefund() {
             <view>手艺人</view>
             <view>{{ item?.artisanName || '未分配' }}</view>
           </view>
-          <view flex flex-bt mb12px f14>
+          <view v-if="item?.cardName" flex flex-bt mb12px f14>
             <view>使用卡项</view>
             <view>{{ item?.cardName || '--' }}</view>
           </view>
@@ -197,7 +197,7 @@ async function toRefund() {
       <view v-if="detail?.payStatus === 2" f14 bg-white px-32rpx py-40rpx mb12px rd-4px>
         <view flex gap16px flex-ac mb12px>
           <view>付款方式</view>
-          <view>{{ detail?.payType ? PayTypesMap?.[detail?.payType] : '--' }}</view>&nbsp;&nbsp;￥{{ detail?.amount }}
+          <view>{{ detail?.payTypeDesc || '--' }}</view>&nbsp;&nbsp;￥{{ detail?.amount }}
         </view>
         <view flex gap16px flex-ac>
           <view>支付时间</view>
