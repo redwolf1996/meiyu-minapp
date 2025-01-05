@@ -18,7 +18,7 @@ export interface BookForm {
   /**
    * 预约的服务列表
    */
-  service: Service[]
+  service: Partial<Service>[]
   /**
    * 服务开始时间，yyyy-MM-dd HH:mm:ss
    */
@@ -49,7 +49,7 @@ export interface Service {
   /**
    * 优惠后金额
    */
-  amount: number
+  amount: any
   /**
    * 卡id
    */
@@ -73,7 +73,9 @@ export interface Service {
   /**
    * 优惠前金额
    */
-  totalAmount: number
+  totalAmount: any
+  /** 选择卡项并有优惠时候显示的名字 例: xxx卡项 -1次 */
+  cardShowName?: string
   name?: string
   duration?: number
   price?: number

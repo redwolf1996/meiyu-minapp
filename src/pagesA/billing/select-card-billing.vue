@@ -22,10 +22,6 @@ onLoad(async (option) => {
   customerCashCardList.value = res.data
 })
 
-// function toDetail(id) {
-//   uni.navigateTo({ url: `/pagesA/card/detail?id=${id}` })
-// }
-
 function selectItem2(itm: any) {
   curSelectedCardToCash.value = itm
   uni.navigateBack()
@@ -56,14 +52,12 @@ function selectItem2(itm: any) {
             </view>
             <view fs-14px mt-10px>
               <template v-if="itm.cardType === 1">
-                <!-- <text>￥{{ itm.amount }}&nbsp;</text> -->
                 <text>可用次数：{{ itm.equity }}次</text>
               </template>
               <template v-if="itm.cardType === 2">
                 <text>剩余金额￥{{ itm.totalAmount }}&nbsp;</text>
               </template>
               <template v-if="itm.cardType === 3">
-                <!-- <text>￥{{ itm.amount }}&nbsp;</text> -->
                 <text>{{ itm.equity }}折</text>
               </template>
             </view>
@@ -77,14 +71,6 @@ function selectItem2(itm: any) {
               </text>
             </view>
           </view>
-          <!-- <view
-            fs-12px
-            flex flex-ac flex-xr h30px w100% pr12px style="background-color: rgba(0, 0, 0, 0.2);
-              border-bottom-left-radius: 4px;border-bottom-right-radius: 4px"
-            @click="toDetail(itm.cardId)"
-          >
-            查看详情&nbsp;>
-          </view> -->
         </view>
       </view>
     </view>

@@ -10,8 +10,9 @@ import { flatten } from 'lodash-es'
 const active = ref<number>(0)
 const scrollTop = ref<number>(0)
 const categories = ref<CatsItemsTree<ServiceList>[]>([])
+const tmpCheckedServs = ref<ServiceList[]>([])
 const checkedCount = computed(() => {
-  return checkedServs.value.length + checkedProds.value.length
+  return tmpCheckedServs.value.length
 })
 
 onShow(async () => {
@@ -50,10 +51,11 @@ function changeCheck() {
     return v.items.length > 0
   }).map(v1 => toRaw(v1.items))
   servs = flatten(toRaw(servs))
-  checkedServs.value = servs.filter(v => v.checked)
+  tmpCheckedServs.value = servs.filter(v => v.checked)
 }
 
 function confirm() {
+  checkedServs.value = tmpCheckedServs.value
   uni.navigateBack()
 }
 </script>
