@@ -255,7 +255,7 @@ watch(() => curSelectedCardToCash.value, () => {
         :rules="[{ required: true, message: '请选择服务方式' }]"
         label="服务方式" align-right :columns="columns"
       />
-      <wd-cell title="手艺人" :is-link="true" @click="toSelectStaff()">
+      <wd-cell title="手艺人" required :is-link="true" @click="toSelectStaff()">
         <view>
           <text v-if="!artName" c-#B6BDBD>
             请选择手艺人
@@ -347,7 +347,20 @@ watch(() => curSelectedCardToCash.value, () => {
       +&nbsp;添加服务
     </view>
 
-    <MyCellGroup :py="0">
+    <wd-cell-group :border="true">
+      <wd-cell title="服务时间" required :is-link="true" @click="toSelServTime()">
+        <view>
+          <text v-if="!bookStime" c-#B6BDBD>
+            请选择服务时间
+          </text>
+          <text v-else>
+            {{ bookStime }}
+          </text>
+        </view>
+      </wd-cell>
+    </wd-cell-group>
+
+    <!-- <MyCellGroup :py="0">
       <MyCell label="服务时间" required noBorder borderTop @myclick="toSelServTime()">
         <text v-if="!bookStime" font-size-14px c-B6BDBD pr4px>
           请选择服务时间
@@ -356,7 +369,7 @@ watch(() => curSelectedCardToCash.value, () => {
           {{ bookStime }}
         </text>
       </MyCell>
-    </MyCellGroup>
+    </MyCellGroup> -->
 
     <view px20px py12px font-size-14px>
       备注

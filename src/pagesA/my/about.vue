@@ -62,8 +62,8 @@ onShareTimeline(() => {
       美预是一款专门为美业打造的一款方便快捷的门店管理软件。从客户预约服务，购买产品 到购买会员卡成为门店会员等进行客户全生命周期进行信息化进行管理。
     </view>
   </view>
-  <view pa wp100 bottom-0 flex flex-cc flex-ac h70px pb40px px70rpx>
-    <button open-type="share">
+  <view pa wp100 bottom-0 flex flex-cc flex-ac h70px pb40px px70rpx bg-white>
+    <button open-type="share" style="background-color: #ffffff;">
       <wd-img
         :width="70"
         mode="widthFix"
