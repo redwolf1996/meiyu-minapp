@@ -117,12 +117,6 @@ function openCalendar() {
           :rules="[{ required: true, message: '姓名必填' }]"
         />
         <wd-input
-          v-model="form.noteName"
-          label="备注名"
-          placeholder="请输入"
-          suffix-icon="arrow-right"
-        />
-        <wd-input
           v-model="form.phone"
           type="number"
           :maxlength="11"
@@ -130,6 +124,12 @@ function openCalendar() {
           placeholder="请输入"
           suffix-icon="arrow-right"
           :rules="[{ required: true, message: '手机号必填' }]"
+        />
+        <wd-input
+          v-model="form.noteName"
+          label="备注名"
+          placeholder="请输入"
+          suffix-icon="arrow-right"
         />
         <wd-picker
           v-model="form.source"
@@ -159,16 +159,16 @@ function openCalendar() {
         label="性别" align-right :columns="GenderSources"
       />
 
-      <view px-20px bg-white>
-        <MyCell noBorder borderTop label="生日" @myclick="openCalendar()">
-          <text v-if="!form.birthday" f14 c-bfbfbf pr-5px>
-            请选择
+      <wd-cell title="生日" :is-link="true" @click="openCalendar()">
+        <view>
+          <text v-if="!form.birthday" c-#B6BDBD>
+            请选择手艺人
           </text>
-          <text v-else f14>
+          <text v-else>
             {{ form.birthday }}
           </text>
-        </MyCell>
-      </view>
+        </view>
+      </wd-cell>
 
       <wd-input
         v-model="form.wechatCode"
