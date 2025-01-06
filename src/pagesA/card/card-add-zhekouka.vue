@@ -177,16 +177,16 @@ function delEquity(info: Info) {
         placeholder="请输入"
         suffix-icon="arrow-right"
       />
-      <MyCellGroup>
-        <MyCell noBorder borderTop required label="卡分类" @myclick="toCats()">
-          <text v-if="!catName" f14 c-bfbfbf pr-5px>
+      <wd-cell title="卡分类" :is-link="true" @click="toCats()">
+        <view>
+          <text v-if="!catName" c-#B6BDBD>
             请选择
           </text>
-          <text v-else f14>
+          <text v-else>
             {{ catName }}
           </text>
-        </MyCell>
-      </MyCellGroup>
+        </view>
+      </wd-cell>
       <wd-input
         v-model="form.price"
         label="售价"
