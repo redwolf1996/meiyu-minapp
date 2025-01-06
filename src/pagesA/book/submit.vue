@@ -123,7 +123,7 @@ async function doSubmit() {
           ￥{{ totalAmount }}
         </text>
       </view>
-      <view flex flex-ac flex-bt>
+      <!-- <view flex flex-ac flex-bt>
         <view />
         <view flex flex-ac gap6px>
           <text>实付：</text>
@@ -131,7 +131,17 @@ async function doSubmit() {
             ￥{{ totalAmount2 }}
           </text>
         </view>
+      </view> -->
+
+      <view flex flex-ac flex-xr>
+        <text>
+          <text>实付:</text>
+          <text c-#FF5A5F>
+            ￥{{ totalAmount2 }}
+          </text>
+        </text>
       </view>
+
       <view flex flex-xr mt10px>
         <text bg-FCE8E9 rd-2px c-FF5A5F h38rpx w98rpx tc flex flex-cc fs-22>
           {{ bookInfo.storeServiceType === 1 ? '到店付' : '上门付' }}

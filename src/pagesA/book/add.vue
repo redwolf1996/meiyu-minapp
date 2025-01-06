@@ -255,7 +255,7 @@ watch(() => curSelectedCardToCash.value, () => {
         :rules="[{ required: true, message: '请选择服务方式' }]"
         label="服务方式" align-right :columns="columns"
       />
-      <wd-cell title="手艺人" required :is-link="true" @click="toSelectStaff()">
+      <wd-cell title="手艺人" :is-link="true" @click="toSelectStaff()">
         <view>
           <text v-if="!artName" c-#B6BDBD>
             请选择手艺人
@@ -266,130 +266,115 @@ watch(() => curSelectedCardToCash.value, () => {
         </view>
       </wd-cell>
     </wd-cell-group>
-  </wd-form>
-  <view class="h10px" />
-
-  <view v-if="checkedServs.length">
-    <view v-for="(item, index) in model.service" :key="`serv-${index}`" mb10px>
-      <view flex flex-ac flex-bt f12 px20px py12px>
-        <view c-3D3D3D>
-          预约服务{{ index + 1 }}
-        </view>
-        <view c-1A66FF @click="delServ(index)">
-          删除
-        </view>
-      </view>
-      <MyCellGroup>
-        <view f14 flex flex-ac flex-bt>
-          <view theme-color fs-14px fb>
-            {{ item.name }}
+    <view class="h10px" />
+    <view v-if="checkedServs.length">
+      <view v-for="(item, index) in model.service" :key="`serv-${index}`" mb10px>
+        <view flex flex-ac flex-bt f12 px20px py12px>
+          <view c-3D3D3D>
+            预约服务{{ index + 1 }}
           </view>
-          <view>
-            <wd-input-number v-model="item.goodsCount" :min="1" @change="handleChange(item)" />
+          <view c-1A66FF @click="delServ(index)">
+            删除
           </view>
         </view>
-
-        <view
-          pt-20rpx
-          flex flex-bt flex-ac
-        >
-          <view c-848486 fs-12px>
-            <text>价格</text>
-          </view>
-          <view fs-12px flex flex-ac gap-6px style="max-width: 60%">
-            <text c-#FF1919>
-              ￥{{ item.price2 }}&nbsp;
-            </text>
-            <text line-through c-848486>
-              ￥{{ item.price }}
-            </text>
-          </view>
-        </view>
-        <view
-          pt-20rpx
-          flex flex-bt flex-ac
-        >
-          <view c-848486 fs-12px>
-            <text>服务时长</text>
-          </view>
-          <view fs-12px flex flex-ac gap-6px style="max-width: 60%">
-            <view c-848486>
-              约{{ item.duration }}分钟
+        <MyCellGroup>
+          <view f14 flex flex-ac flex-bt>
+            <view theme-color fs-14px fb>
+              {{ item.name }}
+            </view>
+            <view>
+              <wd-input-number v-model="item.goodsCount" :min="1" @change="handleChange(item)" />
             </view>
           </view>
-        </view>
-        <view
-          pt-20rpx
-          flex flex-bt flex-ac
-          @click="toSelCard(item, index)"
-        >
-          <view c-848486 fs-12px>
-            <text>使用卡项</text>
-          </view>
-          <view flex flex-ac gap-6px style="max-width: 60%">
-            <view c-848486 flex flex-ac fs-12px>
-              <text v-if="!item.cardShowName" c-#B6BDBD fs-12px>
-                请选择
+
+          <view
+            pt-20rpx
+            flex flex-bt flex-ac
+          >
+            <view c-848486 fs-12px>
+              <text>价格</text>
+            </view>
+            <view fs-12px flex flex-ac gap-6px style="max-width: 60%">
+              <text c-#FF1919>
+                ￥{{ item.price2 }}&nbsp;
               </text>
-              <view v-else fs-12px>
-                {{ item.cardShowName }}
-              </view>
-              <wd-icon name="arrow-right" size="14px" color="#bfbfbf" />
+              <text line-through c-848486>
+                ￥{{ item.price }}
+              </text>
             </view>
           </view>
-        </view>
-      </MyCellGroup>
+          <view
+            pt-20rpx
+            flex flex-bt flex-ac
+          >
+            <view c-848486 fs-12px>
+              <text>服务时长</text>
+            </view>
+            <view fs-12px flex flex-ac gap-6px style="max-width: 60%">
+              <view c-848486>
+                约{{ item.duration }}分钟
+              </view>
+            </view>
+          </view>
+          <view
+            pt-20rpx
+            flex flex-bt flex-ac
+            @click="toSelCard(item, index)"
+          >
+            <view c-848486 fs-12px>
+              <text>使用卡项</text>
+            </view>
+            <view flex flex-ac gap-6px style="max-width: 60%">
+              <view c-848486 flex flex-ac fs-12px>
+                <text v-if="!item.cardShowName" c-#B6BDBD fs-12px>
+                  请选择
+                </text>
+                <view v-else fs-12px>
+                  {{ item.cardShowName }}
+                </view>
+                <wd-icon name="arrow-right" size="14px" color="#bfbfbf" />
+              </view>
+            </view>
+          </view>
+        </MyCellGroup>
+      </view>
     </view>
-  </view>
+    <view>
+      <view bg-white f14 c-1A66FF tc h40px lh-40px @click="toAddServ()">
+        +&nbsp;添加服务
+      </view>
 
-  <view>
-    <view bg-white f14 c-1A66FF tc h40px lh-40px @click="toAddServ()">
-      +&nbsp;添加服务
+      <wd-cell-group :border="true">
+        <wd-cell title="服务时间" required :is-link="true" @click="toSelServTime()">
+          <view>
+            <text v-if="!bookStime" c-#B6BDBD>
+              请选择服务时间
+            </text>
+            <text v-else>
+              {{ bookStime }}
+            </text>
+          </view>
+        </wd-cell>
+      </wd-cell-group>
+      <view px20px py12px font-size-14px>
+        备注
+      </view>
+      <view bg-white px-40rpx py-24rpx>
+        <wd-textarea
+          v-model="model.notes"
+          placeholderStyle="font-size: 14px;color:#C9CDD4;"
+          placeholder="请输入预约备注" :maxlength="200" auto-height clearable show-word-limit
+        />
+      </view>
+      <view mx-40rpx mt-64rpx color-white>
+        <wd-button size="large" custom-class="theme-bg" block @click="save()">
+          <view flex flex-cc>
+            <text>保存</text>
+          </view>
+        </wd-button>
+      </view>
     </view>
-
-    <wd-cell-group :border="true">
-      <wd-cell title="服务时间" required :is-link="true" @click="toSelServTime()">
-        <view>
-          <text v-if="!bookStime" c-#B6BDBD>
-            请选择服务时间
-          </text>
-          <text v-else>
-            {{ bookStime }}
-          </text>
-        </view>
-      </wd-cell>
-    </wd-cell-group>
-
-    <!-- <MyCellGroup :py="0">
-      <MyCell label="服务时间" required noBorder borderTop @myclick="toSelServTime()">
-        <text v-if="!bookStime" font-size-14px c-B6BDBD pr4px>
-          请选择服务时间
-        </text>
-        <text v-else font-size-14px pr5px>
-          {{ bookStime }}
-        </text>
-      </MyCell>
-    </MyCellGroup> -->
-
-    <view px20px py12px font-size-14px>
-      备注
-    </view>
-    <view bg-white px-40rpx py-24rpx>
-      <wd-textarea
-        v-model="model.notes"
-        placeholderStyle="font-size: 14px;color:#C9CDD4;"
-        placeholder="请输入预约备注" :maxlength="200" auto-height clearable show-word-limit
-      />
-    </view>
-
-    <view mx-40rpx mt-64rpx color-white>
-      <wd-button size="large" custom-class="theme-bg" block @click="save()">
-        <view flex flex-cc>
-          <text>保存</text>
-        </view>
-      </wd-button>
-    </view>
-  </view>
+  </wd-form>
   <wu-safe-bottom />
 </template>
 
