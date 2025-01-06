@@ -177,7 +177,7 @@ function delEquity(info: Info) {
         placeholder="请输入"
         suffix-icon="arrow-right"
       />
-      <wd-cell title="卡分类" :is-link="true" @click="toCats()">
+      <wd-cell title="卡分类" required :is-link="true" @click="toCats()">
         <view>
           <text v-if="!catName" c-#B6BDBD>
             请选择

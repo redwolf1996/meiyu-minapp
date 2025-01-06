@@ -241,7 +241,7 @@ function toCats() {
         suffix-icon="arrow-right"
         :rules="[{ required: true, message: '请填写服务名称' }]"
       />
-      <wd-cell title="服务分类" :is-link="true" @click="toCats()">
+      <wd-cell title="服务分类" required :is-link="true" @click="toCats()">
         <view>
           <text v-if="!catName" c-#B6BDBD>
             请选择
