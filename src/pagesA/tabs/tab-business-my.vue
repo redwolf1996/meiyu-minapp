@@ -5,6 +5,8 @@ style:
 </route>
 
 <script lang="ts" setup>
+import MyTabBar from './MyTabBar.vue'
+
 const userInfo = computed(() => useUserStore()?.userInfo)
 const storeInfo = computed(() => userInfo.value?.storeList?.[0])
 
@@ -14,9 +16,9 @@ function toRenew() {
 function toMyStore() {
   uni.navigateTo({ url: '/pagesA/my/store' })
 }
-function toAddNewStore() {
-  uni.navigateTo({ url: '/pagesA/my/new-store' })
-}
+// function toAddNewStore() {
+//   uni.navigateTo({ url: '/pagesA/my/new-store' })
+// }
 function toServ() {
   uni.navigateTo({ url: '/pagesA/my/service' })
 }

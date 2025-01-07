@@ -70,6 +70,7 @@ interface NavigateToOptions {
        "/pagesA/staff/detail" |
        "/pagesA/staff/index" |
        "/pagesA/staff/work-time" |
+       "/pagesA/tabs/MyTabBar" |
        "/pagesA/tabs/tab-business-book" |
        "/pagesA/tabs/tab-business-customer" |
        "/pagesA/tabs/tab-business-dashboard" |

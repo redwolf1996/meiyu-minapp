@@ -502,6 +502,10 @@
           }
         },
         {
+          "path": "tabs/MyTabBar",
+          "type": "page"
+        },
+        {
           "path": "tabs/tab-business-book",
           "type": "page",
           "layout": false,

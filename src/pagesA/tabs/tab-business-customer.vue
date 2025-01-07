@@ -8,6 +8,7 @@ style:
 <script lang="ts" setup>
 import type { CusList, CusModel, CusReqModel } from './types'
 import dayjs from 'dayjs'
+import MyTabBar from './MyTabBar.vue'
 
 const filter = ref()
 const optionsVip = [

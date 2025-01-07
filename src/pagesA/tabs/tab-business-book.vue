@@ -10,6 +10,7 @@ style:
 import type { BookCount, BookListAll, Books } from './types'
 import { getFinalArr } from './data'
 import dayjs from 'dayjs'
+import MyTabBar from './MyTabBar.vue'
 
 const refCancel = ref()
 const refDel = ref()
