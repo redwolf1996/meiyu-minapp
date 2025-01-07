@@ -36,6 +36,8 @@ async function dialogInputConfirm() {
     await request.put<any>(typeUrl.value, form)
   }
   getList()
+  showDialog.value = false
+  form.name = null
   inputDialogRef.value.close()
 }
 
@@ -63,6 +65,7 @@ async function openEdit(item: CatItem) {
 async function openAdd() {
   isAdd.value = true
   form.name = null
+  form.id = null
   dialogKey.value++
   showDialog.value = true
   await nextTick()
@@ -159,7 +162,7 @@ function selCat() {
         v-model="form.name"
         mode="input" :title="`${isAdd ? '添加' : '修改'}${typeName}分类`"
         :placeholder="`请输入${typeName}分类名称`"
-        @close="showDialog = false"
+        @close="showDialog = false; form.name = null;inputDialogRef.close()"
         @confirm="dialogInputConfirm"
       />
     </uni-popup>
