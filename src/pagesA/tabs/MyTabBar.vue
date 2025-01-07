@@ -27,21 +27,48 @@ function changeBar(index: number) {
     :value="tabbar" active-color="#1A66FF" inactive-color="#A7A8AC"
     @change="changeBar"
   >
-    <!-- <uv-tabbar-item text="首页">
+    <uv-tabbar-item text="工作台">
       <template #active-icon>
-        <image class="icon" src="https://cdn.uviewui.com/uview/common/bell-selected.png" />
+        <image class="icon" src="./icons/icon-tab-dashboard-act.png" />
       </template>
       <template #inactive-icon>
-        <image class="icon" src="https://cdn.uviewui.com/uview/common/bell.png" />
+        <image class="icon" src="./icons/icon-tab-dashboard.png" />
       </template>
-    </uv-tabbar-item> -->
-
-    <uv-tabbar-item text="工作台" icon="home" />
+    </uv-tabbar-item>
+    <uv-tabbar-item text="预约">
+      <template #active-icon>
+        <image class="icon" src="./icons/icon-tab-order-act.png" />
+      </template>
+      <template #inactive-icon>
+        <image class="icon" src="./icons/icon-tab-order.png" />
+      </template>
+    </uv-tabbar-item>
+    <uv-tabbar-item text="客户">
+      <template #active-icon>
+        <image class="icon" src="./icons/icon-tab-customer-act.png" />
+      </template>
+      <template #inactive-icon>
+        <image class="icon" src="./icons/icon-tab-customer.png" />
+      </template>
+    </uv-tabbar-item>
+    <uv-tabbar-item text="我的">
+      <template #active-icon>
+        <image class="icon" src="./icons/icon-tab-my-act.png" />
+      </template>
+      <template #inactive-icon>
+        <image class="icon" src="./icons/icon-tab-my.png" />
+      </template>
+    </uv-tabbar-item>
+    <!-- <uv-tabbar-item text="工作台" icon="home" />
     <uv-tabbar-item text="预约" icon="phone" />
     <uv-tabbar-item text="客户" icon="account-fill" />
-    <uv-tabbar-item text="我的" icon="account" />
+    <uv-tabbar-item text="我的" icon="account" /> -->
   </uv-tabbar>
 </template>
 
 <style lang='scss' scoped>
+.icon {
+  width: 40rpx;
+  height: 40rpx;
+}
 </style>
