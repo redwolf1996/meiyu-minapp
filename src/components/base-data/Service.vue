@@ -196,9 +196,6 @@ function toRichEdit() {
 }
 
 async function save() {
-  if (!form.price2) {
-    form.price2 = form.price
-  }
   if (mode.value === 'edit')
     await request.put<any>('/business/service', form)
   else

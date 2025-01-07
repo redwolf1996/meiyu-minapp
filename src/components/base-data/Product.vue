@@ -102,9 +102,6 @@ function toRichEdit() {
 }
 
 async function save() {
-  if (!form.price2) {
-    form.price2 = form.price
-  }
   if (mode.value === 'edit')
     await request.put<any>('/business/product', form)
   else
@@ -161,6 +158,7 @@ function toCats() {
         label="单位"
         placeholder="请填写"
         suffix-icon="arrow-right"
+        :rules="[{ required: true, message: '请填写单位' }]"
       />
       <wd-input
         v-model="form.inventory"
