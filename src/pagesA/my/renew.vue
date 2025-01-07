@@ -64,6 +64,11 @@ async function renew() {
     },
   })
 }
+
+// 1:服务协议 2:隐私政策
+function toProtocol(type: 1 | 2) {
+  uni.navigateTo({ url: `/pagesA/protocol?type=${type}` })
+}
 </script>
 
 <template>
@@ -125,14 +130,14 @@ async function renew() {
       <wd-checkbox v-model="protocalChecked" />
       <text dib f12 pl5px style="transform: translateX(-8px);">
         <text>开通前请确认</text>
-        <text c-1A66FF>
-          《服务协议》、
+        <text c-1A66FF @click="toProtocol(1)">
+          《用户协议》
         </text>
-        <text c-1A66FF>
+        <!-- <text c-1A66FF>
           《缴费协议》
-        </text>
-        <text>和</text>
-        <text c-1A66FF>
+        </text> -->
+        <text>及</text>
+        <text c-1A66FF @click="toProtocol(2)">
           《隐私政策》
         </text>
       </text>

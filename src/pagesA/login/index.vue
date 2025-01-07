@@ -40,6 +40,11 @@ function wxlogin() {
     },
   })
 }
+
+// 1:服务协议 2:隐私政策
+function toProtocol(type: 1 | 2) {
+  uni.navigateTo({ url: `/pagesA/protocol?type=${type}` })
+}
 </script>
 
 <template>
@@ -65,10 +70,6 @@ function wxlogin() {
         </view>
       </wd-button>
     </view>
-    <!-- TODO:开发完用户端后打开 -->
-    <!-- <view mt120rpx>
-      切换为用户端登录
-    </view> -->
     <view bottom-160rpx w-full color-gray-6 pf>
       <view flex flex-cc>
         <checkbox-group @change="select">
@@ -78,12 +79,12 @@ function wxlogin() {
           />
         </checkbox-group>
         <text>登录代表同意</text>
-        <text theme-color>
-          《服务协议》
+        <text theme-color @click="toProtocol(1)">
+          《用户协议》
         </text>
         <text>及</text>
-        <text theme-color>
-          《隐私协议》
+        <text theme-color @click="toProtocol(2)">
+          《隐私政策》
         </text>
       </view>
       <view pt-10rpx>

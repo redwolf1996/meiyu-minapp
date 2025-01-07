@@ -68,7 +68,7 @@ function toFeedBack() {
           </text>
         </view>
         <view c-969699 f14>
-          {{ storeInfo.isOwner ? '店铺拥有者' : storeInfo.roleDesc }}
+          {{ storeInfo?.isOwner ? '店铺拥有者' : storeInfo.roleDesc }}
         </view>
         <view tc pa right-0 top-4px>
           <view c-969699 fs-20 mb2px>

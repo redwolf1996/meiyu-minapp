@@ -4,15 +4,26 @@ style:
 </route>
 
 <script lang="ts" setup>
+const url = ref('')
 const protocolMap = {
-  1: '服务协议',
-  2: '缴费协议',
-  3: '隐私政策',
+  1: '用户协议',
+  2: '隐私政策',
 }
+onLoad((options) => {
+  const type = Number(options.type)
+  uni.setNavigationBarTitle({
+    title: protocolMap[type],
+  })
+  url.value = type === 1
+    ? 'https://api.kivibook.cn/beauty/yhxy.html'
+    : 'https://api.kivibook.cn/beauty/yszc.html'
+})
 </script>
 
 <template>
-  <view>测试</view>
+  <view>
+    <web-view :src="url" style="width: 100vw !important;" />
+  </view>
 </template>
 
 <style lang='scss' scoped></style>
