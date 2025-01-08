@@ -62,6 +62,9 @@ onShow(async () => {
       items: products.filter(v1 => v.id === v1.categoryId).map((v2) => {
         return {
           ...v2,
+          equity: checkedProdIds.includes(v2.id)
+            ? checkedProds.value?.find(v => v.id === v2.id)?.equity
+            : null,
           checked: checkedProdIds.includes(v2.id),
           disabled: from.value !== 'equity' ? false : disabledProdIds.includes(v2.id),
         }
