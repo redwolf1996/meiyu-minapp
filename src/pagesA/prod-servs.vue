@@ -34,12 +34,6 @@ onShow(async () => {
   const productCats = res.data.productCategory!
   const products = res.data.productList
 
-  // const checkedIds = [
-  //   ...checkedServs.value?.map(v1 => v1.id),
-  //   ...checkedProds.value?.map(v1 => v1.id),
-  //   ...disabledIds,
-  // ]
-
   const checkedServIds = checkedServs.value?.map(v1 => v1.id)
   const checkedProdIds = checkedProds.value?.map(v1 => v1.id)
   const disabledServIds = cusOriCardEquity.value?.filter(v => v.goodsType === 2)?.map(v => v.goodsId)
@@ -52,23 +46,15 @@ onShow(async () => {
       items: services.filter(v1 => v.id === v1.categoryId).map((v2) => {
         return {
           ...v2,
+          equity: checkedServIds.includes(v2.id)
+            ? checkedServs.value?.find(v => v.id === v2.id)?.equity
+            : null,
           checked: checkedServIds.includes(v2.id),
           disabled: from.value !== 'equity' ? false : disabledServIds.includes(v2.id),
         }
       }),
     }
   })
-  // categoriesServ.value.unshift({
-  //   id: 0,
-  //   label: '全部',
-  //   items: services.map((v2) => {
-  //     return {
-  //       ...v2,
-  //       checked: checkedIds.includes(v2.id),
-  //       disabled: disabledIds.includes(v2.id),
-  //     }
-  //   }),
-  // })
   categoriesProd.value = productCats.map((v) => {
     return {
       id: v.id,
@@ -82,18 +68,6 @@ onShow(async () => {
       }),
     }
   })
-  // categoriesProd.value.unshift({
-  //   id: 0,
-  //   label: '全部',
-  //   items: products.map((v2) => {
-  //     return {
-  //       ...v2,
-  //       checked: checkedIds.includes(v2.id),
-  //       disabled: disabledIds.includes(v2.id),
-  //     }
-  //   }),
-  // })
-
   changeCheck()
 })
 
