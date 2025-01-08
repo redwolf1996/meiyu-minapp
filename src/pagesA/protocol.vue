@@ -15,8 +15,8 @@ onLoad((options) => {
     title: protocolMap[type],
   })
   url.value = type === 1
-    ? 'https://api.kivibook.cn/beauty/yhxy.html'
-    : 'https://api.kivibook.cn/beauty/yszc.html'
+    ? 'https://api.kivibook.cn/beauty/yhxy.html?v=2'
+    : 'https://api.kivibook.cn/beauty/yszc.html?v=2'
 })
 </script>
 

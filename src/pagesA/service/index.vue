@@ -119,7 +119,7 @@ function showItemMenu(item: List) {
         <wd-img
           :width="100"
           :height="100"
-          mode="widthFix"
+          mode="aspectFill"
           :radius="12"
           :src="item.coverImg"
         />
@@ -150,18 +150,21 @@ function showItemMenu(item: List) {
               {{ item.payType === 1 ? '在线付' : '到店付' }}
             </text>
             <text v-if="item.isToStore" pl5px>
-              支持到店
+              到店服务
             </text>
             <text v-if="item.isToDoor" pl5px>
-              支持上门
+              上门服务
             </text>
             <text v-if="!item.isShow" pl5px>
-              网店不可销售
+              客户端不可预约
             </text>
           </view>
-          <view>
+          <view flex flex-ac gap10px>
             <text fb f12 px-12rpx py-7rpx bg-B5E4CA rd-12rpx>
               ￥{{ item.price2 || item.price }}
+            </text>
+            <text v-if="item.price2" fb f12 c-#CBCBD4 line-through>
+              ￥{{ item.price }}
             </text>
           </view>
         </view>

@@ -119,7 +119,7 @@ function showItemMenu(item: List) {
         <wd-img
           :width="100"
           :height="100"
-          mode="widthFix"
+          mode="aspectFill"
           :radius="12"
           :src="item.coverImg"
         />
@@ -146,13 +146,16 @@ function showItemMenu(item: List) {
             {{ item.name }}
           </view>
           <view f12 color-9A9FA5>
-            <text pl5px>
+            <text>
               {{ item.isShow ? '网店展示' : '网店不展示' }}
             </text>
           </view>
-          <view>
+          <view flex flex-ac gap10px>
             <text fb f12 px-12rpx py-7rpx bg-B5E4CA rd-12rpx>
               ￥{{ item.price2 || item.price }}
+            </text>
+            <text v-if="item.price2" fb f12 c-#CBCBD4 line-through>
+              ￥{{ item.price }}
             </text>
           </view>
         </view>

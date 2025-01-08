@@ -228,7 +228,7 @@ function confirm() {
                   <wd-img
                     :width="72"
                     :height="72"
-                    mode="center"
+                    mode="aspectFill"
                     :src="itm.coverImg"
                   />
                   <view>
@@ -236,9 +236,9 @@ function confirm() {
                       {{ itm.name }}
                     </view>
                     <view f12 c-#FF1919 mt6px>
-                      ￥{{ itm.price2 }}
+                      ￥{{ itm.price2 || itm.price }}
                     </view>
-                    <view f10 c-#D4D4D4 mt6px>
+                    <view v-if="itm.price2" f10 c-#D4D4D4 mt6px>
                       <text line-through>
                         ￥{{ itm.price }}
                       </text>
