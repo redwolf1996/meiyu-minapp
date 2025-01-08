@@ -245,7 +245,10 @@ function delEquity(info: Info) {
           <view>
             <text>{{ item.name }}</text>
             <text theme-red pl5px>
-              ¥{{ item.price2 }}
+              ¥{{ item.price2 || item.price }}
+            </text>
+            <text v-if="item.price2" c-#CBCBD4 line-through>
+              ￥{{ item.price }}
             </text>
           </view>
 
