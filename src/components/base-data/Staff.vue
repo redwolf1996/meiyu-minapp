@@ -33,7 +33,7 @@ const form = reactive<FormStaff>({
   userName: null,
   phone: null,
   gender: 2,
-  jobCode: 1,
+  jobCode: 2,
   roleCode: '',
   notes: '',
   scheduling: computed(() => staffScheduling.value),

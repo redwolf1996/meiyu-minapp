@@ -162,7 +162,7 @@ function openCalendar() {
       <wd-cell title="生日" :is-link="true" @click="openCalendar()">
         <view>
           <text v-if="!form.birthday" c-#B6BDBD>
-            请选择手艺人
+            请选择日期
           </text>
           <text v-else>
             {{ form.birthday }}
