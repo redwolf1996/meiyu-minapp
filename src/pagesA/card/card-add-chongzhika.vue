@@ -4,7 +4,6 @@ style:
 </route>
 
 <script lang="ts" setup>
-import type { BillingGood } from '../billing/types'
 import type { CardForm, Info } from './types'
 
 const userInfo = useUserStore()?.userInfo
@@ -62,16 +61,34 @@ onLoad((options) => {
   }
 })
 
-onShow(() => {
-  setEquity()
-})
+watch(
+  () => checkedProds.value,
+  () => {
+    setEquity()
+  },
+  {
+    deep: true,
+    immediate: false,
+  },
+)
+
+watch(
+  () => checkedServs.value,
+  () => {
+    setEquity()
+  },
+  {
+    deep: true,
+    immediate: false,
+  },
+)
 
 function setEquity() {
   if (checkedProds.value.length || checkedServs.value.length) {
     const arr: any = [...checkedProds.value, ...checkedServs.value]
     form.value.info = arr.map((v) => {
       return {
-        equity: 0,
+        equity: v.equity || 10,
         productId: v.prodType === 1 ? v.id : null,
         serviceId: v.prodType === 2 ? v.id : null,
         name: v.name,
@@ -109,16 +126,20 @@ async function setFormInfo() {
     sources2.value[1].isActive = true
   }
   form.value.countLimit = data.countLimit
-  form.value.info = data.info?.map((v) => {
+
+  const checkedItems: any = data.info.map((v) => {
     return {
       equity: v.equity,
-      productId: v.productId,
-      serviceId: v.serviceId,
-      name: v.serviceName || v.productName,
+      prodType: v.productId ? 1 : 2,
+      id: v.productId || v.serviceId,
+      name: v.productName || v.serviceName,
       price: v.price,
       price2: v.price2,
     }
   })
+  checkedProds.value = checkedItems.filter(v => v.prodType === 1)
+  checkedServs.value = checkedItems.filter(v => v.prodType === 2)
+
   curClassify.value.id = data.categoryId
   curClassify.value.name = data.categoryName
   richData.value.content = data.desc
@@ -217,12 +238,15 @@ function delEquity(info: Info) {
           <view>
             <text>{{ item.name }}</text>
             <text theme-red pl5px>
-              ¥{{ item.price2 }}
+              ¥{{ item.price2 || item.price }}
+            </text>
+            <text v-if="item.price2" c-#CBCBD4 line-through>
+              ￥{{ item.price }}
             </text>
           </view>
           <!-- 充值卡也可以打折 -->
           <view flex flex-ac gap5px>
-            <wd-input-number v-model="item.equity" :step="0.1" :min="1" :max="10" :precision="1" />
+            <wd-input-number v-model="item.equity" :step="0.1" :min="0.1" :max="10" :precision="1" />
             <text>折</text>
             <wd-icon name="minus-circle" size="16px" color="red" @click="delEquity(item)" />
           </view>

@@ -111,7 +111,7 @@ function setEquity() {
     const arr: any = [...checkedProds.value, ...checkedServs.value]
     form.value.info = arr.map((v) => {
       return {
-        equity: v.equity,
+        equity: v.equity || 0,
         productId: v.prodType === 1 ? v.id : null,
         serviceId: v.prodType === 2 ? v.id : null,
         name: v.name,
@@ -168,16 +168,6 @@ async function setFormInfo() {
   checkedProds.value = checkedItems.filter(v => v.prodType === 1)
   checkedServs.value = checkedItems.filter(v => v.prodType === 2)
 
-  // form.value.info = data.info.map((v) => {
-  //   return {
-  //     equity: v.equity,
-  //     productId: v.productId,
-  //     serviceId: v.serviceId,
-  //     name: v.serviceName || v.productName,
-  //     price: v.price,
-  //     price2: v.price2,
-  //   }
-  // })
   curClassify.value.id = data.categoryId
   curClassify.value.name = data.categoryName
   richData.value.content = data.desc

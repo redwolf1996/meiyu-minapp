@@ -4,7 +4,6 @@ style:
 </route>
 
 <script lang="ts" setup>
-import type { BillingGood } from '../billing/types'
 import type { CardForm, Info } from './types'
 
 const userInfo = useUserStore()?.userInfo
@@ -25,12 +24,14 @@ const form = ref<CardForm>({
   countLimit: 0,
 })
 
-// const discountShow = computed(()=>{
-//   if(form.value.info.length){
-//     return 1
-//   }
-//   return 0
-// })
+const discountShow = computed(() => {
+  if (!form.value.info.length)
+    return ''
+  if (form.value.info.length === 1)
+    return `${form.value.info[0].equity}折`
+  else
+    return `${Math.min(...form.value.info.map(v => Number(v.equity)))}折起`
+})
 
 const sources2: any = ref([
   {
@@ -70,9 +71,27 @@ onLoad((options) => {
   }
 })
 
-onShow(() => {
-  setEquity()
-})
+watch(
+  () => checkedProds.value,
+  () => {
+    setEquity()
+  },
+  {
+    deep: true,
+    immediate: false,
+  },
+)
+
+watch(
+  () => checkedServs.value,
+  () => {
+    setEquity()
+  },
+  {
+    deep: true,
+    immediate: false,
+  },
+)
 
 function setEquity() {
   if (checkedProds.value.length || checkedServs.value.length) {
@@ -117,16 +136,20 @@ async function setFormInfo() {
     sources2.value[1].isActive = true
   }
   form.value.countLimit = data.countLimit
-  form.value.info = data.info.map((v) => {
+
+  const checkedItems: any = data.info.map((v) => {
     return {
       equity: v.equity,
-      productId: v.productId,
-      serviceId: v.serviceId,
-      name: v.serviceName || v.productName,
+      prodType: v.productId ? 1 : 2,
+      id: v.productId || v.serviceId,
+      name: v.productName || v.serviceName,
       price: v.price,
       price2: v.price2,
     }
   })
+  checkedProds.value = checkedItems.filter(v => v.prodType === 1)
+  checkedServs.value = checkedItems.filter(v => v.prodType === 2)
+
   curClassify.value.id = data.categoryId
   curClassify.value.name = data.categoryName
   richData.value.content = data.desc
@@ -284,10 +307,8 @@ function delEquity(info: Info) {
           <view text-48rpx pt-56rpx>
             {{ form.name }}
           </view>
-          <view v-if="form.info?.length" f14 pt5px>
-            <text v-for="(item, index) in form.info" :key="`info-${index}`">
-              {{ item.equity }}折&nbsp;
-            </text>
+          <view f14 pt5px>
+            {{ discountShow }}
           </view>
           <view f12 pt-52rpx>
             {{ expiresType === 0 ? '永久有效' : `购买后${form.expires}天内有效` }}

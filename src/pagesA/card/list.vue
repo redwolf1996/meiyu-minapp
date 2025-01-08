@@ -179,12 +179,14 @@ function showItemMenu(item: List) {
                   {{ item.countLimit }}次
                 </text>
               </template>
-              <template v-if="item.type === 3">
-                {{ item?.discountDesc }}
-              </template>
               <template v-if="item.type === 2">
                 <text f12>
                   赠送{{ item.gift }}
+                </text>
+              </template>
+              <template v-if="item.type === 3">
+                <text f12>
+                  {{ item?.discountDesc }}
                 </text>
               </template>
             </view>
