@@ -123,7 +123,7 @@ export interface FormStaff {
   /**
    * 职务必填
    */
-  jobCode: number | string
+  jobCode: number[]
   /**
    * 备注
    */

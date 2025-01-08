@@ -33,7 +33,7 @@ const form = reactive<FormStaff>({
   userName: null,
   phone: null,
   gender: 2,
-  jobCode: 2,
+  jobCode: [2, 3],
   roleCode: '',
   notes: '',
   scheduling: computed(() => staffScheduling.value),
@@ -161,7 +161,7 @@ function toWorkTimes() {
         label="性别"
         align-right :columns="columnsGender"
       />
-      <wd-picker
+      <wd-select-picker
         v-model="form.jobCode"
         :rules="[{ required: true, message: '请选择职位' }]"
         label="职位"

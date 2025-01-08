@@ -72,7 +72,7 @@ export interface Staff {
   /**
    * 职务
    */
-  jobCode: number
+  jobCode: number[]
   /**
    * 职务
    */
