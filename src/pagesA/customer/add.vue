@@ -7,7 +7,6 @@ style:
 <script lang="ts" setup>
 import type { Customer } from './types'
 import { CustomerSources, GenderSources, VipSources } from './data'
-import api from '../api'
 import { useArea } from '@/hooks/useArea'
 
 const { area, addressValue, columnChange, handleConfirmAddress } = useArea()
@@ -19,8 +18,8 @@ const form = reactive<Customer>({
   phone: '',
   noteName: '',
   source: 1,
-  artisanId: null,
-  adviserId: null,
+  artisanId: '', // TODO:wd-picker model-value 初始化的时候不能为null否则第一次选择会失效
+  adviserId: '',
   level: 1,
   gender: 2,
   birthday: '',
@@ -32,13 +31,11 @@ const form = reactive<Customer>({
   notes: '',
   id: null,
 })
-const staffList = ref<{ label: string, value: number }[]>([])
 const from = ref('tab')
 
 onLoad((options) => {
   form.id = +options?.id
   from.value = options?.from ?? 'tab'
-  setStaffList()
 
   if (form?.id > 0) {
     uni.setNavigationBarTitle({ title: '修改客户' })
@@ -87,14 +84,6 @@ async function save() {
     uni.navigateBack()
 }
 
-async function setStaffList() {
-  const res = await api.getStaffList({ storeId: storeId.value })
-  const artList = res.data.list?.filter(v => v.jobCode === 2)
-  staffList.value = artList?.map((v) => {
-    return { label: v.userName, value: v.storeStaffId }
-  })
-}
-
 function calendarConfirm(e) {
   form.birthday = e.fulldate
 }
@@ -137,11 +126,15 @@ function openCalendar() {
         />
         <wd-picker
           v-model="form.artisanId"
-          label="手艺人" align-right :columns="staffList"
+          label="手艺人"
+          :columns="artistListStore"
+          align-right clearable
         />
         <wd-picker
           v-model="form.adviserId"
-          label="营销顾问" align-right :columns="staffList"
+          label="营销顾问"
+          :columns="salesListStore"
+          align-right clearable
         />
       </view>
     </wd-cell-group>

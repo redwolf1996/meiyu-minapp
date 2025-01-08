@@ -5,6 +5,7 @@ import type { List as MsgDetail } from '@/pagesA/msg/types'
 import type { CardEquity, MakeCardModel } from '@/pagesA/card/types'
 import pinia from '@/stores/index'
 import { useUserStore } from '@/stores/modules/user'
+import type { GeneralColumn } from '@/types'
 
 /** 当前选中的客户 */
 export const curCustomer = ref<Partial<CusList>>(null)
@@ -77,3 +78,12 @@ export function resetCards() {
   curSelectedCard.value = null
   curSelectedCardToCash.value = null
 }
+
+/** 手艺人列表 */
+export const artistListStore = ref<GeneralColumn[]>([])
+
+/** 销售列表 */
+export const salesListStore = ref<GeneralColumn[]>([])
+
+/** 所有员工列表 */
+export const staffListStore = ref<GeneralColumn[]>([])

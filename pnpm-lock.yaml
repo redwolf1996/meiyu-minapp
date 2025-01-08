@@ -84,8 +84,8 @@ importers:
         specifier: ^9.13.1
         version: 9.14.0(vue@3.4.38(typescript@5.5.4))
       wot-design-uni:
-        specifier: ^1.3.13
-        version: 1.3.13(vue@3.4.38(typescript@5.5.4))
+        specifier: ^1.5.1
+        version: 1.5.1(vue@3.4.38(typescript@5.5.4))
     devDependencies:
       '@antfu/eslint-config':
         specifier: ^2.21.1
@@ -5669,8 +5669,8 @@ packages:
     resolution: {integrity: sha512-BN22B5eaMMI9UMtjrGd5g5eCYPpCPDUy0FJXbYsaT5zYxjFOckS53SQDE3pWkVoWpHXVb3BrYcEN4Twa55B5cA==}
     engines: {node: '>=0.10.0'}
 
-  wot-design-uni@1.3.13:
-    resolution: {integrity: sha512-3LHW480eivYAIDsxQr8KxMHCpeoj45XXpbmslLEvSWdPaRBvkXukaMW8z7wjejrMozxPBkQZT52bktCLBT/kOA==}
+  wot-design-uni@1.5.1:
+    resolution: {integrity: sha512-jiDRuF8r7+xAldc4Dp+2T1VnqDnOoMWsXu6aRpDg2QG7ZH+/bJl7W8H8hHbKFgA9lu1By/HCDmpG7JC45nYtBw==}
     engines: {HBuilderX: ^3.8.7}
     peerDependencies:
       vue: '>=3.2.47'
@@ -12626,7 +12626,7 @@ snapshots:
 
   word-wrap@1.2.5: {}
 
-  wot-design-uni@1.3.13(vue@3.4.38(typescript@5.5.4)):
+  wot-design-uni@1.5.1(vue@3.4.38(typescript@5.5.4)):
     dependencies:
       vue: 3.4.38(typescript@5.5.4)
 

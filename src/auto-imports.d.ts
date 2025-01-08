@@ -26,6 +26,7 @@ declare global {
   const TopSearch: typeof import('./components/TopSearch.vue')['default']
   const VipLevelMap: typeof import('./utils/consts')['VipLevelMap']
   const WeekMap: typeof import('./utils/consts')['WeekMap']
+  const artistListStore: typeof import('./stores/common')['artistListStore']
   const asyncComputed: typeof import('@vueuse/core')['asyncComputed']
   const autoResetRef: typeof import('@vueuse/core')['autoResetRef']
   const bookDetailInfo: typeof import('./stores/book')['bookDetailInfo']
@@ -175,12 +176,14 @@ declare global {
   const richData: typeof import('./stores/rich-edit-data')['richData']
   const richEditData: typeof import('./stores/rich-edit-data')['richEditData']
   const safeBottom: typeof import('./utils/index')['safeBottom']
+  const salesListStore: typeof import('./stores/common')['salesListStore']
   const selBaseProduct: typeof import('./stores/sel-base-item')['selBaseProduct']
   const selBaseService: typeof import('./stores/sel-base-item')['selBaseService']
   const shallowReactive: typeof import('vue')['shallowReactive']
   const shallowReadonly: typeof import('vue')['shallowReadonly']
   const shallowRef: typeof import('vue')['shallowRef']
   const sleep: typeof import('./utils/index')['sleep']
+  const staffListStore: typeof import('./stores/common')['staffListStore']
   const staffScheduling: typeof import('./stores/common')['staffScheduling']
   const storeId: typeof import('./stores/common')['storeId']
   const storeMsgDetail: typeof import('./stores/common')['storeMsgDetail']
@@ -424,6 +427,7 @@ declare module 'vue' {
     readonly TimesCardTypeMap: UnwrapRef<typeof import('./utils/consts')['TimesCardTypeMap']>
     readonly VipLevelMap: UnwrapRef<typeof import('./utils/consts')['VipLevelMap']>
     readonly WeekMap: UnwrapRef<typeof import('./utils/consts')['WeekMap']>
+    readonly artistListStore: UnwrapRef<typeof import('./stores/common')['artistListStore']>
     readonly bookDetailInfo: UnwrapRef<typeof import('./stores/book')['bookDetailInfo']>
     readonly bookInfo: UnwrapRef<typeof import('./stores/book-info')['bookInfo']>
     readonly bookStime: UnwrapRef<typeof import('./stores/book')['bookStime']>
@@ -520,10 +524,12 @@ declare module 'vue' {
     readonly resolveComponent: UnwrapRef<typeof import('vue')['resolveComponent']>
     readonly richData: UnwrapRef<typeof import('./stores/rich-edit-data')['richData']>
     readonly safeBottom: UnwrapRef<typeof import('./utils/index')['safeBottom']>
+    readonly salesListStore: UnwrapRef<typeof import('./stores/common')['salesListStore']>
     readonly shallowReactive: UnwrapRef<typeof import('vue')['shallowReactive']>
     readonly shallowReadonly: UnwrapRef<typeof import('vue')['shallowReadonly']>
     readonly shallowRef: UnwrapRef<typeof import('vue')['shallowRef']>
     readonly sleep: UnwrapRef<typeof import('./utils/index')['sleep']>
+    readonly staffListStore: UnwrapRef<typeof import('./stores/common')['staffListStore']>
     readonly staffScheduling: UnwrapRef<typeof import('./stores/common')['staffScheduling']>
     readonly storeId: UnwrapRef<typeof import('./stores/common')['storeId']>
     readonly storeMsgDetail: UnwrapRef<typeof import('./stores/common')['storeMsgDetail']>

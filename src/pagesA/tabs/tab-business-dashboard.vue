@@ -13,6 +13,7 @@ import { getMenuButtonInfo } from '@/utils/index'
 import type { DashBoardData } from './types'
 import type { StoreList, UserInfo } from '@/stores/modules/user'
 import MyTabBar from './MyTabBar.vue'
+import type { StaffModel } from '../api'
 
 const toast = useToast()
 const menuButtonWidth = ref(0)
@@ -47,6 +48,22 @@ async function initStore() {
   }
 
   getInfo()
+  setStaffList()
+}
+
+async function setStaffList() {
+  const res = await request.get<StaffModel>('/business/staff', { storeId: storeId.value })
+  const artList = res.data.list?.filter(v => v.jobCode === 2)
+  const salesList = res.data.list?.filter(v => v.jobCode === 3)
+  artistListStore.value = artList?.map((v) => {
+    return { label: v.userName, value: v.storeStaffId }
+  })
+  salesListStore.value = salesList?.map((v) => {
+    return { label: v.userName, value: v.storeStaffId }
+  })
+  staffListStore.value = artList?.map((v) => {
+    return { label: v.userName, value: v.storeStaffId }
+  })
 }
 
 async function getInfo() {

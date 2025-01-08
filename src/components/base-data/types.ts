@@ -119,11 +119,11 @@ export interface FormStaff {
   /**
    * 性别，0未知，1男，2女
    */
-  gender?: number
+  gender?: number | string
   /**
    * 职务必填
    */
-  jobCode: number
+  jobCode: number | string
   /**
    * 备注
    */
