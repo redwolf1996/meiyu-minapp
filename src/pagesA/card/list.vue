@@ -156,7 +156,7 @@ function showItemMenu(item: List) {
         <wd-img
           :width="100"
           :height="100"
-          mode="widthFix"
+          mode="aspectFill"
           :radius="12"
           :src="`${IMG_BASE}/detail/${cardImg[item.type]}.png`"
         />
@@ -170,13 +170,13 @@ function showItemMenu(item: List) {
               />
               <template v-if="item.type === 1">
                 <text v-if="item.secondType === 1" f12>
-                  {{ item.avaTimes }}次
+                  {{ item.countLimit }}次
                 </text>
                 <text v-if="item.secondType === 2" f12>
                   不限次
                 </text>
                 <text v-if="item.secondType === 3" f12>
-                  不限次
+                  {{ item.countLimit }}次
                 </text>
               </template>
               <template v-if="item.type === 3">

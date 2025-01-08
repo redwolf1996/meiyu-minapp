@@ -94,7 +94,7 @@ function setEquity() {
     const arr: any = [...checkedProds.value, ...checkedServs.value]
     form.value.info = arr.map((v) => {
       return {
-        equity: 0,
+        equity: v.equity,
         productId: v.prodType === 1 ? v.id : null,
         serviceId: v.prodType === 2 ? v.id : null,
         name: v.name,
@@ -342,8 +342,8 @@ function delEquity(info: Info) {
           <view text-48rpx pt-56rpx>
             {{ form.name }}
           </view>
-          <view f14>
-            {{ limits }}次
+          <view f14 pt5px>
+            {{ form.secondType === 2 ? '不限' : (limits || form.countLimit) }}次
           </view>
           <view f12 pt-52rpx>
             {{ expiresType === 0 ? '永久有效' : `购买后${form.expires}天内有效` }}

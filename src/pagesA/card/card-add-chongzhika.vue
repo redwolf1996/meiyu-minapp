@@ -281,7 +281,7 @@ function delEquity(info: Info) {
           <view text-48rpx pt-56rpx>
             {{ form.name }}
           </view>
-          <view v-if="form.price && form.gift" f14>
+          <view v-if="form.price && form.gift" f14 pt5px>
             充{{ form.price }}送{{ form.gift }}
           </view>
           <view f12 pt-52rpx>

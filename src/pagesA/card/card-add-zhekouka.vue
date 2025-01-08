@@ -25,6 +25,13 @@ const form = ref<CardForm>({
   countLimit: 0,
 })
 
+// const discountShow = computed(()=>{
+//   if(form.value.info.length){
+//     return 1
+//   }
+//   return 0
+// })
+
 const sources2: any = ref([
   {
     label: '支持',
@@ -72,7 +79,7 @@ function setEquity() {
     const arr: any = [...checkedProds.value, ...checkedServs.value]
     form.value.info = arr.map((v) => {
       return {
-        equity: 0,
+        equity: v.equity || 10,
         productId: v.prodType === 1 ? v.id : null,
         serviceId: v.prodType === 2 ? v.id : null,
         name: v.name,
@@ -210,12 +217,15 @@ function delEquity(info: Info) {
           <view>
             <text>{{ item.name }}</text>
             <text theme-red pl5px>
-              ¥{{ item.price2 }}
+              ¥{{ item.price2 || item.price }}
+            </text>
+            <text v-if="item.price2" c-#CBCBD4 line-through>
+              ￥{{ item.price }}
             </text>
           </view>
           <!-- 折扣卡 -->
           <view flex flex-ac gap5px>
-            <wd-input-number v-model="item.equity" :step="0.1" :min="1" :max="10" :precision="1" />
+            <wd-input-number v-model="item.equity" :step="0.1" :min="0.1" :max="10" :precision="1" />
             <text>折</text>
             <wd-icon name="minus-circle" size="16px" color="red" @click="delEquity(item)" />
           </view>
@@ -274,7 +284,7 @@ function delEquity(info: Info) {
           <view text-48rpx pt-56rpx>
             {{ form.name }}
           </view>
-          <view v-if="form.info?.length" f14>
+          <view v-if="form.info?.length" f14 pt5px>
             <text v-for="(item, index) in form.info" :key="`info-${index}`">
               {{ item.equity }}折&nbsp;
             </text>
