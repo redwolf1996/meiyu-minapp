@@ -47,18 +47,18 @@ export interface Info {
 }
 
 export interface ProductList {
-  categoryId: number
-  categoryName: string
-  coverImg: string
-  desc: string
-  id: number
-  inventory: number
-  isShow: number
-  name: string
-  price: number
-  price2: number
-  storeId: number
-  unit: string
+  categoryId?: number
+  categoryName?: string
+  coverImg?: string
+  desc?: string
+  id?: number
+  inventory?: number
+  isShow?: number
+  name?: string
+  price?: number
+  price2?: number
+  storeId?: number
+  unit?: string
   checked?: boolean
   disabled?: boolean
   prodType?: 1 // 1产品 2服务
@@ -67,22 +67,22 @@ export interface ProductList {
 }
 
 export interface ServiceList {
-  categoryId: number
-  categoryName: string
-  coverImg: string
-  desc: string
-  duration: number
-  durationUnit: string
-  id: number
-  isShow: number
-  isToDoor: number
-  isToStore: number
-  name: string
-  payType: number
-  price: number
-  price2: number
-  serviceColor: string
-  storeId: number
+  categoryId?: number
+  categoryName?: string
+  coverImg?: string
+  desc?: string
+  duration?: number
+  durationUnit?: string
+  id?: number
+  isShow?: number
+  isToDoor?: number
+  isToStore?: number
+  name?: string
+  payType?: number
+  price?: number
+  price2?: number
+  serviceColor?: string
+  storeId?: number
   checked?: boolean
   disabled?: boolean
   prodType?: 2 // 1产品 2服务

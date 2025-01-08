@@ -460,23 +460,23 @@ export interface CardEquity {
   /**
    * 服务次数，产品卡折扣1-100
    */
-  equity: number
+  equity?: number
   /**
    * 商品id
    */
-  goodsId: number
+  goodsId?: number
   /**
    * 商品名称
    */
-  goodsName: string
+  goodsName?: string
   /**
    * 商品类型 1产品 2服务
    */
-  goodsType: number
+  goodsType?: number
   /**
    * 商品价格
    */
-  goodsPrice: string | number
+  goodsPrice?: string | number
   /**
    * 详情得到的id
    */

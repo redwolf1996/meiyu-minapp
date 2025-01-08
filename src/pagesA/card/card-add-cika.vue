@@ -84,10 +84,6 @@ onLoad((options) => {
   }
 })
 
-// onShow(() => {
-//   setEquity()
-// })
-
 watch(
   () => checkedProds.value,
   () => {
