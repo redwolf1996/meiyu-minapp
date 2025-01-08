@@ -5,8 +5,7 @@ style:
 
 <script lang="ts" setup>
 import { sumBy } from 'lodash-es'
-import type { CardForm, Info } from './types'
-import type { BillingGood } from '../billing/types'
+import type { CardForm, CardInfo, Info } from './types'
 
 const userInfo = useUserStore()?.userInfo
 const storeInfo = userInfo?.storeList?.[0]
@@ -85,9 +84,31 @@ onLoad((options) => {
   }
 })
 
-onShow(() => {
-  setEquity()
-})
+// onShow(() => {
+//   setEquity()
+// })
+
+watch(
+  () => checkedProds.value,
+  () => {
+    setEquity()
+  },
+  {
+    deep: true,
+    immediate: false,
+  },
+)
+
+watch(
+  () => checkedServs.value,
+  () => {
+    setEquity()
+  },
+  {
+    deep: true,
+    immediate: false,
+  },
+)
 
 function setEquity() {
   if (checkedProds.value.length || checkedServs.value.length) {
@@ -118,7 +139,7 @@ function resetSources() {
 }
 
 async function setFormInfo() {
-  const res = await request.get<any>(`/business/card/${cardId.value}`)
+  const res = await request.get<CardInfo>(`/business/card/${cardId.value}`)
   const data = res.data
   resetSources()
   form.value.secondType = data.secondType
@@ -136,16 +157,31 @@ async function setFormInfo() {
     sources2.value[1].isActive = true
   }
   form.value.countLimit = data.countLimit
-  form.value.info = data.info.map((v) => {
+
+  const checkedItems: any = data.info.map((v) => {
     return {
       equity: v.equity,
-      productId: v.productId,
-      serviceId: v.serviceId,
-      name: v.serviceName || v.productName,
+      prodType: v.productId ? 1 : 2,
+      id: v.productId || v.serviceId,
+      name: v.productName || v.serviceName,
       price: v.price,
       price2: v.price2,
     }
   })
+
+  checkedProds.value = checkedItems.filter(v => v.prodType === 1)
+  checkedServs.value = checkedItems.filter(v => v.prodType === 2)
+
+  // form.value.info = data.info.map((v) => {
+  //   return {
+  //     equity: v.equity,
+  //     productId: v.productId,
+  //     serviceId: v.serviceId,
+  //     name: v.serviceName || v.productName,
+  //     price: v.price,
+  //     price2: v.price2,
+  //   }
+  // })
   curClassify.value.id = data.categoryId
   curClassify.value.name = data.categoryName
   richData.value.content = data.desc

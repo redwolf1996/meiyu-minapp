@@ -191,19 +191,6 @@ export interface MakeCardModel {
   [property: string]: any
 }
 
-export interface ApifoxModel {
-  code: number
-  data: Data
-  msg: string
-  [property: string]: any
-}
-
-export interface Data {
-  list: List[]
-  total: number
-  [property: string]: any
-}
-
 export interface CusList {
   /**
    * 充值卡剩余金额
@@ -498,4 +485,100 @@ export interface CardEquity {
    * 是否权益可修改
    */
   editable?: boolean
+}
+
+export interface CardInfo {
+  /**
+   * 分类id
+   */
+  categoryId: number
+  /**
+   * 分类名, 这一项如果用不到可以跟我说
+   */
+  categoryName: string
+  /**
+   * 不限次卡，次数上限
+   */
+  countLimit: number
+  /**
+   * 创建人
+   */
+  createBy: number
+  createTime: string
+  /**
+   * 1未删除，2已删除
+   */
+  deleteStatus: number
+  /**
+   * 描述
+   */
+  desc: string
+  /**
+   * 有效期天数, 0不限
+   */
+  expires: number
+  /**
+   * 充值卡赠送
+   */
+  gift: number
+  /**
+   * 主键
+   */
+  id: number
+  /**
+   * 关联权益
+   */
+  info: Partial<Equity>[]
+  /**
+   * 是否网店售卖
+   */
+  isShow: number
+  /**
+   * 卡名称
+   */
+  name: string
+  orgId: number
+  /**
+   * 售价
+   */
+  price: number
+  /**
+   * 次卡分类, 0非次卡，1->有限次卡，2->不限次卡，3->通卡
+   */
+  secondType: number
+  secondTypeDesc: string
+  storeId: number
+  /**
+   * 类型, 1->次卡，2->充值卡，3->折扣卡
+   */
+  type: number
+  typeDesc: string
+  updateBy: number
+  updateTime: null
+}
+
+export interface Equity {
+  cardId: number
+  /**
+   * 权益值, 次卡表示次数，充值卡折扣卡表示折扣1-100
+   */
+  equity: number
+  price: number
+  price2: number
+  /**
+   * 产品id
+   */
+  productId: number
+  /**
+   * 产品名
+   */
+  productName: string
+  /**
+   * 服务id, 服务和产品每条只存在一个
+   */
+  serviceId: number
+  /**
+   * 服务名
+   */
+  serviceName: string
 }

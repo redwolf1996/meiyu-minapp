@@ -57,13 +57,13 @@ export interface WeekTime {
 export const staffScheduling = ref<WeekTime[]>([])
 
 /** 当前选中的服务列表 */
-export const checkedServs = ref<ServiceList[]>([])
+export const checkedServs = ref<Partial<ServiceList>[]>([])
 
 /** 当前选中的产品列表 */
-export const checkedProds = ref<ProductList[]>([])
+export const checkedProds = ref<Partial<ProductList>[]>([])
 
 /** 当前购卡详情权益 */
-export const cusOriCardEquity = ref<CardEquity[]>([])
+export const cusOriCardEquity = ref<Partial<CardEquity>[]>([])
 
 /** 重置选项卡产品服务选项卡内容 */
 export function resetGoods() {

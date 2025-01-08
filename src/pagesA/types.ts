@@ -64,7 +64,6 @@ export interface ProductList {
   prodType?: 1 // 1产品 2服务
   goodsCount?: number // 购买数量
   equity?: number // 次卡表示数量，折扣充值卡表示折扣1.0-10.0
-  [property: string]: any
 }
 
 export interface ServiceList {
@@ -89,7 +88,6 @@ export interface ServiceList {
   prodType?: 2 // 1产品 2服务
   goodsCount?: number // 购买数量
   equity?: number // 次卡表示数量，折扣充值卡表示折扣1.0-10.0
-  [property: string]: any
 }
 
 export interface CatsItemsTree<T> {
