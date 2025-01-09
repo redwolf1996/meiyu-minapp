@@ -65,11 +65,11 @@ export interface ProductList {
   /**
    * 购买的数量
    */
-  goodsCount?: number
+  goodsCount?: any
   /**
    * 次卡表示数量，折扣充值卡表示折扣1.0-10.0
    */
-  equity?: number
+  equity?: any
   /**
    * 服务优惠前总价
    */
@@ -112,11 +112,11 @@ export interface ServiceList {
   /**
    * 购买的数量
    */
-  goodsCount?: number
+  goodsCount?: any
   /**
    * 次卡表示数量，折扣充值卡表示折扣1.0-10.0
    */
-  equity?: number
+  equity?: any
   /**
    * 服务优惠前总价
    */
