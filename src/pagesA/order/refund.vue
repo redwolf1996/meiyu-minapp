@@ -137,7 +137,7 @@ function select({ item }) {
       <view class="h20px" />
       <MyCell label="订单支付方式" :showArrow="false">
         <text f14>
-          {{ PayTypesMap?.[detail?.payType] }}
+          {{ detail?.payTypeDesc }}
         </text>
       </MyCell>
 
@@ -163,15 +163,15 @@ function select({ item }) {
             <wd-icon name="help-circle" size="15px" color="#979797" />
           </wd-popover>
         </view>
-        <view flex flex-ac gap-6px style="max-width: 60%" @click="showActions">
+        <view flex flex-ac flex-xr gap-6px style="min-width: 60%" @click="showActions">
+          <wd-icon name="arrow-right" size="16px" color="#bfbfbf" />
           <text fs-14px>
             {{ curItem?.name || '' }}
           </text>
-          <wd-icon name="arrow-right" size="16px" color="#bfbfbf" />
         </view>
       </view>
       <MyCell label="退款金额" :showArrow="false">
-        ￥<wd-input-number v-model="form.refundAmount" :min="0" input-width="70px" />
+        ￥<wd-input-number v-model="form.refundAmount" :min="0" :max="detail?.amount" input-width="70px" />
       </MyCell>
     </view>
     <view class="h24rpx" />
@@ -199,7 +199,7 @@ function select({ item }) {
           合计退款金额：
         </text>
         <text fs-20px c-#FA483C>
-          ￥{{ form?.refundAmount }}
+          ￥{{ form.refundAmount }}
         </text>
       </view>
     </view>
