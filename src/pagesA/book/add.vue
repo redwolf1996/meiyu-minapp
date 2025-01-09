@@ -278,7 +278,7 @@ watch(() => curSelectedCardToCash.value, () => {
           </view>
         </view>
         <MyCellGroup>
-          <view f14 flex flex-ac flex-bt>
+          <view flex flex-ac flex-bt>
             <view theme-color fs-14px fb>
               {{ item.name }}
             </view>
@@ -296,9 +296,9 @@ watch(() => curSelectedCardToCash.value, () => {
             </view>
             <view fs-12px flex flex-ac gap-6px style="max-width: 60%">
               <text c-#FF1919>
-                ￥{{ item.price2 }}&nbsp;
+                ￥{{ item.price2 || item.price }}
               </text>
-              <text line-through c-848486>
+              <text v-if="item.price2" line-through c-848486>
                 ￥{{ item.price }}
               </text>
             </view>

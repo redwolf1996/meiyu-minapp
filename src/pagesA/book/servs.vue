@@ -19,6 +19,9 @@ onShow(async () => {
   const res = await request.get<AllItems>('/business/goods_all', { storeId: storeId.value })
   const serviceCats = res.data.serviceCategory!
   const services = res.data.serviceList
+
+  const checkedServIds = checkedServs.value?.map(v1 => v1.id)
+
   categories.value = serviceCats.map((v) => {
     return {
       id: v.id,
@@ -30,8 +33,12 @@ onShow(async () => {
         else {
           v2.checked = false
         }
-
-        return { ...v2 }
+        return {
+          ...v2,
+          equity: checkedServIds.includes(v2.id)
+            ? checkedServs.value?.find(v => v.id === v2.id)?.equity
+            : null,
+        }
       }),
     }
   })
@@ -95,9 +102,9 @@ function confirm() {
                   {{ itm.name }}
                 </view>
                 <view f12 c-#FF1919 mt6px>
-                  ￥{{ itm.price2 }}
+                  ￥{{ itm.price2 || itm.price }}
                 </view>
-                <view f10 c-#D4D4D4 mt6px>
+                <view v-if="itm.price2" f10 c-#D4D4D4 mt6px>
                   <text line-through>
                     ￥{{ itm.price }}
                   </text>

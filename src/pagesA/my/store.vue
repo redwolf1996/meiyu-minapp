@@ -12,7 +12,6 @@ const imageValue = ref<any>([{
   url: storeInfo.value?.logo || '',
 }])
 const pccValue = ref<string[]>([storeInfo.value.province || '', storeInfo.value.city || '', storeInfo.value.county || ''])
-console.log(pccValue.value)
 const form: any = reactive({
   id: storeId.value,
   storeName: storeInfo.value?.storeName || '',

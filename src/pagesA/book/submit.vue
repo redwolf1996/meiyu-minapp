@@ -66,7 +66,8 @@ async function doSubmit() {
             radius="10px"
             :width="72"
             :height="72"
-            :src="item.coverImg || DEFAULT_AVATAR"
+            mode="aspectFill"
+            :src="item.coverImg"
           />
           <view flex-1 flex flex-y flex-bt>
             <view f14 c-3B3D3D mb4px flex flex-ac flex-bt>
@@ -78,10 +79,10 @@ async function doSubmit() {
             <view flex flex-ac flex-bt>
               <view flex flex-ac gap4px>
                 <text c-FF1919 f18>
-                  ￥{{ item.price2 || '--' }}
+                  ￥{{ item.price2 || item.price }}
                 </text>
-                <text line-through f12 c-D4D4D4>
-                  ￥{{ item.price || '--' }}
+                <text v-if="item.price2" line-through f12 c-D4D4D4>
+                  ￥{{ item.price }}
                 </text>
               </view>
               <view f12 c-7C7C7C>
@@ -152,7 +153,7 @@ async function doSubmit() {
     <view mb16px px12px py16px bg-white>
       <view>备注</view>
       <view flex flex-ac flex-bt>
-        {{ bookInfo.notes || '--' }}
+        {{ bookInfo.notes }}
       </view>
     </view>
   </view>

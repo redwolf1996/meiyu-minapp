@@ -5,7 +5,6 @@ style:
 
 <script lang="ts" setup>
 function toBWeChat() {
-  console.log('xxxxxx')
   uni.navigateTo({ url: '/pagesA/my/qiwei' })
 }
 
