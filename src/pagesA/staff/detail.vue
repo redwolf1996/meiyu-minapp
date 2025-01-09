@@ -121,6 +121,7 @@ function toEdit() {
       <wd-img
         :width="40"
         :height="40"
+        mode="scaleToFill"
         :src="`${IMG_BASE}/icon-staff.png`"
       />
       <view class="base-wrapper">
@@ -198,6 +199,7 @@ function toEdit() {
       <wd-img
         :width="40"
         :height="40"
+        mode="scaleToFill"
         :src="`${IMG_BASE}/icon-serve.png`"
       />
       <view class="base-wrapper">
