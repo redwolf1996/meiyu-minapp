@@ -299,11 +299,11 @@ function delEquity(item: CardEquity) {
             <view>总次数：</view>
             <view>{{ detail?.countLimit || '不限' }}次</view>
           </view>
-          <view flex flex-bt>
-            <view style="width: 78px;">
+          <view>
+            <view>
               购卡权益：
             </view>
-            <view style="flex-grow: 1;" tr>
+            <view mt5px f12 c-#00BB00>
               {{ detail?.equityDesc }}
             </view>
           </view>
