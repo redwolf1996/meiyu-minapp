@@ -57,6 +57,7 @@ watch(() => curSelectedCard.value, () => {
 
 watch(() => curSelectedCardToCash.value, () => {
   if (curSelectedCardToCash.value) {
+    console.log(curSelectedCardToCash.value)
     form.value.customerCardId = curSelectedCardToCash.value.customerCardId
     form.value.amount = 0
     form.value.gift = 0

@@ -120,6 +120,7 @@ function toCardRecharge(type: 1 | 2 | 3 | 4 | 5 | 6) {
   curCardRechargeType.value = type
   curSelectedCard.value = null
   curSelectedCardToCash.value = null
+  curCardRechargeFormData.value = null
   curCustomer.value = null
   uni.navigateTo({ url: '/pagesA/card/make' })
 }

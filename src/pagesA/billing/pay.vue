@@ -102,7 +102,9 @@ async function pay() {
   }
   else { // 正常支付（mode  1 开单 2开卡 3充值 4预约）
     formData.value.payType = curCode.value
-    formData.value.customerCardId = curCard.value?.id
+    if (mode.value !== 3) { // 充值不需要选择储值卡
+      formData.value.customerCardId = curCard.value?.id
+    }
     const res = await request.post<any>(postUrl.value, formData.value)
     orderId.value = res.data.orderId
     amount = res.data.payAmount

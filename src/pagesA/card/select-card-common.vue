@@ -18,6 +18,7 @@ const cardImgName = { // 1->次卡，2->充值卡，3->折扣卡
 const cType = ref<number>(-1) // 1->次卡，2->充值卡，3->折扣卡
 const cSecondType = ref<number>(-1) // 0非次卡，1->有限次卡，2->不限次卡，3->通卡
 
+// 可用充值卡列表
 const customerCashCardList = ref<AvailableCard[]>([])
 
 onLoad(async (option) => {
