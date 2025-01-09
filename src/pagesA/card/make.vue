@@ -184,7 +184,7 @@ function toPay() {
                 </view>
               </view>
               <view fs-14px mt-10px>
-                <text>剩余金额￥{{ curSelectedCardToCash.totalAmount }}&nbsp;</text>
+                <text>剩余金额&#12288;￥{{ curSelectedCardToCash.totalAmount }}</text>
               </view>
               <view fs-12px mt-10px>
                 <text>有效期：</text>
@@ -192,7 +192,7 @@ function toPay() {
                   永久有效
                 </text>
                 <text v-else>
-                  有效期：{{ curSelectedCardToCash.expiresTimeDesc }}
+                  {{ curSelectedCardToCash.expiresTimeDesc }}
                 </text>
               </view>
             </template>
