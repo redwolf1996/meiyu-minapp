@@ -155,11 +155,11 @@ export interface AvailableCard {
   /**
    * 卡二级分类，次卡 0非次卡，1->有限次卡，2->不限次卡，3->通卡
    */
-  cardSecondType: number
+  cardSecondType?: number
   /**
-   * 卡分类
+   * 卡类别 1->次卡，2->充值卡，3->折扣卡
    */
-  cardType: number
+  cardType?: number
   cardTypeDesc: string
   /**
    * 共用次数上限，无限次通卡

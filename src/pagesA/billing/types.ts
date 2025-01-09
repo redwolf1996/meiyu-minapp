@@ -116,7 +116,7 @@ export interface CashCard {
    */
   cardSecondType?: number
   /**
-   * 卡分类
+   * 卡类别 1->次卡，2->充值卡，3->折扣卡
    */
   cardType?: number
   createTime?: string
