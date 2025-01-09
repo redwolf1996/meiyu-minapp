@@ -155,7 +155,7 @@ export interface MakeCardModel {
   /**
    * 销售
    */
-  adviserId?: number
+  adviserId?: number | string
   /**
    * 金额，充值卡售价
    */

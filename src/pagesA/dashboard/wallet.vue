@@ -119,16 +119,6 @@ function toRecords() {
       </view>
     </view>
   </view>
-
-  <view h-180rpx />
-  <view f12 tc c-F53F3F>
-    <view>
-      往微信零钱账号的授权页面
-    </view>
-    <view mt-22rpx>
-      工信部要求收集用户信息 需用户同意授权--隐私协议需体现
-    </view>
-  </view>
 </template>
 
 <style lang='scss' scoped>

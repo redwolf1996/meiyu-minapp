@@ -117,16 +117,13 @@ function toOrderDetail() {
   </view>
 
   <wd-popup v-model="showCardRecharge" position="bottom" closable :safe-area-inset-bottom="true" custom-style="border-radius:32rpx;">
-    <view style="height: 360px">
+    <view style="height: 210px">
       <view fb tc c-#232220 mt42px>
         选择开卡类型
       </view>
       <view class="h20px" />
       <view px20px py12px>
         <view mb30px>
-          <view fs-16px>
-            开卡
-          </view>
           <view fs-14px flex flex-wrap gap20px mt20px>
             <view class="card-item" @click="toCardRecharge(1)">
               折扣卡
@@ -151,6 +148,17 @@ function toOrderDetail() {
 </template>
 
 <style lang='scss' scoped>
+.card-item {
+  height: 32px;
+  line-height: 32px;
+  text-align: center;
+  color: #303030;
+  background-color: #f6f6fb;
+  padding: 6px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .menu {
   display: flex;
   justify-content: center;

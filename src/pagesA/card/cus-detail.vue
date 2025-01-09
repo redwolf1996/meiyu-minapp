@@ -97,6 +97,9 @@ function getDetail() {
   request.get<CusCardDetail>(`/business/store-customer-card/${id.value}`).then((res) => {
     detail.value = res.data
     cardName.value = res.data.cardName || ''
+    const s = dayjs(res.data.startTime).valueOf()
+    const e = dayjs(res.data.expiresTime).valueOf()
+    timeArr.value = [s, e]
   })
 }
 function getRecords() {
@@ -289,8 +292,12 @@ function delEquity(item: CardEquity) {
             <view>￥{{ detail?.payAmount }}</view>
           </view>
           <view flex flex-bt>
-            <view>购卡权益：</view>
-            <view>{{ detail?.equityDesc }}</view>
+            <view style="width: 78px;">
+              购卡权益：
+            </view>
+            <view style="flex-grow: 1;" tr>
+              {{ detail?.equityDesc }}
+            </view>
           </view>
         </view>
       </view>

@@ -34,12 +34,15 @@ onLoad(async (options) => {
 <template>
   <view h132px mb12px pr>
     <view pr>
-      <image
-        v-if="cardImgName[itm?.type]"
-        style="width: 100%;height: 102px;"
-        mode="aspectFit"
-        :src="`${IMG_BASE}/cards/${cardImgName[itm?.type]}.png`"
-      />
+      <view tc mx30px>
+        <image
+          v-if="cardImgName[itm?.type]"
+          style="height: 102px;"
+          mode="aspectFill"
+          :src="`${IMG_BASE}/cards/${cardImgName[itm?.type]}.png`"
+        />
+      </view>
+
       <view h102px px30px pa wp100 flex flex-y flex-bt class="txt">
         <view p12px flex-grow-1>
           <view flex flex-bt flex-ac>

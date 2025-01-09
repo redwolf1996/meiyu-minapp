@@ -20,7 +20,7 @@ const form = ref<MakeCardModel>({
     return orderTime.value ? dayjs(orderTime.value).format('YYYY-MM-DD HH:mm:ss') : ''
   }),
   storeCustomerId: computed(() => curCustomer.value?.storeCustomerId ?? null),
-  adviserId: null,
+  adviserId: '',
   cardId: null,
   customerCardId: null,
   notes: '',
@@ -217,6 +217,7 @@ function toPay() {
         v-model="form.adviserId"
         label="销售"
         align-right
+        clearable
         :columns="staffList" @open="isPickerOpen = true" @cancel="isPickerOpen = false" @confirm="isPickerOpen = false"
       />
       <view class="h12px" />
