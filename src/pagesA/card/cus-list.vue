@@ -116,9 +116,11 @@ onShow(() => {
           </view>
           <view flex flex-ac flex-bt fs-12px lh-12px>
             <view>
+              <!-- 次卡显示总次数和使用次数 -->
               <text v-if="item.cardType === 1" px-12rpx py-7rpx c-#1A66FF pr left--6px>
                 {{ item?.useCount }}/{{ item?.countLimit }}
               </text>
+              <!--  -->
               <text v-else px-12rpx py-7rpx c-#1A66FF pr left--6px>
                 ¥{{ item?.amount }}/¥{{ item?.totalAmount }}
               </text>

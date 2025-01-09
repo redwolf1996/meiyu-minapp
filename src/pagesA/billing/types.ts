@@ -112,7 +112,7 @@ export interface CashCard {
    */
   cardName?: string
   /**
-   * 卡二级分类, 次卡
+   * 卡二级分类, 次卡 0非次卡，1->有限次卡，2->不限次卡，3->通卡
    */
   cardSecondType?: number
   /**

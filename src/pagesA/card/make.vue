@@ -161,15 +161,15 @@ function toPay() {
               </view>
               <view fs-14px mt-10px>
                 <template v-if="curSelectedCard.type === 1">
-                  <text>￥{{ curSelectedCard.price }}&nbsp;</text>
-                  <text>权益次数：{{ curSelectedCard.countLimit }}次</text>
+                  <text>￥{{ curSelectedCard.price }}&#12288;</text>
+                  <text>权益次数：{{ curSelectedCard.countLimit || '不限' }}次</text>
                 </template>
                 <template v-if="curSelectedCard.type === 2">
-                  <text>本金￥{{ curSelectedCard.price }}&nbsp;</text>
+                  <text>本金￥{{ curSelectedCard.price }}&#12288;</text>
                   <text>赠金￥{{ curSelectedCard.gift }}</text>
                 </template>
                 <template v-if="curSelectedCard.type === 3">
-                  <text>￥{{ curSelectedCard.price }}&nbsp;</text>
+                  <text>￥{{ curSelectedCard.price }}&#12288;</text>
                   <text>{{ getDiscounts(curSelectedCard) }}折</text>
                 </template>
               </view>

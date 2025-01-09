@@ -278,7 +278,7 @@ function delEquity(item: CardEquity) {
           {{ detail?.cardName }}
         </view>
 
-        <view c-#434343 fs-14px flex flex-y gap10px mt10px>
+        <view c-#434343 fs-14px flex flex-y gap14px mt10px>
           <view flex flex-bt>
             <view>卡类型：</view>
             <view>{{ detail?.cardTypeDesc }}</view>
@@ -290,6 +290,14 @@ function delEquity(item: CardEquity) {
           <view flex flex-bt>
             <view>实付：</view>
             <view>￥{{ detail?.payAmount }}</view>
+          </view>
+          <view
+            v-if="detail?.cardType === 1
+              && (detail?.cardSecondType === 2 || detail?.cardSecondType === 3)"
+            flex flex-bt
+          >
+            <view>总次数：</view>
+            <view>{{ detail?.countLimit || '不限' }}次</view>
           </view>
           <view flex flex-bt>
             <view style="width: 78px;">
