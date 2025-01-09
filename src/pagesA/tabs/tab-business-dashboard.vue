@@ -23,6 +23,9 @@ const info = ref<DashBoardData>()
 const isOvertime = ref(false)
 const showCardRecharge = ref(false) // 显示开卡充值弹窗
 
+onLoad(() => {
+  setStaffList()
+})
 onShow(() => {
   initStore()
   // #ifdef MP-WEIXIN
@@ -48,22 +51,6 @@ async function initStore() {
   }
 
   getInfo()
-  setStaffList()
-}
-
-async function setStaffList() {
-  const res = await request.get<StaffModel>('/business/staff', { storeId: storeId.value })
-  const artList = res.data.list?.filter(v => v.jobCode === 2)
-  const salesList = res.data.list?.filter(v => v.jobCode === 3)
-  artistListStore.value = artList?.map((v) => {
-    return { label: v.userName, value: v.storeStaffId }
-  })
-  salesListStore.value = salesList?.map((v) => {
-    return { label: v.userName, value: v.storeStaffId }
-  })
-  staffListStore.value = artList?.map((v) => {
-    return { label: v.userName, value: v.storeStaffId }
-  })
 }
 
 async function getInfo() {

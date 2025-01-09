@@ -89,6 +89,7 @@ async function save() {
   else {
     await request.post<any>('/business/staff', form)
   }
+  setStaffList()
   useUserStore().setUserInfo({ guidStatus: {
     staffCountStatus: 1,
   } })

@@ -1,3 +1,4 @@
+import type { StaffModel } from '@/pagesA/api'
 import dayjs from 'dayjs'
 import { max, min } from 'lodash-es'
 
@@ -154,4 +155,22 @@ export function formatMsgTimeShow(timestr: string) {
   return isToday
     ? inputDate.format('HH:mm')
     : inputDate.format('MM-DD')
+}
+
+/**
+ * 设置员工列表，用于表单选择手艺人、销售等
+ */
+export async function setStaffList() {
+  const res = await request.get<StaffModel>('/business/staff', { storeId: storeId.value })
+  const artList = res.data.list?.filter(v => v.jobCode.includes('2'))
+  const salesList = res.data.list?.filter(v => v.jobCode.includes('3'))
+  artistListStore.value = artList?.map((v) => {
+    return { label: v.userName, value: v.storeStaffId }
+  })
+  salesListStore.value = salesList?.map((v) => {
+    return { label: v.userName, value: v.storeStaffId }
+  })
+  staffListStore.value = artList?.map((v) => {
+    return { label: v.userName, value: v.storeStaffId }
+  })
 }

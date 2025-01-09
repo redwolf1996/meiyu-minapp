@@ -10,7 +10,7 @@ export interface StaffQueryModel {
   /**
    * 职务
    */
-  jobCode?: number
+  jobCode?: number | string
   /**
    * 角色
    */
@@ -44,7 +44,7 @@ export interface StaffModelList {
   /**
    * 职务 1店长，2手艺人，3销售
    */
-  jobCode: number
+  jobCode: any
   /**
    * 职务
    */
