@@ -99,6 +99,7 @@ function select({ item }) {
           <wd-img
             :width="76"
             :height="76"
+            mode="aspectFill"
             :src="item?.goodsCoverImg || `${IMG_BASE}/detail/${cardImgMap[item.goodsCardType]}.png`"
           />
           <view flex-1 h76px flex flex-y flex-bt>
