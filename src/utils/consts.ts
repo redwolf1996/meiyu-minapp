@@ -93,7 +93,7 @@ export const CardRechargeMap2 = {
   6: '充值卡',
 }
 
-export const cardImg = {
+export const cardImgMap = {
   1: 'list-cika',
   2: 'list-chongzhi',
   3: 'list-zhekou',

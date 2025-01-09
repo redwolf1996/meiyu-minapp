@@ -6,11 +6,6 @@ style:
 <script lang="ts" setup>
 import type { CusList as List } from './types'
 
-const cardImg = {
-  1: 'list-cika',
-  2: 'list-chongzhi',
-  3: 'list-zhekou',
-}
 const reqParams = reactive({
   storeId: storeId.value,
   pageNum: 1,
@@ -93,7 +88,7 @@ onShow(() => {
           :height="72"
           mode="aspectFill"
           :radius="12"
-          :src="`${IMG_BASE}/detail/${cardImg[item.cardType]}.png`"
+          :src="`${IMG_BASE}/detail/${cardImgMap[item.cardType]}.png`"
         />
         <view flex flex-y flex-bt flex-1 h-86px>
           <view flex flex-bt>

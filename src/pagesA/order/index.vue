@@ -102,7 +102,7 @@ async function handleClick({ index }) {
               :height="40"
               :radius="8"
               mode="aspectFill"
-              :src="item2.goodsCoverImg || `${IMG_BASE}/detail/${cardImg[item2.goodsCardType]}.png`"
+              :src="item2.goodsCoverImg || `${IMG_BASE}/detail/${cardImgMap[item2.goodsCardType]}.png`"
             />
             <view h40px flex flex-y flex-bt flex-1>
               <view c-28282B f14 flex-bt flex flex-ac>

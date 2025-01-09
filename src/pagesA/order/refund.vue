@@ -99,7 +99,7 @@ function select({ item }) {
           <wd-img
             :width="76"
             :height="76"
-            :src="item?.goodsCoverImg"
+            :src="item?.goodsCoverImg || `${IMG_BASE}/detail/${cardImgMap[item.goodsCardType]}.png`"
           />
           <view flex-1 h76px flex flex-y flex-bt>
             <view>
@@ -175,7 +175,7 @@ function select({ item }) {
     </view>
     <view class="h24rpx" />
     <view pt40rpx bg-white rd-8rpx>
-      <view px20px>
+      <view px32rpx>
         退款说明
       </view>
       <view bg-white>

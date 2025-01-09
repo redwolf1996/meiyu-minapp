@@ -19,11 +19,6 @@ const actionList = ref<any>([
   { name: '删除' },
   { name: '复制' },
 ])
-const cardImg = {
-  1: 'list-cika',
-  2: 'list-chongzhi',
-  3: 'list-zhekou',
-}
 const reqParams = reactive<ReqModel>({
   storeId: storeId.value,
   pageNum: 1,
@@ -158,7 +153,7 @@ function showItemMenu(item: List) {
           :height="100"
           mode="aspectFill"
           :radius="12"
-          :src="`${IMG_BASE}/detail/${cardImg[item.type]}.png`"
+          :src="`${IMG_BASE}/detail/${cardImgMap[item.type]}.png`"
         />
         <view flex flex-y flex-bt flex-1 h-108px>
           <view flex flex-bt>
