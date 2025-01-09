@@ -27,17 +27,12 @@ onShow(async () => {
       id: v.id,
       label: v.name,
       items: services.filter(v1 => v.id === v1.categoryId).map((v2) => {
-        if (checkedServs.value.find(v3 => v3.id === v2.id)) {
-          v2.checked = true
-        }
-        else {
-          v2.checked = false
-        }
         return {
           ...v2,
           equity: checkedServIds.includes(v2.id)
             ? checkedServs.value?.find(v => v.id === v2.id)?.equity
             : null,
+          checked: checkedServIds.includes(v2.id),
         }
       }),
     }
@@ -55,14 +50,19 @@ function handleChange({ value }) {
 function changeCheck() {
   let servs = []
   servs = categories.value.filter((v) => {
-    return v.items.length > 0
+    return v.items.length > 0 && v.id !== 0
   }).map(v1 => toRaw(v1.items))
   servs = flatten(toRaw(servs))
   tmpCheckedServs.value = servs.filter(v => v.checked)
 }
 
 function confirm() {
-  checkedServs.value = tmpCheckedServs.value
+  checkedServs.value = tmpCheckedServs.value.map((v) => {
+    return {
+      ...v,
+      prodType: 2,
+    }
+  })
   uni.navigateBack()
 }
 </script>

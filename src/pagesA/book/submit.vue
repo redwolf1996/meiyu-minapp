@@ -25,7 +25,7 @@ async function doSubmit() {
           预约时间：
         </text>
         <text pl10px>
-          {{ bookInfo.startTime ?? '--' }}
+          {{ fdt(bookInfo.startTime) ?? '--' }}
         </text>
       </view>
       <view flex flex-ac>
