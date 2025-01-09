@@ -65,11 +65,11 @@ export interface Service {
   /**
    * 服务id
    */
-  storeServiceId: number
+  storeServiceId?: number
   /**
    * 优惠前总金额
    */
-  totalAmount: number | ComputedRef<number>
+  totalAmount?: number | ComputedRef<number>
   /**
    * 使用卡项优惠(扣减)金额
    */
@@ -77,7 +77,7 @@ export interface Service {
   /**
    * 服务优惠后总金额
    */
-  amount: number | ComputedRef<number>
+  amount?: number | ComputedRef<number>
   /**
    * 选择卡项并有优惠时候显示的名字 例: xxx卡项 -1次
    */
@@ -89,6 +89,7 @@ export interface Service {
   price?: number
   price2?: number
   coverImg?: string
+  [property: string]: any
 }
 
 export interface BookDetail {

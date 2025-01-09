@@ -4,13 +4,18 @@ style:
 </route>
 
 <script lang="ts" setup>
-const totalAmount = sumArray(bookInfo.value.service.map(v => func_mul(v.price2, v.goodsCount)))
-// const totalAmount = sumArray(bookInfo.value.service.map(v => v.totalAmount))
-const totalAmount2 = sumArray(bookInfo.value.service.map(v => v.amount))
+// 商品原价合计
+const totalOriAmount = sumArray(bookInfo.value.service.map((v) => {
+  const cost = v.price2 || v.price
+  return func_mul(cost, v.goodsCount)
+}))
+
+// 商品优惠价合计
+const totalToPayAmount = sumArray(bookInfo.value.service.map(v => v.amount))
+
 async function doSubmit() {
-  bookInfo.value.amount = totalAmount2
-  // 预约支付
-  uni.navigateTo({ url: '/pagesA/billing/pay?createSource=4' })
+  bookInfo.value.amount = totalToPayAmount
+  uni.navigateTo({ url: '/pagesA/billing/pay?createSource=4' }) // 预约单支付（包含了预约信息和支付信息）
 }
 </script>
 
@@ -121,13 +126,13 @@ async function doSubmit() {
       <view flex flex-ac flex-bt>
         <view>商品金额</view>
         <text c-#818181 font-size-14px>
-          ￥{{ totalAmount }}
+          ￥{{ totalOriAmount }}
         </text>
       </view>
 
       <view flex flex-ac flex-xr mt20px>
         <text c-#FF5A5F>
-          ￥{{ totalAmount2 }}
+          ￥{{ totalToPayAmount }}
         </text>
         <text f14>
           合计：

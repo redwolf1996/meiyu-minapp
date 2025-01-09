@@ -73,19 +73,19 @@ export interface ProductList {
   /**
    * 服务优惠前总价
    */
-  totalAmount?: number | ComputedRef<number>
+  totalAmount?: any
   /**
    * 服务优惠后总价
    */
-  amount?: number | ComputedRef<number>
+  amount?: any
   /**
    * 使用卡项时 卡项优惠(扣减)的金额
    */
-  cardReduceAmount?: number | ComputedRef<number>
+  cardReduceAmount?: any
   /**
    * 使用卡项时 卡项展示的名称 例如：洗发次卡 -1次
    */
-  cardShowName?: string | ComputedRef<string>
+  cardShowName?: any
   [property: string]: any
 }
 
@@ -120,19 +120,19 @@ export interface ServiceList {
   /**
    * 服务优惠前总价
    */
-  totalAmount?: number | ComputedRef<number>
+  totalAmount?: any
   /**
    * 服务优惠后总价
    */
-  amount?: number | ComputedRef<number>
+  amount?: any
   /**
    * 使用卡项时 卡项优惠(扣减)的金额
    */
-  cardReduceAmount?: number | ComputedRef<number>
+  cardReduceAmount?: any
   /**
    * 使用卡项时 卡项展示的名称 例如：洗发次卡 -1次
    */
-  cardShowName?: string | ComputedRef<string>
+  cardShowName?: any
   [property: string]: any
 }
 

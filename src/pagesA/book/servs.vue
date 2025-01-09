@@ -37,6 +37,8 @@ onShow(async () => {
       }),
     }
   })
+
+  changeCheck() // 初始化tmpCheckedServs
 })
 
 function handleChange({ value }) {

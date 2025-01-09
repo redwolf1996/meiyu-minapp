@@ -145,16 +145,16 @@ watch(() => checkedServs.value, () => {
   model.service = checkedServs.value.map((v) => {
     return {
       storeServiceId: v.id,
-      goodsCount: v.goodsCount || 1,
       name: v.name,
       duration: v.duration,
       price: v.price,
       price2: v.price2,
       coverImg: v.coverImg,
-      totalAmount: v.totalAmount || 0, // 商品原价总价
-      amount: v.amount || 0, // 商品优惠后总价
-      cardReduceAmount: v.cardReduceAmount || 0, // 卡项优惠金额
-      cardShowName: v.cardShowName || '', // 卡项展示的名称 例如：洗发次卡 -1次
+      goodsCount: v?.goodsCount || 1, // 数量
+      totalAmount: v?.totalAmount || 0, // 商品原价总价
+      amount: v?.amount || 0, // 商品优惠后总价
+      cardReduceAmount: v?.cardReduceAmount || 0, // 卡项优惠金额
+      cardShowName: v?.cardShowName || '', // 卡项展示的名称 例如：洗发次卡 -1次
     }
   })
   model.service.forEach((item: Partial<Service>) => {
