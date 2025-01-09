@@ -111,13 +111,25 @@ onShow(() => {
           </view>
           <view flex flex-ac flex-bt fs-12px lh-12px>
             <view>
-              <!-- 次卡显示总次数和使用次数 -->
               <text v-if="item.cardType === 1" px-12rpx py-7rpx c-#1A66FF pr left--6px>
-                {{ item?.useCount }}/{{ item?.countLimit }}
+                <!-- 有限次卡和通卡  -->
+                <template v-if="item.cardSecondType === 1 || item.cardSecondType === 3">
+                  {{ item?.useCount }}/{{ item?.countLimit }}
+                </template>
+                <!-- 不限次卡 -->
+                <template v-if="item.cardSecondType === 2">
+                  {{ item?.useCount }}/不限
+                </template>
               </text>
-              <!--  -->
-              <text v-else px-12rpx py-7rpx c-#1A66FF pr left--6px>
+
+              <!-- 充值卡：显示 [已使用金额]/[总金额] -->
+              <text v-if="item.cardType === 2" px-12rpx py-7rpx c-#1A66FF pr left--6px>
                 ¥{{ item?.amount }}/¥{{ item?.totalAmount }}
+              </text>
+
+              <!-- 折扣卡：显示 [已使用次数]/[折扣]起 -->
+              <text v-if="item.cardType === 3" px-12rpx py-7rpx c-#1A66FF pr left--6px>
+                {{ item?.useCount }}/{{ item?.countLimit }}
               </text>
             </view>
 
