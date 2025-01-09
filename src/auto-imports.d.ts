@@ -147,6 +147,7 @@ declare global {
   const onUnmounted: typeof import('vue')['onUnmounted']
   const onUpdated: typeof import('vue')['onUpdated']
   const pausableWatch: typeof import('@vueuse/core')['pausableWatch']
+  const payTypesStore: typeof import('./stores/common')['payTypesStore']
   const platform: typeof import('./utils/index')['platform']
   const provide: typeof import('vue')['provide']
   const provideLocal: typeof import('@vueuse/core')['provideLocal']
@@ -164,6 +165,7 @@ declare global {
   const refThrottled: typeof import('@vueuse/core')['refThrottled']
   const refWithControl: typeof import('@vueuse/core')['refWithControl']
   const refundTypesMap: typeof import('./utils/consts')['refundTypesMap']
+  const refundTypesStore: typeof import('./stores/common')['refundTypesStore']
   const request: typeof import('./utils/request')['default']
   const resetCard: typeof import('./stores/common')['resetCard']
   const resetCards: typeof import('./stores/common')['resetCards']
@@ -513,10 +515,12 @@ declare module 'vue' {
     readonly onUnload: UnwrapRef<typeof import('@dcloudio/uni-app')['onUnload']>
     readonly onUnmounted: UnwrapRef<typeof import('vue')['onUnmounted']>
     readonly onUpdated: UnwrapRef<typeof import('vue')['onUpdated']>
+    readonly payTypesStore: UnwrapRef<typeof import('./stores/common')['payTypesStore']>
     readonly provide: UnwrapRef<typeof import('vue')['provide']>
     readonly reactive: UnwrapRef<typeof import('vue')['reactive']>
     readonly readonly: UnwrapRef<typeof import('vue')['readonly']>
     readonly ref: UnwrapRef<typeof import('vue')['ref']>
+    readonly refundTypesStore: UnwrapRef<typeof import('./stores/common')['refundTypesStore']>
     readonly request: UnwrapRef<typeof import('./utils/request')['default']>
     readonly resetCards: UnwrapRef<typeof import('./stores/common')['resetCards']>
     readonly resetCurClassify: UnwrapRef<typeof import('./stores/classify')['resetCurClassify']>

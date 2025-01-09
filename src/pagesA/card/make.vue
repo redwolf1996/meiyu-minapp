@@ -6,7 +6,6 @@ style:
 
 <script lang="ts" setup>
 import { PayModeEnum } from '@/utils/consts'
-import type { StaffModel } from '../api'
 import type { MakeCardModel } from './types'
 import dayjs from 'dayjs'
 import type { CustomerDetail } from '../customer/types'
@@ -14,7 +13,6 @@ import type { CustomerDetail } from '../customer/types'
 const toast = useToast()
 const visibleStaff = ref(false)
 const orderTime = ref(dayjs().valueOf())
-const staffList = ref<{ label: string, value: number }[]>([])
 const form = ref<MakeCardModel>({
   orderTime: computed(() => {
     return orderTime.value ? dayjs(orderTime.value).format('YYYY-MM-DD HH:mm:ss') : ''
@@ -43,18 +41,7 @@ onLoad(async (option) => {
   }
 })
 
-async function setStaffList() {
-  const res = await request.get<StaffModel>('/business/staff', { storeId: storeId.value })
-  staffList.value = res.data.list?.map((v) => {
-    return {
-      label: v.userName,
-      value: v.staffId,
-    }
-  })
-}
-
 onMounted(() => {
-  setStaffList()
   uni.setNavigationBarTitle({
     title: curCardRechargeType.value === 6 ? '充值' : '开卡',
   })
@@ -218,7 +205,7 @@ function toPay() {
         label="销售"
         align-right
         clearable
-        :columns="staffList" @open="isPickerOpen = true" @cancel="isPickerOpen = false" @confirm="isPickerOpen = false"
+        :columns="salesListStore" @open="isPickerOpen = true" @cancel="isPickerOpen = false" @confirm="isPickerOpen = false"
       />
       <view class="h12px" />
 

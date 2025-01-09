@@ -1,5 +1,5 @@
 import type { CusList } from '@/pagesA/tabs/types'
-import type { BillModel } from '@/pagesA/billing/types'
+import type { BillModel, PayRefundType } from '@/pagesA/billing/types'
 import type { AvailableCard, CardList, ProductList, ServiceList } from '@/pagesA/types'
 import type { List as MsgDetail } from '@/pagesA/msg/types'
 import type { CardEquity, MakeCardModel } from '@/pagesA/card/types'
@@ -87,3 +87,9 @@ export const salesListStore = ref<GeneralColumn[]>([])
 
 /** 所有员工列表 */
 export const staffListStore = ref<GeneralColumn[]>([])
+
+/** 付款方式列表 */
+export const payTypesStore = ref<PayRefundType['payType']>([])
+
+/** 退款方式列表 */
+export const refundTypesStore = ref<PayRefundType['refundType']>([])

@@ -176,7 +176,7 @@ async function toRefund() {
             <view>价格</view>
             <view>￥{{ item?.goodsPrice }}</view>
           </view>
-          <view flex flex-bt mb12px f14>
+          <view v-if="item?.goodsType === 1 || item?.goodsType === 4" flex flex-bt mb12px f14>
             <view>手艺人</view>
             <view>{{ item?.artisanName || '未分配' }}</view>
           </view>

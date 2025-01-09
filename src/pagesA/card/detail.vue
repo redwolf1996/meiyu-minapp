@@ -34,7 +34,7 @@ onLoad(async (options) => {
 <template>
   <view h132px mb12px pr>
     <view pr>
-      <view tc mx30px>
+      <view tc mx20px>
         <image
           v-if="cardImgName[itm?.type]"
           style="height: 102px;"
@@ -58,17 +58,17 @@ onLoad(async (options) => {
           </view>
           <view fs-14px mt-10px>
             <template v-if="itm?.type === 1">
-              <text>￥{{ itm?.price }}&nbsp;</text>
+              <text>￥{{ itm?.price }}&#12288;</text>
               <text>
                 权益次数：{{ itm?.countLimit }}次
               </text>
             </template>
             <template v-if="itm?.type === 2">
-              <text>本金￥{{ itm?.price }}&nbsp;</text>
+              <text>本金￥{{ itm?.price }}&#12288;</text>
               <text>赠金￥{{ itm?.gift }}</text>
             </template>
             <template v-if="itm?.type === 3">
-              <text>￥{{ itm?.price }}&nbsp;</text>
+              <text>￥{{ itm?.price }}&#12288;</text>
               <text>{{ getDiscounts(itm) }}折</text>
             </template>
           </view>
