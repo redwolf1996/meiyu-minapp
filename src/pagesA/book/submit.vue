@@ -104,12 +104,12 @@ async function doSubmit() {
               </view>
             </view>
 
-            <view flex flex-xr>
-              <text>
-                <text>小计:</text>
-                <text c-#FA483C>
-                  ￥{{ item.amount }}
-                </text>
+            <view flex flex-xr flex-ac>
+              <text c-#FA483C>
+                ￥{{ item.amount }}
+              </text>
+              <text f14>
+                小计：
               </text>
             </view>
           </view>
@@ -124,28 +124,13 @@ async function doSubmit() {
           ￥{{ totalAmount }}
         </text>
       </view>
-      <!-- <view flex flex-ac flex-bt>
-        <view />
-        <view flex flex-ac gap6px>
-          <text>实付：</text>
-          <text c-FF5A5F>
-            ￥{{ totalAmount2 }}
-          </text>
-        </view>
-      </view> -->
 
-      <view flex flex-ac flex-xr>
-        <text>
-          <text>实付:</text>
-          <text c-#FF5A5F>
-            ￥{{ totalAmount2 }}
-          </text>
+      <view flex flex-ac flex-xr mt20px>
+        <text c-#FF5A5F>
+          ￥{{ totalAmount2 }}
         </text>
-      </view>
-
-      <view flex flex-xr mt10px>
-        <text bg-FCE8E9 rd-2px c-FF5A5F h38rpx w98rpx tc flex flex-cc fs-22>
-          {{ bookInfo.storeServiceType === 1 ? '到店付' : '上门付' }}
+        <text f14>
+          合计：
         </text>
       </view>
     </view>

@@ -9,6 +9,7 @@ import { bookInfo } from '@/stores/book-info'
 import type { ListStaff } from '../staff/types'
 import type { BookForm, Service } from './types'
 import type { CustomerDetail } from '../customer/types'
+import qs from 'qs'
 
 const curIndex = ref(0) // 预约服务列表当前选择项的索引
 const columns = ref<SelItem[]>([
@@ -33,6 +34,7 @@ const model = reactive<BookForm>({
   customerCardId: null,
   notes: null,
   service: [],
+  amount: 0,
 })
 const artName = ref('')
 const listStaff = ref<ListStaff[]>([])
@@ -118,11 +120,12 @@ async function save() {
 function toSelCard(item, index: number) {
   if (!model.storeCustomerId)
     return toast.warning('请先选择客户')
+  curIndex.value = index
   const storeCustomerId = model.storeCustomerId
   const goodsId = item.storeServiceId
   const goodsType = 1
-  curIndex.value = index
-  uni.navigateTo({ url: `/pagesA/billing/select-card-billing?storeCustomerId=${storeCustomerId}&goodsId=${goodsId}&goodsType=${goodsType}` })
+  const params = qs.stringify({ storeCustomerId, goodsId, goodsType })
+  uni.navigateTo({ url: `/pagesA/billing/select-card-billing?${params}` })
 }
 
 function handleChange(item: Partial<Service>) {
@@ -148,17 +151,19 @@ watch(() => checkedServs.value, () => {
       price: v.price,
       price2: v.price2,
       coverImg: v.coverImg,
-      totalAmount: null, // 商品原价总价
-      amount: null, // 商品优惠后总价
-      cardShowName: null,
+      totalAmount: v.totalAmount || 0, // 商品原价总价
+      amount: v.amount || 0, // 商品优惠后总价
+      cardReduceAmount: v.cardReduceAmount || 0, // 卡项优惠金额
+      cardShowName: v.cardShowName || '', // 卡项展示的名称 例如：洗发次卡 -1次
     }
   })
-  model.service.forEach((item: any) => {
+  model.service.forEach((item: Partial<Service>) => {
+    const cost = item.price2 || item.price
     item.totalAmount = computed(() => {
-      return func_mul(item.price, item.goodsCount)
+      return func_mul(cost, item.goodsCount)
     })
     item.amount = computed(() => {
-      return func_mul(func_sub(item.price2, item.cardReduceAmount), item.goodsCount)
+      return func_mul(func_sub(cost, item.cardReduceAmount), item.goodsCount)
     })
   })
 })
@@ -166,6 +171,9 @@ watch(() => checkedServs.value, () => {
 watch(() => curSelectedCardToCash.value, () => {
   model.service.forEach((item: Partial<Service>, index: number) => {
     if (curIndex.value === index) {
+      // 消费价格（有优惠价使用优惠价，没有则使用原价）
+      const cost = item.price2 || item.price
+
       item.customerCardId = curSelectedCardToCash.value?.customerCardId
       item.cardId = curSelectedCardToCash.value?.cardId
 
@@ -173,17 +181,17 @@ watch(() => curSelectedCardToCash.value, () => {
         item.cardReduceAmount = 1
       }
       else {
-        item.cardReduceAmount = func_mul(item.price, func_sub(1, func_div(curSelectedCardToCash.value?.equity, 10)))
+        item.cardReduceAmount = func_mul(cost, func_sub(1, func_div(curSelectedCardToCash.value?.equity, 10)))
       }
 
       item.totalAmount = computed(() => {
-        return func_mul(item.price, item.goodsCount)
+        return func_mul(cost, item.goodsCount)
       })
       item.amount = computed(() => {
         if (curSelectedCardToCash.value?.cardType === 1) {
           return 0
         }
-        return func_mul(func_sub(item.price, item.cardReduceAmount), item.goodsCount)
+        return func_mul(func_sub(cost, item.cardReduceAmount), item.goodsCount)
       })
 
       item.cardName = curSelectedCardToCash.value?.cardName

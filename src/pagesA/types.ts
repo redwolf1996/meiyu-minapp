@@ -62,8 +62,30 @@ export interface ProductList {
   checked?: boolean
   disabled?: boolean
   prodType?: 1 // 1产品 2服务
-  goodsCount?: number // 购买数量
-  equity?: number // 次卡表示数量，折扣充值卡表示折扣1.0-10.0
+  /**
+   * 购买的数量
+   */
+  goodsCount?: number
+  /**
+   * 次卡表示数量，折扣充值卡表示折扣1.0-10.0
+   */
+  equity?: number
+  /**
+   * 服务优惠前总价
+   */
+  totalAmount?: number | ComputedRef<number>
+  /**
+   * 服务优惠后总价
+   */
+  amount?: number | ComputedRef<number>
+  /**
+   * 使用卡项时 卡项优惠(扣减)的金额
+   */
+  cardReduceAmount?: number | ComputedRef<number>
+  /**
+   * 使用卡项时 卡项展示的名称 例如：洗发次卡 -1次
+   */
+  cardShowName?: string | ComputedRef<string>
   [property: string]: any
 }
 
@@ -87,8 +109,30 @@ export interface ServiceList {
   checked?: boolean
   disabled?: boolean
   prodType?: 2 // 1产品 2服务
-  goodsCount?: number // 购买数量
-  equity?: number // 次卡表示数量，折扣充值卡表示折扣1.0-10.0
+  /**
+   * 购买的数量
+   */
+  goodsCount?: number
+  /**
+   * 次卡表示数量，折扣充值卡表示折扣1.0-10.0
+   */
+  equity?: number
+  /**
+   * 服务优惠前总价
+   */
+  totalAmount?: number | ComputedRef<number>
+  /**
+   * 服务优惠后总价
+   */
+  amount?: number | ComputedRef<number>
+  /**
+   * 使用卡项时 卡项优惠(扣减)的金额
+   */
+  cardReduceAmount?: number | ComputedRef<number>
+  /**
+   * 使用卡项时 卡项展示的名称 例如：洗发次卡 -1次
+   */
+  cardShowName?: string | ComputedRef<string>
   [property: string]: any
 }
 

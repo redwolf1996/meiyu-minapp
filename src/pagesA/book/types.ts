@@ -20,6 +20,10 @@ export interface BookForm {
    */
   service: Partial<Service>[]
   /**
+   * 支付总金额
+   */
+  amount?: number | ComputedRef<number>
+  /**
    * 服务开始时间，yyyy-MM-dd HH:mm:ss
    */
   startTime: ComputedRef<string>
@@ -47,17 +51,9 @@ export interface BookForm {
 
 export interface Service {
   /**
-   * 优惠后金额
-   */
-  amount: any
-  /**
    * 卡id
    */
   cardId?: number
-  /**
-   * 卡优惠金额
-   */
-  cardReduceAmount?: number
   /**
    * 用的购卡id
    */
@@ -71,10 +67,20 @@ export interface Service {
    */
   storeServiceId: number
   /**
-   * 优惠前金额
+   * 优惠前总金额
    */
-  totalAmount: any
-  /** 选择卡项并有优惠时候显示的名字 例: xxx卡项 -1次 */
+  totalAmount: number | ComputedRef<number>
+  /**
+   * 使用卡项优惠(扣减)金额
+   */
+  cardReduceAmount?: number | ComputedRef<number>
+  /**
+   * 服务优惠后总金额
+   */
+  amount: number | ComputedRef<number>
+  /**
+   * 选择卡项并有优惠时候显示的名字 例: xxx卡项 -1次
+   */
   cardShowName?: string
   cardName?: string // 卡项名称
   cardType?: number // 卡项类型
