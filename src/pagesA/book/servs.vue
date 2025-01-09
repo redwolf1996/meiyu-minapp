@@ -29,9 +29,9 @@ onShow(async () => {
       items: services.filter(v1 => v.id === v1.categoryId).map((v2) => {
         return {
           ...v2,
-          equity: checkedServIds.includes(v2.id)
-            ? checkedServs.value?.find(v => v.id === v2.id)?.equity
-            : null,
+          goodsCount: checkedServIds.includes(v2.id)
+            ? checkedServs.value?.find(v => v.id === v2.id)?.goodsCount
+            : 1,
           checked: checkedServIds.includes(v2.id),
         }
       }),

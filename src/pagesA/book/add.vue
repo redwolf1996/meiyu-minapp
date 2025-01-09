@@ -104,6 +104,7 @@ function toSelServTime() {
 }
 
 async function save() {
+  console.log(checkedServs.value)
   if (!bookStime.value) {
     return uni.showToast({
       title: '请选择服务时间',
