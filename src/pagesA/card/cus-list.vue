@@ -25,6 +25,7 @@ async function queryList(page: number, pageSize: number) {
 }
 
 function toDetail(id: number) {
+  resetGoods()
   uni.navigateTo({
     url: `/pagesA/card/cus-detail?id=${id}`,
   })

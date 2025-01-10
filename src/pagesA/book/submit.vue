@@ -10,8 +10,11 @@ const totalOriAmount = sumArray(bookInfo.value.service.map((v) => {
   return func_mul(cost, v.goodsCount)
 }))
 
-// 商品优惠价合计
+// 商品优惠后合计
 const totalToPayAmount = sumArray(bookInfo.value.service.map(v => v.amount))
+
+// 商品优惠金额合计
+const discountAmount = func_sub(totalOriAmount, totalToPayAmount)
 
 async function doSubmit() {
   bookInfo.value.amount = totalToPayAmount
@@ -138,7 +141,16 @@ async function doSubmit() {
         </text>
       </view>
 
-      <view flex flex-ac flex-xr mt20px>
+      <view v-if="discountAmount" flex flex-ac flex-bt fs-14px mt5px>
+        <view c-#FF4E4E>
+          优惠金额
+        </view>
+        <text c-#FF4E4E font-size-14px>
+          -￥{{ discountAmount }}
+        </text>
+      </view>
+
+      <view flex flex-ac flex-xr mt10px>
         <text c-#FF5A5F>
           ￥{{ totalToPayAmount }}
         </text>

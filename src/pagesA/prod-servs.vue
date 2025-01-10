@@ -20,8 +20,8 @@ const checkedCount = computed(() => {
 })
 const from = ref<FromType>('billing')
 
-onLoad((option) => {
-  from.value = option.from
+onLoad((options) => {
+  from.value = options.from
   if (from.value !== 'equity') {
     cusOriCardEquity.value = []
   }

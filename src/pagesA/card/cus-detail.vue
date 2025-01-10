@@ -38,6 +38,7 @@ const cardEquity = ref<CardEquity[]>([])
 const visEditName = ref(false)
 const visEditExpire = ref(false)
 const visEditEquity = ref(false)
+const disabledIds = ref<number[]>([])
 
 async function queryList(page: number, pageSize: number) {
   reqParams.pageNum = page
@@ -51,15 +52,25 @@ async function queryList(page: number, pageSize: number) {
   paging.value.complete(res.data.list)
 }
 
-onShow(() => {
-  const disabledIds = cusOriCardEquity.value.map(v => v.goodsId)
+onLoad(async (option) => {
+  id.value = option.id!
+  initPage()
+})
+
+async function initPage() {
+  getDetail()
+  getRecords()
+  await getOriCardEquity()
+}
+
+watch(() => [checkedServs.value, checkedProds.value], () => {
   cardEquity.value = [
     ...cusOriCardEquity.value,
     ...checkedServs.value?.filter((v0) => {
-      return !disabledIds.includes(v0.id)
+      return !disabledIds?.value.includes(v0.id)
     })?.map((v) => {
       return {
-        equity: null,
+        equity: v.equity || null,
         goodsId: v.id,
         goodsName: v.name,
         goodsType: v.prodType,
@@ -68,10 +79,10 @@ onShow(() => {
       }
     }),
     ...checkedProds.value?.filter((v0) => {
-      return !disabledIds.includes(v0.id)
+      return !disabledIds.value.includes(v0.id)
     })?.map((v) => {
       return {
-        equity: null,
+        equity: v.equity || null,
         goodsId: v.id,
         goodsName: v.name,
         goodsType: v.prodType,
@@ -82,15 +93,16 @@ onShow(() => {
   ]
 })
 
-onLoad((option) => {
-  id.value = option.id!
-  initPage()
-})
-
-function initPage() {
-  getDetail()
-  getRecords()
-  getOriCardEquity()
+async function getOriCardEquity() {
+  const res = await request.get<CardEquity[]>(`/business/store-customer-card/info/${id.value}`)
+  cusOriCardEquity.value = res.data.map((item) => {
+    return {
+      ...item,
+      editable: false,
+    }
+  })
+  disabledIds.value = cusOriCardEquity.value.map(v => v.goodsId)
+  cardEquity.value = [...cusOriCardEquity.value]
 }
 
 function getDetail() {
@@ -105,15 +117,7 @@ function getDetail() {
 function getRecords() {
   paging.value?.reload()
 }
-async function getOriCardEquity() {
-  const res = await request.get<CardEquity[]>(`/business/store-customer-card/info/${id.value}`)
-  cusOriCardEquity.value = res.data.map((item) => {
-    return {
-      ...item,
-      editable: false,
-    }
-  })
-}
+
 function toEditName() {
   visEditName.value = true
 }
