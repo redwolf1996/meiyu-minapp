@@ -80,7 +80,7 @@ export interface BillingGood {
    */
   goodsPrice2?: number
   /**
-   * 商品类型，1服务，2产品，3卡
+   * 商品类型，1服务 2产品 3卡 4预约 5充值
    */
   goodsType?: number
   /**

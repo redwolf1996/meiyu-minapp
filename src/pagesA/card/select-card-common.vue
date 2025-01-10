@@ -218,7 +218,7 @@ function selectItem2(itm: any) {
           </view>
         </view>
       </view>
-      <wd-status-tip v-else image="content" tip="暂无充值卡" />
+      <wd-status-tip v-else image="content" tip="暂无可选卡项" />
     </template>
   </view>
 </template>

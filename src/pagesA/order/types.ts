@@ -61,7 +61,7 @@ export interface OrderItem {
    */
   goodsPrice: number
   /**
-   * 订单项类别，1服务，2产品，3卡，4预约
+   * 商品类型，1服务 2产品 3卡 4预约 5充值
    */
   goodsType: number
   /**

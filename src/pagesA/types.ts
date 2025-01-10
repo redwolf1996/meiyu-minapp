@@ -188,7 +188,7 @@ export interface AvailableCard {
    */
   goodsName: string
   /**
-   * 商品类型，1服务，2产品
+   * 商品类型，1服务 2产品 3卡 4预约
    */
   goodsType: number
   /**

@@ -36,8 +36,10 @@ onShow(async () => {
 
   const checkedServIds = checkedServs.value?.map(v1 => v1.id)
   const checkedProdIds = checkedProds.value?.map(v1 => v1.id)
-  const disabledServIds = cusOriCardEquity.value?.filter(v => v.goodsType === 2)?.map(v => v.goodsId)
-  const disabledProdIds = cusOriCardEquity.value?.filter(v => v.goodsType === 1)?.map(v => v.goodsId)
+  const disabledServIds = cusOriCardEquity.value?.filter(v => v.goodsType === 1)?.map(v => v.goodsId)
+  const disabledProdIds = cusOriCardEquity.value?.filter(v => v.goodsType === 2)?.map(v => v.goodsId)
+
+  console.log(disabledServIds, disabledProdIds)
 
   categoriesServ.value = serviceCats.map((v) => {
     return {
@@ -72,6 +74,7 @@ onShow(async () => {
     }
   })
   changeCheck()
+  console.log(categoriesServ.value, categoriesProd.value)
 })
 
 function handleChange1({ value }) {

@@ -478,7 +478,7 @@ export interface CardEquity {
    */
   goodsName?: string
   /**
-   * 商品类型 1产品 2服务
+   *  商品类型，1服务 2产品 3卡 4预约 5充值
    */
   goodsType?: number
   /**
