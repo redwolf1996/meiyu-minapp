@@ -24,7 +24,7 @@ const dataList = ref<CusRecordList[]>([])
 const total = ref(0)
 const countUse = ref()
 const countSurplus = ref()
-const detail = ref<CusCardDetail>({} as CusCardDetail)
+const detail = ref<CusCardDetail>(null)
 const cardName = ref('')
 const timeArr = ref<any[]>([Date.now(), dayjs().add(1, 'year').valueOf()])
 const showSTime = computed(() => dayjs(timeArr.value[0]).format('YYYY-MM-DD'))
@@ -64,6 +64,7 @@ async function initPage() {
 }
 
 watch(() => [checkedServs.value, checkedProds.value], () => {
+  console.log('选择了商品')
   cardEquity.value = [
     ...cusOriCardEquity.value,
     ...checkedServs.value?.filter((v0) => {
@@ -102,7 +103,7 @@ async function getOriCardEquity() {
     }
   })
   disabledIds.value = cusOriCardEquity.value.map(v => v.goodsId)
-  cardEquity.value = [...cusOriCardEquity.value]
+  cardEquity.value = cusOriCardEquity.value
 }
 
 function getDetail() {
@@ -438,14 +439,14 @@ function delEquity(item: CardEquity) {
               </text>
             </view>
 
-            <view flex flex-ac gap5px>
+            <view v-if="detail" flex flex-ac gap5px>
               <template v-if="detail?.cardType === 1">
-                <wd-input-number v-model="item.equity" :step="1" :min="1" />
+                <wd-input-number key="n1" v-model="item.equity" :step="1" :min="1" />
                 <text>次&nbsp;</text>
                 <wd-icon v-if="item.editable" name="minus-circle" size="16px" color="red" @click="delEquity(item)" />
               </template>
               <template v-else>
-                <wd-input-number v-model="item.equity" :step="0.1" :min="1" :max="10" :precision="1" />
+                <wd-input-number key="n2" v-model="item.equity" :step="0.1" :min="1" :max="10" :precision="1" />
                 <text>折&nbsp;</text>
                 <wd-icon v-if="item.editable" name="minus-circle" size="16px" color="red" @click="delEquity(item)" />
               </template>
