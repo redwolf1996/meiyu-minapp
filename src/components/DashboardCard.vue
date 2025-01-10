@@ -14,9 +14,10 @@ const img = data.serviceList?.[0].serviceCoverImg
     <view flex flex-bt>
       <view flex gap-14px>
         <wd-img
+          mode="aspectFill"
           :width="60"
           :height="60"
-          mode="aspectFill"
+          :radius="8"
           :src="img"
         />
         <view flex flex-y flex-bt>
