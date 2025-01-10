@@ -248,14 +248,14 @@ function getActiveIndex() {
           &nbsp;&nbsp;修改
         </text>
       </view>
-      <view mt-10px f12 c-818181>
+      <view v-if="bookDetail?.notes" mt-10px f12 c-818181>
         备注：<text c-232220>
-          {{ bookDetail?.notes ?? '--' }}
+          {{ bookDetail?.notes }}
         </text>
       </view>
       <view v-if="bookDetail?.customerAddress" mt-10px f12 c-818181>
         上门地址：<text c-232220>
-          {{ bookDetail?.customerAddress ?? '--' }}
+          {{ bookDetail?.customerAddress }}
         </text>
       </view>
       <!-- TODO 等做客户端的时候放上核销码 -->
@@ -284,6 +284,7 @@ function getActiveIndex() {
             :width="72"
             :height="72"
             radius="10"
+            mode="aspectFill"
             :src="item?.serviceCoverImg"
           />
           <view flex-1 flex flex-y flex-bt h-72px>
