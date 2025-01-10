@@ -16,11 +16,12 @@ const img = data.serviceList?.[0].serviceCoverImg
         <wd-img
           :width="60"
           :height="60"
+          mode="aspectFill"
           :src="img"
         />
         <view flex flex-y flex-bt>
           <view f12>
-            {{ data.serviceList?.[0]?.serviceName }}
+            {{ data.serviceList?.[0]?.serviceName }}{{ data.serviceList?.length > 1 ? `等${data.serviceList?.length}项` : '' }}
           </view>
           <view fb f12>
             {{ data.startTimeStr }}

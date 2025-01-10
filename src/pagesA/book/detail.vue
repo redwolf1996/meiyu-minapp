@@ -253,8 +253,8 @@ function getActiveIndex() {
           {{ bookDetail?.notes ?? '--' }}
         </text>
       </view>
-      <view mt-10px f12 c-818181>
-        地址：<text c-232220>
+      <view v-if="bookDetail?.customerAddress" mt-10px f12 c-818181>
+        上门地址：<text c-232220>
           {{ bookDetail?.customerAddress ?? '--' }}
         </text>
       </view>

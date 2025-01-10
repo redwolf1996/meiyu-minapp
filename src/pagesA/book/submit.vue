@@ -57,6 +57,14 @@ async function doSubmit() {
           {{ bookInfo?.artName || '到店分配' }}
         </text>
       </view>
+      <view v-if="bookInfo.storeServiceType === 2" flex flex-ac>
+        <text c-818181>
+          上门地址：
+        </text>
+        <text pl10px>
+          {{ bookInfo?.customerAddress || '--' }}
+        </text>
+      </view>
     </view>
 
     <view mb16px px12px py16px bg-white>
@@ -142,7 +150,7 @@ async function doSubmit() {
 
     <view mb16px px12px py16px bg-white>
       <view>备注</view>
-      <view flex flex-ac flex-bt>
+      <view flex flex-ac flex-bt f14 pt5px>
         {{ bookInfo.notes }}
       </view>
     </view>

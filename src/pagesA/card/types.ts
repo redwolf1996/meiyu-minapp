@@ -221,6 +221,10 @@ export interface CusList {
    */
   countLimit: number
   /**
+   * 折扣卡列表页描述
+   */
+  discountDesc?: string
+  /**
    * 创建时间
    */
   createTime: string

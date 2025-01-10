@@ -1,5 +1,9 @@
 export interface BookForm {
   /**
+   * 上门服务地址
+   */
+  customerAddress?: string | null
+  /**
    * 分配的手艺人
    */
   artisanId: number
@@ -50,6 +54,10 @@ export interface BookForm {
 }
 
 export interface Service {
+  /**
+   * 上门服务地址
+   */
+  customerAddress?: string | null
   /**
    * 卡id
    */

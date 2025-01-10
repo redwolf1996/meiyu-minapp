@@ -2,6 +2,10 @@ import type { Service } from '@/pagesA/book/types'
 
 interface BookTempInfo {
   /**
+   * 上门服务地址
+   */
+  customerAddress?: string | null
+  /**
    * 分配的手艺人
    */
   artisanId?: number

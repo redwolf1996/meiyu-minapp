@@ -28,6 +28,7 @@ const model = reactive<BookForm>({
   storeCustomerName: computed(() => curCustomer.value?.name),
   storeCustomerId: computed(() => curCustomer.value?.storeCustomerId),
   storeServiceType: 1,
+  customerAddress: null,
   startTime: computed(() => `${bookStime.value}:00`),
   artisanId: null,
   payType: null,
@@ -41,6 +42,14 @@ const listStaff = ref<ListStaff[]>([])
 const visibleStaff = ref(false)
 const fromCustomer = ref(false)
 const cusName = computed(() => `${curCustomer.value?.name} ${curCustomer.value?.phone}` || '')
+
+watch(
+  () => model.storeServiceType,
+  (newValue) => {
+    if (newValue === 1)
+      model.customerAddress = null
+  },
+)
 
 function toSelCus() {
   if (fromCustomer.value)
@@ -104,7 +113,12 @@ function toSelServTime() {
 }
 
 async function save() {
-  console.log(checkedServs.value)
+  if (model.storeServiceType === 2 && !model.customerAddress) {
+    return uni.showToast({
+      title: '请选择上门地址',
+      icon: 'none',
+    })
+  }
   if (!bookStime.value) {
     return uni.showToast({
       title: '请选择服务时间',
@@ -263,6 +277,16 @@ watch(() => curSelectedCardToCash.value, () => {
         v-model="model.storeServiceType"
         :rules="[{ required: true, message: '请选择服务方式' }]"
         label="服务方式" align-right :columns="columns"
+      />
+      <wd-input
+        v-if="model.storeServiceType === 2"
+        v-model="model.customerAddress"
+        label-width="80px"
+        label="上门地址"
+        clearable
+        align-right
+        placeholder="请输入"
+        :rules="[{ required: true, message: '请填写上门地址' }]"
       />
       <wd-cell title="手艺人" :is-link="true" @click="toSelectStaff()">
         <view>

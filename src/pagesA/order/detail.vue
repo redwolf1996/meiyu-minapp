@@ -86,9 +86,9 @@ async function toRefund() {
           <view>创建时间</view>
           <view>{{ fdt(detail?.createTime) }}</view>
         </view>
-        <view flex flex-ac flex-bt>
+        <view v-if="detail?.adviserName" flex flex-ac flex-bt>
           <view>销售员</view>
-          <view>{{ detail?.adviserName ?? '--' }}</view>
+          <view>{{ detail?.adviserName }}</view>
         </view>
         <view v-if="detail?.payStatus === 3" flex flex-ac flex-bt mt12px>
           <view>取消时间</view>
