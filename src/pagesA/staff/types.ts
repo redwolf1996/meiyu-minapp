@@ -26,7 +26,7 @@ export interface ListStaff {
    */
   phone: string
   /**
-   * 角色
+   * 角色 1店长，2销售，3手艺人
    */
   roleCode: number
   /**
@@ -90,7 +90,7 @@ export interface Staff {
    */
   phone: string
   /**
-   * 角色
+   * 角色 1店长，2销售，3手艺人
    */
   roleCode: number
   /**

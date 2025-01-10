@@ -227,6 +227,9 @@ export interface StoreList {
    * 省
    */
   province?: string
+  /**
+   * 角色 1店长，2销售，3手艺人
+   */
   roleCode?: number
   roleDesc?: string
   /**
