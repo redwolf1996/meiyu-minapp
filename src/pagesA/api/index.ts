@@ -64,7 +64,7 @@ export interface StaffModelList {
   /**
    * 角色描述
    */
-  roleDesc: string
+  roleDesc?: string
   /**
    * 登录人平台唯一id
    */

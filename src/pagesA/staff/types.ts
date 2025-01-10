@@ -30,9 +30,9 @@ export interface ListStaff {
    */
   roleCode: number
   /**
-   * 角色
+   * 角色描述
    */
-  roleDesc: string
+  roleDesc?: string
   /**
    * 登录人平台唯一id
    */
@@ -94,9 +94,9 @@ export interface Staff {
    */
   roleCode: number
   /**
-   * 角色
+   * 角色描述
    */
-  roleDesc: string
+  roleDesc?: string
   /**
    * 工作时间
    */

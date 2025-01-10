@@ -15,7 +15,8 @@ function login(p: { code: string }) {
 }
 
 function wxlogin() {
-  wx.login({
+  uni.login({
+    provider: 'weixin',
     async success(res) {
       code.value = res.code
       if (res.code) {

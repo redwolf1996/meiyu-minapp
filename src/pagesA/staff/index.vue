@@ -56,21 +56,21 @@ async function getList() {
           :height="75"
           mode="aspectFill"
           :radius="12"
-          :src="item.avatar"
+          :src="item?.avatar || DEFAULT_AVATAR"
         />
         <view flex flex-y flex-bt py-14rpx h-75px>
           <view f12>
-            {{ item.userName }}
+            {{ item?.userName || '--' }}
           </view>
           <view f12>
-            {{ item.phone }}
+            {{ item?.phone || '--' }}
           </view>
           <view f10 flex flex-ac gap-10rpx>
             <wd-icon name="star-filled" size="10px" color="#FFC960" />
-            <text>{{ item.jobDesc }}</text>
+            <text>{{ item?.jobDesc || '--' }}</text>
             <view w-6rpx h-6rpx round style="background-color: #91919F;" />
             <text c-91919F>
-              {{ item.roleDesc }}
+              {{ item?.roleDesc || '--' }}
             </text>
           </view>
         </view>
