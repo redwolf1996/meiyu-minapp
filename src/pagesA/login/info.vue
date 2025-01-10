@@ -4,6 +4,8 @@ style:
 </route>
 
 <script lang="ts" setup>
+import type { UserInfo } from '@/stores/modules/user'
+
 const role = ref<'business' | 'staff'>('business')
 const form = reactive<{
   userName: string
@@ -29,6 +31,9 @@ function handleSubmit() {
         const res = await request.post<{ token: string, isRegister: 0 | 1 }>(url, form)
         const { token, isRegister } = res.data
         useUserStore().setUserInfo({ token, isRegister })
+
+        const res2 = await request.get<UserInfo>('/business/info')
+        useUserStore().setUserInfo(res2.data)
         uni.redirectTo({ url: '/pagesA/tabs/tab-business-dashboard' })
       }
     })

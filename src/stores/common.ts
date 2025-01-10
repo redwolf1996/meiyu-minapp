@@ -36,6 +36,7 @@ export const curCardRechargeType = ref<number>(null)
 /** 当前待提交的开卡充值表单数据 */
 export const curCardRechargeFormData = ref<MakeCardModel>(null)
 
+/** 当前选中的门店id */
 export const storeId = computed(() => {
   return useUserStore(pinia).userInfo?.lastStoreId || useUserStore(pinia).userInfo?.storeList?.[0]?.storeId || null
 })

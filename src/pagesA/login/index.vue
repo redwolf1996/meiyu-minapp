@@ -4,6 +4,8 @@ style:
 </route>
 
 <script lang="ts" setup>
+import type { UserInfo } from '@/stores/modules/user'
+
 const checked = ref(false)
 const code = ref('')
 function select(e: UniHelper.CheckboxGroupOnChangeEvent) {
@@ -23,12 +25,13 @@ function wxlogin() {
         const { token, isRegister } = (await login({ code: res.code })).data
         useUserStore().setUserInfo({ token, isRegister })
         if (isRegister) {
+          const res = await request.get<UserInfo>('/business/info')
+          useUserStore().setUserInfo(res.data)
           uni.reLaunch({ url: '/pagesA/tabs/tab-business-dashboard' })
         }
         else {
-          // 跳转到商家完善信息页面（商家端和客户端已经分开）
-          uni.navigateTo({ url: '/pagesA/login/info?role=business' })
-          // uni.navigateTo({ url: '/pagesA/login/role-select' })
+          // 身份选择（商家/员工）
+          uni.navigateTo({ url: '/pagesA/login/role-select' })
         }
       }
       else {

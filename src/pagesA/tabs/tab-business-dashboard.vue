@@ -6,14 +6,11 @@ style:
 
 <script lang="ts" setup>
 import dayjs from 'dayjs'
-// #ifdef MP-WEIXIN
 import { getMenuButtonInfo } from '@/utils/index'
-// #endif
 
 import type { DashBoardData } from './types'
-import type { StoreList, UserInfo } from '@/stores/modules/user'
+import type { UserInfo } from '@/stores/modules/user'
 import MyTabBar from './MyTabBar.vue'
-import type { StaffModel } from '../api'
 
 const toast = useToast()
 const menuButtonWidth = ref(0)
@@ -26,18 +23,15 @@ const showCardRecharge = ref(false) // 显示开卡充值弹窗
 onLoad(() => {
   setStaffList()
 })
+
 onShow(() => {
   initStore()
-  // #ifdef MP-WEIXIN
   const menuButtonInfo = getMenuButtonInfo()
   menuButtonWidth.value = menuButtonInfo?.barWidth
-  // #endif
 })
 
 // 店铺初始化
 async function initStore() {
-  const res = await request.get<UserInfo>('/business/info')
-  useUserStore().setUserInfo(res.data)
   userInfo.value = useUserStore().userInfo
   storeName.value = userInfo.value?.lastStoreName || userInfo.value.storeList?.[0]?.storeName
   const guidStatus = userInfo.value.guidStatus
@@ -49,20 +43,19 @@ async function initStore() {
   if (!guidStatus.staffCountStatus || !guidStatus.productCountStatus || !guidStatus.serviceCountStatus) { // 如果新手引导未完成
     return uni.navigateTo({ url: '/pagesA/init/steps/index' })
   }
-
-  getInfo()
+  getDashboardInfo()
 }
 
-async function getInfo() {
+// 获取工作台信息
+async function getDashboardInfo() {
   const res = await request.get<DashBoardData>(`/business/workbench/${storeId.value}`)
   info.value = res.data
 
   // 判断是否过期
   const today = dayjs()
   const expTime = dayjs(info.value.orgExpiresTime)
-  if (today.isAfter(expTime)) {
+  if (today.isAfter(expTime))
     isOvertime.value = true
-  }
 }
 
 function toWallet() {
