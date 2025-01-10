@@ -183,6 +183,7 @@ declare global {
   const selBaseProduct: typeof import('./stores/sel-base-item')['selBaseProduct']
   const selBaseService: typeof import('./stores/sel-base-item')['selBaseService']
   const setStaffList: typeof import('./utils/index')['setStaffList']
+  const setUserBaseInfo: typeof import('./utils/index')['setUserBaseInfo']
   const shallowReactive: typeof import('vue')['shallowReactive']
   const shallowReadonly: typeof import('vue')['shallowReadonly']
   const shallowRef: typeof import('vue')['shallowRef']
@@ -532,6 +533,7 @@ declare module 'vue' {
     readonly safeBottom: UnwrapRef<typeof import('./utils/index')['safeBottom']>
     readonly salesListStore: UnwrapRef<typeof import('./stores/common')['salesListStore']>
     readonly setStaffList: UnwrapRef<typeof import('./utils/index')['setStaffList']>
+    readonly setUserBaseInfo: UnwrapRef<typeof import('./utils/index')['setUserBaseInfo']>
     readonly shallowReactive: UnwrapRef<typeof import('vue')['shallowReactive']>
     readonly shallowReadonly: UnwrapRef<typeof import('vue')['shallowReadonly']>
     readonly shallowRef: UnwrapRef<typeof import('vue')['shallowRef']>

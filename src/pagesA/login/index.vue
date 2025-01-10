@@ -25,8 +25,7 @@ function wxlogin() {
         const { token, isRegister } = (await login({ code: res.code })).data
         useUserStore().setUserInfo({ token, isRegister })
         if (isRegister) {
-          const res = await request.get<UserInfo>('/business/info')
-          useUserStore().setUserInfo(res.data)
+          await setUserBaseInfo()
           uni.reLaunch({ url: '/pagesA/tabs/tab-business-dashboard' })
         }
         else {

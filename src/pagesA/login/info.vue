@@ -31,9 +31,7 @@ function handleSubmit() {
         const res = await request.post<{ token: string, isRegister: 0 | 1 }>(url, form)
         const { token, isRegister } = res.data
         useUserStore().setUserInfo({ token, isRegister })
-
-        const res2 = await request.get<UserInfo>('/business/info')
-        useUserStore().setUserInfo(res2.data)
+        await setUserBaseInfo()
         uni.redirectTo({ url: '/pagesA/tabs/tab-business-dashboard' })
       }
     })

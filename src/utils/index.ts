@@ -1,6 +1,7 @@
 import type { StaffModel } from '@/pagesA/api'
+import type { UserInfo } from '@/stores/modules/user'
 import dayjs from 'dayjs'
-import { max, min } from 'lodash-es'
+import { max, min, reject } from 'lodash-es'
 
 export const IMG_BASE = import.meta.env.VITE_APP_IMG_BASE
 
@@ -173,4 +174,14 @@ export async function setStaffList() {
   staffListStore.value = artList?.map((v) => {
     return { label: v.userName, value: v.storeStaffId }
   })
+}
+
+/**
+ * 设置user基础信息
+ */
+export async function setUserBaseInfo() {
+  const res = await request.get<UserInfo>('/business/info')
+  if (!res.data?.lastStore)
+    res.data.lastStore = res.data.storeList[0]
+  useUserStore().setUserInfo(res.data)
 }
