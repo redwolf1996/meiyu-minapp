@@ -181,7 +181,10 @@ export async function setStaffList() {
  */
 export async function setUserBaseInfo() {
   const res = await request.get<UserInfo>('/business/info')
-  if (!res.data?.lastStore)
+  if (!res.data?.lastStore) {
     res.data.lastStore = res.data.storeList[0]
+    // 上报当前门店id
+    await request.put('/business/current-store-id', { storeId: res.data.storeList[0].storeId })
+  }
   useUserStore().setUserInfo(res.data)
 }
