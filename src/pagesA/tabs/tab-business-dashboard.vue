@@ -60,6 +60,8 @@ function toWallet() {
   uni.navigateTo({ url: '/pagesA/dashboard/wallet' })
 }
 function toRenew() {
+  if (storeRole.value === 2 || storeRole.value === 3)
+    return toast.warning('您没有权限操作续费，请联系店长或店铺拥有者')
   uni.navigateTo({ url: '/pagesA/my/renew' })
 }
 function toScanCode() {
@@ -255,7 +257,7 @@ function toCardRecharge(type: 1 | 2 | 3 | 4 | 5 | 6) {
         </view>
       </view>
 
-      <view v-if="isOvertime && storeRole !== 2 && storeRole !== 3" mt-30px class="renew" flex flex-bt flex-ac gap-24rpx>
+      <view v-if="isOvertime && storeRole !== 2 && storeRole !== 3 " mt-30px class="renew" flex flex-bt flex-ac gap-24rpx p-20px>
         <wd-img
           :width="23"
           :height="23"
@@ -401,14 +403,14 @@ function toCardRecharge(type: 1 | 2 | 3 | 4 | 5 | 6) {
   justify-content: center;
 }
 .renew-btn {
-  width: 144rpx;
-  height: 48rpx;
-  line-height: 48rpx;
+  width: 72px;
+  height: 24px;
+  line-height: 24px;
   text-align: center;
   color: #fff;
-  font-size: 24rpx;
+  font-size: 12px;
   background-color: #e3c377;
-  border-radius: 26rpx;
+  border-radius: 13px;
   box-shadow: 2.66px 2.66px 10.66px 0px rgba(0, 11, 222, 0.24);
 }
 .renew {

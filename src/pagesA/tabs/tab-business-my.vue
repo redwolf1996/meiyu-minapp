@@ -81,6 +81,7 @@ function toFeedBack() {
       </view>
     </view>
     <view
+      v-if="storeRole !== 2 && storeRole !== 3"
       :style="{
         backgroundImage: `url(${IMG_BASE}/bg-my.png)`,
       }" px16px py12px flex flex-ac flex-bt mt-12px
