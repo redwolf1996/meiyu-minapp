@@ -42,7 +42,7 @@ export interface BillingGood {
   /**
    * 商品优惠后总价
    */
-  amount?: ComputedRef<number> | number | null
+  amount?: any
   /**
    * 手艺人id
    */
@@ -58,7 +58,7 @@ export interface BillingGood {
   /**
    * 卡优惠金额
    */
-  cardReduceAmount?: ComputedRef<number> | number | null
+  cardReduceAmount?: any
   /**
    * 购卡id，符合已购卡优惠时填写
    */
@@ -86,7 +86,7 @@ export interface BillingGood {
   /**
    * 商品原价总价
    */
-  totalAmount?: ComputedRef<number> | number | null
+  totalAmount?: any
   /**
    * 服务或产品名称
    */

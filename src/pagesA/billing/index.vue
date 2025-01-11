@@ -72,12 +72,13 @@ function mergeProdsAndServs() {
       }
     })
     form.value.billingGoods = tmp
-    form.value.billingGoods.forEach((item: any) => {
+    form.value.billingGoods.forEach((item: BillingGood) => {
+      const cost = item.goodsPrice2 || item.goodsPrice
       item.totalAmount = computed(() => {
-        return func_mul(item.goodsPrice, item.goodsCount)
+        return func_mul(cost, item.goodsCount)
       })
       item.amount = computed(() => {
-        return func_mul(func_sub(item.goodsPrice2, item.cardReduceAmount), item.goodsCount)
+        return func_mul(func_sub(cost, item.cardReduceAmount), item.goodsCount)
       })
     })
   }
@@ -92,21 +93,23 @@ watch(() => curSelectedCardToCash.value, () => {
       item.customerCardId = curSelectedCardToCash.value?.customerCardId
       item.cardId = curSelectedCardToCash.value?.cardId
 
+      const cost = item.goodsPrice2 || item.goodsPrice
+
       if (curSelectedCardToCash.value?.cardType === 1) { // 1->次卡，2->充值卡，3->折扣卡
         item.cardReduceAmount = 1
       }
       else {
-        item.cardReduceAmount = func_mul(item.goodsPrice, func_sub(1, func_div(curSelectedCardToCash.value?.equity, 10)))
+        item.cardReduceAmount = func_mul(cost, func_sub(1, func_div(curSelectedCardToCash.value?.equity, 10)))
       }
 
       item.totalAmount = computed(() => {
-        return func_mul(item.goodsPrice, item.goodsCount)
+        return func_mul(cost, item.goodsCount)
       })
       item.amount = computed(() => {
         if (curSelectedCardToCash.value?.cardType === 1) {
           return 0
         }
-        return func_mul(func_sub(item.goodsPrice2, item.cardReduceAmount), item.goodsCount)
+        return func_mul(func_sub(cost, item.cardReduceAmount), item.goodsCount)
       })
 
       if (curSelectedCardToCash.value?.cardType === 1) {
@@ -143,7 +146,7 @@ function clickItem(item: ListStaff) {
 }
 
 async function getStaff() {
-  const res = await request.get<ListRes<ListStaff>>('/business/staff', { storeId: storeId.value })
+  const res = await request.get<ListRes<ListStaff>>('/business/staff', { storeId: storeId.value, jobCode: 2 })
   listStaff.value = res.data.list.map((v) => {
     return {
       ...v,
@@ -283,9 +286,12 @@ function delEquity(item: BillingGood) {
             <wd-icon name="minus-circle" size="16px" color="red" @click="delEquity(item)" />
           </view>
         </view>
-        <view flex flex-xr py10px pr20px>
-          <text>
+        <view flex flex-xr py10px pr20px flex-ac gap5px>
+          <text v-if="item.goodsPrice2" line-through c-#D4D4D4 f12>
             ￥{{ item.goodsPrice }}
+          </text>
+          <text>
+            ￥{{ item.goodsPrice2 || item.goodsPrice }}
           </text>
         </view>
         <view>
