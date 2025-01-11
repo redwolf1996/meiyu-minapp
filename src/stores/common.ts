@@ -41,6 +41,14 @@ export const storeId = computed(() => {
   return useUserStore(pinia).userInfo?.lastStore?.storeId || null
 })
 
+/**
+ * 当前角色
+ * 1: '店长' 2: '销售' 3: '手艺人'
+ */
+export const storeRole = computed(() => {
+  return useUserStore(pinia).userInfo?.lastStore?.roleCode
+})
+
 /** 当前积分查询参数 */
 export const cusPointsParams = ref<{
   id: number | string

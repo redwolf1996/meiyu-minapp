@@ -255,7 +255,7 @@ function toCardRecharge(type: 1 | 2 | 3 | 4 | 5 | 6) {
         </view>
       </view>
 
-      <view v-if="isOvertime" mt-30px class="renew" flex flex-bt flex-ac gap-24rpx>
+      <view v-if="isOvertime && storeRole !== 2 && storeRole !== 3" mt-30px class="renew" flex flex-bt flex-ac gap-24rpx>
         <wd-img
           :width="23"
           :height="23"
@@ -280,7 +280,7 @@ function toCardRecharge(type: 1 | 2 | 3 | 4 | 5 | 6) {
         </view>
         <view h-20px />
         <view class="grid">
-          <view @click="toScanCode()">
+          <view v-if="storeRole !== 2" @click="toScanCode()">
             <i i-ant-design-scan-outlined fs-64 c-1563ff />
             <text>扫码核销</text>
           </view>
@@ -308,7 +308,7 @@ function toCardRecharge(type: 1 | 2 | 3 | 4 | 5 | 6) {
             <i i-tabler-address-book fs-64 c-1563ff />
             <text>预约列表</text>
           </view>
-          <view @click="toStoreManage()">
+          <view v-if="storeRole !== 2 && storeRole !== 3" @click="toStoreManage()">
             <i i-mingcute-shop-line fs-64 c-1563ff />
             <text>店务管理</text>
           </view>

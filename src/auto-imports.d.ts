@@ -192,6 +192,7 @@ declare global {
   const staffScheduling: typeof import('./stores/common')['staffScheduling']
   const storeId: typeof import('./stores/common')['storeId']
   const storeMsgDetail: typeof import('./stores/common')['storeMsgDetail']
+  const storeRole: typeof import('./stores/common')['storeRole']
   const stores: typeof import('./stores/index')['default']
   const sumArray: typeof import('./utils/math')['sumArray']
   const syncRef: typeof import('@vueuse/core')['syncRef']
@@ -542,6 +543,7 @@ declare module 'vue' {
     readonly staffScheduling: UnwrapRef<typeof import('./stores/common')['staffScheduling']>
     readonly storeId: UnwrapRef<typeof import('./stores/common')['storeId']>
     readonly storeMsgDetail: UnwrapRef<typeof import('./stores/common')['storeMsgDetail']>
+    readonly storeRole: UnwrapRef<typeof import('./stores/common')['storeRole']>
     readonly stores: UnwrapRef<typeof import('./stores/index')['default']>
     readonly sumArray: UnwrapRef<typeof import('./utils/math')['sumArray']>
     readonly themeColor: UnwrapRef<typeof import('./utils/index')['themeColor']>

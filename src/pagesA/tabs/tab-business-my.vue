@@ -114,7 +114,7 @@ function toFeedBack() {
     />
   </view>
   <MyCellGroup>
-    <MyCell label="我的店铺" noBorder @myclick="toMyStore()">
+    <MyCell v-if="storeRole !== 2 && storeRole !== 3" label="我的店铺" noBorder @myclick="toMyStore()">
       <template #icon>
         <wd-icon name="home" size="18px" />
       </template>
