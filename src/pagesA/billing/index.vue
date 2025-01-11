@@ -195,6 +195,10 @@ function toPay() {
     return func_add(prev, cur.amount)
   }, 0)
   curBilling.value = form.value
+  // 待付款金额为0，不去结账，直接提交成功
+  if (totalToPay.value === 0) {
+    console.log('x')
+  }
   uni.navigateTo({ url: `/pagesA/billing/pay?mode=${PayModeEnum.MakeOrder}&storeCustomerId=${form.value.storeCustomerId}` })
 }
 
