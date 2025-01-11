@@ -49,12 +49,14 @@ text {
   }
   .wd-cell__left,
   .wd-input__label,
+  .wd-calendar__label,
   .wd-select-picker__label,
   .wd-picker__label {
     padding-left: 0px !important;
     // min-width: 20% !important;
     // max-width: 20% !important;
   }
+  .wd-calendar__label.is-required::after,
   .wd-cell__left.is-required::after,
   .wd-input__label.is-required::after,
   .wd-select-picker__label.is-required::after,

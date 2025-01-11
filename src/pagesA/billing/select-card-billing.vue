@@ -40,7 +40,7 @@ function selectItem2(itm: any) {
         <view class="txt" flex flex-y flex-bt>
           <view p12px flex-grow-1 @click="selectItem2(itm)">
             <view flex flex-bt flex-ac>
-              <view fs-14px>
+              <view fs-14px fb>
                 {{ itm.cardName }}
               </view>
               <view
@@ -56,7 +56,7 @@ function selectItem2(itm: any) {
                   可用次数：不限次
                 </text>
                 <text v-else>
-                  可用次数：{{ itm.equity }}次
+                  可用次数：{{ itm.countLimit }}次
                 </text>
               </template>
               <template v-if="itm.cardType === 2">
