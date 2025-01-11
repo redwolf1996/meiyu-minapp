@@ -213,10 +213,10 @@ watch(() => curSelectedCardToCash.value, () => {
       item.cardType = curSelectedCardToCash.value?.cardType
 
       if (curSelectedCardToCash.value?.cardType === 1) {
-        item.cardShowName = `${curSelectedCardToCash.value?.cardName} -${item.cardReduceAmount}次`
+        item.cardShowName = `${curSelectedCardToCash.value?.cardName}\u00A0\u00A0\u00A0\u00A0\-${item.cardReduceAmount}次`
       }
       else {
-        item.cardShowName = `${curSelectedCardToCash.value?.cardName} -￥${item.cardReduceAmount}`
+        item.cardShowName = `${curSelectedCardToCash.value?.cardName}\u00A0\u00A0\u00A0\u00A0\-￥${item.cardReduceAmount}`
       }
     }
   })

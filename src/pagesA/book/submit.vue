@@ -4,6 +4,8 @@ style:
 </route>
 
 <script lang="ts" setup>
+import qs from 'qs'
+
 // 商品原价合计
 const totalOriAmount = sumArray(bookInfo.value.service.map((v) => {
   const cost = v.price2 || v.price
@@ -17,8 +19,27 @@ const totalToPayAmount = sumArray(bookInfo.value.service.map(v => v.amount))
 const discountAmount = func_sub(totalOriAmount, totalToPayAmount)
 
 async function doSubmit() {
-  bookInfo.value.amount = totalToPayAmount
-  uni.navigateTo({ url: '/pagesA/billing/pay?createSource=4' }) // 预约单支付（包含了预约信息和支付信息）
+  if (!totalToPayAmount) { // 总金额为0直接预约成功，不需要支付
+    pay()
+  }
+  else {
+    bookInfo.value.amount = totalToPayAmount
+    uni.navigateTo({ url: '/pagesA/billing/pay?createSource=4' }) // 预约单支付（包含了预约信息和支付信息）
+  }
+}
+
+// 待付款金额为0，不去结账，直接提交成功
+async function pay() {
+  const res = await request.post<any>('/business/billing', { ...bookInfo.value, payType: null })
+  toast.info('开单成功')
+  const params = {
+    orderId: res.data.orderId,
+    mode: PayModeEnum.Booking, // mode  1 开单 2开卡 3充值 4预约
+    amount: res.data.payAmount,
+    points: res.data.gainIntegral,
+  }
+  await sleep(1000)
+  uni.redirectTo({ url: `/pagesA/billing/pay-success?${qs.stringify(params)}` })
 }
 </script>
 

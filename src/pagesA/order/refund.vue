@@ -49,7 +49,7 @@ async function getDetail() {
 }
 
 function confirmRefund() {
-  if (!form.refundType)
+  if (!form.refundType && form.refundAmount !== 0)
     return toast.warning('请选择退款方式')
   message
     .confirm({

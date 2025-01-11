@@ -51,6 +51,10 @@ async function toRefund() {
     url: `/pagesA/order/refund?id=${id.value}`,
   })
 }
+
+function toRefundDetail() {
+  uni.navigateTo({ url: `/pagesA/order/refund-detail?refundId=${detail?.value.refundId}` })
+}
 </script>
 
 <template>
@@ -70,7 +74,7 @@ async function toRefund() {
       </view>
       <view class="h20px" />
       <view v-if="detail?.payStatus === 4">
-        <MyCell label="退款金额">
+        <MyCell label="退款金额" @myclick="toRefundDetail">
           <text f14>
             ￥{{ detail?.refundAmount }}
           </text>
