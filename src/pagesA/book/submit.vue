@@ -6,6 +6,8 @@ style:
 <script lang="ts" setup>
 import qs from 'qs'
 
+const toast = useToast()
+
 // 商品原价合计
 const totalOriAmount = sumArray(bookInfo.value.service.map((v) => {
   const cost = v.price2 || v.price
@@ -30,8 +32,8 @@ async function doSubmit() {
 
 // 待付款金额为0，不去结账，直接提交成功
 async function pay() {
-  const res = await request.post<any>('/business/billing', { ...bookInfo.value, payType: null })
-  toast.info('开单成功')
+  const res = await request.post<any>('/business/booking', { ...bookInfo.value, payType: null })
+  toast.info('预约成功')
   const params = {
     orderId: res.data.orderId,
     mode: PayModeEnum.Booking, // mode  1 开单 2开卡 3充值 4预约
@@ -44,6 +46,7 @@ async function pay() {
 </script>
 
 <template>
+  <wd-toast />
   <view px15px py12px>
     <view mb16px px12px py16px f12 flex flex-y gap-23rpx bg-white>
       <view bg-FCE8E9 c-FF5A5F h38rpx w128rpx tc flex flex-cc>
