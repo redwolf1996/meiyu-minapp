@@ -56,7 +56,7 @@ function selectItem2(itm: any) {
                   可用次数：不限次
                 </text>
                 <text v-else>
-                  可用次数：{{ itm.countLimit }}次
+                  可用次数：{{ itm.equity }}次
                 </text>
               </template>
               <template v-if="itm.cardType === 2">

@@ -130,7 +130,7 @@ onShow(() => {
 
               <!-- 折扣卡：显示 [已使用次数]/[折扣]起 -->
               <text v-if="item.cardType === 3" px-12rpx py-7rpx c-#1A66FF pr left--6px>
-                {{ item?.useCount }}/{{ item?.discountDesc }}
+                {{ item?.discountDesc }}
               </text>
             </view>
 
