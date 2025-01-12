@@ -60,7 +60,7 @@ function selectItem2(itm: any) {
                 </text>
               </template>
               <template v-if="itm.cardType === 2">
-                <text>剩余金额：￥{{ itm.totalAmount }}</text>
+                <text>剩余金额：￥{{ itm.totalAmount }}&#12288;折扣：{{ itm.equity }}折</text>
               </template>
               <template v-if="itm.cardType === 3">
                 <text>折扣：{{ itm.equity }}折</text>

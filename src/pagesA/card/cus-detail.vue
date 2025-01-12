@@ -171,6 +171,11 @@ function delEquity(item: CardEquity) {
     checkedProds.value = checkedProds.value.filter(item => item.id !== goodsId)
   }
 }
+
+function toBilling() {
+  resetGoods()
+  uni.navigateTo({ url: `/pagesA/billing/index?customerId=${detail.value.customerId}` })
+}
 </script>
 
 <template>
@@ -269,15 +274,20 @@ function delEquity(item: CardEquity) {
         </view>
       </view>
       <view bg-white px-34rpx py-40rpx mt-16px>
-        <view flex flex-ac gap-20rpx>
-          <wd-img
-            :width="18"
-            :height="18"
-            :src="`${IMG_BASE}/icon-book.png`"
-          />
-          <text fs-34>
-            卡详情
-          </text>
+        <view flex flex-ac flex-bt>
+          <view flex flex-ac gap-20rpx>
+            <wd-img
+              :width="18"
+              :height="18"
+              :src="`${IMG_BASE}/icon-book.png`"
+            />
+            <text fs-34>
+              卡详情
+            </text>
+          </view>
+          <view f14 c-1a66ff @click="toBilling">
+            去使用
+          </view>
         </view>
         <view c-#3A3A3A fb mt18px>
           {{ detail?.cardName }}
