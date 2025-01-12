@@ -126,7 +126,7 @@ function toCardRecharge(type: 1 | 2 | 3 | 4 | 5 | 6) {
       <template #title>
         <view flex flex-ac flex-bt :style="{ width: `calc(100% - ${menuButtonWidth}px)` }">
           <view px-24rpx>
-            {{ userInfo?.lastStore?.storeName || '--' }}
+            {{ userInfo?.lastStore?.storeName || userInfo?.storeList?.[0]?.storeName || '--' }}
           </view>
           <view flex flex-y flex-cc pr-24rpx pr @click="toMsg()">
             <wd-img

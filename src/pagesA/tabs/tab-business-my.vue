@@ -8,7 +8,7 @@ style:
 import MyTabBar from './MyTabBar.vue'
 
 const userInfo = computed(() => useUserStore()?.userInfo)
-const storeInfo = computed(() => userInfo.value?.lastStore)
+const storeInfo = computed(() => userInfo.value?.lastStore || userInfo.value?.storeList?.[0])
 
 function toRenew() {
   uni.navigateTo({ url: '/pagesA/my/renew' })

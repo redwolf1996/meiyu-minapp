@@ -304,7 +304,7 @@ onShow(() => {
               </view>
             </view>
           </view>
-          <view grid grid-cols-2 f12 mt-10px grid-gap-10px>
+          <view grid grid-cols-2 f12 mt-10px grid-gap-5px>
             <view>
               <text c-929292>
                 余额：
