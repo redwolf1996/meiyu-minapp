@@ -297,7 +297,6 @@ function toDetail(item: BookListAll) {
               placeholder="请输入预约人姓名或手机号"
               custom-class="cus-input"
               :no-border="true"
-              size="small"
               :clearable="true"
             />
           </view>
