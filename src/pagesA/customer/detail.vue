@@ -361,16 +361,16 @@ onMounted(async () => {
               <view f14>
                 {{ item.createTime }}
               </view>
-              <view v-if="item.payStatus === 1" class="my-status-tag to-service">
+              <view v-if="item.searchStatus === 101" class="my-status-tag to-service">
                 待支付
               </view>
-              <view v-if="item.payStatus === 2" class="my-status-tag end-service">
+              <view v-if="item.payStatus === 103" class="my-status-tag end-service">
                 已完成
               </view>
-              <view v-if="item.payStatus === 4" class="my-status-tag end-service">
+              <view v-if="item.payStatus === 105" class="my-status-tag end-service">
                 已完成(退款成功)
               </view>
-              <view v-if="item.payStatus === 3" class="my-status-tag cancel-service">
+              <view v-if="item.payStatus === 104" class="my-status-tag cancel-service">
                 已取消
               </view>
             </view>
@@ -478,7 +478,7 @@ onMounted(async () => {
                     :src="`${IMG_BASE}/icon-people.png`"
                   />
                   <view fb>
-                    {{ item?.artisanName }}
+                    {{ item?.artisanName || '未分配' }}
                   </view>
                   <view w-10rpx h-10rpx round ma style="background-color: #000;" />
                   <view> {{ item?.artisanPhone }}</view>
