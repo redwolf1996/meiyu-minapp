@@ -9,6 +9,7 @@ import { PayModeEnum } from '@/utils/consts'
 import type { MakeCardModel } from './types'
 import dayjs from 'dayjs'
 import type { CustomerDetail } from '../customer/types'
+import qs from 'qs'
 
 const toast = useToast()
 const visibleStaff = ref(false)
@@ -76,6 +77,11 @@ function toSelCus() {
 }
 
 async function payLater() {
+  if (!form.value.cardId && curCardRechargeType.value !== 6)
+    return toast.warning('请选择卡项')
+  if (!form.value.customerCardId && curCardRechargeType.value === 6)
+    return toast.warning('请选择充值卡')
+
   form.value.amount = Number(form.value.amount)
   form.value.gift = Number(form.value.gift)
   form.value.payType = null // 稍后支付
@@ -87,9 +93,35 @@ async function payLater() {
 }
 
 function toPay() {
-  curCardRechargeFormData.value = form.value
-  const mode = curCardRechargeType.value === 6 ? PayModeEnum.Recharge : PayModeEnum.MakeCard
-  uni.navigateTo({ url: `/pagesA/billing/pay?mode=${mode}` })
+  if (!form.value.cardId && curCardRechargeType.value !== 6)
+    return toast.warning('请选择卡项')
+  if (!form.value.customerCardId && curCardRechargeType.value === 6)
+    return toast.warning('请选择充值卡')
+  if (!form.value.amount && curCardRechargeType.value === 6)
+    return toast.warning('请输入充值金额')
+
+  if (!form.value.amount && curCardRechargeType.value !== 6) {
+    submitDirect()
+  }
+  else {
+    curCardRechargeFormData.value = form.value
+    const mode = curCardRechargeType.value === 6 ? PayModeEnum.Recharge : PayModeEnum.MakeCard
+    uni.navigateTo({ url: `/pagesA/billing/pay?mode=${mode}` })
+  }
+}
+
+// 待付款金额为0，不去结账，直接提交成功
+async function submitDirect() {
+  const res = await request.post<any>('/business/store-customer-card', { ...form.value, payType: null })
+  toast.info('开卡成功')
+  const params = {
+    orderId: res.data.orderId,
+    mode: PayModeEnum.MakeCard, // mode  1 开单 2开卡 3充值 4预约
+    amount: res.data.payAmount,
+    points: res.data.gainIntegral,
+  }
+  await sleep(1000)
+  uni.redirectTo({ url: `/pagesA/billing/pay-success?${qs.stringify(params)}` })
 }
 </script>
 
@@ -279,18 +311,25 @@ function toPay() {
       </text>
     </view>
     <view class="footer-inner">
-      <view w120px>
-        <wd-button size="large" :plain="true" block @click="payLater()">
-          <view flex flex-cc>
-            <text>稍后付款</text>
-          </view>
-        </wd-button>
-      </view>
-      <view w104px>
+      <template v-if="form.amount">
+        <view w120px>
+          <wd-button size="large" :plain="true" block @click="payLater()">
+            <view flex flex-cc>
+              <text>稍后付款</text>
+            </view>
+          </wd-button>
+        </view>
+        <view w104px>
+          <wd-button size="large" custom-class="theme-bg" block @click="toPay()">
+            <view flex flex-cc>
+              <text>收款</text>
+            </view>
+          </wd-button>
+        </view>
+      </template>
+      <view v-if="!form.amount" wp100>
         <wd-button size="large" custom-class="theme-bg" block @click="toPay()">
-          <view flex flex-cc>
-            <text>收款</text>
-          </view>
+          提交
         </wd-button>
       </view>
     </view>

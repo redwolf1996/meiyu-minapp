@@ -164,6 +164,7 @@ function toSelectStaff(index: number) {
 function toSelCard(item, index: number) {
   if (!form.value.storeCustomerId)
     return toast.warning('请先选择客户')
+
   const storeCustomerId = form.value.storeCustomerId
   const goodsId = item.goodsId
   const goodsType = item.goodsType
@@ -192,19 +193,23 @@ async function payLater() {
 }
 
 function toPay() {
+  if (!form.value.storeCustomerId)
+    return toast.warning('请选择客户')
+  if (!form.value.billingGoods.length)
+    return toast.warning('请添加商品')
   form.value.amount = form.value.billingGoods.reduce((prev, cur) => {
     return func_add(prev, cur.amount)
   }, 0)
   curBilling.value = form.value
 
   if (totalToPay.value === 0)
-    pay()
+    submitDirect()
   else
     uni.navigateTo({ url: `/pagesA/billing/pay?mode=${PayModeEnum.MakeOrder}&storeCustomerId=${form.value.storeCustomerId}` })
 }
 
 // 待付款金额为0，不去结账，直接提交成功
-async function pay() {
+async function submitDirect() {
   const res = await request.post<any>('/business/billing', { ...curBilling.value, payType: null })
   toast.info('开单成功')
   const params = {
@@ -379,17 +384,26 @@ function delEquity(item: BillingGood) {
       </text>
     </view>
     <view class="footer-inner">
-      <view w120px>
-        <wd-button size="large" :plain="true" block @click="payLater()">
-          <view flex flex-cc>
-            <text>稍后付款</text>
-          </view>
-        </wd-button>
-      </view>
-      <view w104px>
+      <template v-if="totalToPay">
+        <view w120px>
+          <wd-button size="large" :plain="true" block @click="payLater()">
+            <view flex flex-cc>
+              <text>稍后付款</text>
+            </view>
+          </wd-button>
+        </view>
+        <view w104px>
+          <wd-button size="large" custom-class="theme-bg" block @click="toPay()">
+            <view flex flex-cc>
+              <text>收款</text>
+            </view>
+          </wd-button>
+        </view>
+      </template>
+      <view v-else wp100>
         <wd-button size="large" custom-class="theme-bg" block @click="toPay()">
           <view flex flex-cc>
-            <text>{{ totalToPay ? '收款' : '提交' }}</text>
+            <text>提交</text>
           </view>
         </wd-button>
       </view>

@@ -218,7 +218,7 @@ function toCardRecharge(type: 1 | 2 | 3 | 4 | 5 | 6) {
             {{ info?.customerCount }}
           </view>
           <view f12 color-646466 mt-2px>
-            总客户
+            普通客户
           </view>
         </view>
         <view wp-25>

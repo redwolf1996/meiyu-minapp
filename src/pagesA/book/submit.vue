@@ -22,7 +22,7 @@ const discountAmount = func_sub(totalOriAmount, totalToPayAmount)
 
 async function doSubmit() {
   if (!totalToPayAmount) { // 总金额为0直接预约成功，不需要支付
-    pay()
+    submitDirect()
   }
   else {
     bookInfo.value.amount = totalToPayAmount
@@ -31,7 +31,7 @@ async function doSubmit() {
 }
 
 // 待付款金额为0，不去结账，直接提交成功
-async function pay() {
+async function submitDirect() {
   const res = await request.post<any>('/business/booking', { ...bookInfo.value, payType: null })
   toast.info('预约成功')
   const params = {
@@ -161,27 +161,27 @@ async function pay() {
       <view flex flex-ac flex-bt>
         <view>商品金额</view>
         <text c-#818181 font-size-14px>
-          ￥{{ totalOriAmount }}
+          ￥{{ totalToPayAmount }}
         </text>
       </view>
 
-      <view v-if="discountAmount" flex flex-ac flex-bt fs-14px mt5px>
+      <!-- <view v-if="discountAmount" flex flex-ac flex-bt fs-14px mt5px>
         <view c-#FF4E4E>
           优惠金额
         </view>
         <text c-#FF4E4E font-size-14px>
           -￥{{ discountAmount }}
         </text>
-      </view>
+      </view> -->
 
-      <view flex flex-ac flex-xr mt10px>
+      <!-- <view flex flex-ac flex-xr mt10px>
         <text c-#FF5A5F>
           ￥{{ totalToPayAmount }}
         </text>
         <text f14>
           合计：
         </text>
-      </view>
+      </view> -->
     </view>
 
     <view mb16px px12px py16px bg-white>

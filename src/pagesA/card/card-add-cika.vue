@@ -280,8 +280,8 @@ function delEquity(info: Info) {
             <text>次</text>
             <wd-icon name="minus-circle" size="16px" color="red" @click="delEquity(item)" />
           </view>
-          <!-- 不限次卡 -->
 
+          <!-- 不限次卡 -->
           <view v-if="form.secondType === 2" flex flex-ac gap10px>
             <text>
               不限次
@@ -292,7 +292,7 @@ function delEquity(info: Info) {
           <!-- 通卡 -->
           <view v-if="form.secondType === 3" flex flex-ac gap10px>
             <text>
-              共用次数
+              不限次
             </text>
             <wd-icon name="minus-circle" size="16px" color="red" @click="delEquity(item)" />
           </view>
