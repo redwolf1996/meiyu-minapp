@@ -1,4 +1,4 @@
-import { merge } from 'lodash-es'
+import { cloneDeep, merge } from 'lodash-es'
 import { defineStore } from 'pinia'
 
 export const useUserStore = defineStore(
@@ -23,8 +23,11 @@ export const useUserStore = defineStore(
       merge(userInfo.value, val)
     }
     function clearUserInfo() {
-      userInfo.value.token = null
-      userInfo.value.storeList = []
+      const guidStatus = cloneDeep(userInfo.value.guidStatus)
+      // 只保留新手引导信息
+      userInfo.value = {
+        guidStatus,
+      }
     }
 
     return {
@@ -142,7 +145,7 @@ export interface UserInfo {
 }
 
 /**
- * 组织信息（owenr才返回），组织信息（owenr才返回）
+ * 组织信息（owner才返回）
  */
 export interface OrgInfo {
   /**

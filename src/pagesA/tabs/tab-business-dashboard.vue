@@ -34,12 +34,16 @@ async function initStore() {
   userInfo.value = useUserStore().userInfo
   const guidStatus = userInfo.value.guidStatus
 
-  if (!userInfo.value.orgInfo?.storeCount) { // 如果店铺未创建
-    return uni.navigateTo({ url: '/pagesA/init/steps/step1' })
-  }
+  const isOwner = userInfo.value.lastStore.isOwner
 
-  if (!guidStatus.staffCountStatus || !guidStatus.productCountStatus || !guidStatus.serviceCountStatus) { // 如果新手引导未完成
-    return uni.navigateTo({ url: '/pagesA/init/steps/index' })
+  if (!isOwner) {
+    if (!userInfo.value.orgInfo?.storeCount) { // 如果店铺未创建
+      return uni.navigateTo({ url: '/pagesA/init/steps/step1' })
+    }
+
+    if (!guidStatus.staffCountStatus || !guidStatus.productCountStatus || !guidStatus.serviceCountStatus) { // 如果新手引导未完成
+      return uni.navigateTo({ url: '/pagesA/init/steps/index' })
+    }
   }
   getDashboardInfo()
 }

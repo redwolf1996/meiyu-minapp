@@ -38,7 +38,7 @@ export const curCardRechargeFormData = ref<MakeCardModel>(null)
 
 /** 当前选中的门店id */
 export const storeId = computed(() => {
-  return useUserStore(pinia).userInfo?.lastStore?.storeId || useUserStore(pinia).userInfo?.storeList[0]?.storeId || null
+  return useUserStore(pinia).userInfo?.lastStore?.storeId || useUserStore(pinia).userInfo?.storeList?.[0]?.storeId || null
 })
 
 /**
@@ -46,7 +46,7 @@ export const storeId = computed(() => {
  * 1: '店长' 2: '销售' 3: '手艺人'
  */
 export const storeRole = computed(() => {
-  return useUserStore(pinia).userInfo?.lastStore?.roleCode || useUserStore(pinia).userInfo?.storeList[0]?.roleCode || null
+  return useUserStore(pinia).userInfo?.lastStore?.roleCode || useUserStore(pinia).userInfo?.storeList?.[0]?.roleCode || null
 })
 
 /** 当前积分查询参数 */

@@ -57,14 +57,14 @@ function toFeedBack() {
       />
       <view flex-1 flex flex-y flex-bt h64px pr>
         <view c-141414 f18>
-          {{ userInfo.userName }}
+          {{ userInfo?.userName }}
         </view>
         <view flex flex-ac gap5px>
           <text class="yy">
             营业中
           </text>
           <text f14 c-969699>
-            {{ userInfo.phone }}
+            {{ userInfo?.phone }}
           </text>
         </view>
         <view c-969699 f14>
@@ -75,7 +75,7 @@ function toFeedBack() {
             积分
           </view>
           <view f18>
-            {{ userInfo.orgInfo.integration }}
+            {{ userInfo.orgInfo?.integration }}
           </view>
         </view>
       </view>
@@ -95,7 +95,7 @@ function toFeedBack() {
             :src="`${IMG_BASE}/icon-v.png`"
           />
           <text color-white opacity-50 f12>
-            {{ userInfo.orgInfo.expiresTime }} 到期
+            {{ userInfo.orgInfo?.expiresTime }} 到期
           </text>
         </view>
         <view f12 color-white>
@@ -120,7 +120,7 @@ function toFeedBack() {
         <wd-icon name="home" size="18px" />
       </template>
       <text f14 c-3B3D3D>
-        {{ storeInfo.storeName }}
+        {{ storeInfo?.storeName }}
       </text>
     </MyCell>
     <MyCell label="联系客服" noBorder @myclick="toServ()">

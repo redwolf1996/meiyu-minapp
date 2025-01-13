@@ -182,6 +182,6 @@ export async function setStaffList() {
 export async function setUserBaseInfo() {
   const res = await request.get<UserInfo>('/business/info')
   if (!res.data?.lastStore)
-    res.data.lastStore = res.data.storeList[0]
+    res.data.lastStore = res.data.storeList?.[0]
   useUserStore().setUserInfo(res.data)
 }
