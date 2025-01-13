@@ -358,7 +358,8 @@ function toBilling() {
             {{ item?.goodsName }}&nbsp;{{ item?.goodsCount ? `x${item?.goodsCount}` : '' }}
           </text>
           <text c-#F53F3F>
-            -{{ item?.cardReduceAmount || item?.orderItemAmount || 1 }}
+            {{ item?.recordDesc }}
+            <!-- -{{ item?.cardReduceAmount || item?.orderItemAmount || 1 }} -->
           </text>
         </view>
         <view fs-12px c-#9B9B9B>
