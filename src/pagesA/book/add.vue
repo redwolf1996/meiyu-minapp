@@ -193,9 +193,27 @@ watch(() => curSelectedCardToCash.value, () => {
       item.cardId = curSelectedCardToCash.value?.cardId
 
       if (curSelectedCardToCash.value?.cardType === 1) { // 1->次卡，2->充值卡，3->折扣卡
-        item.cardReduceAmount = 1
+        if (curSelectedCardToCash.value?.cardSecondType === 2) // 不限次卡
+          item.cardReduceAmount = computed(() => item.goodsCount)
+        if (curSelectedCardToCash.value?.cardSecondType === 1) {
+          if (curSelectedCardToCash.value?.equity > 1) {
+            item.cardReduceAmount = computed(() => item.goodsCount)
+          }
+          else {
+            item.cardReduceAmount = 1
+          }
+        }
+        if (curSelectedCardToCash.value?.cardSecondType === 3) {
+          if (curSelectedCardToCash.value?.countLimit > 1) {
+            item.cardReduceAmount = computed(() => item.goodsCount)
+          }
+          else {
+            item.cardReduceAmount = 1
+          }
+        }
       }
-      else {
+
+      else { // 充值卡(当折扣卡使用)，折扣卡
         item.cardReduceAmount = func_mul(cost, func_sub(1, func_div(curSelectedCardToCash.value?.equity, 10)))
       }
 
@@ -203,9 +221,8 @@ watch(() => curSelectedCardToCash.value, () => {
         return func_mul(cost, item.goodsCount)
       })
       item.amount = computed(() => {
-        if (curSelectedCardToCash.value?.cardType === 1) {
+        if (curSelectedCardToCash.value?.cardType === 1)
           return 0
-        }
         return func_mul(func_sub(cost, item.cardReduceAmount), item.goodsCount)
       })
 
