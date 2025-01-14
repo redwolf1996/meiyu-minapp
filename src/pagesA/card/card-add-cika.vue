@@ -7,6 +7,7 @@ style:
 import { sumBy } from 'lodash-es'
 import type { CardForm, CardInfo, Info } from './types'
 
+const toast = useToast()
 const userInfo = useUserStore()?.userInfo
 const storeInfo = userInfo?.storeList?.[0]
 const expiresType = ref(0) // 0永久有效 1限期有效
@@ -190,6 +191,11 @@ function toRichEdit() {
 }
 
 async function save() {
+  if (form.value.secondType === 1 && limits.value == 0)
+    return toast.warning('有限次卡次数不能为0')
+  if (form.value.secondType === 3 && form.value.countLimit == 0)
+    return toast.warning('通卡次数不能为0')
+
   form.value.expires = expiresType.value ? form.value.expires : 0
   if (mode.value === 'edit')
     await request.put<any>('/business/card', form.value)
@@ -217,6 +223,7 @@ function delEquity(info: Info) {
 </script>
 
 <template>
+  <wd-toast />
   <wd-form :model="form">
     <view bg-white p-40rpx>
       <view class="form-item-title required">
