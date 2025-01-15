@@ -195,6 +195,9 @@ async function save() {
     return toast.warning('有限次卡次数不能为0')
   if (form.value.secondType === 3 && form.value.countLimit == 0)
     return toast.warning('通卡次数不能为0')
+  if (expiresType.value === 1 && !form.value.expires) {
+    return toast.warning('卡项有效期不能为0天')
+  }
 
   form.value.expires = expiresType.value ? form.value.expires : 0
   if (mode.value === 'edit')

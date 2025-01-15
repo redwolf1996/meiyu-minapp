@@ -162,6 +162,9 @@ function toRichEdit() {
 }
 
 async function save() {
+  if (expiresType.value === 1 && !form.value.expires) {
+    return toast.warning('卡项有效期不能为0天')
+  }
   form.value.expires = expiresType.value ? form.value.expires : 0
   if (mode.value === 'edit')
     await request.put<any>('/business/card', form.value)
