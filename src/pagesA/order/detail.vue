@@ -98,6 +98,10 @@ function toRefundDetail() {
           <view>取消时间</view>
           <view>{{ fdt(detail?.refundTime) }}</view>
         </view>
+        <view v-if="detail?.notes" flex flex-ac flex-bt>
+          <view>订单备注</view>
+          <view>{{ detail?.notes }}</view>
+        </view>
         <!-- TODO 剩余支付时间 -->
         <!-- <view flex flex-ac flex-bt mt12px v-if="detail?.payStatus === 1">
           <view c-FF5B05>

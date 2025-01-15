@@ -61,6 +61,10 @@ export interface GuidStatus {
 }
 
 export interface UserInfo {
+  /**
+   * 续费单价
+   */
+  renewPrice?: number
   token?: string
   isRegister?: 1 | 0 // 1已注册 2未注册
   guidStatus: Partial<GuidStatus>

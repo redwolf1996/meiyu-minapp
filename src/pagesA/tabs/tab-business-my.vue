@@ -99,7 +99,7 @@ function toFeedBack() {
           </text>
         </view>
         <view f12 color-white>
-          最低60/月，也可积分抵扣
+          最低￥{{ useUserStore()?.userInfo?.renewPrice || '--' }}/月，也可积分抵扣
         </view>
       </view>
       <view class="xf" @click="toRenew()">

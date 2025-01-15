@@ -174,14 +174,14 @@ async function submitDirect() {
         </text>
       </view> -->
 
-      <!-- <view flex flex-ac flex-xr mt10px>
+      <view flex flex-ac flex-xr mt10px>
         <text c-#FF5A5F>
           ￥{{ totalToPayAmount }}
         </text>
         <text f14>
           合计：
         </text>
-      </view> -->
+      </view>
     </view>
 
     <view mb16px px12px py16px bg-white>
