@@ -107,7 +107,7 @@ async function handleClick({ index }) {
             <view h40px flex flex-y flex-bt flex-1>
               <view c-28282B f14 flex-bt flex flex-ac>
                 <view>{{ item2.goodsName }}</view>
-                <view>￥{{ item2.goodsPrice }}</view>
+                <view>￥{{ item2.amount }}</view>
               </view>
               <view c-717171 f12>
                 x{{ item2.goodsCount }}
