@@ -95,6 +95,22 @@ export interface BillingGood {
    * 使用卡项显示的名称 例：5折折扣卡-￥10.00
    */
   cardShowName?: string
+  /**
+   * 用卡名称
+   */
+  cardName?: string
+  /**
+   * 卡类别 1->次卡，2->充值卡，3->折扣卡
+   */
+  cardType?: number
+  /**
+   * 次卡类型 1->有限次卡，2->不限次卡，3->通卡
+   */
+  cardSecondType?: number
+  /**
+   * 次卡可使用次数（剩余次数）
+   */
+  equity?: number
   [property: string]: any
 }
 

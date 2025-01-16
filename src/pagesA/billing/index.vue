@@ -7,7 +7,6 @@ style:
 <script lang="ts" setup>
 import type { ListStaff } from '../staff/types'
 import type { BillModel, BillingGood } from './types'
-import { sum } from 'lodash-es'
 import dayjs from 'dayjs'
 import type { CustomerDetail } from '../customer/types'
 import qs from 'qs'
@@ -35,7 +34,7 @@ const totalToPay = computed(() => {
   if (!form.value.billingGoods.length)
     return 0
   const arr = form.value.billingGoods.map(v => v.amount)
-  return sum(arr)
+  return sumArray(arr)
 }) // 待付款金额
 const fromCustomer = ref(false) // 是否从客户详情进入
 
@@ -88,40 +87,106 @@ function mergeProdsAndServs() {
   }
 }
 
+// 选择卡项
 watch(() => curSelectedCardToCash.value, () => {
   form.value.billingGoods.forEach((item: BillingGood, index: number) => {
     if (curIndex.value === index) {
+      // 消费价格（有优惠价使用优惠价，没有则使用原价）
+      const cost = item.goodsPrice2 || item.goodsPrice
       item.customerCardId = curSelectedCardToCash.value?.customerCardId
       item.cardId = curSelectedCardToCash.value?.cardId
+      item.equity = curSelectedCardToCash.value?.equity // 可用次数
+      item.cardSecondType = curSelectedCardToCash.value?.cardSecondType
+      item.cardName = curSelectedCardToCash.value?.cardName
+      item.cardType = curSelectedCardToCash.value?.cardType
 
-      const cost = item.goodsPrice2 || item.goodsPrice
-
-      if (curSelectedCardToCash.value?.cardType === 1) { // 1->次卡，2->充值卡，3->折扣卡
-        item.cardReduceAmount = 1
+      // 处理次卡和非次卡，卡项扣减显示信息
+      if (item.cardType === 1) { // 次卡
+        if (item.cardSecondType === 2) { // 不限次卡
+          item.cardReduceAmount = item.goodsCount
+        }
+        else { // 通卡和有限次卡
+          item.cardReduceAmount = item.goodsCount <= item.equity ? item.goodsCount : item.equity
+        }
+        item.cardShowName = `${item.cardName}\u00A0\u00A0\u00A0\u00A0\-${item.cardReduceAmount}次`
       }
-      else {
+      else { // 折扣卡、充值卡(当折扣卡使用)
         item.cardReduceAmount = func_mul(cost, func_sub(1, func_div(curSelectedCardToCash.value?.equity, 10)))
+        item.cardShowName = `${item.cardName}\u00A0\u00A0\u00A0\u00A0\-￥${item.cardReduceAmount}`
       }
 
-      item.totalAmount = computed(() => {
+      item.totalAmount = computed(() => { // 商品原价总价
         return func_mul(cost, item.goodsCount)
       })
-      item.amount = computed(() => {
-        if (curSelectedCardToCash.value?.cardType === 1) {
-          return 0
+      item.amount = computed(() => { // 小计
+        if (item?.cardType === 1) {
+          if (item.cardSecondType === 2) {
+            return 0
+          }
+          else {
+            if (item.goodsCount <= item.equity)
+              return 0
+            return func_mul(cost, item.goodsCount - item.equity)
+          }
         }
         return func_mul(func_sub(cost, item.cardReduceAmount), item.goodsCount)
       })
-
-      if (curSelectedCardToCash.value?.cardType === 1) {
-        item.cardShowName = `${curSelectedCardToCash.value?.cardName}\u00A0\u00A0\u00A0\u00A0\-${item.cardReduceAmount}次`
-      }
-      else {
-        item.cardShowName = `${curSelectedCardToCash.value?.cardName}\u00A0\u00A0\u00A0\u00A0\-￥${item.cardReduceAmount}`
-      }
     }
   })
 })
+
+// 改变每一项服务的数量
+function handleChangeGoodsCount(item: Partial<BillingGood>) {
+  const cost = item.goodsPrice2 || item.goodsPrice
+  if (item.cardName) {
+    if (item.cardType === 1) {
+      if (item.cardSecondType === 2) {
+        item.cardReduceAmount = item.goodsCount
+      }
+      else {
+        item.cardReduceAmount = item.goodsCount <= item.equity ? item.goodsCount : item.equity
+      }
+
+      item.cardShowName = `${item.cardName}\u00A0\u00A0\u00A0\u00A0\-${item.cardReduceAmount}次`
+    }
+    else {
+      item.cardShowName = `${item.cardName}\u00A0\u00A0\u00A0\u00A0\-￥${item.cardReduceAmount}`
+    }
+
+    item.totalAmount = computed(() => { // 商品原价总价
+      return func_mul(cost, item.goodsCount)
+    })
+    item.amount = computed(() => { // 小计
+      if (item?.cardType === 1) {
+        if (item.cardSecondType === 2) {
+          return 0
+        }
+        else {
+          if (item.goodsCount <= item.equity)
+            return 0
+          return func_mul(cost, item.goodsCount - item.equity)
+        }
+      }
+      return func_mul(func_sub(cost, item.cardReduceAmount), item.goodsCount)
+    })
+  }
+
+  if (item.goodsType === 1) {
+    checkedServs.value.forEach((v) => {
+      if (v.id === item.goodsId) {
+        v.goodsCount = item.goodsCount
+      }
+    })
+  }
+
+  if (item.goodsType === 2) {
+    checkedProds.value.forEach((v) => {
+      if (v.id === item.goodsId) {
+        v.goodsCount = item.goodsCount
+      }
+    })
+  }
+}
 
 watch(() => checkedProds.value, () => {
   mergeProdsAndServs()
@@ -307,7 +372,7 @@ function delEquity(item: BillingGood) {
               </text>
             </view>
             <view flex flex-ac gap10px>
-              <wd-input-number v-model="item.goodsCount" />
+              <wd-input-number v-model="item.goodsCount" :min="1" @change="handleChangeGoodsCount(item)" />
               <wd-icon name="minus-circle" size="16px" color="red" @click="delEquity(item)" />
             </view>
           </view>
