@@ -143,14 +143,6 @@ function toSelCard(item, index: number) {
   uni.navigateTo({ url: `/pagesA/billing/select-card-billing?${params}` })
 }
 
-function handleChange(item: Partial<Service>) {
-  checkedServs.value.forEach((v) => {
-    if (v.id === item.storeServiceId) {
-      v.goodsCount = item.goodsCount
-    }
-  })
-}
-
 function delServ(index) {
   model.service.splice(index, 1)
   checkedServs.value.splice(index, 1)
@@ -183,61 +175,96 @@ watch(() => checkedServs.value, () => {
   })
 })
 
+// 选择卡项
 watch(() => curSelectedCardToCash.value, () => {
   model.service.forEach((item: Partial<Service>, index: number) => {
     if (curIndex.value === index) {
       // 消费价格（有优惠价使用优惠价，没有则使用原价）
       const cost = item.price2 || item.price
-
       item.customerCardId = curSelectedCardToCash.value?.customerCardId
       item.cardId = curSelectedCardToCash.value?.cardId
-
-      if (curSelectedCardToCash.value?.cardType === 1) { // 1->次卡，2->充值卡，3->折扣卡
-        if (curSelectedCardToCash.value?.cardSecondType === 2) // 不限次卡
-          item.cardReduceAmount = computed(() => item.goodsCount)
-        if (curSelectedCardToCash.value?.cardSecondType === 1) {
-          if (curSelectedCardToCash.value?.equity > 1) {
-            item.cardReduceAmount = computed(() => item.goodsCount)
-          }
-          else {
-            item.cardReduceAmount = 1
-          }
-        }
-        if (curSelectedCardToCash.value?.cardSecondType === 3) {
-          if (curSelectedCardToCash.value?.countLimit > 1) {
-            item.cardReduceAmount = computed(() => item.goodsCount)
-          }
-          else {
-            item.cardReduceAmount = 1
-          }
-        }
-      }
-
-      else { // 充值卡(当折扣卡使用)，折扣卡
-        item.cardReduceAmount = func_mul(cost, func_sub(1, func_div(curSelectedCardToCash.value?.equity, 10)))
-      }
-
-      item.totalAmount = computed(() => {
-        return func_mul(cost, item.goodsCount)
-      })
-      item.amount = computed(() => {
-        if (curSelectedCardToCash.value?.cardType === 1)
-          return 0
-        return func_mul(func_sub(cost, item.cardReduceAmount), item.goodsCount)
-      })
-
+      item.equity = curSelectedCardToCash.value?.equity // 可用次数
+      item.cardSecondType = curSelectedCardToCash.value?.cardSecondType
       item.cardName = curSelectedCardToCash.value?.cardName
       item.cardType = curSelectedCardToCash.value?.cardType
 
-      if (curSelectedCardToCash.value?.cardType === 1) {
-        item.cardShowName = `${curSelectedCardToCash.value?.cardName}\u00A0\u00A0\u00A0\u00A0\-${item.cardReduceAmount}次`
+      // 处理次卡和非次卡，卡项扣减显示信息
+      if (item.cardType === 1) { // 次卡
+        if (item.cardSecondType === 2) { // 不限次卡
+          item.cardReduceAmount = item.goodsCount
+        }
+        else { // 通卡和有限次卡
+          item.cardReduceAmount = item.goodsCount <= item.equity ? item.goodsCount : item.equity
+        }
+        item.cardShowName = `${item.cardName}\u00A0\u00A0\u00A0\u00A0\-${item.cardReduceAmount}次`
       }
-      else {
-        item.cardShowName = `${curSelectedCardToCash.value?.cardName}\u00A0\u00A0\u00A0\u00A0\-￥${item.cardReduceAmount}`
+      else { // 折扣卡、充值卡(当折扣卡使用)
+        item.cardReduceAmount = func_mul(cost, func_sub(1, func_div(curSelectedCardToCash.value?.equity, 10)))
+        item.cardShowName = `${item.cardName}\u00A0\u00A0\u00A0\u00A0\-￥${item.cardReduceAmount}`
       }
+
+      item.totalAmount = computed(() => { // 商品原价总价
+        return func_mul(cost, item.goodsCount)
+      })
+      item.amount = computed(() => { // 小计
+        if (item?.cardType === 1) {
+          if (item.cardSecondType === 2) {
+            return 0
+          }
+          else {
+            if (item.goodsCount <= item.equity)
+              return 0
+            return func_mul(cost, item.goodsCount - item.equity)
+          }
+        }
+        return func_mul(func_sub(cost, item.cardReduceAmount), item.goodsCount)
+      })
     }
   })
 })
+
+// 改变每一项服务的数量
+function handleChangeGoodsCount(item: Partial<Service>) {
+  const cost = item.price2 || item.price
+  if (item.cardName) {
+    if (item.cardType === 1) {
+      if (item.cardSecondType === 2) {
+        item.cardReduceAmount = item.goodsCount
+      }
+      else {
+        item.cardReduceAmount = item.goodsCount <= item.equity ? item.goodsCount : item.equity
+      }
+
+      item.cardShowName = `${item.cardName}\u00A0\u00A0\u00A0\u00A0\-${item.cardReduceAmount}次`
+    }
+    else {
+      item.cardShowName = `${item.cardName}\u00A0\u00A0\u00A0\u00A0\-￥${item.cardReduceAmount}`
+    }
+
+    item.totalAmount = computed(() => { // 商品原价总价
+      return func_mul(cost, item.goodsCount)
+    })
+    item.amount = computed(() => { // 小计
+      if (item?.cardType === 1) {
+        if (item.cardSecondType === 2) {
+          return 0
+        }
+        else {
+          if (item.goodsCount <= item.equity)
+            return 0
+          return func_mul(cost, item.goodsCount - item.equity)
+        }
+      }
+      return func_mul(func_sub(cost, item.cardReduceAmount), item.goodsCount)
+    })
+  }
+
+  checkedServs.value.forEach((v) => {
+    if (v.id === item.storeServiceId) {
+      v.goodsCount = item.goodsCount
+    }
+  })
+}
 </script>
 
 <template>
@@ -333,7 +360,7 @@ watch(() => curSelectedCardToCash.value, () => {
               {{ item.name }}
             </view>
             <view>
-              <wd-input-number v-model="item.goodsCount" :min="1" @change="handleChange(item)" />
+              <wd-input-number v-model="item.goodsCount" :min="1" @change="handleChangeGoodsCount(item)" />
             </view>
           </view>
 

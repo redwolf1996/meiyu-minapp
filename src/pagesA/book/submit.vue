@@ -9,16 +9,16 @@ import qs from 'qs'
 const toast = useToast()
 
 // 商品原价合计
-const totalOriAmount = sumArray(bookInfo.value.service.map((v) => {
-  const cost = v.price2 || v.price
-  return func_mul(cost, v.goodsCount)
-}))
+// const totalOriAmount = sumArray(bookInfo.value.service.map((v) => {
+//   const cost = v.price2 || v.price
+//   return func_mul(cost, v.goodsCount)
+// }))
 
 // 商品优惠后合计
 const totalToPayAmount = sumArray(bookInfo.value.service.map(v => v.amount))
 
 // 商品优惠金额合计
-const discountAmount = func_sub(totalOriAmount, totalToPayAmount)
+// const discountAmount = func_sub(totalOriAmount, totalToPayAmount)
 
 async function doSubmit() {
   if (!totalToPayAmount) { // 总金额为0直接预约成功，不需要支付

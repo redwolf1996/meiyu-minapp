@@ -104,6 +104,10 @@ export interface Service {
   price?: number
   price2?: number
   coverImg?: string
+  /**
+   * 次卡可扣减的次数
+   */
+  equity?: number
   [property: string]: any
 }
 

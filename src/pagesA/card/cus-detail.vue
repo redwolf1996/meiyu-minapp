@@ -211,7 +211,7 @@ function toBilling() {
             剩余次数
           </text>
           <text v-if="detail?.cardType === 2">
-            抵扣金额
+            剩余金额
           </text>
           <text v-if="detail?.cardType === 3">
             余额
