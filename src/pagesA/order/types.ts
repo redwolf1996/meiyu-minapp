@@ -71,6 +71,10 @@ export interface OrderItem {
 }
 
 export interface Detail {
+  /**
+   * 订单状态    101待支付，102待服务，103已完成，104已取消，105已退款
+   */
+  searchStatus?: number
   adviserId: number
   /**
    * 销售

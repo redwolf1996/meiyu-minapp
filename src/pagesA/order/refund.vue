@@ -118,8 +118,16 @@ function select({ item }) {
                   <text v-if="item?.goodsType === 3">
                     会员卡
                   </text>
+                  <text v-if="item?.goodsType === 4">
+                    预约
+                  </text>
+                  <text v-if="item?.goodsType === 5">
+                    充值
+                  </text>
                 </view>
-                <view>x{{ item?.goodsCount }}</view>
+                <view v-if="item?.goodsCount">
+                  x{{ item?.goodsCount }}
+                </view>
               </view>
             </view>
             <view flex flex-xr f14>
@@ -131,8 +139,12 @@ function select({ item }) {
     </view>
     <view class="h24rpx" />
     <view py40rpx px32rpx bg-white rd-8rpx>
-      <view>
+      <view fb>
         退款金额
+      </view>
+      <view class="h10px" />
+      <view f12 c-#E66711>
+        若使用卡项，退费后卡项权益将自动返回
       </view>
       <view class="h20px" />
       <MyCell label="订单支付方式" :showArrow="false">

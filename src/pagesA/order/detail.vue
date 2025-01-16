@@ -67,9 +67,20 @@ function toRefundDetail() {
             ￥{{ detail?.amount }}
           </text>
         </view>
-        <view class="my-status-tag end-service">
-          <!-- 已完成(退款成功) -->
+        <!-- <view class="my-status-tag end-service">
           {{ PayStatusMap?.[detail?.payStatus] }}
+        </view> -->
+        <view v-if="detail.searchStatus === 101" class="my-status-tag to-service">
+          待支付
+        </view>
+        <view v-if="detail.searchStatus === 103" class="my-status-tag end-service">
+          已完成
+        </view>
+        <view v-if="detail.searchStatus === 105" class="my-status-tag end-service">
+          已完成(退款成功)
+        </view>
+        <view v-if="detail.searchStatus === 104" class="my-status-tag cancel-service">
+          已取消
         </view>
       </view>
       <view class="h20px" />
@@ -237,6 +248,16 @@ function toRefundDetail() {
     </template>
     <template v-if="detail?.payStatus === 2">
       <MyButton
+        v-if="!detail?.amount"
+        :borderWidth="2" radius="8rpx" fontSize="32rpx"
+        width="208rpx" bgColor="transparent"
+        color="#1A66FF" borderColor="#1A66FF"
+        @click="toCancel()"
+      >
+        取消
+      </MyButton>
+      <MyButton
+        v-else
         :borderWidth="2" radius="8rpx" fontSize="32rpx"
         width="208rpx" bgColor="transparent"
         color="#1A66FF" borderColor="#1A66FF"
