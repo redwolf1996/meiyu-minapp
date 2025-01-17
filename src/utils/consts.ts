@@ -99,6 +99,9 @@ export const cardImgMap = {
   3: 'list-zhekou',
 }
 
+/**
+ * MakeOrder 开单, MakeCard 开卡, Recharge 充值, Booking 预约
+ */
 export enum PayModeEnum {
   MakeOrder = 1,
   MakeCard = 2,

@@ -6,6 +6,7 @@ style:
 <script lang="ts" setup>
 import { PayModeEnum } from '@/utils/consts'
 import type { CashCard, PayRefundType, PayType } from './types'
+import { pick } from 'lodash-es'
 
 const toast = useToast()
 const curCode = ref<number | null >(null)
@@ -52,12 +53,33 @@ onLoad(async (option) => {
     }
 
     if (mode.value === PayModeEnum.MakeCard) {
-      formData.value = curCardRechargeFormData.value
+      const data = pick(curCardRechargeFormData.value, [
+        'orderTime',
+        'storeCustomerId',
+        'customerCardId',
+        'cardId',
+        'adviserId',
+        'notes',
+        'amount',
+        'gift',
+        'payType',
+      ])
+      formData.value = data
       postUrl.value = '/business/store-customer-card'
     }
 
     if (mode.value === PayModeEnum.Recharge) {
-      formData.value = curCardRechargeFormData.value
+      const data = pick(curCardRechargeFormData.value, [
+        'orderTime',
+        'storeCustomerId',
+        'customerCardId',
+        'adviserId',
+        'notes',
+        'amount',
+        'gift',
+        'payType',
+      ])
+      formData.value = data
       postUrl.value = '/business/value-card-recharge'
     }
 

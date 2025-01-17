@@ -151,6 +151,9 @@ export interface Info {
   cardId?: number
 }
 
+/**
+ * 开卡和充值共用提交对象，充值须舍弃其中的一部分
+ */
 export interface MakeCardModel {
   /**
    * 销售

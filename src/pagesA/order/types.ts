@@ -24,7 +24,7 @@ export interface List {
    * 搜索状态
    * 101待支付，102待服务，103已完成，104已取消，105已退款
    */
-  searchStatus: number
+  searchStatus?: number
   /**
    * 支付状态名
    */

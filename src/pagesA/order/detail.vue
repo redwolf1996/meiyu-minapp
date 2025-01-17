@@ -70,16 +70,16 @@ function toRefundDetail() {
         <!-- <view class="my-status-tag end-service">
           {{ PayStatusMap?.[detail?.payStatus] }}
         </view> -->
-        <view v-if="detail.searchStatus === 101" class="my-status-tag to-service">
+        <view v-if="detail?.searchStatus === 101" class="my-status-tag to-service">
           待支付
         </view>
-        <view v-if="detail.searchStatus === 103" class="my-status-tag end-service">
+        <view v-if="detail?.searchStatus === 103" class="my-status-tag end-service">
           已完成
         </view>
-        <view v-if="detail.searchStatus === 105" class="my-status-tag end-service">
+        <view v-if="detail?.searchStatus === 105" class="my-status-tag end-service">
           已完成(退款成功)
         </view>
-        <view v-if="detail.searchStatus === 104" class="my-status-tag cancel-service">
+        <view v-if="detail?.searchStatus === 104" class="my-status-tag cancel-service">
           已取消
         </view>
       </view>
