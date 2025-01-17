@@ -46,6 +46,7 @@ onLoad(async (option) => {
 async function getDetail() {
   const res = await request.get<Detail>(`/business/order/${id.value}`)
   detail.value = res.data
+  form.refundAmount = detail.value.amount
 }
 
 function confirmRefund() {

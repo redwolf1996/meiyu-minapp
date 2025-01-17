@@ -31,7 +31,7 @@ async function getPageInfo() {
 }
 
 async function getStaff() {
-  const res = await request.get<ListRes<ListStaff>>('/business/staff', { storeId: storeId.value })
+  const res = await request.get<ListRes<ListStaff>>('/business/staff', { storeId: storeId.value, jobCode: 2 })
   listStaff.value = res.data.list.map((v) => {
     return {
       ...v,

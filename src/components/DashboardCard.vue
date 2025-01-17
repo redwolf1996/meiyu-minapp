@@ -5,8 +5,8 @@ const props = defineProps<{
   data?: TodayBookingList // 今日预约列表
 }>()
 const emits = defineEmits(['myclick'])
-const data = props.data
-const img = data.serviceList?.[0].serviceCoverImg
+const data = computed(() => props.data)
+const img = data.value.serviceList?.[0].serviceCoverImg
 </script>
 
 <template>
