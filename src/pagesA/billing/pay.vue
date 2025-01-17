@@ -31,6 +31,8 @@ onLoad(async (option) => {
     })
   })
 
+  console.log('option', option)
+
   //  1 开单 2开卡 3充值 4预约
   if (option?.createSource) {
     mode.value = Number(option?.createSource)
@@ -84,6 +86,7 @@ onLoad(async (option) => {
     }
 
     if (mode.value === PayModeEnum.Booking) {
+      getAvailableCashCards(bookInfo.value.storeCustomerId, bookInfo.value.amount)
       formData.value = bookInfo.value
       postUrl.value = '/business/booking'
     }
@@ -227,28 +230,32 @@ async function payLater() {
     </view>
   </view>
 
-  <view v-if="mode !== 4" mx-40rpx mt-164rpx color-white>
-    <wd-button size="large" custom-class="theme-bg" block @click="pay()">
-      <view flex flex-cc>
-        <text>结账</text>
-      </view>
-    </wd-button>
-  </view>
+  <view class="h150px" />
 
-  <view v-else mx-40rpx mt-164rpx color-white flex flex-cc gap10px>
-    <view w120px @click="payLater()">
-      <wd-button size="large" :plain="true" block>
-        <view flex flex-cc>
-          <text>稍后付款</text>
-        </view>
-      </wd-button>
-    </view>
-    <view w104px @click="pay()">
-      <wd-button size="large" custom-class="theme-bg" block>
+  <view fixed bottom-30px wp100>
+    <view v-if="mode !== 4" mx-40rpx mt-164rpx color-white>
+      <wd-button size="large" custom-class="theme-bg" block @click="pay()">
         <view flex flex-cc>
           <text>结账</text>
         </view>
       </wd-button>
+    </view>
+
+    <view v-else mx-40rpx mt-164rpx color-white flex flex-cc gap10px>
+      <view w120px @click="payLater()">
+        <wd-button size="large" :plain="true" block>
+          <view flex flex-cc>
+            <text>稍后付款</text>
+          </view>
+        </wd-button>
+      </view>
+      <view w104px @click="pay()">
+        <wd-button size="large" custom-class="theme-bg" block>
+          <view flex flex-cc>
+            <text>结账</text>
+          </view>
+        </wd-button>
+      </view>
     </view>
   </view>
 </template>

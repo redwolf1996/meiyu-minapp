@@ -60,6 +60,7 @@ interface BookTempInfo {
 
 export const bookInfo = ref<Partial<BookTempInfo>>({
   bookId: null,
+  storeCustomerId: null,
   artisanId: null,
   artName: null,
   service: [],
