@@ -342,10 +342,19 @@ function handleChangeGoodsCount(item: Partial<Service>) {
           </text>
         </view>
       </wd-cell>
+      <wd-cell title="服务时间" required :is-link="true" @click="toSelServTime()">
+        <view>
+          <text v-if="!bookStime" c-#B6BDBD>
+            请选择服务时间
+          </text>
+          <text v-else>
+            {{ bookStime }}
+          </text>
+        </view>
+      </wd-cell>
     </wd-cell-group>
-    <view class="h10px" />
     <view v-if="checkedServs.length">
-      <view v-for="(item, index) in model.service" :key="`serv-${index}`" mb10px>
+      <view v-for="(item, index) in model.service" :key="`serv-${index}`" flex flex-y gap10px>
         <view flex flex-ac flex-bt f12 px20px py12px>
           <view c-3D3D3D>
             预约服务{{ index + 1 }}
@@ -416,23 +425,10 @@ function handleChangeGoodsCount(item: Partial<Service>) {
         </MyCellGroup>
       </view>
     </view>
+    <view bg-white f14 c-1A66FF tc pt10px pb20px style="border-top: 1px solid #EBEEF1;" @click="toAddServ()">
+      +&nbsp;添加服务
+    </view>
     <view>
-      <view bg-white f14 c-1A66FF tc h40px lh-40px @click="toAddServ()">
-        +&nbsp;添加服务
-      </view>
-
-      <wd-cell-group :border="true">
-        <wd-cell title="服务时间" required :is-link="true" @click="toSelServTime()">
-          <view>
-            <text v-if="!bookStime" c-#B6BDBD>
-              请选择服务时间
-            </text>
-            <text v-else>
-              {{ bookStime }}
-            </text>
-          </view>
-        </wd-cell>
-      </wd-cell-group>
       <view px20px py12px font-size-14px>
         备注
       </view>
