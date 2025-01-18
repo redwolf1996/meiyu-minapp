@@ -205,7 +205,9 @@ function selectMode(m: number) {
   dropMenu.value.close()
 }
 
-function calendarChange() {
+function calendarChange(val) {
+  getBookDashboard(val.fulldate)
+  getBookCount(val.fulldate)
 }
 
 function showSearch() {

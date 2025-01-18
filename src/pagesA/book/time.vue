@@ -31,7 +31,7 @@ async function init() {
   const params = {
     storeId: storeId.value,
     artisanId: bookInfo.value?.artisanId,
-    cDate: today,
+    cDate: day.value,
   }
   const res = await request.get<TimeOccupy[]>('/business/booking-artisan', params)
   const employIndexes = flatten(res.data.map(v => v.employIndex))
@@ -63,6 +63,7 @@ onHide(() => {
 
 function calendarChange(e) {
   day.value = e.fulldate
+  init()
 }
 
 function clickItem(item: Times) {
