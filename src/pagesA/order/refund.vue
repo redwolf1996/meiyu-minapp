@@ -184,7 +184,7 @@ function select({ item }) {
         </view>
       </view>
       <MyCell label="退款金额" :showArrow="false">
-        ￥<wd-input-number v-model="form.refundAmount" :min="0" :max="detail?.amount" input-width="70px" />
+        ￥<wd-input-number v-model="form.refundAmount" :min="0" :precision="2" :max="detail?.amount" input-width="70px" />
       </MyCell>
     </view>
     <view class="h24rpx" />
