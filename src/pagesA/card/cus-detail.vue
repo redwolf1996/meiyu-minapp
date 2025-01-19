@@ -64,7 +64,6 @@ async function initPage() {
 }
 
 watch(() => [checkedServs.value, checkedProds.value], () => {
-  console.log('选择了商品')
   cardEquity.value = [
     ...cusOriCardEquity.value,
     ...checkedServs.value?.filter((v0) => {
@@ -115,6 +114,7 @@ function getDetail() {
     timeArr.value = [s, e]
   })
 }
+
 function getRecords() {
   paging.value?.reload()
 }
@@ -346,7 +346,8 @@ function toBilling() {
         <view class="item mid" @click="toEditExpire()">
           修改有效期
         </view>
-        <view v-if="!dataList.length" class="item" @click="toEditEquity()">
+        <!-- 已使用则无法修改权益 v-if="!dataList.length" -->
+        <view v-if="dataList.length" class="item" @click="toEditEquity()">
           修改权益
         </view>
       </view>
@@ -436,7 +437,7 @@ function toBilling() {
 
     <view>
       <wd-cell-group :border="false">
-        <wd-cell title="购卡权益" is-link @click="toProdServs()">
+        <wd-cell title="购卡权益" required is-link @click="toProdServs()">
           <text c-#B6BDBD>
             选择商品
           </text>
@@ -464,6 +465,11 @@ function toBilling() {
             </view>
           </view>
         </template>
+        <wd-cell title="已选服务共用次数" required is-link @click="toProdServs()">
+          <text c-#B6BDBD>
+            选择商品
+          </text>
+        </wd-cell>
       </wd-cell-group>
     </view>
 

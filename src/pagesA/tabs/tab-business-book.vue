@@ -62,8 +62,8 @@ const headHeight = ref(0)
 const tabHeight = ref(0)
 const navHeight = getMenuButtonInfo().navHeight // 只能通过系统方法获取navHeight，通过dom获取不到
 const scrollTop = ref(800)
-const value1 = ref<string>('09:00')
-const value2 = ref<string>('21:00')
+const value1 = ref<any>('00:00')
+const value2 = ref<any>('23:59')
 const dateType = ref(null)
 const sources: any = [
   { label: '全部', value: 1, isActive: true },
@@ -295,8 +295,8 @@ function showSearch() {
 
 function resetSearch() {
   reqParams.artisanId = null
-  value1.value = '09:00'
-  value2.value = '21:00'
+  value1.value = '00:00'
+  value2.value = '00:00'
   dateType.value = 1
   reqParams.keyword = ''
 }
