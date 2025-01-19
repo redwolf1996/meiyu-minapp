@@ -15,6 +15,19 @@ const sources = ref<GrigSelectItem[]>(props.sources)
 const columns = ref(props.columns)
 const mode = ref<Mode>(props.mode)
 
+watch(() => model.value, (val) => {
+  if (mode.value === 'single') {
+    sources.value.forEach((e: GrigSelectItem) => {
+      if (e.value !== val) {
+        e.isActive = false
+      }
+      else {
+        e.isActive = true
+      }
+    })
+  }
+})
+
 function onClickTag(item: GrigSelectItem, index: number) {
   item.isActive = !item.isActive
   if (mode.value === 'single') {

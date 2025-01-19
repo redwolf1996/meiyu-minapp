@@ -12,6 +12,7 @@ import { getFinalArr } from './data'
 import dayjs from 'dayjs'
 import MyTabBar from './MyTabBar.vue'
 
+const showPop = ref(false)
 const refCancel = ref()
 const refDel = ref()
 // 预约列表各状态数量
@@ -45,12 +46,43 @@ const servMap = {
   3: 'end-service',
   4: 'cancel-service',
 }
+
+const paging = ref<ZPagingInstance<BookListAll> | null>(null)
+const dataList = ref<BookListAll[]>([])
+const curItem = ref<BookListAll>({} as BookListAll)
+const windowHeight = uni.getWindowInfo().windowHeight
+const screenWidth = uni.getWindowInfo().screenWidth
+const instance = getCurrentInstance()
+const query = uni.createSelectorQuery().in(instance.proxy)
+const dropMenu = ref()
+/** 0预约看板 1预约列表 */
+const mode = ref(0)
+const visableSearch = ref(false)
+const headHeight = ref(0)
+const tabHeight = ref(0)
+const navHeight = getMenuButtonInfo().navHeight // 只能通过系统方法获取navHeight，通过dom获取不到
+const scrollTop = ref(800)
+const value1 = ref<string>('09:00')
+const value2 = ref<string>('21:00')
+const dateType = ref(null)
+const sources: any = [
+  { label: '全部', value: 1, isActive: true },
+  { label: '今天', value: 2, isActive: false },
+  { label: '明天', value: 3, isActive: false },
+]
+
+const sources2: any = [
+  { label: '全部', value: null, isActive: true, disabled: false },
+  { label: '未分配', value: 0, isActive: false, disabled: false },
+  ...staffListStore.value,
+]
+
 const reqParams = reactive({
   storeId: storeId.value,
   status: 1, // 1待服务，2服务中，3已完成，4已取消
-  artisanId: '', // 手艺人id
-  sTime: null, // 服务开始时间
-  eTime: null, // 服务结束时间
+  artisanId: null, // 手艺人id
+  sTime: computed(() => value1.value ? `${value1.value}:00` : null), // 服务开始时间
+  eTime: computed(() => value2.value ? `${value2.value}:00` : null), // 服务结束时间
   sDate: null, // 服务开始日期
   eDate: null, // 服务开始日期
   keyword: '', // 关键字
@@ -58,46 +90,21 @@ const reqParams = reactive({
   pageSize: 10,
 })
 
-const paging = ref<ZPagingInstance<BookListAll> | null>(null)
-const dataList = ref<BookListAll[]>([])
-const curItem = ref<BookListAll>({} as BookListAll)
+watch(() => dateType.value, (val) => {
+  if (val === 1) { // 全部
+    reqParams.sDate = null
+    reqParams.eDate = null
+  }
+  if (val === 2) { // 今天
+    reqParams.sDate = dayjs().format('YYYY-MM-DD')
+    reqParams.eDate = dayjs().format('YYYY-MM-DD')
+  }
+  if (val === 3) { // 明天
+    reqParams.sDate = dayjs().add(1, 'day').format('YYYY-MM-DD')
+    reqParams.eDate = dayjs().add(1, 'day').format('YYYY-MM-DD')
+  }
+})
 
-async function queryList(page: number, pageSize: number) {
-  reqParams.pageNum = page
-  reqParams.pageSize = pageSize
-  const res = await request.get<ListRes<BookListAll>>('/business/booking', reqParams)
-  paging.value.complete(res.data.list)
-}
-
-function tabClick(val) {
-  reqParams.status = items.value[val.index].value
-  paging.value?.reload()
-}
-
-const windowHeight = uni.getWindowInfo().windowHeight
-const screenWidth = uni.getWindowInfo().screenWidth
-const instance = getCurrentInstance()
-const query = uni.createSelectorQuery().in(instance.proxy)
-const dropMenu = ref()
-const mode = ref(0) // 0预约看板 1预约列表
-const visableSearch = ref(false)
-const headHeight = ref(0)
-const tabHeight = ref(0)
-const navHeight = getMenuButtonInfo().navHeight // 只能通过系统方法获取navHeight，通过dom获取不到
-const scrollTop = ref(800)
-const val = ref()
-const sources: any = [
-  { label: '全部', value: 1, isActive: true },
-  { label: '今天', value: 2, isActive: false },
-  { label: '明天', value: 3, isActive: false },
-]
-const sources2: any = [
-  { label: '全部', value: 1, isActive: true },
-  { label: '未分配', value: 2, isActive: false },
-  { label: '刘小明', value: 3, isActive: false },
-  { label: '阿月', value: 3, isActive: false },
-  { label: '小美', value: 3, isActive: false },
-]
 const servStatusMap = {
   1: {
     name: '待分配',
@@ -129,6 +136,18 @@ const multipleItemWidth = computed(() => {
     return (screenWidth - 40) / 3
   return (screenWidth - 40) / len
 })
+
+async function queryList(page: number, pageSize: number) {
+  reqParams.pageNum = page
+  reqParams.pageSize = pageSize
+  const res = await request.get<ListRes<BookListAll>>('/business/booking', reqParams)
+  paging.value.complete(res.data.list)
+}
+
+function tabClick(val) {
+  reqParams.status = items.value[val.index].value
+  paging.value?.reload()
+}
 
 onLoad((options) => {
   const tab = options?.tab
@@ -210,9 +229,6 @@ function calendarChange(val) {
   getBookCount(val.fulldate)
 }
 
-function showSearch() {
-  visableSearch.value = true
-}
 function createOrder() {
   curSelectedCard.value = null
   curCustomer.value = null
@@ -272,6 +288,31 @@ function toDetail(item: BookListAll) {
     url: `/pagesA/book/detail?id=${item.bookingId}`,
   })
 }
+
+function showSearch() {
+  visableSearch.value = true
+}
+
+function resetSearch() {
+  reqParams.artisanId = null
+  value1.value = '09:00'
+  value2.value = '21:00'
+  dateType.value = 1
+  reqParams.keyword = ''
+}
+
+function doSearch() {
+  paging.value?.reload()
+  visableSearch.value = false
+}
+
+function showPicker() {
+  showPop.value = true
+}
+
+function confirm() {
+  showPop.value = false
+}
 </script>
 
 <template>
@@ -308,10 +349,10 @@ function toDetail(item: BookListAll) {
             服务时间
           </view>
           <view>
-            <GridTagSelect v-model="val" :sources="sources" :columns="3" />
-            <MyCell label="服务时段">
-              <text f14 c-3B3D3D>
-                09:00-21:00
+            <GridTagSelect v-model="dateType" :sources="sources" :columns="3" />
+            <MyCell label="服务时段" @myclick="showPicker">
+              <text v-if="value1 && value2" f14 c-3B3D3D>
+                {{ value1 }}-{{ value2 }}
               </text>
             </MyCell>
           </view>
@@ -321,15 +362,23 @@ function toDetail(item: BookListAll) {
             手艺人
           </view>
           <view>
-            <GridTagSelect v-model="val" :sources="sources2" :columns="3" mode="multiple" />
+            <GridTagSelect v-model="reqParams.artisanId" :sources="sources2" :columns="3" mode="single" />
           </view>
         </view>
       </view>
-      <view flex flex-cc gap-40rpx>
-        <MyButton bgColor="#ffffff" color="#232220" borderColor="rgba(0, 0, 0, 0.2)">
+      <view flex flex-cc gap20px>
+        <!-- <wd-button :plain="true" @click="resetSearch">
+          重置
+        </wd-button>
+        <wd-button @click="doSearch">
+          确定
+        </wd-button> -->
+        <MyButton bgColor="#ffffff" color="#232220" borderColor="rgba(0, 0, 0, 0.2)" @click="resetSearch">
           重置
         </MyButton>
-        <MyButton>确定</MyButton>
+        <MyButton @click="doSearch">
+          确定
+        </MyButton>
       </view>
     </wd-popup>
     <view id="title">
@@ -599,6 +648,30 @@ function toDetail(item: BookListAll) {
         @confirm="doCancel"
       />
     </uni-popup>
+
+    <wd-popup v-model="showPop" :z-index="100000" position="bottom" custom-style="height: 350px;">
+      <view tc mt10px fb>
+        工作时间
+      </view>
+      <view h-12px />
+      <view flex flex-cc gap-10px>
+        <view wp50>
+          <wd-datetime-picker-view v-model="value1" type="time" />
+        </view>
+        <view>-</view>
+        <view wp50>
+          <wd-datetime-picker-view v-model="value2" type="time" />
+        </view>
+      </view>
+
+      <view mx-40rpx mt-20rpx color-white @click="confirm">
+        <wd-button size="large" custom-class="theme-bg" block>
+          <view flex flex-cc>
+            <text>确定</text>
+          </view>
+        </wd-button>
+      </view>
+    </wd-popup>
 
     <!-- <BookList v-if="mode === 1" :bookCount="bookCountsAll" :listData="bookListDataAll" :searchForm="searchForm" /> -->
   </view>

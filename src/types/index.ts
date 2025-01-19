@@ -2,8 +2,9 @@ import type { PayModeEnum } from '@/utils/consts'
 
 export interface GrigSelectItem {
   label: string
-  value: number | string
+  value: number | string | null
   isActive: boolean
+  disabled?: boolean
 }
 
 export interface GeneralColumn {
