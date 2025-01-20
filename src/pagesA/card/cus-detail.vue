@@ -25,6 +25,7 @@ const total = ref(0)
 const countUse = ref()
 const countSurplus = ref()
 const detail = ref<CusCardDetail>(null)
+const countLimit = computed(() => detail.value?.countLimit || 0)
 const cardName = ref('')
 const timeArr = ref<any[]>([Date.now(), dayjs().add(1, 'year').valueOf()])
 const showSTime = computed(() => dayjs(timeArr.value[0]).format('YYYY-MM-DD'))
@@ -144,7 +145,7 @@ async function confirmExpire() {
   visEditExpire.value = false
 }
 async function confirmEquity() {
-  await request.put('/business/store-customer-card/info', { id: id.value, info: cardEquity.value })
+  await request.put('/business/store-customer-card/info', { id: id.value, info: cardEquity.value, countLimit: countLimit.value })
   initPage()
   resetGoods()
   uni.showToast({ title: '修改成功' })
@@ -347,7 +348,7 @@ function toBilling() {
           修改有效期
         </view>
         <!-- 已使用则无法修改权益 v-if="!dataList.length" -->
-        <view v-if="dataList.length" class="item" @click="toEditEquity()">
+        <view v-if="!dataList.length" class="item" @click="toEditEquity()">
           修改权益
         </view>
       </view>
@@ -434,8 +435,7 @@ function toBilling() {
       修改权益
     </view>
     <view h-30px />
-
-    <view>
+    <wd-form :model="cardEquity">
       <wd-cell-group :border="false">
         <wd-cell title="购卡权益" required is-link @click="toProdServs()">
           <text c-#B6BDBD>
@@ -453,9 +453,15 @@ function toBilling() {
 
             <view v-if="detail" flex flex-ac gap5px>
               <template v-if="detail?.cardType === 1">
-                <wd-input-number key="n1" v-model="item.equity" :step="1" :min="1" />
-                <text>次&nbsp;</text>
-                <wd-icon v-if="item.editable" name="minus-circle" size="16px" color="red" @click="delEquity(item)" />
+                <template v-if="detail?.cardSecondType === 1">
+                  <wd-input-number key="n1" v-model="item.equity" :step="1" :min="1" />
+                  <text>次&nbsp;</text>
+                  <wd-icon v-if="item.editable" name="minus-circle" size="16px" color="red" @click="delEquity(item)" />
+                </template>
+                <template v-else>
+                  <text>不限次&nbsp;</text>
+                  <wd-icon v-if="item.editable" name="minus-circle" size="16px" color="red" @click="delEquity(item)" />
+                </template>
               </template>
               <template v-else>
                 <wd-input-number key="n2" v-model="item.equity" :step="0.1" :min="1" :max="10" :precision="1" />
@@ -465,13 +471,22 @@ function toBilling() {
             </view>
           </view>
         </template>
-        <wd-cell title="已选服务共用次数" required is-link @click="toProdServs()">
+        <wd-input
+          v-model="countLimit"
+          type="number"
+          label-width="60%"
+          label="已选服务共用次数"
+          placeholder="请输入"
+          suffix-icon="arrow-right"
+          :rules="[{ required: true, message: '请填写已选服务共用次数' }]"
+        />
+        <!-- <wd-cell v-if="detail?.cardSecondType === 3" title="已选服务共用次数" required is-link @click="toProdServs()">
           <text c-#B6BDBD>
             选择商品
           </text>
-        </wd-cell>
+        </wd-cell> -->
       </wd-cell-group>
-    </view>
+    </wd-form>
 
     <view mx-40rpx mt-30px mb-30px color-white @click="confirmEquity">
       <wd-button size="large" block plain>

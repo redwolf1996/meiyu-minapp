@@ -62,8 +62,10 @@ const headHeight = ref(0)
 const tabHeight = ref(0)
 const navHeight = getMenuButtonInfo().navHeight // 只能通过系统方法获取navHeight，通过dom获取不到
 const scrollTop = ref(800)
-const value1 = ref<any>('00:00')
-const value2 = ref<any>('23:59')
+const tmpValue1 = ref('')
+const tmpValue2 = ref('')
+const value1 = ref('')
+const value2 = ref('')
 const dateType = ref(null)
 const sources: any = [
   { label: '全部', value: 1, isActive: true },
@@ -81,8 +83,8 @@ const reqParams = reactive({
   storeId: storeId.value,
   status: 1, // 1待服务，2服务中，3已完成，4已取消
   artisanId: null, // 手艺人id
-  sTime: computed(() => value1.value ? `${value1.value}:00` : null), // 服务开始时间
-  eTime: computed(() => value2.value ? `${value2.value}:00` : null), // 服务结束时间
+  sTime: computed(() => `${value1.value}:00`), // 服务开始时间
+  eTime: computed(() => `${value2.value}:00`), // 服务结束时间
   sDate: null, // 服务开始日期
   eDate: null, // 服务开始日期
   keyword: '', // 关键字
@@ -153,6 +155,7 @@ onLoad((options) => {
   const tab = options?.tab
   if (tab === 'list')
     mode.value = 1
+  storeInfo()
 })
 
 onShow(() => {
@@ -169,6 +172,13 @@ onMounted(async () => {
     headHeight.value = data?.height
   }).exec()
 })
+
+function storeInfo() {
+  request.get<any>(`/business/store/${storeId.value}`).then((res) => {
+    value1.value = tmpValue1.value = res.data.workStime.slice(0, -3)
+    value2.value = tmpValue2.value = res.data.workEtime.slice(0, -3)
+  })
+}
 
 // 只能通过事件监听获取第三方组件uv-tabbar的高度
 uni.$on('getTabHeight', (data) => {
@@ -295,8 +305,8 @@ function showSearch() {
 
 function resetSearch() {
   reqParams.artisanId = null
-  value1.value = '00:00'
-  value2.value = '00:00'
+  value1.value = tmpValue1.value
+  value2.value = tmpValue2.value
   dateType.value = 1
   reqParams.keyword = ''
 }
