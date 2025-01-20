@@ -185,3 +185,13 @@ export async function setUserBaseInfo() {
     res.data.lastStore = res.data.storeList?.[0]
   useUserStore().setUserInfo(res.data)
 }
+
+/**
+ * 营业时间为15分钟的整数倍
+ */
+export function filter15Minutes(type, values) {
+  if (type === 'minute') {
+    return values.filter(value => value % 15 === 0)
+  }
+  return values
+}

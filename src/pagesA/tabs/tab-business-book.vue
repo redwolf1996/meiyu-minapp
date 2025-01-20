@@ -666,11 +666,11 @@ function confirm() {
       <view h-12px />
       <view flex flex-cc gap-10px>
         <view wp50>
-          <wd-datetime-picker-view v-model="value1" type="time" />
+          <wd-datetime-picker-view v-model="value1" :filter="filter15Minutes" type="time" />
         </view>
         <view>-</view>
         <view wp50>
-          <wd-datetime-picker-view v-model="value2" type="time" />
+          <wd-datetime-picker-view v-model="value2" :filter="filter15Minutes" type="time" />
         </view>
       </view>
 

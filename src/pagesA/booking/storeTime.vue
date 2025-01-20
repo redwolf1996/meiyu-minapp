@@ -72,7 +72,7 @@ async function save() {
     <GridTagSelect v-model="val" :sources="sources" :columns="3" mode="multiple" />
   </view>
   <MyCellGroup>
-    <MyCell label="每天可营业时段" @myclick="showPicker">
+    <MyCell label="每天可营业时段" noBorder @myclick="showPicker">
       <text f14 c-3B3D3D>
         {{ value1 }}-{{ value2 }}
       </text>
@@ -94,11 +94,11 @@ async function save() {
     <view h-12px />
     <view flex flex-cc gap-10px>
       <view wp50>
-        <wd-datetime-picker-view v-model="value1" type="time" />
+        <wd-datetime-picker-view v-model="value1" :filter="filter15Minutes" type="time" />
       </view>
       <view>-</view>
       <view wp50>
-        <wd-datetime-picker-view v-model="value2" type="time" />
+        <wd-datetime-picker-view v-model="value2" :filter="filter15Minutes" type="time" />
       </view>
     </view>
 

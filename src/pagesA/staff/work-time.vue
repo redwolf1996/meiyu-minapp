@@ -84,11 +84,11 @@ function save() {
     <view h-12px />
     <view flex flex-cc gap-10px>
       <view wp50>
-        <wd-datetime-picker-view v-model="value1" type="time" />
+        <wd-datetime-picker-view v-model="value1" type="time" :filter="filter15Minutes" />
       </view>
       <view>-</view>
       <view wp50>
-        <wd-datetime-picker-view v-model="value2" type="time" />
+        <wd-datetime-picker-view v-model="value2" type="time" :filter="filter15Minutes" />
       </view>
     </view>
 

@@ -26,11 +26,11 @@ function toStoreTime() {
   })
 }
 
-function toD2dTime() {
-  uni.navigateTo({
-    url: '/pagesA/booking/d2dTime',
-  })
-}
+// function toD2dTime() {
+//   uni.navigateTo({
+//     url: '/pagesA/booking/d2dTime',
+//   })
+// }
 
 async function change({ value }) {
   await request.put('/business/store-status', {
@@ -55,7 +55,7 @@ function getWeeksDesc(weeks: number[] | null) {
       <MyCell label="门店营业状态" :show-arrow="false">
         <wd-switch v-model="checked" :active-color="themeColor" @change="change" />
       </MyCell>
-      <MyCell label="门店营业时间" @myclick="toStoreTime">
+      <MyCell noBorder label="门店营业时间" @myclick="toStoreTime">
         <view f12 c-3B3D3D tr>
           <view>
             {{ info?.workStime?.slice(0, -3) }}-{{ info?.workEtime?.slice(0, -3) }}
@@ -63,14 +63,14 @@ function getWeeksDesc(weeks: number[] | null) {
           <view>{{ getWeeksDesc(info?.workWeek) }}</view>
         </view>
       </MyCell>
-      <MyCell label="上门服务时间" no-border @myclick="toD2dTime">
+      <!-- <MyCell label="上门服务时间" no-border @myclick="toD2dTime">
         <view tr f12 c-3B3D3D>
           <view>
             {{ info?.toDoorStime?.slice(0, -3) }}-{{ info?.toDoorEtime?.slice(0, -3) }}
           </view>
           <view>{{ getWeeksDesc(info?.toDoorWeek) }}</view>
         </view>
-      </MyCell>
+      </MyCell> -->
     </MyCellGroup>
 
     <!-- <view mt-22px mb-11px pl-20px f14 c-969699>
