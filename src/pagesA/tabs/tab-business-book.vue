@@ -11,6 +11,7 @@ import type { BookCount, BookListAll, Books } from './types'
 import { getFinalArr } from './data'
 import dayjs from 'dayjs'
 import MyTabBar from './MyTabBar.vue'
+import type { Data } from '../booking/types'
 
 const showPop = ref(false)
 const refCancel = ref()
@@ -174,7 +175,7 @@ onMounted(async () => {
 })
 
 function storeInfo() {
-  request.get<any>(`/business/store/${storeId.value}`).then((res) => {
+  request.get<Data>(`/business/store/${storeId.value}`).then((res) => {
     value1.value = tmpValue1.value = res.data.workStime.slice(0, -3)
     value2.value = tmpValue2.value = res.data.workEtime.slice(0, -3)
   })

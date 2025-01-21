@@ -11,6 +11,7 @@ import type { BookForm, Service } from './types'
 import type { CustomerDetail } from '../customer/types'
 import qs from 'qs'
 
+const toast = useToast()
 const curIndex = ref(0) // 预约服务列表当前选择项的索引
 const columns = ref<SelItem[]>([
   {
@@ -269,6 +270,7 @@ function handleChangeGoodsCount(item: Partial<Service>) {
 
 <template>
   <page-meta :page-style="`overflow:${visibleStaff ? 'hidden' : 'visible'};`" />
+  <wd-toast />
   <wd-popup
     v-model="visibleStaff" :z-index="999" :lock-scroll="true" :safe-area-inset-bottom="false" position="right"
     custom-style="height: 100vh;width: 80%;background: #F9F9F9;"

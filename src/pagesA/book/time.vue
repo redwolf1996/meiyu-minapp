@@ -8,6 +8,7 @@ style:
 import type { Times } from '@/utils'
 import type { TimeOccupy } from './types'
 import { flatten } from 'lodash-es'
+import type { Data } from '../booking/types'
 
 const instance = getCurrentInstance()
 const query = uni.createSelectorQuery().in(instance.proxy)
@@ -22,10 +23,21 @@ const selectedTime = computed(() => {
   return `${day.value} ${stime.value}-${etime.value}`
 })
 const times = ref(get24HoursQuarter())
+const cellStime = ref('')
+const cellEtime = ref('')
 
 onShow(async () => {
   init()
+  storeInfo()
 })
+
+// TODO: 获取门店营业时间
+function storeInfo() {
+  request.get<Data>(`/business/store/${storeId.value}`).then((res) => {
+    cellStime.value = res.data.workStime.slice(0, -3)
+    cellEtime.value = res.data.workEtime.slice(0, -3)
+  })
+}
 
 async function init() {
   const params = {
