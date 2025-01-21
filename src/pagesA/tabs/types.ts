@@ -231,7 +231,7 @@ export interface CusList {
    */
   lastPayTime: null | string
   /**
-   * 会员
+   * 会员 1普通客户 2vip会员
    */
   level: number
   /**

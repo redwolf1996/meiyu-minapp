@@ -292,7 +292,7 @@ onShow(() => {
                   {{ item.name }}
                 </text>
                 <wd-img
-                  v-if="item.level"
+                  v-if="item.level === 2"
                   :round="true"
                   :width="18"
                   :height="18"

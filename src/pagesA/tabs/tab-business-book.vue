@@ -84,8 +84,8 @@ const reqParams = reactive({
   storeId: storeId.value,
   status: 1, // 1待服务，2服务中，3已完成，4已取消
   artisanId: null, // 手艺人id
-  sTime: computed(() => `${value1.value}:00`), // 服务开始时间
-  eTime: computed(() => `${value2.value}:00`), // 服务结束时间
+  // sTime: computed(() => `${value1.value}:00`), // 服务开始时间
+  // eTime: computed(() => `${value2.value}:00`), // 服务结束时间
   sDate: null, // 服务开始日期
   eDate: null, // 服务开始日期
   keyword: '', // 关键字
@@ -361,11 +361,11 @@ function confirm() {
           </view>
           <view>
             <GridTagSelect v-model="dateType" :sources="sources" :columns="3" />
-            <MyCell label="服务时段" @myclick="showPicker">
+            <!-- <MyCell label="服务时段" @myclick="showPicker">
               <text v-if="value1 && value2" f14 c-3B3D3D>
                 {{ value1 }}-{{ value2 }}
               </text>
-            </MyCell>
+            </MyCell> -->
           </view>
         </view>
         <view bg-white px-32rpx py-25rpx rd-20rpx mb-24rpx>
