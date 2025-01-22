@@ -81,6 +81,7 @@ function toOrderDetail(id) {
 }
 
 function toBookDetail(item: ListBook) {
+  bookStime.value = ''
   uni.navigateTo({
     url: `/pagesA/book/detail?id=${item.bookingId}`,
   })

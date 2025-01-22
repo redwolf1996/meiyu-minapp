@@ -295,6 +295,7 @@ async function doSign(item: BookListAll) {
   getCountsAll()
 }
 function toDetail(item: BookListAll) {
+  bookStime.value = ''
   uni.navigateTo({
     url: `/pagesA/book/detail?id=${item.bookingId}`,
   })

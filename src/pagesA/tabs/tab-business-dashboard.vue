@@ -85,6 +85,7 @@ function toAddBooking() {
   uni.navigateTo({ url: '/pagesA/book/add' })
 }
 function toBookDetail(item) {
+  bookStime.value = ''
   const bookingId = item.bookingId
   uni.navigateTo({ url: `/pagesA/book/detail?id=${bookingId}` })
 }

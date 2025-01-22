@@ -8,6 +8,7 @@ const props = defineProps<{
 const data = props.data
 async function toServDetail() {
   await request.put(`/business/notice/${data.id}`)
+  bookStime.value = ''
   uni.navigateTo({
     url: `/pagesA/book/detail?id=${data.ext?.bookingId}`,
   })
