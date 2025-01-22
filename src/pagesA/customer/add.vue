@@ -142,6 +142,7 @@ function openCalendar() {
     <view h-24rpx />
     <wd-picker
       v-model="form.level"
+      :readonly="+form?.id > 0"
       label="会员等级" align-right :columns="VipSources"
     />
 
