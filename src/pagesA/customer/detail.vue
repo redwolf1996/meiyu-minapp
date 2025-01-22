@@ -566,7 +566,11 @@ onMounted(async () => {
           </view>
           <view c-434343 flex flex-ac flex-bt mb16px f14>
             <view>营销顾问：</view>
-            <view>{{ detail?.adviserName || '--' }}</view>
+            <view>{{ detail?.adviserName || '未分配' }}</view>
+          </view>
+          <view c-434343 flex flex-ac flex-bt mb16px f14>
+            <view>手艺人：</view>
+            <view>{{ detail?.artisanName || '未分配' }}</view>
           </view>
           <view c-434343 flex flex-ac flex-bt f14>
             <view>客户备注：</view>

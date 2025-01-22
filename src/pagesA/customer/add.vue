@@ -52,8 +52,8 @@ async function setFormInfo() {
   form.noteName = data.noteName
   form.phone = data.phone
   form.source = data.source
-  form.artisanId = data.artisanId
-  form.adviserId = data.adviserId
+  form.artisanId = data.artisanId || ''
+  form.adviserId = data.adviserId || ''
   form.level = data.level
   form.gender = data.gender
   form.birthday = data.birthday

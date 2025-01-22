@@ -1,4 +1,8 @@
 export interface List {
+  customerPhone?: string
+  customerName?: string
+  createSourceType?: string
+  createSource?: number
   /**
    * 金额
    */
@@ -122,7 +126,7 @@ export interface Detail {
    */
   orderNo: string
   /**
-   * 创建源头，1开单，2预约，3开卡，4充值
+   * 创建源头，1开单，2开卡，3充值，4预约
    */
   createSource: number
   /**

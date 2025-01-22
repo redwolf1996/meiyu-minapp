@@ -199,7 +199,7 @@ function toRefundDetail() {
             <view>手艺人</view>
             <view>{{ item?.artisanName || '未分配' }}</view>
           </view>
-          <view v-if="item?.cardName && detail?.createSource !== 4" flex flex-bt mb12px f14>
+          <view v-if="item?.cardName && (detail?.createSource === 1 || detail?.createSource === 2)" flex flex-bt mb12px f14>
             <view>使用卡项</view>
             <view>{{ item?.cardName || '--' }}</view>
           </view>
