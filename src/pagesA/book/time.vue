@@ -10,6 +10,9 @@ import type { TimeOccupy } from './types'
 import { flatten } from 'lodash-es'
 import type { Data } from '../booking/types'
 
+const minIndex = ref(0)
+const maxIndex = ref(0)
+const curWeek = ref(+new Date().getDay() + 1)
 const instance = getCurrentInstance()
 const query = uni.createSelectorQuery().in(instance.proxy)
 const today = fd(+new Date())
@@ -23,23 +26,20 @@ const selectedTime = computed(() => {
   return `${day.value} ${stime.value}-${etime.value}`
 })
 const times = ref(get24HoursQuarter())
-const cellStime = ref('')
-const cellEtime = ref('')
+const workStime = ref('')
+const workEtime = ref('')
+const workWeeks = ref([])
 
-onShow(async () => {
+onShow(() => {
   init()
-  storeInfo()
 })
 
-// TODO: 获取门店营业时间
-function storeInfo() {
-  request.get<Data>(`/business/store/${storeId.value}`).then((res) => {
-    cellStime.value = res.data.workStime.slice(0, -3)
-    cellEtime.value = res.data.workEtime.slice(0, -3)
-  })
-}
-
 async function init() {
+  const re = await request.get<Data>(`/business/store/${storeId.value}`)
+  workStime.value = re.data.workStime.slice(0, -3)
+  workEtime.value = re.data.workEtime.slice(0, -3)
+  workWeeks.value = re.data.workWeek
+
   const params = {
     storeId: storeId.value,
     artisanId: bookInfo.value?.artisanId,
@@ -47,10 +47,20 @@ async function init() {
   }
   const res = await request.get<TimeOccupy[]>('/business/booking-artisan', params)
   const employIndexes = flatten(res.data.map(v => v.employIndex))
+
+  times.value.forEach((v, i) => {
+    if (v.value === workStime.value)
+      minIndex.value = i
+    if (v.value === workEtime.value)
+      maxIndex.value = i
+  })
+
   times.value = times.value.map((v, i) => {
     return {
       selected: v.selected,
-      disabled: !!employIndexes.includes(i),
+      disabled: !workWeeks.value.includes(curWeek.value)
+        ? true
+        : (!!employIndexes.includes(i) || i < minIndex.value || i > maxIndex.value),
       value: v.value,
     }
   })
@@ -74,6 +84,7 @@ onHide(() => {
 })
 
 function calendarChange(e) {
+  curWeek.value = e.lunar.nWeek
   day.value = e.fulldate
   init()
 }
