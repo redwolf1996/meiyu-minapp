@@ -135,11 +135,17 @@ onShow(() => {
             </view>
 
             <view>
-              <text v-if="item.isValid" f12 px-16rpx py-8rpx c-#32C272 bg-#D6F3E3 flex flex-cc rd-30px>
+              <text v-if="item.isValid === 0" c-#A6A6B0 bg-#F5F5FA f12 px-16rpx py-8rpx flex flex-cc rd-30px>
+                已失效
+              </text>
+              <text v-if="item.isValid === 1" c-#32C272 bg-#D6F3E3 f12 px-16rpx py-8rpx flex flex-cc rd-30px>
                 使用中
               </text>
-              <text v-else c-#A6A6B0 bg-#F5F5FA f12 px-16rpx py-8rpx flex flex-cc rd-30px>
-                已失效
+              <text v-if="item.isValid === 2" c-#F56C6C bg-#FEF0F0 f12 px-16rpx py-8rpx flex flex-cc rd-30px>
+                待支付
+              </text>
+              <text v-if="item.isValid === 3" c-#A6A6B0 bg-#F5F5FA f12 px-16rpx py-8rpx flex flex-cc rd-30px>
+                已取消
               </text>
             </view>
           </view>
