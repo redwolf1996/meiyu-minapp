@@ -56,7 +56,7 @@ async function renew() {
         icon: 'success',
       })
       setTimeout(() => { // 返回工作台
-        uni.navigateTo({ url: '/pagesA/tabs/tab-business-dashboard' })
+        uni.reLaunch({ url: '/pagesA/tabs/tab-business-dashboard' })
       }, 1000)
     },
     fail(res) {

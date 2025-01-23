@@ -32,7 +32,7 @@ function handleSubmit() {
         const { token, isRegister } = res.data
         useUserStore().setUserInfo({ token, isRegister })
         await setUserBaseInfo()
-        uni.redirectTo({ url: '/pagesA/tabs/tab-business-dashboard' })
+        uni.reLaunch({ url: '/pagesA/tabs/tab-business-dashboard' })
       }
     })
     .catch((error) => {

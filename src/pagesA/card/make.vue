@@ -89,7 +89,7 @@ async function payLater() {
   await request.post(url, form.value)
   toast.info('待客户支付后，可找到该订单再次进行支付')
   await sleep(1000)
-  uni.redirectTo({ url: '/pagesA/tabs/tab-business-dashboard' })
+  uni.reLaunch({ url: '/pagesA/tabs/tab-business-dashboard' })
 }
 
 function toPay() {

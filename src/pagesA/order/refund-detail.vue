@@ -20,7 +20,7 @@ async function getDetail() {
 }
 
 function toDashboard() {
-  uni.navigateTo({ url: '/pagesA/tabs/tab-business-dashboard' })
+  uni.reLaunch({ url: '/pagesA/tabs/tab-business-dashboard' })
 }
 </script>
 

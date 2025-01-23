@@ -27,7 +27,7 @@ function toCardRecharge(type: 1 | 2 | 3 | 4 | 5 | 6) {
 
 // 返回首页
 function toDashboard() {
-  uni.navigateTo({ url: '/pagesA/tabs/tab-business-dashboard' })
+  uni.reLaunch({ url: '/pagesA/tabs/tab-business-dashboard' })
 }
 
 // 继续开单
