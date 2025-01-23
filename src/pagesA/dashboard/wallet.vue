@@ -53,7 +53,8 @@ function toRecords() {
     </view>
     <view h-40px />
     <view class="btn">
-      <text>全部提现到微信零钱</text>
+      <view>全部提现到</view>
+      <view>微信零钱</view>
     </view>
     <view h-44px />
     <view class="cash" c-fff flex flex-cc tc p-10px>
