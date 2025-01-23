@@ -81,8 +81,8 @@ function toDetail(item: CusList) {
   uni.navigateTo({ url: `/pagesA/customer/detail?id=${item.storeCustomerId}` })
 }
 
-function closeBirthday() {
-  filter.value.close()
+function resetSearch() {
+  birthday.value = null
 }
 
 function confirmBirthday() { // 搜索当天生日和当月生日
@@ -261,9 +261,8 @@ onShow(() => {
               </wd-action-sheet>
 
               <view flex tc flex-cc mt-24rpx px-112rpx gap-20rpx>
-                <button class="my-btn normal" w-220rpx @click="closeBirthday()">
-                  <!-- 重置 -->
-                  关闭
+                <button class="my-btn normal" w-220rpx @click="resetSearch()">
+                  重置
                 </button>
                 <button class="my-btn theme" w-220rpx @click="confirmBirthday()">
                   <!-- 查看50个用户 -->

@@ -318,9 +318,9 @@ function doSearch() {
   visableSearch.value = false
 }
 
-function showPicker() {
-  showPop.value = true
-}
+// function showPicker() {
+//   showPop.value = true
+// }
 
 function confirm() {
   showPop.value = false
