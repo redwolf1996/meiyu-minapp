@@ -361,7 +361,6 @@ function toBilling() {
           </text>
           <text c-#F53F3F>
             {{ item?.recordDesc }}
-            <!-- -{{ item?.cardReduceAmount || item?.orderItemAmount || 1 }} -->
           </text>
         </view>
         <view fs-12px c-#9B9B9B>
