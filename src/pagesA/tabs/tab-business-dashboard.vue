@@ -36,7 +36,7 @@ async function initStore() {
 
   const isOwner = userInfo.value.lastStore.isOwner
 
-  if (!isOwner) {
+  if (isOwner) {
     if (!userInfo.value.orgInfo?.storeCount) { // 如果店铺未创建
       return uni.navigateTo({ url: '/pagesA/init/steps/step1' })
     }

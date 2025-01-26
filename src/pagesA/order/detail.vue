@@ -101,11 +101,11 @@ function toRefundDetail() {
           <view>创建时间</view>
           <view>{{ fdt(detail?.createTime) }}</view>
         </view>
-        <view v-if="detail?.adviserName" flex flex-ac flex-bt>
+        <view v-if="detail?.adviserName" flex flex-ac flex-bt mb12px>
           <view>销售员</view>
           <view>{{ detail?.adviserName }}</view>
         </view>
-        <view v-if="detail?.payStatus === 3" flex flex-ac flex-bt mt12px>
+        <view v-if="detail?.payStatus === 3" flex flex-ac flex-bt mb12px>
           <view>取消时间</view>
           <view>{{ fdt(detail?.refundTime) }}</view>
         </view>
