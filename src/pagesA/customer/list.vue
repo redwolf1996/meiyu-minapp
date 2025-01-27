@@ -71,8 +71,15 @@ function toAddCus() {
     </view>
     <view v-for="(item, index) in list" :key="`sd-${index}`" flex flex-ac flex-bt bg-white px40rpx py20rpx style="border-bottom: 1px solid #DFDFDF" @click="clickItem(item)">
       <view>
-        <view f14 c-313131>
-          {{ item.name }}
+        <view f14 c-313131 flex flex-ac gap5px>
+          <text>{{ item.name }}</text>
+          <wd-img
+            v-if="item?.level === 2"
+            style="transform: translateY(2px);"
+            :width="16"
+            :height="16"
+            :src="`${IMG_BASE}/icon-v.png`"
+          />
         </view>
         <view f12 c-777777 mt6px>
           {{ item.phone }}
