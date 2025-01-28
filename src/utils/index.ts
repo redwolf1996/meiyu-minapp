@@ -258,3 +258,27 @@ export function isTimeExceeding(startTime, endTime, durationMinutes) {
     return totalMinutes >= end
   }
 }
+
+export function groupSortedConsecutive(arr) {
+  if (arr.length === 0)
+    return []
+
+  // 先创建副本再排序，避免修改原数组
+  const sortedArr = arr.slice().sort((a, b) => a - b)
+  const result = []
+  let currentGroup = [sortedArr[0]]
+
+  for (let i = 1; i < sortedArr.length; i++) {
+    // 判断当前元素与前一个元素的差值是否为1
+    if (sortedArr[i] - sortedArr[i - 1] === 1) {
+      currentGroup.push(sortedArr[i])
+    }
+    else {
+      result.push(currentGroup)
+      currentGroup = [sortedArr[i]]
+    }
+  }
+  result.push(currentGroup)
+
+  return result
+}

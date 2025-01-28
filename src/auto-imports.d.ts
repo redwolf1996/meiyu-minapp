@@ -92,6 +92,8 @@ declare global {
   const getDiscounts: typeof import('./utils/index')['getDiscounts']
   const getMenuButtonInfo: typeof import('./utils/index')['getMenuButtonInfo']
   const getStoreId: typeof import('./utils/index')['getStoreId']
+  const groupConsecutive: typeof import('./utils/index')['groupConsecutive']
+  const groupSortedConsecutive: typeof import('./utils/index')['groupSortedConsecutive']
   const h: typeof import('vue')['h']
   const http: typeof import('./utils/http')['http']
   const ignorableWatch: typeof import('@vueuse/core')['ignorableWatch']
@@ -477,6 +479,7 @@ declare module 'vue' {
     readonly getCurrentScope: UnwrapRef<typeof import('vue')['getCurrentScope']>
     readonly getDiscounts: UnwrapRef<typeof import('./utils/index')['getDiscounts']>
     readonly getMenuButtonInfo: UnwrapRef<typeof import('./utils/index')['getMenuButtonInfo']>
+    readonly groupSortedConsecutive: UnwrapRef<typeof import('./utils/index')['groupSortedConsecutive']>
     readonly h: UnwrapRef<typeof import('vue')['h']>
     readonly http: UnwrapRef<typeof import('./utils/http')['http']>
     readonly inject: UnwrapRef<typeof import('vue')['inject']>
