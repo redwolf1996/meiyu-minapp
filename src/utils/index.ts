@@ -193,3 +193,68 @@ export function filter15Minutes(type, values) {
   }
   return values
 }
+
+/**
+ * 返回给定开始时间和结束时间之间的数组，每15分钟一个
+ */
+export function generateTimeSlots(startTime: string, endTime: string) {
+  const parseTime = (timeStr) => {
+    const [hours, minutes] = timeStr.split(':').map(Number)
+    return hours * 60 + minutes
+  }
+
+  const formatTime = (totalMinutes) => {
+    const hours = Math.floor(totalMinutes / 60)
+    const mins = totalMinutes % 60
+    return `${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}`
+  }
+
+  const start = parseTime(startTime)
+  const end = parseTime(endTime)
+  const timeSlots: Times[] = []
+
+  if (start >= end)
+    return timeSlots // 处理无效输入
+
+  for (let current = start; current < end; current += 15) { // 修改循环条件
+    timeSlots.push({
+      selected: false,
+      disabled: false,
+      value: formatTime(current),
+    })
+  }
+  return timeSlots
+}
+
+/**
+ * 判断时间是否超出范围
+ */
+export function isTimeExceeding(startTime, endTime, durationMinutes) {
+  // 将时间字符串转换为分钟数
+  const parseTime = (timeStr) => {
+    const [hours, minutes] = timeStr.split(':').map(Number)
+    return hours * 60 + minutes
+  }
+
+  const start = parseTime(startTime)
+  const end = parseTime(endTime)
+  const totalMinutes = start + durationMinutes
+
+  // 判断是否跨天
+  const isCrossDay = totalMinutes >= 1440 // 1440 分钟 = 24 小时
+
+  // 如果跨天，直接算作超出
+  if (isCrossDay) {
+    return true
+  }
+
+  // 如果不跨天，判断是否超出结束时间
+  if (end < start) {
+    // 如果结束时间小于开始时间（跨天场景），需要额外判断
+    return totalMinutes >= end && totalMinutes < start
+  }
+  else {
+    // 正常情况，直接比较
+    return totalMinutes >= end
+  }
+}

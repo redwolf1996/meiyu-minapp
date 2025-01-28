@@ -82,6 +82,7 @@ declare global {
   const func_div: typeof import('./utils/math')['func_div']
   const func_mul: typeof import('./utils/math')['func_mul']
   const func_sub: typeof import('./utils/math')['func_sub']
+  const generateTimeSlots: typeof import('./utils/index')['generateTimeSlots']
   const get2: typeof import('./utils/math')['get2']
   const get24Hours: typeof import('./utils/index')['get24Hours']
   const get24HoursHalf: typeof import('./utils/index')['get24HoursHalf']
@@ -103,6 +104,7 @@ declare global {
   const isReactive: typeof import('vue')['isReactive']
   const isReadonly: typeof import('vue')['isReadonly']
   const isRef: typeof import('vue')['isRef']
+  const isTimeExceeding: typeof import('./utils/index')['isTimeExceeding']
   const makeDestructurable: typeof import('@vueuse/core')['makeDestructurable']
   const markRaw: typeof import('vue')['markRaw']
   const msgDetail: typeof import('./stores/common')['msgDetail']
@@ -466,6 +468,7 @@ declare module 'vue' {
     readonly func_div: UnwrapRef<typeof import('./utils/math')['func_div']>
     readonly func_mul: UnwrapRef<typeof import('./utils/math')['func_mul']>
     readonly func_sub: UnwrapRef<typeof import('./utils/math')['func_sub']>
+    readonly generateTimeSlots: UnwrapRef<typeof import('./utils/index')['generateTimeSlots']>
     readonly get24Hours: UnwrapRef<typeof import('./utils/index')['get24Hours']>
     readonly get24HoursHalf: UnwrapRef<typeof import('./utils/index')['get24HoursHalf']>
     readonly get24HoursQuarter: UnwrapRef<typeof import('./utils/index')['get24HoursQuarter']>
@@ -482,6 +485,7 @@ declare module 'vue' {
     readonly isReactive: UnwrapRef<typeof import('vue')['isReactive']>
     readonly isReadonly: UnwrapRef<typeof import('vue')['isReadonly']>
     readonly isRef: UnwrapRef<typeof import('vue')['isRef']>
+    readonly isTimeExceeding: UnwrapRef<typeof import('./utils/index')['isTimeExceeding']>
     readonly markRaw: UnwrapRef<typeof import('vue')['markRaw']>
     readonly nextTick: UnwrapRef<typeof import('vue')['nextTick']>
     readonly onActivated: UnwrapRef<typeof import('vue')['onActivated']>

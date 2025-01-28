@@ -10,8 +10,6 @@ import type { TimeOccupy } from './types'
 import { flatten } from 'lodash-es'
 import type { Data } from '../booking/types'
 
-const minIndex = ref(0)
-const maxIndex = ref(0)
 const curWeek = ref(+new Date().getDay() + 1)
 const instance = getCurrentInstance()
 const query = uni.createSelectorQuery().in(instance.proxy)
@@ -25,7 +23,7 @@ const selectedTime = computed(() => {
     return ''
   return `${day.value} ${stime.value}-${etime.value}`
 })
-const times = ref(get24HoursQuarter())
+const times = ref()
 const workStime = ref('')
 const workEtime = ref('')
 const workWeeks = ref([])
@@ -34,11 +32,21 @@ onShow(() => {
   init()
 })
 
+// 设置总时长
+function setTotalDuration() {
+  let tmpDuration = 0
+  bookInfo.value.service.map((v) => {
+    tmpDuration += v.duration * v.goodsCount
+  })
+  duration.value = tmpDuration
+}
+
 async function init() {
   const re = await request.get<Data>(`/business/store/${storeId.value}`)
   workStime.value = re.data.workStime.slice(0, -3)
   workEtime.value = re.data.workEtime.slice(0, -3)
   workWeeks.value = re.data.workWeek
+  times.value = generateTimeSlots(workStime.value, workEtime.value)
 
   const params = {
     storeId: storeId.value,
@@ -48,29 +56,26 @@ async function init() {
   const res = await request.get<TimeOccupy[]>('/business/booking-artisan', params)
   const employIndexes = flatten(res.data.map(v => v.employIndex))
 
-  times.value.forEach((v, i) => {
-    if (v.value === workStime.value)
-      minIndex.value = i
-    if (v.value === workEtime.value)
-      maxIndex.value = i
-  })
+  setTotalDuration()
+
+  let lastSelectableIndex = 0
+  // 从当前时间开始加上服务时长，如果超过结束时间，则该时间点包括以后的时间点都不可选
+  for (let i = 0; i < times.value.length; i++) {
+    if (isTimeExceeding(times.value[i].value, workEtime.value, duration.value)) {
+      lastSelectableIndex = i
+      break
+    }
+  }
 
   times.value = times.value.map((v, i) => {
     return {
       selected: v.selected,
-      disabled: !workWeeks.value.includes(curWeek.value)
+      disabled: !workWeeks.value.includes(curWeek.value) || i >= lastSelectableIndex
         ? true
-        : (!!employIndexes.includes(i) || i < minIndex.value || i > maxIndex.value),
+        : (!!employIndexes.includes(i)),
       value: v.value,
     }
   })
-  let tmpDuration = 0
-
-  bookInfo.value.service.map((v) => {
-    tmpDuration += v.duration * v.goodsCount
-  })
-
-  duration.value = tmpDuration
 }
 
 onMounted(() => {
