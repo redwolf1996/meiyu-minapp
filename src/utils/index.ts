@@ -228,8 +228,9 @@ export function generateTimeSlots(startTime: string, endTime: string) {
 
 /**
  * 判断时间是否超出范围
+ * mode: 1 表示判断是否超出结束时间，2 表示判断是否超出中间某一段的结束时间
  */
-export function isTimeExceeding(startTime, endTime, durationMinutes) {
+export function isTimeExceeding(startTime, endTime, durationMinutes, mode = 1) {
   // 将时间字符串转换为分钟数
   const parseTime = (timeStr) => {
     const [hours, minutes] = timeStr.split(':').map(Number)
@@ -251,7 +252,9 @@ export function isTimeExceeding(startTime, endTime, durationMinutes) {
   // 如果不跨天，判断是否超出结束时间
   if (end < start) {
     // 如果结束时间小于开始时间（跨天场景），需要额外判断
-    return totalMinutes >= end && totalMinutes < start
+    return mode === 1
+      ? totalMinutes >= end && totalMinutes < start
+      : totalMinutes > end && totalMinutes < start
   }
   else {
     // 正常情况，直接比较
@@ -259,6 +262,9 @@ export function isTimeExceeding(startTime, endTime, durationMinutes) {
   }
 }
 
+/**
+ * 将数组分组，每组包含连续的数字
+ */
 export function groupSortedConsecutive(arr) {
   if (arr.length === 0)
     return []
@@ -280,5 +286,16 @@ export function groupSortedConsecutive(arr) {
   }
   result.push(currentGroup)
 
+  return result
+}
+
+/**
+ * 生成两个数之间的数值的数组
+ */
+export function generateArray(start, end) {
+  const result = []
+  for (let i = start; i < end; i++) {
+    result.push(i)
+  }
   return result
 }

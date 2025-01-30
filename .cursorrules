@@ -1,0 +1,49 @@
+# 定义文件类型的处理规则
+[*.{js,jsx,ts,tsx,vue}]
+# 使用 ESLint 规则
+eslint = true
+# 启用代码补全
+completion = true
+# 启用代码重构
+refactor = true
+
+[*.{css,scss,less}]
+# 启用样式相关的补全
+completion = true
+
+[*.{json,yaml,yml}]
+# 启用配置文件的补全
+completion = true
+
+[*.{md,txt}]
+# 禁用代码相关功能
+completion = false
+eslint = false
+refactor = false
+
+# 特定目录的规则
+[src/]
+# 启用所有功能
+completion = true
+eslint = true
+refactor = true
+
+[test/]
+# 测试文件的规则
+completion = true
+eslint = true
+
+# 忽略特定目录
+[dist/]
+ignore = true
+
+[node_modules/]
+ignore = true
+
+# Vue 文件的特殊规则
+[*.vue]
+# 启用 Vue 特定的功能
+completion = true
+eslint = true
+refactor = true
+vueSupport = true

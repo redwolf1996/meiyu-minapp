@@ -1,0 +1,59 @@
+# 依赖目录
+node_modules/
+dist/
+build/
+
+# 编译输出
+*.min.js
+*.min.css
+
+# 包管理文件
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# 构建配置
+webpack.config.js
+vite.config.js
+
+# 环境配置文件
+.env
+.env.*
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 日志文件
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE 配置目录
+.idea/
+.vscode/
+*.sublime-*
+
+# 测试文件
+__tests__/
+test/
+tests/
+*.spec.js
+*.test.js
+
+# 文档
+docs/
+*.md
+
+# 其他二进制文件
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.ico
+*.svg
+*.ttf
+*.woff
+*.woff2
+*.eot

@@ -82,6 +82,7 @@ declare global {
   const func_div: typeof import('./utils/math')['func_div']
   const func_mul: typeof import('./utils/math')['func_mul']
   const func_sub: typeof import('./utils/math')['func_sub']
+  const generateArray: typeof import('./utils/index')['generateArray']
   const generateTimeSlots: typeof import('./utils/index')['generateTimeSlots']
   const get2: typeof import('./utils/math')['get2']
   const get24Hours: typeof import('./utils/index')['get24Hours']
@@ -470,6 +471,7 @@ declare module 'vue' {
     readonly func_div: UnwrapRef<typeof import('./utils/math')['func_div']>
     readonly func_mul: UnwrapRef<typeof import('./utils/math')['func_mul']>
     readonly func_sub: UnwrapRef<typeof import('./utils/math')['func_sub']>
+    readonly generateArray: UnwrapRef<typeof import('./utils/index')['generateArray']>
     readonly generateTimeSlots: UnwrapRef<typeof import('./utils/index')['generateTimeSlots']>
     readonly get24Hours: UnwrapRef<typeof import('./utils/index')['get24Hours']>
     readonly get24HoursHalf: UnwrapRef<typeof import('./utils/index')['get24HoursHalf']>

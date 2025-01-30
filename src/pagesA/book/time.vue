@@ -54,9 +54,12 @@ async function init() {
     cDate: day.value,
   }
   const res = await request.get<TimeOccupy[]>('/business/booking-artisan', params)
-  const employIndexes = flatten(res.data.map(v => v.employIndex))
+  const employIndexes = flatten(res.data.map(v => v.employIndex)) // 后端计算的disabled时间点index
 
   setTotalDuration()
+
+  const newIndexes = groupSortedConsecutive(employIndexes)
+  const endTimeIndexes = newIndexes?.map(v => v?.[0]) // 结束时间点集合（每一段disabled的时间点的起始时间）
 
   let lastSelectableIndex = 0
   // 从当前时间开始加上服务时长，如果超过结束时间，则该时间点包括以后的时间点都不可选
@@ -67,10 +70,29 @@ async function init() {
     }
   }
 
+  const endTimes = []
+  for (let i = 0; i < times.value.length; i++) {
+    if (endTimeIndexes.includes(i)) {
+      endTimes.push(times.value[i].value)
+    }
+  }
+
+  const disabledIndexedFront = []
+  for (let i0 = 0; i0 < times.value.length; i0++) {
+    for (let i = 0; i < endTimes.length; i++) {
+      if (isTimeExceeding(times.value[i0].value, endTimes[i], duration.value, 2)) {
+        const disSindex = i0
+        const disEindex = endTimeIndexes[i]
+        const arr = generateArray(disSindex, disEindex)
+        disabledIndexedFront.push(...arr)
+      }
+    }
+  }
+
   times.value = times.value.map((v, i) => {
     return {
       selected: v.selected,
-      disabled: !workWeeks.value.includes(curWeek.value) || i >= lastSelectableIndex
+      disabled: !workWeeks.value.includes(curWeek.value) || (i >= lastSelectableIndex || disabledIndexedFront?.includes(i))
         ? true
         : (!!employIndexes.includes(i)),
       value: v.value,
