@@ -19,6 +19,7 @@ const httpInterceptor = {
       'envVersion': envVersion,
       'B-Store-Id': storeId.value,
     }
+    console.log(options.header.envVersion)
     const token = userStore.userInfo?.token
     if (token) {
       options.header.Authorization = token

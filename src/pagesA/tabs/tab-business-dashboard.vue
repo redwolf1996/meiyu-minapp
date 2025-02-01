@@ -19,11 +19,9 @@ const info = ref<DashBoardData>()
 const isOvertime = ref(false)
 const showCardRecharge = ref(false) // 显示开卡充值弹窗
 
-onLoad(() => {
-  setStaffList()
-})
-
 onShow(() => {
+  if (storeId.value)
+    setStaffList()
   initStore()
   const menuButtonInfo = getMenuButtonInfo()
   menuButtonWidth.value = menuButtonInfo?.barWidth
@@ -34,17 +32,18 @@ async function initStore() {
   userInfo.value = useUserStore().userInfo
   const guidStatus = userInfo.value.guidStatus
 
-  const isOwner = userInfo.value.lastStore.isOwner
+  // const isOwner = userInfo.value.lastStore.isOwner
 
-  if (isOwner) {
-    if (!userInfo.value.orgInfo?.storeCount) { // 如果店铺未创建
-      return uni.navigateTo({ url: '/pagesA/init/steps/step1' })
-    }
-
-    if (!guidStatus.staffCountStatus || !guidStatus.productCountStatus || !guidStatus.serviceCountStatus) { // 如果新手引导未完成
-      return uni.navigateTo({ url: '/pagesA/init/steps/index' })
-    }
+  // if (isOwner) {
+  console.log(userInfo.value.lastStore)
+  if (!userInfo.value.lastStore) { // 如果店铺未创建
+    return uni.navigateTo({ url: '/pagesA/init/steps/step1' })
   }
+
+  if (!guidStatus.staffCountStatus || !guidStatus.productCountStatus || !guidStatus.serviceCountStatus) { // 如果新手引导未完成
+    return uni.navigateTo({ url: '/pagesA/init/steps/index' })
+  }
+  // }
   getDashboardInfo()
 }
 
