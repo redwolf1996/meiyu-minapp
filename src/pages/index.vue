@@ -5,6 +5,7 @@ style:
 
 <script lang="ts" setup>
 const userInfo = useUserStore().userInfo
+console.log(userInfo)
 if (userInfo.token && userInfo.isRegister) {
   toBusinessDashboard()
 }
