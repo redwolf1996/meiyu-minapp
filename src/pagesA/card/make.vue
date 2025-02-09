@@ -104,6 +104,8 @@ function toPay() {
     submitDirect()
   }
   else {
+    if (typeof form.value.adviserId !== 'string')
+      form.value.adviserId = ''
     curCardRechargeFormData.value = form.value
     const mode = curCardRechargeType.value === 6 ? PayModeEnum.Recharge : PayModeEnum.MakeCard
     uni.navigateTo({ url: `/pagesA/billing/pay?mode=${mode}` })
