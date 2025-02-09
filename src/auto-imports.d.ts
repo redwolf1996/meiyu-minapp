@@ -71,6 +71,7 @@ declare global {
   const defineComponent: typeof import('vue')['defineComponent']
   const eagerComputed: typeof import('@vueuse/core')['eagerComputed']
   const effectScope: typeof import('vue')['effectScope']
+  const envVersion: typeof import('./utils/index')['envVersion']
   const extendRef: typeof import('@vueuse/core')['extendRef']
   const fd: typeof import('./utils/index')['fd']
   const fdt: typeof import('./utils/index')['fdt']
@@ -108,6 +109,7 @@ declare global {
   const isReadonly: typeof import('vue')['isReadonly']
   const isRef: typeof import('vue')['isRef']
   const isTimeExceeding: typeof import('./utils/index')['isTimeExceeding']
+  const logReqInfo: typeof import('./utils/index')['logReqInfo']
   const makeDestructurable: typeof import('@vueuse/core')['makeDestructurable']
   const markRaw: typeof import('vue')['markRaw']
   const msgDetail: typeof import('./stores/common')['msgDetail']
@@ -491,6 +493,7 @@ declare module 'vue' {
     readonly isReadonly: UnwrapRef<typeof import('vue')['isReadonly']>
     readonly isRef: UnwrapRef<typeof import('vue')['isRef']>
     readonly isTimeExceeding: UnwrapRef<typeof import('./utils/index')['isTimeExceeding']>
+    readonly logReqInfo: UnwrapRef<typeof import('./utils/index')['logReqInfo']>
     readonly markRaw: UnwrapRef<typeof import('vue')['markRaw']>
     readonly nextTick: UnwrapRef<typeof import('vue')['nextTick']>
     readonly onActivated: UnwrapRef<typeof import('vue')['onActivated']>

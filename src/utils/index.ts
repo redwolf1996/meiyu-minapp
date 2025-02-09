@@ -3,9 +3,15 @@ import type { UserInfo } from '@/stores/modules/user'
 import dayjs from 'dayjs'
 import { max, min, reject } from 'lodash-es'
 
+const envVersion = import.meta.env.VITE_ENV_VERSION
 export const IMG_BASE = import.meta.env.VITE_APP_IMG_BASE
-
 export const DEFAULT_AVATAR = `${IMG_BASE}/avatar-default.png`
+
+const makeLog = 1
+export function logReqInfo(url, params) {
+  if (envVersion === 'develop' && makeLog)
+    console.log(url, params)
+}
 
 export function getMenuButtonInfo() {
   // 获取距上
