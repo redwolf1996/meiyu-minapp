@@ -115,17 +115,20 @@ onShow(() => {
               <text v-if="item.cardType === 1" px-12rpx py-7rpx c-#1A66FF pr left--6px>
                 <!-- 有限次卡和通卡  -->
                 <template v-if="item.cardSecondType === 1 || item.cardSecondType === 3">
-                  {{ item?.useCount }}/{{ item?.countLimit }}
+                  <!-- {{ item?.useCount }}/{{ item?.countLimit }} -->
+                  {{ item?.discountDesc }}
                 </template>
                 <!-- 不限次卡 -->
                 <template v-if="item.cardSecondType === 2">
-                  {{ item?.useCount }}/不限
+                  <!-- {{ item?.useCount }}/不限 -->
+                  {{ item?.discountDesc }}
                 </template>
               </text>
 
               <!-- 充值卡：显示 [已使用金额]/[总金额] -->
               <text v-if="item.cardType === 2" px-12rpx py-7rpx c-#1A66FF pr left--6px>
-                ¥{{ item?.amount }}/¥{{ item?.totalAmount }}
+                <!-- ¥{{ item?.amount }}/¥{{ item?.totalAmount }} -->
+                {{ item?.discountDesc }}
               </text>
 
               <!-- 折扣卡：显示 [已使用次数]/[折扣]起 -->
