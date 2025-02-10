@@ -24,7 +24,7 @@ function toStaffRegister() {
       <wd-img
         :height="184"
         width="50%"
-        :src="`${IMG_BASE}/login_s2.png`"
+        :src="`${IMG_BASE}/login_s2.png?v=1`"
         @click="toBusinessRegister()"
       />
       <wd-img

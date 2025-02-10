@@ -6,6 +6,7 @@ style:
 <script lang="ts" setup>
 import type { CardForm, Info } from './types'
 
+const toast = useToast()
 const userInfo = useUserStore()?.userInfo
 const storeInfo = userInfo?.storeList?.[0]
 const expiresType = ref(0) // 0永久有效 1限期有效
@@ -202,6 +203,7 @@ function delEquity(info: Info) {
 </script>
 
 <template>
+  <wd-toast />
   <wd-form :model="form">
     <wd-cell-group :border="true">
       <wd-input

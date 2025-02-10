@@ -7,7 +7,7 @@ const envVersion = import.meta.env.VITE_ENV_VERSION
 export const IMG_BASE = import.meta.env.VITE_APP_IMG_BASE
 export const DEFAULT_AVATAR = `${IMG_BASE}/avatar-default.png`
 
-const makeLog = 0
+const makeLog = 1
 export function logReqInfo(url, params) {
   if (envVersion === 'develop' && makeLog)
     console.log(url, params)
