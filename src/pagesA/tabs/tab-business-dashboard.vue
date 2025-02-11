@@ -18,6 +18,35 @@ const userInfo = ref<Partial<UserInfo>>(null)
 const info = ref<DashBoardData>()
 const isOvertime = ref(false)
 const showCardRecharge = ref(false) // 显示开卡充值弹窗
+uni.showShareMenu({
+  withShareTicket: true,
+  menus: ['shareAppMessage', 'shareTimeline'],
+})
+
+onShareAppMessage((res) => {
+  if (res.from === 'button') {
+    // 来自页面内分享按
+    return {
+      title: '美预',
+      path: `/pagesA/tabs/tab-business-dashboard`,
+      // imageUrl: '',
+    }
+  }
+  else {
+    return {
+      title: '美预',
+      path: `/pagesA/tabs/tab-business-dashboard`,
+      // imageUrl: '',
+    }
+  }
+})
+onShareTimeline(() => {
+  return {
+    title: '美预',
+    // query: `share=${state.share}`, // 可不填 传递的参数，只能是这种格式
+    // imageUrl: urlImg,
+  }
+})
 
 onShow(() => {
   if (storeId.value)
