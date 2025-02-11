@@ -6,9 +6,9 @@ style:
 <script lang="ts" setup>
 const userInfo = useUserStore().userInfo
 const isCompleteSettings = computed(() => {
-  if (userInfo.guidStatus.productSkip !== 1
-    && userInfo.guidStatus.serviceSkip !== 1
-    && userInfo.guidStatus.staffSkip !== 1
+  if (userInfo.productSkip !== 1
+    && userInfo.serviceSkip !== 1
+    && userInfo.staffSkip !== 1
   ) {
     return false
   }

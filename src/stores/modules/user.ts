@@ -4,30 +4,13 @@ import { defineStore } from 'pinia'
 export const useUserStore = defineStore(
   'user',
   () => {
-    const userInfo = ref<Partial<UserInfo>>({
-      guidStatus: {
-        productSkip: 0, // 0未添加 1已添加 2稍后添加
-        serviceSkip: 0,
-        staffSkip: 0,
-      },
-    })
+    const userInfo = ref<Partial<UserInfo>>({})
 
     function setUserInfo(val: Partial<UserInfo>) {
-      if (val?.orgInfo?.productCount)
-        userInfo.value.guidStatus.productSkip = 1
-      if (val?.orgInfo?.serviceCount)
-        userInfo.value.guidStatus.serviceSkip = 1
-      if (val?.orgInfo?.staffCount)
-        userInfo.value.guidStatus.staffSkip = 1
-
       merge(userInfo.value, val)
     }
     function clearUserInfo() {
-      const guidStatus = cloneDeep(userInfo.value.guidStatus)
-      // 只保留新手引导信息
-      userInfo.value = {
-        guidStatus,
-      }
+      userInfo.value = {}
     }
 
     return {
@@ -67,7 +50,7 @@ export interface UserInfo {
   renewPrice?: number
   token?: string
   isRegister?: 1 | 0 // 1已注册 2未注册
-  guidStatus: Partial<GuidStatus>
+  guidStatus?: Partial<GuidStatus>
   /**
    * 我关联的店铺
    */
@@ -145,6 +128,18 @@ export interface UserInfo {
    * 用户名，姓名
    */
   userName: string
+  /**
+   * 服务新手引导 0未添加 1已添加 2稍后添加
+   */
+  serviceSkip: 0 | 1 | 2
+  /**
+   * 产品新手引导 0未添加 1已添加 2稍后添加
+   */
+  productSkip: 0 | 1 | 2
+  /**
+   * 员工新手引导 0未添加 1已添加 2稍后添加
+   */
+  staffSkip: 0 | 1 | 2
   [property: string]: any
 }
 

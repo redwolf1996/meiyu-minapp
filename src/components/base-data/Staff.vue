@@ -90,9 +90,9 @@ async function save() {
     await request.post<any>('/business/staff', form)
   }
   setStaffList()
-  useUserStore().setUserInfo({ guidStatus: {
+  useUserStore().setUserInfo({
     staffSkip: 1,
-  } })
+  })
   let msg = '添加成功'
   if (form.storeStaffId)
     msg = '修改成功'
@@ -101,10 +101,11 @@ async function save() {
   uni.navigateBack()
 }
 
-function skip() {
-  useUserStore().setUserInfo({ guidStatus: {
+async function skip() {
+  useUserStore().setUserInfo({
     staffSkip: 2,
-  } })
+  })
+  await request.get('/business/beginner/staffSkip')
   uni.navigateBack()
 }
 

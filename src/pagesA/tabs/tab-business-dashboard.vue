@@ -59,7 +59,6 @@ onShow(() => {
 // 店铺初始化
 async function initStore() {
   userInfo.value = useUserStore().userInfo
-  const guidStatus = userInfo.value.guidStatus
 
   const isOwner = userInfo.value.lastStore?.isOwner
 
@@ -68,7 +67,7 @@ async function initStore() {
   }
 
   if (isOwner) {
-    if (!guidStatus.staffSkip || !guidStatus.productSkip || !guidStatus.serviceSkip) { // 如果新手引导未完成
+    if (!userInfo.value.staffSkip || !userInfo.value.productSkip || !userInfo.value.serviceSkip) { // 如果新手引导未完成
       return uni.navigateTo({ url: '/pagesA/init/steps/index' })
     }
   }
