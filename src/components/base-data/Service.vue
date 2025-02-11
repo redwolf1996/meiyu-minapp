@@ -201,7 +201,7 @@ async function save() {
   else
     await request.post<any>('/business/service', form)
   useUserStore().setUserInfo({ guidStatus: {
-    serviceCountStatus: 1,
+    serviceSkip: 1,
   } })
   let msg = '添加成功'
   if (mode.value === 'edit')
@@ -215,7 +215,7 @@ async function save() {
 
 function skip() {
   useUserStore().setUserInfo({ guidStatus: {
-    serviceCountStatus: 2,
+    serviceSkip: 2,
   } })
   uni.navigateBack()
 }

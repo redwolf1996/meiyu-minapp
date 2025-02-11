@@ -24,7 +24,7 @@ const arr = ref<Step[]>([
     desc: '创建你的第一个服务，方便客户预约',
     icon: 'i-material-symbols-edit-square',
     color: 'color-1a66ff',
-    status: computed(() => userInfo.value.guidStatus.serviceCountStatus),
+    status: computed(() => userInfo.value.guidStatus.serviceSkip),
     path: '/pagesA/init/steps/step2',
   },
   {
@@ -52,7 +52,7 @@ onShow(async () => {
   useUserStore().setUserInfo(res.data)
   const userInfo = useUserStore()?.userInfo
   const guidStatus = userInfo.guidStatus
-  if (guidStatus.staffCountStatus && guidStatus.productCountStatus && guidStatus.serviceCountStatus) { // 如果新手完成了
+  if (guidStatus.staffCountStatus && guidStatus.productCountStatus && guidStatus.serviceSkip) { // 如果新手完成了
     uni.navigateTo({ url: '/pagesA/init/steps/done' })
   }
 })

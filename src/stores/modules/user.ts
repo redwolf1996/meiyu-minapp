@@ -7,7 +7,7 @@ export const useUserStore = defineStore(
     const userInfo = ref<Partial<UserInfo>>({
       guidStatus: {
         productCountStatus: 0, // 0未添加 1已添加 2稍后添加
-        serviceCountStatus: 0,
+        serviceSkip: 0,
         staffCountStatus: 0,
       },
     })
@@ -16,7 +16,7 @@ export const useUserStore = defineStore(
       if (val?.orgInfo?.productCount)
         userInfo.value.guidStatus.productCountStatus = 1
       if (val?.orgInfo?.serviceCount)
-        userInfo.value.guidStatus.serviceCountStatus = 1
+        userInfo.value.guidStatus.serviceSkip = 1
       if (val?.orgInfo?.staffCount)
         userInfo.value.guidStatus.staffCountStatus = 1
 
@@ -56,7 +56,7 @@ export const useUserStore = defineStore(
  */
 export interface GuidStatus {
   productCountStatus: 0 | 1 | 2 // 0未添加 1已添加 2稍后添加
-  serviceCountStatus: 0 | 1 | 2 // 0未添加 1已添加 2稍后添加
+  serviceSkip: 0 | 1 | 2 // 0未添加 1已添加 2稍后添加
   staffCountStatus: 0 | 1 | 2 // 0未添加 1已添加 2稍后添加
 }
 

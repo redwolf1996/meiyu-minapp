@@ -7,7 +7,7 @@ style:
 const userInfo = useUserStore().userInfo
 const isCompleteSettings = computed(() => {
   if (userInfo.guidStatus.productCountStatus !== 1
-    && userInfo.guidStatus.serviceCountStatus !== 1
+    && userInfo.guidStatus.serviceSkip !== 1
     && userInfo.guidStatus.staffCountStatus !== 1
   ) {
     return false
