@@ -68,7 +68,7 @@ async function initStore() {
   }
 
   if (isOwner) {
-    if (!guidStatus.staffCountStatus || !guidStatus.productCountStatus || !guidStatus.serviceSkip) { // 如果新手引导未完成
+    if (!guidStatus.staffSkip || !guidStatus.productSkip || !guidStatus.serviceSkip) { // 如果新手引导未完成
       return uni.navigateTo({ url: '/pagesA/init/steps/index' })
     }
   }

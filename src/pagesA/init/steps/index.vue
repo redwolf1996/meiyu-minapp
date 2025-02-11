@@ -33,7 +33,7 @@ const arr = ref<Step[]>([
     desc: '创建你的第一个产品，方便客户购买开单',
     icon: 'i-material-symbols-edit-square',
     color: 'color-1a66ff',
-    status: computed(() => userInfo.value.guidStatus.productCountStatus),
+    status: computed(() => userInfo.value.guidStatus.productSkip),
     path: '/pagesA/init/steps/step4',
   },
   {
@@ -42,7 +42,7 @@ const arr = ref<Step[]>([
     desc: '创建你的第一个手艺人，方便客户预约时指定手艺人',
     icon: 'i-material-symbols-edit-square',
     color: 'color-1a66ff',
-    status: computed(() => userInfo.value.guidStatus.staffCountStatus),
+    status: computed(() => userInfo.value.guidStatus.staffSkip),
     path: '/pagesA/init/steps/step5',
   },
 ])
@@ -52,7 +52,7 @@ onShow(async () => {
   useUserStore().setUserInfo(res.data)
   const userInfo = useUserStore()?.userInfo
   const guidStatus = userInfo.guidStatus
-  if (guidStatus.staffCountStatus && guidStatus.productCountStatus && guidStatus.serviceSkip) { // 如果新手完成了
+  if (guidStatus.staffSkip && guidStatus.productSkip && guidStatus.serviceSkip) { // 如果新手完成了
     uni.navigateTo({ url: '/pagesA/init/steps/done' })
   }
 })

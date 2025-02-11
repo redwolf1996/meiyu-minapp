@@ -91,7 +91,7 @@ async function save() {
   }
   setStaffList()
   useUserStore().setUserInfo({ guidStatus: {
-    staffCountStatus: 1,
+    staffSkip: 1,
   } })
   let msg = '添加成功'
   if (form.storeStaffId)
@@ -103,7 +103,7 @@ async function save() {
 
 function skip() {
   useUserStore().setUserInfo({ guidStatus: {
-    staffCountStatus: 2,
+    staffSkip: 2,
   } })
   uni.navigateBack()
 }

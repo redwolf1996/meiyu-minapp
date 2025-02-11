@@ -6,19 +6,19 @@ export const useUserStore = defineStore(
   () => {
     const userInfo = ref<Partial<UserInfo>>({
       guidStatus: {
-        productCountStatus: 0, // 0未添加 1已添加 2稍后添加
+        productSkip: 0, // 0未添加 1已添加 2稍后添加
         serviceSkip: 0,
-        staffCountStatus: 0,
+        staffSkip: 0,
       },
     })
 
     function setUserInfo(val: Partial<UserInfo>) {
       if (val?.orgInfo?.productCount)
-        userInfo.value.guidStatus.productCountStatus = 1
+        userInfo.value.guidStatus.productSkip = 1
       if (val?.orgInfo?.serviceCount)
         userInfo.value.guidStatus.serviceSkip = 1
       if (val?.orgInfo?.staffCount)
-        userInfo.value.guidStatus.staffCountStatus = 1
+        userInfo.value.guidStatus.staffSkip = 1
 
       merge(userInfo.value, val)
     }
@@ -55,9 +55,9 @@ export const useUserStore = defineStore(
  * 0未添加 1已添加 2稍后添加
  */
 export interface GuidStatus {
-  productCountStatus: 0 | 1 | 2 // 0未添加 1已添加 2稍后添加
+  productSkip: 0 | 1 | 2 // 0未添加 1已添加 2稍后添加
   serviceSkip: 0 | 1 | 2 // 0未添加 1已添加 2稍后添加
-  staffCountStatus: 0 | 1 | 2 // 0未添加 1已添加 2稍后添加
+  staffSkip: 0 | 1 | 2 // 0未添加 1已添加 2稍后添加
 }
 
 export interface UserInfo {

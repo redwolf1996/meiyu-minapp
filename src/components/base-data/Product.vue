@@ -107,7 +107,7 @@ async function save() {
   else
     await request.post<any>('/business/product', form)
   useUserStore().setUserInfo({ guidStatus: {
-    productCountStatus: 1,
+    productSkip: 1,
   } })
   let msg = '添加成功'
   if (mode.value === 'edit')
@@ -121,7 +121,7 @@ async function save() {
 
 function skip() {
   useUserStore().setUserInfo({ guidStatus: {
-    productCountStatus: 2,
+    productSkip: 2,
   } })
   uni.navigateBack()
 }
