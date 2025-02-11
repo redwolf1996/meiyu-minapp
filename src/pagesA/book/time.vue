@@ -157,14 +157,16 @@ async function save() {
         {{ bookInfo.artName || '未分配' }}
       </text>
     </view>
-    <view id="mytable" class="my-table">
-      <template v-for="item in times" :key="item.value">
-        <view class="item pr" :class="{ selected: item.selected, disabled: item.disabled }" @click="clickItem(item)">
-          {{ item.value }}
-          <wd-icon v-if="item.selected" name="check" color="rgba(255,255,255,0.8)" size="20px" custom-style="position:absolute;left:50%;top:50%;transform:translate(-50%, -50%)" />
-        </view>
-      </template>
-    </view>
+    <scroll-view :style="{ height: '344px', width: '100%' }" scroll-y>
+      <view class="my-table">
+        <template v-for="item in times" :key="item.value">
+          <view class="item pr" :class="{ selected: item.selected, disabled: item.disabled }" @click="clickItem(item)">
+            {{ item.value }}
+            <wd-icon v-if="item.selected" name="check" color="rgba(255,255,255,0.8)" size="20px" custom-style="position:absolute;left:50%;top:50%;transform:translate(-50%, -50%)" />
+          </view>
+        </template>
+      </view>
+    </scroll-view>
     <view tc mt20px>
       <wd-img
         :height="20"
@@ -196,8 +198,7 @@ async function save() {
   border-top: 1px solid #eaeaea;
   grid-template-columns: repeat(6, 1fr);
   grid-template-rows: repeat(16, 43px);
-  height: 300px;
-  overflow-y: scroll;
+  height: 100%;
   .item {
     box-sizing: border-box !important;
     border-right: 1px solid #eaeaea;
