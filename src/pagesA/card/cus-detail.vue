@@ -29,7 +29,9 @@ const countLimit = computed(() => detail.value?.countLimit || 0)
 const cardName = ref('')
 const timeArr = ref<any[]>([Date.now(), dayjs().add(1, 'year').valueOf()])
 const showSTime = computed(() => dayjs(timeArr.value[0]).format('YYYY-MM-DD'))
-const showETime = computed(() => dayjs(timeArr.value[1]).format('YYYY-MM-DD'))
+const showETime = computed(() => {
+  return timeArr.value[1] ? dayjs(timeArr.value[1]).format('YYYY-MM-DD') : null
+})
 const cardExpire = ref({
   id: computed(() => id.value),
   startTime: computed(() => `${showSTime.value} 00:00:00`),
@@ -111,7 +113,7 @@ function getDetail() {
     detail.value = res.data
     cardName.value = res.data.cardName || ''
     const s = dayjs(res.data.startTime).valueOf()
-    const e = dayjs(res.data.expiresTime).valueOf()
+    const e = res.data.expiresTime ? dayjs(res.data.expiresTime).valueOf() : null
     timeArr.value = [s, e]
   })
 }
@@ -344,7 +346,7 @@ function toBilling() {
         <view class="item" @click="toEditName()">
           修改名称
         </view>
-        <view class="item mid" @click="toEditExpire()">
+        <view class="item" :class="[dataList.length ? 'mid' : '']" @click="toEditExpire()">
           修改有效期
         </view>
         <!-- 已使用则无法修改权益 v-if="!dataList.length" -->
