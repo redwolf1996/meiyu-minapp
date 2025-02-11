@@ -45,7 +45,7 @@ async function init() {
   const re = await request.get<Data>(`/business/store/${storeId.value}`)
   workStime.value = re.data.workStime.slice(0, -3)
   workEtime.value = re.data.workEtime.slice(0, -3)
-  workWeeks.value = re.data.workWeek
+  workWeeks.value = re.data.workWeek || [1, 2, 3, 4, 5, 6, 7]
   times.value = generateTimeSlots(workStime.value, workEtime.value)
 
   const params = {

@@ -357,7 +357,7 @@ function getActiveIndex() {
           <template #description>
             <template v-if="bookDetail?.bookingStatus === 1">
               <view c-#808089 fs-14px lh-22px>
-                客户到店后进行签到以记录服务开始时间，预约状态进入"服务中"
+                预约到店或上门后进行签到以记录服务开始时间，预约状态进入"服务中"
               </view>
               <view mt10px>
                 <button class="my-btn complete" style="width: 80px;" @click="doSign()">
