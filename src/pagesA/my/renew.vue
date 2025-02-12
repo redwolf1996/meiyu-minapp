@@ -50,14 +50,15 @@ async function renew() {
     package: res.data.packageVal,
     signType: res.data.signType,
     paySign: res.data.paySign,
-    success() {
+    async success() {
       uni.showToast({
         title: '支付成功',
         icon: 'success',
       })
-      setTimeout(() => { // 返回工作台
-        uni.reLaunch({ url: '/pagesA/tabs/tab-business-dashboard' })
-      }, 1000)
+
+      const res = await request.get<any>('/business/info')
+      useUserStore().setUserInfo(res.data)
+      uni.reLaunch({ url: '/pagesA/tabs/tab-business-dashboard' })
     },
     fail(res) {
       console.error(res)
