@@ -3,45 +3,82 @@ style:
   navigationBarTitleText: 我的邀请
 </route>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import type { List } from './types'
+
+const reqParams = reactive({
+  storeId: storeId.value,
+  pageNum: 1,
+  pageSize: 10,
+})
+const paging = ref<ZPagingInstance<List> | null>(null)
+const dataList = ref<List[]>([])
+const total = ref(0)
+
+async function queryList(page: number, pageSize: number) {
+  reqParams.pageNum = page
+  reqParams.pageSize = pageSize
+  const res = await request.get<ListRes<List>>('/business/store-customer-card', reqParams)
+  total.value = res.data.total
+  paging.value.complete(res.data.list)
+}
+
+onShow(() => {
+  paging.value?.reload()
+})
+</script>
 
 <template>
-  <view flex flex-bt flex-ac c-888888 f14 px16px py8px bg-white>
-    <text>累积奖励：5个月</text>
-    <text>共7条记录</text>
-  </view>
-  <view px16px py26px>
-    <view px16px py12px bg-white>
-      <view py12px>
-        <view flex flex-ac flex-bt>
-          <view c-434343>
-            2024-12-17 12:34:01
-          </view>
-          <view>+ 1个月</view>
-        </view>
-        <view flex flex-ac flex-bt mt4px>
-          <view>158****7527</view>
-          <view c-00C777>
-            已完成
-          </view>
-        </view>
+  <z-paging
+    ref="paging"
+    v-model="dataList"
+    lower-threshold="100" auto-show-back-to-top :default-page-size="10"
+    @query="queryList"
+  >
+    <template #top>
+      <view flex flex-bt flex-ac c-888888 f14 px16px py8px bg-white>
+        <text>累积奖励：5个月</text>
+        <text>共{{ total }}条记录</text>
       </view>
-      <view py12px>
-        <view flex flex-ac flex-bt>
-          <view c-434343>
-            2024-12-17 12:34:01
+    </template>
+
+    <template #bottom>
+      <view class="h50px" />
+    </template>
+
+    <view px16px py26px>
+      <view px16px py12px bg-white>
+        <view py12px>
+          <view flex flex-ac flex-bt>
+            <view c-434343>
+              2024-12-17 12:34:01
+            </view>
+            <view>+ 1个月</view>
           </view>
-          <view>+ 1个月</view>
+          <view flex flex-ac flex-bt mt4px>
+            <view>158****7527</view>
+            <view c-00C777>
+              已完成
+            </view>
+          </view>
         </view>
-        <view flex flex-ac flex-bt mt4px>
-          <view>158****7527</view>
-          <view c-00C777>
-            已完成
+        <view py12px>
+          <view flex flex-ac flex-bt>
+            <view c-434343>
+              2024-12-17 12:34:01
+            </view>
+            <view>+ 1个月</view>
+          </view>
+          <view flex flex-ac flex-bt mt4px>
+            <view>158****7527</view>
+            <view c-00C777>
+              已完成
+            </view>
           </view>
         </view>
       </view>
     </view>
-  </view>
+  </z-paging>
 </template>
 
 <style lang='scss' scoped></style>
