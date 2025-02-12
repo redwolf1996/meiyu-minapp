@@ -18,7 +18,7 @@ const total = ref(0)
 async function queryList(page: number, pageSize: number) {
   reqParams.pageNum = page
   reqParams.pageSize = pageSize
-  const res = await request.get<ListRes<List>>('/business/store-customer-card', reqParams)
+  const res = await request.get<ListRes<List>>('/business/invite-record', reqParams)
   total.value = res.data.total
   paging.value.complete(res.data.list)
 }
@@ -46,9 +46,23 @@ onShow(() => {
       <view class="h50px" />
     </template>
 
-    <view px16px py26px>
+    <view v-if="dataList.length" px16px py26px>
       <view px16px py12px bg-white>
-        <view py12px>
+        <view v-for="item in dataList" :key="item.id" py12px>
+          <view flex flex-ac flex-bt>
+            <view c-434343>
+              {{ fdt(item.createTime) }}
+            </view>
+            <view>+ {{ item.days }}天</view>
+          </view>
+          <view flex flex-ac flex-bt mt4px>
+            <view>{{ item.businessPhone }}</view>
+            <view c-00C777>
+              {{ item.status }}
+            </view>
+          </view>
+        </view>
+        <!-- <view py12px>
           <view flex flex-ac flex-bt>
             <view c-434343>
               2024-12-17 12:34:01
@@ -61,21 +75,7 @@ onShow(() => {
               已完成
             </view>
           </view>
-        </view>
-        <view py12px>
-          <view flex flex-ac flex-bt>
-            <view c-434343>
-              2024-12-17 12:34:01
-            </view>
-            <view>+ 1个月</view>
-          </view>
-          <view flex flex-ac flex-bt mt4px>
-            <view>158****7527</view>
-            <view c-00C777>
-              已完成
-            </view>
-          </view>
-        </view>
+        </view> -->
       </view>
     </view>
   </z-paging>
