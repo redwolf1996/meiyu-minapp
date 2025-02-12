@@ -82,7 +82,7 @@ function handleChange1() {
           </view>
           <view flex flex-ac flex-bt>
             <view f14>
-              订单：{{ item.orgId }}
+              订单：{{ item.orderNo }}
             </view>
             <view fs-24 mt8rpx>
               {{ item.type === 1 ? '收入' : '支出' }}
