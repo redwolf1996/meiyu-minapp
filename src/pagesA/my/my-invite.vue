@@ -37,7 +37,7 @@ onShow(() => {
   >
     <template #top>
       <view flex flex-bt flex-ac c-888888 f14 px16px py8px bg-white>
-        <text>累积奖励：5个月</text>
+        <text>累积奖励：-- 天</text>
         <text>共{{ total }}条记录</text>
       </view>
     </template>
