@@ -51,8 +51,8 @@ onMounted(() => {
 watch(() => curSelectedCard.value, () => {
   if (curSelectedCard.value) {
     form.value.cardId = curSelectedCard.value.id
-    form.value.amount = curSelectedCard.value.price
-    form.value.gift = curSelectedCard.value.gift || 0
+    form.value.amount = +curSelectedCard.value.price
+    form.value.gift = +curSelectedCard.value.gift || 0
   }
 })
 
@@ -93,6 +93,7 @@ async function payLater() {
 }
 
 function toPay() {
+  form.value.amount = Number(form.value.amount)
   if (!form.value.cardId && curCardRechargeType.value !== 6)
     return toast.warning('请选择卡项')
   if (!form.value.customerCardId && curCardRechargeType.value === 6)
@@ -100,12 +101,12 @@ function toPay() {
   if (!form.value.amount && curCardRechargeType.value === 6)
     return toast.warning('请输入充值金额')
 
+  if (typeof form.value.adviserId !== 'string')
+    form.value.adviserId = ''
   if (!form.value.amount && curCardRechargeType.value !== 6) {
     submitDirect()
   }
   else {
-    if (typeof form.value.adviserId !== 'string')
-      form.value.adviserId = ''
     curCardRechargeFormData.value = form.value
     const mode = curCardRechargeType.value === 6 ? PayModeEnum.Recharge : PayModeEnum.MakeCard
     uni.navigateTo({ url: `/pagesA/billing/pay?mode=${mode}` })
@@ -119,7 +120,7 @@ async function submitDirect() {
   const params = {
     orderId: res.data.orderId,
     mode: PayModeEnum.MakeCard, // mode  1 开单 2开卡 3充值 4预约
-    amount: res.data.payAmount,
+    amount: +res.data.payAmount,
     points: res.data.gainIntegral,
   }
   await sleep(1000)
