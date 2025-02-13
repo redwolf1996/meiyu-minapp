@@ -165,6 +165,9 @@ async function payLater() {
   await sleep(1000)
   uni.reLaunch({ url: '/pagesA/tabs/tab-business-dashboard' })
 }
+
+const debouncedPay = debounce(pay)
+const debouncedPayLater = debounce(payLater)
 </script>
 
 <template>
@@ -234,7 +237,7 @@ async function payLater() {
 
   <view fixed bottom-30px wp100>
     <view v-if="mode !== 4" mx-40rpx mt-164rpx color-white>
-      <wd-button size="large" custom-class="theme-bg" block @click="pay()">
+      <wd-button size="large" custom-class="theme-bg" block @click="debouncedPay">
         <view flex flex-cc>
           <text>结账</text>
         </view>
@@ -242,14 +245,14 @@ async function payLater() {
     </view>
 
     <view v-else mx-40rpx mt-164rpx color-white flex flex-cc gap10px>
-      <view w120px @click="payLater()">
+      <view w120px @click="debouncedPayLater">
         <wd-button size="large" :plain="true" block>
           <view flex flex-cc>
             <text>稍后付款</text>
           </view>
         </wd-button>
       </view>
-      <view w104px @click="pay()">
+      <view w104px @click="debouncedPay">
         <wd-button size="large" custom-class="theme-bg" block>
           <view flex flex-cc>
             <text>结账</text>
