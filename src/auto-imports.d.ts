@@ -65,6 +65,7 @@ declare global {
   const cusOriCardEquity: typeof import('./stores/common')['cusOriCardEquity']
   const cusPointsParams: typeof import('./stores/common')['cusPointsParams']
   const customRef: typeof import('vue')['customRef']
+  const debounce: typeof import('./utils/debounce')['debounce']
   const debouncedRef: typeof import('@vueuse/core')['debouncedRef']
   const debouncedWatch: typeof import('@vueuse/core')['debouncedWatch']
   const defineAsyncComponent: typeof import('vue')['defineAsyncComponent']
@@ -462,6 +463,7 @@ declare module 'vue' {
     readonly cusOriCardEquity: UnwrapRef<typeof import('./stores/common')['cusOriCardEquity']>
     readonly cusPointsParams: UnwrapRef<typeof import('./stores/common')['cusPointsParams']>
     readonly customRef: UnwrapRef<typeof import('vue')['customRef']>
+    readonly debounce: UnwrapRef<typeof import('./utils/debounce')['debounce']>
     readonly defineAsyncComponent: UnwrapRef<typeof import('vue')['defineAsyncComponent']>
     readonly defineComponent: UnwrapRef<typeof import('vue')['defineComponent']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>

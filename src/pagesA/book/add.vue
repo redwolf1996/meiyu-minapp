@@ -113,7 +113,7 @@ function toSelServTime() {
   uni.navigateTo({ url: '/pagesA/book/time' })
 }
 
-async function save() {
+function save() {
   if (model.storeServiceType === 2 && !model.customerAddress) {
     return uni.showToast({
       title: '请选择上门地址',

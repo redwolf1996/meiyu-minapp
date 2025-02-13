@@ -20,7 +20,7 @@ const totalToPayAmount = sumArray(bookInfo.value.service.map(v => v.amount))
 // 商品优惠金额合计
 // const discountAmount = func_sub(totalOriAmount, totalToPayAmount)
 
-async function doSubmit() {
+const doSubmit = debounce(() => {
   if (!totalToPayAmount) { // 总金额为0直接预约成功，不需要支付
     submitDirect()
   }
@@ -28,7 +28,7 @@ async function doSubmit() {
     bookInfo.value.amount = totalToPayAmount
     uni.navigateTo({ url: '/pagesA/billing/pay?createSource=4' }) // 预约单支付（包含了预约信息和支付信息）
   }
-}
+})
 
 // 待付款金额为0，不去结账，直接提交成功
 async function submitDirect() {
@@ -196,7 +196,7 @@ async function submitDirect() {
     <view f12 c-1A66FF>
       {{ fdt(bookInfo?.startTime) }}&nbsp;{{ bookInfo.storeServiceType === 1 ? '到店' : '上门' }}
     </view>
-    <MyButton width="200rpx" @click="doSubmit()">
+    <MyButton width="200rpx" @click="doSubmit">
       提交预约
     </MyButton>
   </view>

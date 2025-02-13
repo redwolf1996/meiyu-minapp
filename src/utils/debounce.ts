@@ -1,34 +1,28 @@
-let timeout = null
+export function debounce<T extends (...args: any[]) => any>(
+  func: T,
+  wait: number = 20000,
+  immediate: boolean = true,
+): (...args: Parameters<T>) => void {
+  let timeout: ReturnType<typeof setTimeout> | null = null
 
-/**
- * 防抖原理：一定时间内，只有最后一次操作，再过wait毫秒后才执行函数
- *
- * @param {Function} func 要执行的回调函数
- * @param {number} wait 延时的时间
- * @param {boolean} immediate 是否立即执行
- * @return null
- */
-function debounce(func, wait = 2500, immediate = false) {
-  // 清除定时器
-  if (timeout !== null)
-    clearTimeout(timeout)
-  // 立即执行，此类情况一般用不到
-  if (immediate) {
-    const callNow = !timeout
-    timeout = setTimeout(() => {
+  return function (...args: Parameters<T>): void {
+    const later = () => {
       timeout = null
-    }, wait)
-    if (callNow)
-      // eslint-disable-next-line ts/no-unused-expressions
-      typeof func === 'function' && func()
-  }
-  else {
-    // 设置定时器，当最后一次操作后，timeout不会再被清除，所以在延时wait毫秒后执行func回调方法
-    timeout = setTimeout(() => {
-      // eslint-disable-next-line ts/no-unused-expressions
-      typeof func === 'function' && func()
-    }, wait)
+      if (!immediate) {
+        func(...args)
+      }
+    }
+
+    const callNow = immediate && timeout === null
+
+    if (timeout !== null) {
+      clearTimeout(timeout)
+    }
+
+    timeout = setTimeout(later, wait)
+
+    if (callNow) {
+      func(...args)
+    }
   }
 }
-
-export default debounce
