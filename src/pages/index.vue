@@ -5,7 +5,6 @@ style:
 
 <script lang="ts" setup>
 const userInfo = useUserStore().userInfo
-console.log(userInfo)
 if (userInfo.token && userInfo.isRegister) {
   toBusinessDashboard()
 }
@@ -14,11 +13,11 @@ else {
 }
 
 function toBusinessDashboard() {
-  uni.reLaunch({ url: '/pagesA/tabs/tab-business-dashboard' })
+  uni.redirectTo({ url: '/pagesA/tabs/tab-business-dashboard' })
 }
 
 function toBusinessLogin() {
-  uni.navigateTo({ url: '/pagesA/login/index' })
+  uni.redirectTo({ url: '/pagesA/login/index' })
 }
 </script>
 
