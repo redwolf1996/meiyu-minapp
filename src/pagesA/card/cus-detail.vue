@@ -411,11 +411,14 @@ function toBilling() {
     <view mx-40rpx>
       <wd-datetime-picker v-model="timeArr" type="date" use-default-slot>
         <view flex flex-ac flex-bt>
-          <input v-model="showSTime" style="background-color: #F6F6FB;padding:10px 20px;flex:1;" type="text" placeholder="开始时间">
+          <!-- <input v-model="showSTime" style="background-color: #F6F6FB;padding:10px 20px;flex:1;" type="text" placeholder="开始时间" :readonly="true"> -->
+
+          <wd-input v-model="showSTime" readonly center custom-class="centered-input" />
           <view w44px tc c-#929292 fs-12px>
             至
           </view>
-          <input v-model="showETime" style="background-color: #F6F6FB;padding:10px 20px;flex:1;" type="text" placeholder="结束时间">
+          <wd-input v-model="showETime" readonly center custom-class="centered-input" />
+          <!-- <input v-model="showETime" style="background-color: #F6F6FB;padding:10px 20px;flex:1;" type="text" placeholder="结束时间" :readonly="true"> -->
         </view>
       </wd-datetime-picker>
     </view>
@@ -502,6 +505,10 @@ function toBilling() {
 </template>
 
 <style lang='scss' scoped>
+/* 覆盖组件内部输入框的样式 */
+.centered-input :deep(.wd-input__inner) {
+  text-align: center !important;
+}
 .item2:not(:last-child) {
   border-bottom: 1px solid #ebebf0;
 }
