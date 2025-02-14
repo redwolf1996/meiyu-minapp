@@ -165,12 +165,13 @@ function toProdServs() { // 商品和服务列表页面
 }
 
 function delEquity(item: CardEquity) {
+  console.log(item)
   const goodsId = item.goodsId
   const goodsType = item.goodsType
-  if (checkedServs.value.length && goodsType === 1) {
+  if (checkedServs.value.length && goodsType === 2) {
     checkedServs.value = checkedServs.value.filter(item => item.id !== goodsId)
   }
-  if (checkedProds.value.length && goodsType === 2) {
+  if (checkedProds.value.length && goodsType === 1) {
     checkedProds.value = checkedProds.value.filter(item => item.id !== goodsId)
   }
 }
@@ -473,6 +474,7 @@ function toBilling() {
           </view>
         </template>
         <wd-input
+          v-if="detail?.cardType === 1 && detail?.cardSecondType === 3"
           v-model="countLimit"
           type="number"
           label-width="60%"

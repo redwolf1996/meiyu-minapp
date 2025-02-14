@@ -325,7 +325,7 @@ function delEquity(info: Info) {
       <view class="form-item-title required">
         <text>卡有效期</text>
       </view>
-      <wd-radio-group v-model="expiresType" checkedColor="#fa4350">
+      <wd-radio-group v-model="expiresType" checkedColor="#09BB07">
         <wd-radio :value="0">
           永久有效
         </wd-radio>
