@@ -77,8 +77,8 @@ watch(() => [checkedServs.value, checkedProds.value], () => {
         equity: v.equity || null,
         goodsId: v.id,
         goodsName: v.name,
-        goodsType: v.prodType,
-        goodsPrice: v.price2,
+        goodsType: 1,
+        goodsPrice: v.price2 || v.price,
         editable: true,
       }
     }),
@@ -89,8 +89,8 @@ watch(() => [checkedServs.value, checkedProds.value], () => {
         equity: v.equity || null,
         goodsId: v.id,
         goodsName: v.name,
-        goodsType: v.prodType,
-        goodsPrice: v.price2,
+        goodsType: 2,
+        goodsPrice: v.price2 || v.price,
         editable: true,
       }
     }),
