@@ -150,6 +150,9 @@ onShow(() => {
               <text v-if="item.isValid === 3" c-#A6A6B0 bg-#F5F5FA f12 px-16rpx py-8rpx flex flex-cc rd-30px>
                 已取消
               </text>
+              <text v-if="item.isValid === 4" c-#0D5BB5 bg-#DBEEFF f12 px-16rpx py-8rpx flex flex-cc rd-30px>
+                待开卡
+              </text>
             </view>
           </view>
         </view>
