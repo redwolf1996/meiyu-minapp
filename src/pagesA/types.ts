@@ -61,7 +61,7 @@ export interface ProductList {
   unit?: string
   checked?: boolean
   disabled?: boolean
-  prodType?: 1 // 1产品 2服务
+  prodType?: 2 // 1服务 2产品
   /**
    * 购买的数量
    */
@@ -108,7 +108,7 @@ export interface ServiceList {
   storeId?: number
   checked?: boolean
   disabled?: boolean
-  prodType?: 2 // 1产品 2服务
+  prodType?: 1 // 1服务 2产品
   /**
    * 购买的数量
    */

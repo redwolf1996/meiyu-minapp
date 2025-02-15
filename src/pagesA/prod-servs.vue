@@ -74,7 +74,6 @@ onShow(async () => {
     }
   })
   changeCheck()
-  console.log(categoriesServ.value, categoriesProd.value)
 })
 
 function handleChange1({ value }) {
@@ -113,13 +112,13 @@ function confirm() {
   checkedServs.value = tmpCheckedServs.value.map((v) => {
     return {
       ...v,
-      prodType: 2,
+      prodType: 1,
     }
   })
   checkedProds.value = tmpCheckedProds.value.map((v) => {
     return {
       ...v,
-      prodType: 1,
+      prodType: 2,
     }
   })
   uni.navigateBack()

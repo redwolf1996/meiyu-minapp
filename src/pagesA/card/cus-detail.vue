@@ -67,6 +67,7 @@ async function initPage() {
 }
 
 watch(() => [checkedServs.value, checkedProds.value], () => {
+  console.log(checkedServs.value)
   cardEquity.value = [
     ...cusOriCardEquity.value,
     ...checkedServs.value?.filter((v0) => {
