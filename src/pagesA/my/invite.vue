@@ -25,14 +25,14 @@ onShareAppMessage((res) => {
     // 来自页面内分享按
     return {
       title: '美预',
-      path: `/pages/index?inviteCode=${useUserStore().userInfo.inviteCode}`,
+      path: `/pages/index?scene=${useUserStore().userInfo.inviteCode}`,
       // imageUrl: '',
     }
   }
   else {
     return {
       title: '美预',
-      path: `/pages/index?inviteCode=${useUserStore().userInfo.inviteCode}`,
+      path: `/pages/index?scene=${useUserStore().userInfo.inviteCode}`,
       // imageUrl: '',
     }
   }
@@ -40,7 +40,7 @@ onShareAppMessage((res) => {
 onShareTimeline(() => {
   return {
     title: '美预',
-    query: `inviteCode=${useUserStore().userInfo.inviteCode}`, // 可不填 传递的参数，只能是这种格式
+    query: `scene=${useUserStore().userInfo.inviteCode}`, // 可不填 传递的参数，只能是这种格式
     // query: `share=${state.share}`, // 可不填 传递的参数，只能是这种格式
     // imageUrl: urlImg,
   }

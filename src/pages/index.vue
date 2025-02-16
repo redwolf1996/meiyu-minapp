@@ -5,12 +5,20 @@ style:
 
 <script lang="ts" setup>
 const userInfo = useUserStore().userInfo
-if (userInfo.token && userInfo.isRegister) {
-  toBusinessDashboard()
-}
-else {
-  toBusinessLogin()
-}
+
+// 在页面的生命周期函数中获取页面地址栏参数（获取小程序码场景值）
+onShow(() => {
+  const launchOptions = wx.getLaunchOptionsSync()
+  if (launchOptions.query?.inviteCode) {
+    uni.setStorageSync('inviteCode', launchOptions.query.inviteCode)
+  }
+  if (userInfo.token && userInfo.isRegister) {
+    toBusinessDashboard()
+  }
+  else {
+    toBusinessLogin()
+  }
+})
 
 function toBusinessDashboard() {
   uni.redirectTo({ url: '/pagesA/tabs/tab-business-dashboard' })

@@ -19,6 +19,8 @@ const form = reactive<{
 
 onLoad((payload) => {
   role.value = payload?.role
+  const inviteCode = uni.getStorageSync('inviteCode')
+  form.othersInviteCode = inviteCode || ''
 })
 
 const formRef = ref()
