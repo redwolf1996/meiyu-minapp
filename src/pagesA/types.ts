@@ -142,7 +142,15 @@ export interface CatsItemsTree<T> {
   items: T[]
 }
 
+export interface Goods {
+  equity: number
+  goodsId: number
+  goodsName: string
+  goodsType: number
+}
+
 export interface AvailableCard {
+  infoList: Goods[]
   amount: number
   /**
    * 卡id
@@ -172,7 +180,7 @@ export interface AvailableCard {
   /**
    * 次卡表示数量，折扣充值卡表示折扣1.0-10.0
    */
-  equity: number
+  equity?: number
   /**
    * 有效期结束
    */
@@ -182,15 +190,15 @@ export interface AvailableCard {
   /**
    * 商品id
    */
-  goodsId: number
+  goodsId?: number
   /**
    * 商品名
    */
-  goodsName: string
+  goodsName?: string
   /**
    * 商品类型，1服务 2产品 3卡 4预约
    */
-  goodsType: number
+  goodsType?: number
   /**
    * 是否长期有效
    */

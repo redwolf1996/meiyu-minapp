@@ -10,6 +10,7 @@ import type { ListStaff } from '../staff/types'
 import type { BookForm, Service } from './types'
 import type { CustomerDetail } from '../customer/types'
 import qs from 'qs'
+import type { AvailableCard } from '../types'
 
 const toast = useToast()
 const curIndex = ref(0) // 预约服务列表当前选择项的索引
@@ -149,6 +150,20 @@ function delServ(index) {
   checkedServs.value.splice(index, 1)
 }
 
+/**
+ * 获取可使用的卡项
+ */
+const availableCards = ref<AvailableCard[]>([])
+async function getAvailableCard() {
+  const res
+  = await request.get<AvailableCard[]>('/business/store-customer-card-match', { storeCustomerId: model.storeCustomerId, goodsType: 1 })
+  availableCards.value = res.data
+}
+
+watch(() => model.storeCustomerId, () => {
+  getAvailableCard()
+})
+
 watch(() => checkedServs.value, () => {
   model.service = checkedServs.value.map((v) => {
     return {
@@ -165,15 +180,70 @@ watch(() => checkedServs.value, () => {
       cardShowName: v?.cardShowName || '', // 卡项展示的名称 例如：洗发次卡 -1次
     }
   })
-  model.service.forEach((item: Partial<Service>) => {
-    const cost = item.price2 || item.price
-    item.totalAmount = computed(() => {
-      return func_mul(cost, item.goodsCount)
+
+  if (availableCards.value.length) {
+    model.service.forEach((item: Partial<Service>) => {
+      const avas = availableCards.value.filter((v) => {
+        const ids = v.infoList?.map(v2 => v2.goodsId)
+        return ids.includes(item.storeServiceId)
+      })
+      if (avas.length) {
+        const curSelectedCardToCash = avas[0]
+
+        // 消费价格（有优惠价使用优惠价，没有则使用原价）
+        const cost = item.price2 || item.price
+        item.customerCardId = curSelectedCardToCash?.customerCardId
+        item.cardId = curSelectedCardToCash?.cardId
+        item.equity = curSelectedCardToCash?.infoList?.[0]?.equity // 可用次数
+        item.cardSecondType = curSelectedCardToCash?.cardSecondType
+        item.cardName = curSelectedCardToCash?.cardName
+        item.cardType = curSelectedCardToCash?.cardType
+
+        // 处理次卡和非次卡，卡项扣减显示信息
+        if (item.cardType === 1) { // 次卡
+          if (item.cardSecondType === 2) { // 不限次卡
+            item.cardReduceAmount = item.goodsCount
+          }
+          else { // 通卡和有限次卡
+            item.cardReduceAmount = item.goodsCount <= item.equity ? item.goodsCount : item.equity
+          }
+          item.cardShowName = `${item.cardName}\u00A0\u00A0\u00A0\u00A0\-${item.cardReduceAmount}次`
+        }
+        else { // 折扣卡、充值卡(当折扣卡使用)
+          item.cardReduceAmount = func_mul(cost, func_sub(1, func_div(item.equity, 10)))
+          item.cardShowName = `${item.cardName}\u00A0\u00A0\u00A0\u00A0\-￥${item.cardReduceAmount}`
+        }
+
+        item.totalAmount = computed(() => { // 商品原价总价
+          return func_mul(cost, item.goodsCount)
+        })
+        item.amount = computed(() => { // 小计
+          if (item?.cardType === 1) {
+            if (item.cardSecondType === 2) {
+              return 0
+            }
+            else {
+              if (item.goodsCount <= item.equity)
+                return 0
+              return func_mul(cost, item.goodsCount - item.equity)
+            }
+          }
+          return func_mul(func_sub(cost, item.cardReduceAmount), item.goodsCount)
+        })
+      }
     })
-    item.amount = computed(() => {
-      return func_mul(func_sub(cost, item.cardReduceAmount), item.goodsCount)
+  }
+  else {
+    model.service.forEach((item: Partial<Service>) => {
+      const cost = item.price2 || item.price
+      item.totalAmount = computed(() => {
+        return func_mul(cost, item.goodsCount)
+      })
+      item.amount = computed(() => {
+        return func_mul(func_sub(cost, item.cardReduceAmount), item.goodsCount)
+      })
     })
-  })
+  }
 })
 
 // 选择卡项

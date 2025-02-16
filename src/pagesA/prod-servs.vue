@@ -39,8 +39,6 @@ onShow(async () => {
   const disabledServIds = cusOriCardEquity.value?.filter(v => v.goodsType === 1)?.map(v => v.goodsId)
   const disabledProdIds = cusOriCardEquity.value?.filter(v => v.goodsType === 2)?.map(v => v.goodsId)
 
-  console.log(disabledServIds, disabledProdIds)
-
   categoriesServ.value = serviceCats.map((v) => {
     return {
       id: v.id,
