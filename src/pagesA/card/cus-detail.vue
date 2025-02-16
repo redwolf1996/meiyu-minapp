@@ -25,7 +25,7 @@ const total = ref(0)
 const countUse = ref()
 const countSurplus = ref()
 const detail = ref<CusCardDetail>(null)
-const countLimit = computed(() => detail.value?.countLimit || 0)
+const countLimit = ref(0)
 const cardName = ref('')
 const timeArr = ref<any[]>([Date.now(), dayjs().add(1, 'year').valueOf()])
 const showSTime = computed(() => dayjs(timeArr.value[0]).format('YYYY-MM-DD'))
@@ -112,6 +112,7 @@ async function getOriCardEquity() {
 function getDetail() {
   request.get<CusCardDetail>(`/business/store-customer-card/${id.value}`).then((res) => {
     detail.value = res.data
+    countLimit.value = res.data.countLimit || 0
     cardName.value = res.data.cardName || ''
     const s = dayjs(res.data.startTime).valueOf()
     const e = res.data.expiresTime ? dayjs(res.data.expiresTime).valueOf() : null
