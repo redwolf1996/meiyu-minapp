@@ -14,12 +14,14 @@ const reqParams = reactive({
 const paging = ref<ZPagingInstance<List> | null>(null)
 const dataList = ref<List[]>([])
 const total = ref(0)
+const totalDays = ref(0)
 
 async function queryList(page: number, pageSize: number) {
   reqParams.pageNum = page
   reqParams.pageSize = pageSize
-  const res = await request.get<ListRes<List>>('/business/invite-record', reqParams)
+  const res = await request.get<any>('/business/invite-record', reqParams)
   total.value = res.data.total
+  totalDays.value = +res.data.accumulate
   paging.value.complete(res.data.list)
 }
 
@@ -37,7 +39,7 @@ onShow(() => {
   >
     <template #top>
       <view flex flex-bt flex-ac c-888888 f14 px16px py8px bg-white>
-        <text>累积奖励：-- 天</text>
+        <text>累积奖励：{{ totalDays }} 天</text>
         <text>共{{ total }}条记录</text>
       </view>
     </template>
