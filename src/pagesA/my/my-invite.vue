@@ -25,6 +25,37 @@ async function queryList(page: number, pageSize: number) {
   paging.value.complete(res.data.list)
 }
 
+uni.showShareMenu({
+  withShareTicket: true,
+  menus: ['shareAppMessage', 'shareTimeline'],
+})
+
+onShareAppMessage((res) => {
+  if (res.from === 'button') {
+    // 来自页面内分享按
+    return {
+      title: '美预',
+      path: `/pagesA/tabs/tab-business-dashboard`,
+      // imageUrl: '',
+    }
+  }
+  else {
+    return {
+      title: '美预',
+      path: `/pagesA/tabs/tab-business-dashboard`,
+      // imageUrl: '',
+    }
+  }
+})
+
+onShareTimeline(() => {
+  return {
+    title: '美预',
+    // query: `share=${state.share}`, // 可不填 传递的参数，只能是这种格式
+    // imageUrl: urlImg,
+  }
+})
+
 onShow(() => {
   paging.value?.reload()
 })

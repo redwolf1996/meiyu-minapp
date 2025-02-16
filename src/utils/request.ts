@@ -9,6 +9,14 @@ export const request = {
       url: params ? `${url}?${qs.stringify(params)}` : url,
     })
   },
+  get2(url: string, params?: any) {
+    logReqInfo(url, params)
+    return http2<any>({
+      method: 'GET',
+      url: params ? `${url}?${qs.stringify(params)}` : url,
+      responseType: 'arraybuffer',
+    })
+  },
   post<T>(url: string, params?: any) {
     logReqInfo(url, params)
     return http<T>({

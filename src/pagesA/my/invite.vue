@@ -10,19 +10,29 @@ uni.showShareMenu({
   menus: ['shareAppMessage', 'shareTimeline'],
 })
 
+const url = ref('')
+
+onLoad(async () => {
+  const res = await request.get2('/business/get-unlimited-qrcode', {
+    scene: useUserStore().userInfo.inviteCode,
+    page: 'pages/index',
+  })
+  url.value = `data:image/png;base64,${uni.arrayBufferToBase64(res)}`
+})
+
 onShareAppMessage((res) => {
   if (res.from === 'button') {
     // 来自页面内分享按
     return {
       title: '美预',
-      path: `/pagesA/tabs/tab-business-dashboard`,
+      path: `/pages/index?inviteCode=${useUserStore().userInfo.inviteCode}`,
       // imageUrl: '',
     }
   }
   else {
     return {
       title: '美预',
-      path: `/pagesA/tabs/tab-business-dashboard`,
+      path: `/pages/index?inviteCode=${useUserStore().userInfo.inviteCode}`,
       // imageUrl: '',
     }
   }
@@ -30,6 +40,7 @@ onShareAppMessage((res) => {
 onShareTimeline(() => {
   return {
     title: '美预',
+    query: `inviteCode=${useUserStore().userInfo.inviteCode}`, // 可不填 传递的参数，只能是这种格式
     // query: `share=${state.share}`, // 可不填 传递的参数，只能是这种格式
     // imageUrl: urlImg,
   }
@@ -67,16 +78,22 @@ function toMyInvite() {
         邀请码
       </view>
       <view fs-64 mt10px>
-        896789
+        {{ useUserStore().userInfo.inviteCode }}
       </view>
       <view h40px />
       <view tc flex flex-cc>
-        <ikun-qrcode
+        <!-- <ikun-qrcode
           width="296"
           height="296"
           unit="rpx"
           color="#000000"
           data="字符串变量"
+        /> -->
+        <wd-img
+          :width="148"
+          :height="148"
+          mode="aspectFit"
+          :src="url"
         />
       </view>
       <view h24px />
@@ -88,9 +105,13 @@ function toMyInvite() {
           保存图片
         </view>
         <view w32rpx />
-        <view class="btn b2">
+        <!-- <view class="btn b2">
           分享邀请
-        </view>
+        </view> -->
+
+        <button class="btn b2" open-type="share" style="background-color: #ffffff;">
+          分享邀请
+        </button>
       </view>
       <view mt24px flex flex-cc tc @click="toMyInvite()">
         <text fs-34 c-1A66FF>
@@ -113,6 +134,12 @@ page {
 </style>
 
 <style lang="scss" scoped>
+button {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
 .btn {
   width: 295rpx;
   height: 80rpx;

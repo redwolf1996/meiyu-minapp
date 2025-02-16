@@ -99,6 +99,7 @@ declare global {
   const groupSortedConsecutive: typeof import('./utils/index')['groupSortedConsecutive']
   const h: typeof import('vue')['h']
   const http: typeof import('./utils/http')['http']
+  const http2: typeof import('./utils/http')['http2']
   const ignorableWatch: typeof import('@vueuse/core')['ignorableWatch']
   const inject: typeof import('vue')['inject']
   const injectLocal: typeof import('@vueuse/core')['injectLocal']
@@ -115,6 +116,7 @@ declare global {
   const markRaw: typeof import('vue')['markRaw']
   const msgDetail: typeof import('./stores/common')['msgDetail']
   const my: typeof import('./utils/index')['my']
+  const myStoreId: typeof import('./utils/http')['myStoreId']
   const nextTick: typeof import('vue')['nextTick']
   const onActivated: typeof import('vue')['onActivated']
   const onAddToFavorites: typeof import('@dcloudio/uni-app')['onAddToFavorites']
@@ -487,6 +489,7 @@ declare module 'vue' {
     readonly getMenuButtonInfo: UnwrapRef<typeof import('./utils/index')['getMenuButtonInfo']>
     readonly groupSortedConsecutive: UnwrapRef<typeof import('./utils/index')['groupSortedConsecutive']>
     readonly h: UnwrapRef<typeof import('vue')['h']>
+    readonly http2: UnwrapRef<typeof import('./utils/http')['http2']>
     readonly http: UnwrapRef<typeof import('./utils/http')['http']>
     readonly inject: UnwrapRef<typeof import('vue')['inject']>
     readonly isH5: UnwrapRef<typeof import('./utils/index')['isH5']>

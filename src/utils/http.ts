@@ -2,7 +2,6 @@ const baseUrl = import.meta.env.VITE_BASE_URL
 const envVersion = import.meta.env.VITE_ENV_VERSION
 const userStore = useUserStore()
 
-// const accountInfo = uni.getAccountInfoSync()
 const httpInterceptor = {
   invoke(options: UniApp.RequestOptions) {
     const urls = [
@@ -17,7 +16,7 @@ const httpInterceptor = {
       ...options?.header,
       'client': 'minapp',
       'envVersion': envVersion,
-      'B-Store-Id': storeId.value,
+      'B-Store-Id': storeId.value || '',
     }
     const token = userStore.userInfo?.token
     if (token) {
@@ -50,7 +49,7 @@ export function http<T>(options: UniApp.RequestOptions) {
           else if (data.code !== 200) {
             uni.showToast({
               icon: 'none',
-              title: data.code === 500 ? '服务端错误' : (res.data as Data<T>).msg,
+              title: data.code === 500 ? '服务端错误' : (res.data as Data<T>)?.msg || '请求错误',
               duration: 2000,
             })
             return reject(res)
@@ -60,11 +59,26 @@ export function http<T>(options: UniApp.RequestOptions) {
         else {
           uni.showToast({
             icon: 'none',
-            title: (res.data as Data<T>).msg || '请求错误',
+            title: (res.data as Data<T>)?.msg || '请求错误',
             duration: 2000,
           })
           return reject(res)
         }
+      },
+      fail(err) {
+        uni.showToast({ icon: 'none', title: '网络错误', duration: 2000 })
+        reject(err)
+      },
+    })
+  })
+}
+
+export function http2<T>(options: UniApp.RequestOptions) {
+  return new Promise<T>((resolve, reject) => {
+    uni.request({
+      ...options,
+      success(res) {
+        resolve(res.data as T)
       },
       fail(err) {
         uni.showToast({ icon: 'none', title: '网络错误', duration: 2000 })

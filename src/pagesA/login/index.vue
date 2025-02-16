@@ -26,7 +26,7 @@ function wxlogin() {
         useUserStore().setUserInfo({ token, isRegister })
         if (isRegister) {
           await setUserBaseInfo()
-          uni.reLaunch({ url: '/pagesA/tabs/tab-business-dashboard' })
+          uni.redirectTo({ url: '/pagesA/tabs/tab-business-dashboard' })
         }
         else {
           // 身份选择（商家/员工）

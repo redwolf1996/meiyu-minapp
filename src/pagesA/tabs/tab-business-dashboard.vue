@@ -58,8 +58,8 @@ onShow(() => {
 
 // 店铺初始化
 async function initStore() {
-  const res = await request.get<UserInfo>('/business/info')
-  useUserStore().setUserInfo(res.data)
+  // const res = await request.get<UserInfo>('/business/info')
+  // useUserStore().setUserInfo(res.data)
 
   userInfo.value = useUserStore().userInfo
 
