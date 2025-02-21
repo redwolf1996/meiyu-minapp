@@ -7,10 +7,10 @@ style:
 const userInfo = useUserStore().userInfo
 
 // 在页面的生命周期函数中获取页面地址栏参数（获取小程序码场景值）
-onShow(() => {
-  const launchOptions = wx.getLaunchOptionsSync()
-  if (launchOptions.query?.scene) {
-    uni.setStorageSync('inviteCode', launchOptions.query.scene)
+onLoad((query) => {
+  const scene = decodeURIComponent(query.scene)
+  if (scene) {
+    uni.setStorageSync('inviteCode', scene)
   }
   if (userInfo.token && userInfo.isRegister) {
     toBusinessDashboard()
