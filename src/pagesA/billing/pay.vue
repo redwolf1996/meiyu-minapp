@@ -31,8 +31,6 @@ onLoad(async (option) => {
     })
   })
 
-  console.log('option', option)
-
   //  1 开单 2开卡 3充值 4预约
   if (option?.createSource) {
     mode.value = Number(option?.createSource)

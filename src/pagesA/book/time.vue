@@ -11,8 +11,6 @@ import { flatten } from 'lodash-es'
 import type { Data } from '../booking/types'
 
 const curWeek = ref(+new Date().getDay() + 1)
-const instance = getCurrentInstance()
-const query = uni.createSelectorQuery().in(instance.proxy)
 const today = fd(+new Date())
 const day = ref(fd(+new Date()))
 const stime = ref('')
@@ -99,12 +97,6 @@ async function init() {
     }
   })
 }
-
-onMounted(() => {
-  query.select('#mytable').boundingClientRect((data: any) => {
-    console.log(data)
-  }).exec()
-})
 
 onHide(() => {
   bookInfo.value = null

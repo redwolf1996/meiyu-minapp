@@ -67,7 +67,6 @@ async function initPage() {
 }
 
 watch(() => [checkedServs.value, checkedProds.value], () => {
-  console.log(checkedServs.value)
   cardEquity.value = [
     ...cusOriCardEquity.value,
     ...checkedServs.value?.filter((v0) => {
@@ -167,7 +166,6 @@ function toProdServs() { // 商品和服务列表页面
 }
 
 function delEquity(item: CardEquity) {
-  console.log(item)
   const goodsId = item.goodsId
   const goodsType = item.goodsType
   if (checkedServs.value.length && goodsType === 2) {

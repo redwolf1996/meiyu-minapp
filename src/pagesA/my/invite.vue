@@ -11,14 +11,43 @@ uni.showShareMenu({
 })
 
 const url = ref('')
+const base64 = ref<any>(null)
 
 onLoad(async () => {
   const res = await request.get2('/business/get-unlimited-qrcode', {
     scene: useUserStore().userInfo.inviteCode,
     page: 'pages/index',
   })
-  url.value = `data:image/png;base64,${uni.arrayBufferToBase64(res)}`
+  base64.value = uni.arrayBufferToBase64(res)
+  url.value = `data:image/png;base64,${base64.value}`
 })
+
+async function saveImg() {
+  const filePath = `${wx.env.USER_DATA_PATH}/detail.png`
+  uni.getFileSystemManager().writeFile({
+    filePath, // 创建一个临时文件名
+    data: base64.value, // 写入的文本或二进制数据
+    encoding: 'base64', // 写入当前文件的字符编码
+    success: () => {
+      uni.saveImageToPhotosAlbum({
+        filePath,
+        success() {
+          uni.showToast({
+            title: '保存成功，请从相册选择再分享',
+            icon: 'none',
+            duration: 500,
+          })
+        },
+        fail(err) {
+          console.error(err.errMsg)
+        },
+      })
+    },
+    fail: (err) => {
+      console.error(err)
+    },
+  })
+}
 
 onShareAppMessage((res) => {
   if (res.from === 'button') {
@@ -101,7 +130,7 @@ function toMyInvite() {
         扫码注册
       </view>
       <view mt40px flex flex-cc>
-        <view class="btn b1">
+        <view class="btn b1" @click="saveImg">
           保存图片
         </view>
         <view w32rpx />
