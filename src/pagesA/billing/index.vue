@@ -257,6 +257,8 @@ async function payLater() {
   uni.navigateBack()
 }
 
+const debouncePayLater = debounce(payLater, 2000)
+
 function toPay() {
   if (!form.value.storeCustomerId)
     return toast.warning('请选择客户')
@@ -272,6 +274,8 @@ function toPay() {
   else
     uni.navigateTo({ url: `/pagesA/billing/pay?mode=${PayModeEnum.MakeOrder}&storeCustomerId=${form.value.storeCustomerId}` })
 }
+
+const debounceToPay = debounce(toPay, 2000)
 
 // 待付款金额为0，不去结账，直接提交成功
 async function submitDirect() {
@@ -451,14 +455,14 @@ function delEquity(item: BillingGood) {
     <view class="footer-inner">
       <template v-if="totalToPay">
         <view w120px>
-          <wd-button size="large" :plain="true" block @click="payLater()">
+          <wd-button size="large" :plain="true" block @click="debouncePayLater()">
             <view flex flex-cc>
               <text>稍后付款</text>
             </view>
           </wd-button>
         </view>
         <view w104px>
-          <wd-button size="large" custom-class="theme-bg" block @click="toPay()">
+          <wd-button size="large" custom-class="theme-bg" block @click="debounceToPay()">
             <view flex flex-cc>
               <text>收款</text>
             </view>
@@ -466,7 +470,7 @@ function delEquity(item: BillingGood) {
         </view>
       </template>
       <view v-else wp100>
-        <wd-button size="large" custom-class="theme-bg" block @click="toPay()">
+        <wd-button size="large" custom-class="theme-bg" block @click="debounceToPay()">
           <view flex flex-cc>
             <text>提交</text>
           </view>

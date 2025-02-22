@@ -180,6 +180,8 @@ async function save() {
   uni.navigateBack()
 }
 
+const debounceSub = debounce(save)
+
 function delEquity(info: Info) {
   if (checkedServs.value.length && info.serviceId) {
     checkedServs.value = checkedServs.value.filter(item => item.id !== info.serviceId)
@@ -343,7 +345,7 @@ function delEquity(info: Info) {
       />
     </view>
   </wd-form>
-  <view mx-40rpx mt-64rpx color-white @click="save()">
+  <view mx-40rpx mt-64rpx color-white @click="debounceSub()">
     <wd-button size="large" custom-class="theme-bg" block>
       <view flex flex-cc>
         <text>保存</text>

@@ -92,6 +92,8 @@ async function payLater() {
   uni.reLaunch({ url: '/pagesA/tabs/tab-business-dashboard' })
 }
 
+const debouncePayLater = debounce(payLater, 2000)
+
 function toPay() {
   form.value.amount = Number(form.value.amount)
   if (!form.value.cardId && curCardRechargeType.value !== 6)
@@ -112,6 +114,8 @@ function toPay() {
     uni.navigateTo({ url: `/pagesA/billing/pay?mode=${mode}` })
   }
 }
+
+const debounceToPay = debounce(toPay, 2000)
 
 // 待付款金额为0，不去结账，直接提交成功
 async function submitDirect() {
@@ -316,14 +320,14 @@ async function submitDirect() {
     <view class="footer-inner">
       <template v-if="form.amount">
         <view w120px>
-          <wd-button size="large" :plain="true" block @click="payLater()">
+          <wd-button size="large" :plain="true" block @click="debouncePayLater()">
             <view flex flex-cc>
               <text>稍后付款</text>
             </view>
           </wd-button>
         </view>
         <view w104px>
-          <wd-button size="large" custom-class="theme-bg" block @click="toPay()">
+          <wd-button size="large" custom-class="theme-bg" block @click="debounceToPay()">
             <view flex flex-cc>
               <text>收款</text>
             </view>
@@ -331,7 +335,7 @@ async function submitDirect() {
         </view>
       </template>
       <view v-if="!form.amount" wp100>
-        <wd-button size="large" custom-class="theme-bg" block @click="toPay()">
+        <wd-button size="large" custom-class="theme-bg" block @click="debounceToPay()">
           提交
         </wd-button>
       </view>

@@ -213,6 +213,8 @@ async function save() {
   uni.navigateBack()
 }
 
+const debounceSub = debounce(save)
+
 async function skip() {
   useUserStore().setUserInfo({
     serviceSkip: 2,
@@ -377,7 +379,7 @@ function toCats() {
     </view>
   </wd-form>
 
-  <view mx-40rpx mt-64rpx color-white @click="save()">
+  <view mx-40rpx mt-64rpx color-white @click="debounceSub()">
     <wd-button size="large" custom-class="theme-bg" block>
       <view flex flex-cc>
         <text>保存</text>

@@ -164,8 +164,8 @@ async function payLater() {
   uni.reLaunch({ url: '/pagesA/tabs/tab-business-dashboard' })
 }
 
-const debouncedPay = debounce(pay)
-const debouncedPayLater = debounce(payLater)
+const debouncedPay = debounce(pay, 2000)
+const debouncedPayLater = debounce(payLater, 2000)
 </script>
 
 <template>
