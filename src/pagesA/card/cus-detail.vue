@@ -168,10 +168,10 @@ function toProdServs() { // 商品和服务列表页面
 function delEquity(item: CardEquity) {
   const goodsId = item.goodsId
   const goodsType = item.goodsType
-  if (checkedServs.value.length && goodsType === 2) {
+  if (checkedServs.value.length && goodsType === 1) {
     checkedServs.value = checkedServs.value.filter(item => item.id !== goodsId)
   }
-  if (checkedProds.value.length && goodsType === 1) {
+  if (checkedProds.value.length && goodsType === 2) {
     checkedProds.value = checkedProds.value.filter(item => item.id !== goodsId)
   }
 }
