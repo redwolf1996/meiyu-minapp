@@ -4,7 +4,6 @@ style:
 </route>
 
 <script lang="ts" setup>
-const version = uni.getAppBaseInfo()?.appVersion
 function quit() {
   useUserStore().clearUserInfo()
   uni.redirectTo({ url: '/pagesA/login/index' })
@@ -49,7 +48,7 @@ function update() {
     <MyCell label="授权管理" /> -->
     <MyCell label="检查更新" noBorder @myclick="update">
       <text f14 c-3B3D3D>
-        当前版本{{ version }}
+        当前版本2.0.12
       </text>
     </MyCell>
   </MyCellGroup>
