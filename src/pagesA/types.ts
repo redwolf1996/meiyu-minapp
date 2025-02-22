@@ -46,22 +46,26 @@ export interface Info {
   [property: string]: any
 }
 
-export interface ProductList {
+export interface ServiceList {
   categoryId?: number
   categoryName?: string
   coverImg?: string
   desc?: string
+  duration?: number
+  durationUnit?: string
   id?: number
-  inventory?: number
   isShow?: number
+  isToDoor?: number
+  isToStore?: number
   name?: string
+  payType?: number
   price?: number
   price2?: number
+  serviceColor?: string
   storeId?: number
-  unit?: string
   checked?: boolean
   disabled?: boolean
-  prodType?: 2 // 1服务 2产品
+  prodType?: 1 // 1服务 2产品
   /**
    * 购买的数量
    */
@@ -89,26 +93,22 @@ export interface ProductList {
   [property: string]: any
 }
 
-export interface ServiceList {
+export interface ProductList {
   categoryId?: number
   categoryName?: string
   coverImg?: string
   desc?: string
-  duration?: number
-  durationUnit?: string
   id?: number
+  inventory?: number
   isShow?: number
-  isToDoor?: number
-  isToStore?: number
   name?: string
-  payType?: number
   price?: number
   price2?: number
-  serviceColor?: string
   storeId?: number
+  unit?: string
   checked?: boolean
   disabled?: boolean
-  prodType?: 1 // 1服务 2产品
+  prodType?: 2 // 1服务 2产品
   /**
    * 购买的数量
    */

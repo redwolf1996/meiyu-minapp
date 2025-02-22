@@ -55,7 +55,7 @@ function mergeProdsAndServs() {
     const arr: any = [...checkedProds.value, ...checkedServs.value]
     const tmp = arr.map((v) => {
       return {
-        goodsType: v.prodType === 1 ? 2 : 1, // 1服务 2产品
+        goodsType: v.prodType, // 1服务 2产品
         goodsId: v.id,
         goodsCount: 1, // 商品数量
         goodsPrice: v.price, // 商品原价
