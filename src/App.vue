@@ -24,12 +24,12 @@ function update() {
         })
       })
     }
-    else {
-      uni.showToast({
-        title: '当前已是最新版本',
-        icon: 'success',
-      })
-    }
+    // else {
+    //   uni.showToast({
+    //     title: '当前已是最新版本',
+    //     icon: 'success',
+    //   })
+    // }
   })
 }
 

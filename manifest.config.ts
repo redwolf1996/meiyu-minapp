@@ -4,7 +4,7 @@ export default defineManifestConfig({
   'name': 'yau',
   'appid': '__UNI__401176F',
   'description': '',
-  'versionName': '1.0.0',
+  'versionName': '2.0.5',
   'versionCode': '100',
   'transformPx': false,
   'h5': {
