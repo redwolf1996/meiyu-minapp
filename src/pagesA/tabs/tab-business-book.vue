@@ -205,6 +205,7 @@ async function getBookDashboard(cDate: string) {
       bookingListUse: getFinalArr(item.bookingList),
     }
   })
+  console.log(tableData.value)
 }
 
 async function getBookCount(cDate?: string) {
@@ -505,15 +506,16 @@ function confirm() {
                 :style="{
                   width: `${multipleItemWidth - 10}px`,
                   top: `${itm[0].top}px`,
-                  height: `${itm.length === 1 ? itm.height : itm[itm.length - 1].end - itm[0].top}px`,
+                  // height: `${itm.length === 1 ? itm.height : itm[itm.length - 1].end - itm[0].top}px`,
                 }"
               >
                 <view
                   v-for="(it, i) in itm" :key="`kkk-${index}-${idx}-${i}`" :style="{
                     height: `${it.height}px`,
-                    transform: `translateY(${itm.length === 1 ? 0 : it.top - itm[0].top}px)`,
+                    // transform: `translateY(${itm.length === 1 ? 0 : it.top - itm[0].top}px)`,
                     background: servStatusMap[it.bookingStatus].color,
-                    width: `${(multipleItemWidth - 10) / itm.length}%`,
+                    width: `${(multipleItemWidth - 10)}px`,
+                    // width: `${(multipleItemWidth - 10) / itm.length}%`,
                   }" class="booking-item"
                 >
                   <view class="ch" f12 fb ellipsis>
@@ -705,7 +707,7 @@ page {
   position: absolute;
   left: 0;
   display: flex;
-  flex-wrap: nowrap;
+  flex-direction: column;
   // border: 1px solid blue;
   // height: 150px;
   // top: 0;
