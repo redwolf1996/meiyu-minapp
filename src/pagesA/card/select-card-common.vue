@@ -50,8 +50,11 @@ onLoad(async (option) => {
       name: '所有分类',
       storeId: null,
     })
+    console.log(cType.value, cSecondType.value)
     const cards = res.data.cardList.filter((v) => {
-      return v.type === cType.value && v.secondType === cSecondType.value
+      return cType.value === 1
+        ? (v.type === cType.value) && (v.secondType === cSecondType.value)
+        : v.type === cType.value
     })
     categories.value = cardCats.map((v) => {
       return {
