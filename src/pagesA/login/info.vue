@@ -19,7 +19,7 @@ const form = reactive<{
 
 onLoad((payload) => {
   role.value = payload?.role
-  const inviteCode = uni.getStorageSync('inviteCode')
+  const inviteCode = JSON.parse(uni.getStorageSync('inviteCode'))
   form.othersInviteCode = inviteCode || ''
 })
 
