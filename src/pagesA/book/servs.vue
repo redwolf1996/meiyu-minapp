@@ -57,12 +57,11 @@ function changeCheck() {
   servs = flatten(toRaw(servs))
   tmpCheckedServs.value = servs.filter(v => v.checked)
 }
-
 function confirm() {
   checkedServs.value = tmpCheckedServs.value.map((v) => {
     return {
       ...v,
-      prodType: 2,
+      prodType: 1,
     }
   })
   uni.navigateBack()
