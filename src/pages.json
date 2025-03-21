@@ -253,6 +253,13 @@
           }
         },
         {
+          "path": "dashboard/cash-results",
+          "type": "page",
+          "style": {
+            "navigationBarTitleText": "提现结果"
+          }
+        },
+        {
           "path": "dashboard/cashing-records",
           "type": "page",
           "style": {

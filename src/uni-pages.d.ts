@@ -35,6 +35,7 @@ interface NavigateToOptions {
        "/pagesA/customer/list" |
        "/pagesA/customer/points" |
        "/pagesA/dashboard/cash-apply" |
+       "/pagesA/dashboard/cash-results" |
        "/pagesA/dashboard/cashing-records" |
        "/pagesA/dashboard/income-detail" |
        "/pagesA/dashboard/pay-ways" |
