@@ -90,6 +90,10 @@ async function handleSubmit() {
       },
       fail: (res) => {
         console.log('fail:', res)
+        uni.showToast({
+          title: '提现失败',
+          icon: 'none',
+        })
       },
     })
   }
