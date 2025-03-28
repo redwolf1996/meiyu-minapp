@@ -26,7 +26,7 @@ function toRecords() {
 }
 
 function toCashApply() {
-  uni.navigateTo({ url: '/pagesA/dashboard/cash-apply' })
+  uni.navigateTo({ url: `/pagesA/dashboard/cash-apply?platformAmount=${info.value?.platformAmount}` })
 }
 </script>
 
@@ -43,7 +43,7 @@ function toCashApply() {
     <view flex flex-cc c-fff>
       <view v-if="show" tc>
         <text fs-64>
-          {{ info?.platformAmount ?? '--' }}
+          {{ info?.platformAmount + info?.frozenAmount }}
         </text>
       </view>
       <view v-else tc style="transform: translateY(10rpx);">
@@ -74,7 +74,7 @@ function toCashApply() {
           可提现余额(元)
         </view>
         <view f14 mt10rpx>
-          {{ info?.frozenAmount ?? '--' }}
+          {{ info?.platformAmount ?? '--' }}
         </view>
       </view>
       <view wp-33.3333>

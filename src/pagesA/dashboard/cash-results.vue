@@ -1,9 +1,14 @@
 <route lang="yaml">
 style:
-  navigationBarTitleText: 提现结果
+  navigationBarTitleText: 提现申请
 </route>
 
 <script lang="ts" setup>
+const cashAmount = ref<number>(0) // 提现金额
+onLoad((options) => {
+  cashAmount.value = Number(options?.cashAmount)
+})
+
 function handleBack() {
   uni.redirectTo({
     url: '/pagesA/tabs/tab-business-dashboard',
@@ -26,10 +31,10 @@ function toMy() {
 <template>
   <view tc>
     <view class="h60px" />
-    <view>提现成功</view>
+    <view>申请成功</view>
     <view class="h30px" />
     <view fs-28px fb>
-      ￥9985.88
+      ￥{{ cashAmount }}
     </view>
     <view class="h40px" />
     <view f12 c-#6C6666>

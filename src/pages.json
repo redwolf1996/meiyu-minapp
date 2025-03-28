@@ -256,7 +256,7 @@
           "path": "dashboard/cash-results",
           "type": "page",
           "style": {
-            "navigationBarTitleText": "提现结果"
+            "navigationBarTitleText": "提现申请"
           }
         },
         {
