@@ -53,7 +53,7 @@ style:
       <view>
         <view>勋华科技</view>
         <view>
-          {{ storeMsgDetail?.ext?.today ?? '--' }}
+          {{ storeMsgDetail?.createTime ?? '--' }}
         </view>
       </view>
     </view>
