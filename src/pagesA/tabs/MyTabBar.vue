@@ -54,10 +54,10 @@ function changeBar(index: number) {
     </uv-tabbar-item>
     <uv-tabbar-item text="数据">
       <template #active-icon>
-        <image class="icon" src="./icons/icon-tab-customer-act.png" />
+        <image class="icon" src="./icons/icon-tab-data-act.png" />
       </template>
       <template #inactive-icon>
-        <image class="icon" src="./icons/icon-tab-customer.png" />
+        <image class="icon" src="./icons/icon-tab-data.png" />
       </template>
     </uv-tabbar-item>
     <uv-tabbar-item text="我的">
