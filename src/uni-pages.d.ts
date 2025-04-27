@@ -41,7 +41,6 @@ interface NavigateToOptions {
        "/pagesA/dashboard/pay-ways" |
        "/pagesA/dashboard/store" |
        "/pagesA/dashboard/wallet" |
-       "/pagesA/data-statistics/index" |
        "/pagesA/login/index" |
        "/pagesA/login/info" |
        "/pagesA/login/role-select" |
@@ -75,6 +74,7 @@ interface NavigateToOptions {
        "/pagesA/tabs/tab-business-book" |
        "/pagesA/tabs/tab-business-customer" |
        "/pagesA/tabs/tab-business-dashboard" |
+       "/pagesA/tabs/tab-business-data" |
        "/pagesA/tabs/tab-business-my" |
        "/pagesA/init/steps/done" |
        "/pagesA/init/steps/index" |

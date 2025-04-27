@@ -295,13 +295,6 @@
           }
         },
         {
-          "path": "data-statistics/index",
-          "type": "page",
-          "style": {
-            "navigationBarTitleText": "数据统计"
-          }
-        },
-        {
           "path": "login/index",
           "type": "page",
           "style": {
@@ -536,6 +529,15 @@
           "type": "page",
           "style": {
             "navigationBarTitleText": "工作台",
+            "navigationStyle": "custom"
+          }
+        },
+        {
+          "path": "tabs/tab-business-data",
+          "type": "page",
+          "style": {
+            "navigationBarTitleText": "数据",
+            "navigationBarBackgroundColor": "#ffffff",
             "navigationStyle": "custom"
           }
         },
