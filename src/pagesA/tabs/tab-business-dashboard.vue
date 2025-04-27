@@ -152,6 +152,11 @@ function toCardRecharge(type: 1 | 2 | 3 | 4 | 5 | 6) {
   curCustomer.value = null
   uni.navigateTo({ url: '/pagesA/card/make' })
 }
+
+// 数据统计
+function toDataStatistics() {
+  uni.navigateTo({ url: '/pagesA/data-statistics/index' })
+}
 </script>
 
 <template>
@@ -352,6 +357,10 @@ function toCardRecharge(type: 1 | 2 | 3 | 4 | 5 | 6) {
           <view @click="toCusCard()">
             <i i-heroicons-outline-credit-card fs-64 c-1563ff />
             <text>会员卡项</text>
+          </view>
+          <view @click="toDataStatistics()">
+            <i i-heroicons-outline-credit-card fs-64 c-1563ff />
+            <text>数据统计</text>
           </view>
         </view>
       </view>

@@ -41,6 +41,7 @@ interface NavigateToOptions {
        "/pagesA/dashboard/pay-ways" |
        "/pagesA/dashboard/store" |
        "/pagesA/dashboard/wallet" |
+       "/pagesA/data-statistics/index" |
        "/pagesA/login/index" |
        "/pagesA/login/info" |
        "/pagesA/login/role-select" |
