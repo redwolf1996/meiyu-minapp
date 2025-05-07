@@ -257,7 +257,7 @@ function toCats() {
         prop="duration"
         placeholder="请输入"
         :use-suffix-slot="true"
-        type="number"
+        type="digit"
         :rules="[{ required: true, message: '填写服务时长' }]"
       >
         <template #suffix>
