@@ -290,7 +290,7 @@ function toCats() {
     <wd-cell-group :border="true">
       <wd-input
         v-model="form.price"
-        type="number"
+        type="digit"
         label="原价"
         placeholder="请输入"
         suffix-icon="arrow-right"
@@ -298,7 +298,7 @@ function toCats() {
       />
       <wd-input
         v-model="form.price2"
-        type="number"
+        type="digit"
         label="优惠价"
         placeholder="若不填，则客户按原价购买"
         suffix-icon="arrow-right"
