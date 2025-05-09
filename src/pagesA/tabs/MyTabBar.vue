@@ -18,6 +18,7 @@ const tabUrls: NavigateToOptions['url'][] = [
 ]
 
 function changeBar(index: number) {
+  console.log('changeBar', index)
   uni.redirectTo({ url: tabUrls[index], animationType: 'none' })
 }
 </script>

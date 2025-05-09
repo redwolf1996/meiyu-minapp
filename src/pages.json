@@ -537,7 +537,6 @@
           "type": "page",
           "style": {
             "navigationBarTitleText": "数据",
-            "navigationBarBackgroundColor": "#ffffff",
             "navigationStyle": "custom"
           }
         },

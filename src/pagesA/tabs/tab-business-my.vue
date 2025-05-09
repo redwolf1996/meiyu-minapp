@@ -156,7 +156,7 @@ function toFeedBack() {
     </text>
   </view> -->
   <view h100px />
-  <MyTabBar :tab-index="3" />
+  <MyTabBar :tab-index="4" />
 </template>
 
 <style lang='scss' scoped>
