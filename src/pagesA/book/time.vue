@@ -10,7 +10,8 @@ import type { TimeOccupy } from './types'
 import { flatten } from 'lodash-es'
 import type { Data } from '../booking/types'
 
-const curWeek = ref(+new Date().getDay() + 1)
+const tw = +new Date().getDay()
+const curWeek = ref(tw === 0 ? 7 : tw)
 const today = fd(+new Date())
 const day = ref(fd(+new Date()))
 const stime = ref('')
