@@ -77,7 +77,7 @@ watch(() => [checkedServs.value, checkedProds.value], () => {
         goodsId: v.id,
         goodsName: v.name,
         goodsType: 1,
-        goodsPrice: v.price2 || v.price,
+        goodsPrice: v.price2 ?? v.price,
         editable: true,
       }
     }),
@@ -89,7 +89,7 @@ watch(() => [checkedServs.value, checkedProds.value], () => {
         goodsId: v.id,
         goodsName: v.name,
         goodsType: 2,
-        goodsPrice: v.price2 || v.price,
+        goodsPrice: v.price2 ?? v.price,
         editable: true,
       }
     }),

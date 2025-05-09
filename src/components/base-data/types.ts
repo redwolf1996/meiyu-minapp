@@ -50,7 +50,7 @@ export interface FormService {
   /**
    * 划线价两位小数（优惠后价格）
    */
-  price2?: number
+  price2?: number | null
   /**
    * 服务标记色
    */
@@ -99,7 +99,7 @@ export interface FormProduct {
   /**
    * 划线价两位小数（优惠后价格）
    */
-  price2?: number
+  price2?: number | null
   /**
    * 当前门店
    */

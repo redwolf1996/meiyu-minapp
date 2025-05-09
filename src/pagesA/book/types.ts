@@ -102,7 +102,7 @@ export interface Service {
   name?: string
   duration?: number
   price?: number
-  price2?: number
+  price2?: number | null
   coverImg?: string
   /**
    * 次卡可扣减的次数

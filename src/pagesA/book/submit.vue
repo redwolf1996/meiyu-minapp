@@ -119,9 +119,9 @@ async function submitDirect() {
             <view flex flex-ac flex-bt>
               <view flex flex-ac gap4px>
                 <text c-FF1919 f18>
-                  ￥{{ item.price2 || item.price }}
+                  ￥{{ item.price2 ?? item.price }}
                 </text>
-                <text v-if="item.price2" line-through f12 c-D4D4D4>
+                <text v-if="isNumber(item.price2)" line-through f12 c-D4D4D4>
                   ￥{{ item.price }}
                 </text>
               </view>

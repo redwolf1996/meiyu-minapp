@@ -106,6 +106,7 @@ declare global {
   const isDefined: typeof import('@vueuse/core')['isDefined']
   const isH5: typeof import('./utils/index')['isH5']
   const isIos: typeof import('./utils/index')['isIos']
+  const isNumber: typeof import('./utils/index')['isNumber']
   const isProxy: typeof import('vue')['isProxy']
   const isReactive: typeof import('vue')['isReactive']
   const isReadonly: typeof import('vue')['isReadonly']
@@ -493,6 +494,7 @@ declare module 'vue' {
     readonly http: UnwrapRef<typeof import('./utils/http')['http']>
     readonly inject: UnwrapRef<typeof import('vue')['inject']>
     readonly isH5: UnwrapRef<typeof import('./utils/index')['isH5']>
+    readonly isNumber: UnwrapRef<typeof import('./utils/index')['isNumber']>
     readonly isProxy: UnwrapRef<typeof import('vue')['isProxy']>
     readonly isReactive: UnwrapRef<typeof import('vue')['isReactive']>
     readonly isReadonly: UnwrapRef<typeof import('vue')['isReadonly']>

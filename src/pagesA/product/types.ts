@@ -38,7 +38,7 @@ export interface List {
   /**
    * 优惠价
    */
-  price2?: number
+  price2?: number | null
   /**
    * 门店id
    */

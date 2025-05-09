@@ -38,7 +38,7 @@ export interface Info {
   cardId: number
   equity: number
   price: number
-  price2: number
+  price2?: number | null
   productId: number
   productName: string
   serviceId: number
@@ -60,7 +60,7 @@ export interface ServiceList {
   name?: string
   payType?: number
   price?: number
-  price2?: number
+  price2?: number | null
   serviceColor?: string
   storeId?: number
   checked?: boolean
@@ -103,7 +103,7 @@ export interface ProductList {
   isShow?: number
   name?: string
   price?: number
-  price2?: number
+  price2?: number | null
   storeId?: number
   unit?: string
   checked?: boolean

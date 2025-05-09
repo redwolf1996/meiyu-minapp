@@ -77,7 +77,7 @@ export interface List {
   /**
    * 划线价（优惠后价格）
    */
-  price2?: number
+  price2?: number | null
   /**
    * 颜色
    */

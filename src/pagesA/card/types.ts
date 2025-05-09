@@ -575,7 +575,7 @@ export interface Equity {
    */
   equity: number
   price: number
-  price2: number
+  price2?: number | null
   /**
    * 产品id
    */
