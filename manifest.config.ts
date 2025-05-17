@@ -4,8 +4,8 @@ export default defineManifestConfig({
   'name': 'yau',
   'appid': '__UNI__401176F',
   'description': '',
-  'versionName': '2.0.5',
-  'versionCode': '100',
+  'versionName': '3.0.5',
+  'versionCode': '200',
   'transformPx': false,
   'h5': {
     router: {
