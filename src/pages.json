@@ -624,6 +624,22 @@
             "navigationBarTitleText": "添加员工",
             "navigationStyle": "custom"
           }
+        },
+        {
+          "path": "tabs/components-data/customer-analysis",
+          "type": "page"
+        },
+        {
+          "path": "tabs/components-data/manage-data",
+          "type": "page"
+        },
+        {
+          "path": "tabs/components-data/staff-achievements",
+          "type": "page"
+        },
+        {
+          "path": "tabs/components-data/staff-statistics",
+          "type": "page"
         }
       ]
     },

@@ -86,6 +86,10 @@ interface NavigateToOptions {
        "/pagesA/init/steps/step3" |
        "/pagesA/init/steps/step4" |
        "/pagesA/init/steps/step5" |
+       "/pagesA/tabs/components-data/customer-analysis" |
+       "/pagesA/tabs/components-data/manage-data" |
+       "/pagesA/tabs/components-data/staff-achievements" |
+       "/pagesA/tabs/components-data/staff-statistics" |
        "/pagesB/index";
 }
 interface RedirectToOptions extends NavigateToOptions {}
