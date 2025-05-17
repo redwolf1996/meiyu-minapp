@@ -26,15 +26,11 @@ const showSearchParams = ref(false)
 function changeSearchParams() {
   showSearchParams.value = !showSearchParams.value
 }
-
-function changeTab(item: any) {
-  console.log(item)
-}
 </script>
 
 <template>
   <MyNavBar title="数据" :capsule="false" />
-  <wd-tabs v-model="tab" @click="changeTab">
+  <wd-tabs v-model="tab">
     <block v-for="item in tabs" :key="item.label">
       <wd-tab :title="item.label" />
     </block>
@@ -45,6 +41,21 @@ function changeTab(item: any) {
     <text>2023-01-01</text>
     <wd-icon v-if="!showSearchParams" name="arrow-down" color="#3B3D3D" size="16px" />
     <wd-icon v-else name="arrow-up" color="#3B3D3D" size="16px" />
+  </view>
+  <view h10px />
+  <view px16px py10px bg-white>
+    <view v-if="tab === 0">
+      <ManageData />
+    </view>
+    <view v-if="tab === 1">
+      <CustomerAnalysis />
+    </view>
+    <view v-if="tab === 2">
+      <StaffAchievements />
+    </view>
+    <view v-if="tab === 3">
+      <StaffStatistics />
+    </view>
   </view>
 
   <MyTabBar :tab-index="3" />
