@@ -5,6 +5,7 @@ const { closeOutside } = useQueue()
 </script>
 
 <template>
+  <view class="h58px" />
   <view @click="closeOutside">
     <view bg-white px16px py10px>
       <view bg-white pl10px style="position: relative; padding-left: 10px;">
