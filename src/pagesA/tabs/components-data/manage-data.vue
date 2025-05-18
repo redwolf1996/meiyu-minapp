@@ -5,11 +5,11 @@ const { closeOutside } = useQueue()
 </script>
 
 <template>
-  <view @click="closeOutside">
+  <view bg-white px16px py10px @click="closeOutside">
     <view pl10px fb style="position: relative; padding-left: 10px;">
       <view style="position: absolute; left: 0; top: 50%; transform: translateY(-50%); height: 66.7%; width: 3px; background-color: #931E5E;" />
       <text c-#931E5E>
-        经营概括
+        经营概况
       </text>
     </view>
     <view h20px />

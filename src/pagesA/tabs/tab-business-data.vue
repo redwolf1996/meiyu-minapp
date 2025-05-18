@@ -43,7 +43,7 @@ function changeSearchParams() {
     <wd-icon v-else name="arrow-up" color="#3B3D3D" size="16px" />
   </view>
   <view h10px />
-  <view px16px py10px bg-white>
+  <view>
     <view v-if="tab === 0">
       <ManageData />
     </view>
