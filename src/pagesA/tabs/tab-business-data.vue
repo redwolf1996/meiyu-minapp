@@ -31,7 +31,7 @@ function changeSearchParams() {
 <template>
   <view class="fixed-header">
     <MyNavBar title="数据" :capsule="false" />
-    <wd-tabs v-model="tab">
+    <wd-tabs v-model="tab" active-color="#1A66FF">
       <block v-for="item in tabs" :key="item.label">
         <wd-tab :title="item.label" />
       </block>

@@ -40,6 +40,9 @@ text {
 .wd-calendar__value{
   text-align: right;
 }
+.wd-tabs__nav-item.is-active {
+  color: #1A66FF !important;
+}
 .wd-form {
   .wd-input__inner {
     text-align: right !important;

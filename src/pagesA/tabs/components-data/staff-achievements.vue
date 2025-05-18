@@ -1,5 +1,10 @@
 <script setup lang="ts">
-
+const tab = ref(0)
+const tabs = [{
+  label: '销售业绩',
+}, {
+  label: '服务业绩',
+}]
 </script>
 
 <template>
@@ -11,6 +16,38 @@
         <text fb c-#931E5E>
           门店排行
         </text>
+      </view>
+      <view class="h20px" />
+      <wd-tabs v-model="tab" slidable="always">
+        <block v-for="item in tabs" :key="item.label">
+          <wd-tab :title="item.label" />
+        </block>
+      </wd-tabs>
+      <view class="h20px" />
+      <view>
+        <view flex flex-ac flex-bt style="border-bottom: 1px solid #F0F1F4;">
+          <view flex flex-ac gap16px>
+            <wd-img
+              :width="16"
+              :height="16"
+              mode="aspectFill"
+              :src="`${IMG_BASE}/icon-rank-1.png`"
+            />
+            <wd-img
+              :width="48"
+              :height="48"
+              mode="aspectFill"
+              :src="`${IMG_BASE}/data-icon.png`"
+            />
+            <text>
+              小美
+            </text>
+          </view>
+          <view flex flex-ac gap10px>
+            <text>¥2500.00</text>
+            <wd-icon name="arrow-right" size="22px" color="#8D9092" />
+          </view>
+        </view>
       </view>
     </view>
   </view>
