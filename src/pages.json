@@ -634,6 +634,13 @@
           "type": "page"
         },
         {
+          "path": "tabs/components-data/staff-achievements-detail",
+          "type": "page",
+          "style": {
+            "navigationBarTitleText": "业绩"
+          }
+        },
+        {
           "path": "tabs/components-data/staff-achievements",
           "type": "page"
         },
