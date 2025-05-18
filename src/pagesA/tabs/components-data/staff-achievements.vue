@@ -25,7 +25,7 @@ const tabs = [{
       </wd-tabs>
       <view class="h20px" />
       <view>
-        <view flex flex-ac flex-bt style="border-bottom: 1px solid #F0F1F4;">
+        <view flex flex-ac flex-bt style="border-bottom: 1px solid #F0F1F4;" py10px>
           <view flex flex-ac gap16px>
             <wd-img
               :width="16"
