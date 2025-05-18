@@ -1,9 +1,11 @@
 <script setup lang="ts">
+import { useQueue } from 'wot-design-uni'
 
+const { closeOutside } = useQueue()
 </script>
 
 <template>
-  <view>
+  <view @click="closeOutside">
     <view pl10px fb style="position: relative; padding-left: 10px;">
       <view style="position: absolute; left: 0; top: 50%; transform: translateY(-50%); height: 66.7%; width: 3px; background-color: #931E5E;" />
       <text c-#931E5E>
@@ -26,7 +28,7 @@
         <view>
           <view c-3B3D3D fw-500 font-size-14px flex flex-ac gap4px>
             <text>实际收款金额(元)</text>
-            <wd-popover use-content-slot placement="bottom-start" :offset="-40">
+            <wd-popover use-content-slot placement="bottom">
               <template #content>
                 <view class="pop-content">
                   实际收款金额：在统计时间内所有已完成订单收入金额总和减去退款金额
@@ -74,7 +76,7 @@
         <view>
           <view c-3B3D3D fw-500 font-size-14px flex flex-ac gap4px>
             <text>开卡充值金额(元)</text>
-            <wd-popover use-content-slot placement="bottom-start" :offset="-40">
+            <wd-popover use-content-slot placement="bottom">
               <template #content>
                 <view class="pop-content">
                   开卡充值金额：订单完成时间在统计时间内，开卡（次卡、折扣卡）或充值（充值卡、余额充值）的实际收款金额总和，统计时减去开卡充值实际退款的金额。
