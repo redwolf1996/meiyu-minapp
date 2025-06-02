@@ -1,4 +1,11 @@
 <script setup lang="ts">
+const props = defineProps<{
+  searchParams: {
+    sDate: string
+    eDate: string
+  }
+}>()
+
 const tab = ref(0)
 const tabs = [{
   label: '销售业绩',
@@ -32,6 +39,10 @@ const staffList = ref([
     rank: 4,
   },
 ])
+
+watch(props.searchParams, () => {
+  console.log(props.searchParams)
+})
 </script>
 
 <template>

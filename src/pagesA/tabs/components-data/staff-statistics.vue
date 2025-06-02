@@ -1,7 +1,17 @@
 <script setup lang="ts">
 import { useQueue } from 'wot-design-uni'
 
+const props = defineProps<{
+  searchParams: {
+    sDate: string
+    eDate: string
+  }
+}>()
 const { closeOutside } = useQueue()
+
+watch(props.searchParams, () => {
+  console.log(props.searchParams)
+})
 </script>
 
 <template>

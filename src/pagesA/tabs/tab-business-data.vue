@@ -166,16 +166,16 @@ const tempRange = ref<any[]>(['', Date.now()])
   <view class="content-wrapper">
     <view>
       <view v-if="tab === 0">
-        <ManageData />
+        <ManageData :search-params="searchParams" />
       </view>
       <view v-if="tab === 1">
-        <CustomerAnalysis />
+        <CustomerAnalysis :search-params="searchParams" />
       </view>
       <view v-if="tab === 2">
-        <StaffAchievements />
+        <StaffAchievements :search-params="searchParams" />
       </view>
       <view v-if="tab === 3">
-        <StaffStatistics />
+        <StaffStatistics :search-params="searchParams" />
       </view>
     </view>
   </view>
@@ -189,7 +189,6 @@ const tempRange = ref<any[]>(['', Date.now()])
         <view mb20px>
           <view class="date-range" text-center py10px mb20px>
             {{ dateRange || '请选择日期' }}
-            <wd-icon name="arrow-down" color="#999" size="14px" />
           </view>
 
           <view class="date-options" mb20px>
