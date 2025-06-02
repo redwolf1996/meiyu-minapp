@@ -27,7 +27,7 @@ const info = ref<Ranking>({
   saleRanking: [],
   serviceRanking: [],
 })
-onLoad(() => {
+onMounted(() => {
   getManageData()
 })
 

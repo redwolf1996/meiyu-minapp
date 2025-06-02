@@ -10,7 +10,7 @@ const props = defineProps<{
 }>()
 const { closeOutside } = useQueue()
 
-onLoad(() => {
+onMounted(() => {
   getManageData()
 })
 

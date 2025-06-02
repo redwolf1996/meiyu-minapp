@@ -80,13 +80,6 @@ export interface StatStaff {
   serveDeductionCard: number
 }
 
-export interface ApifoxModel {
-  code: number
-  data: Data
-  msg: string
-  [property: string]: any
-}
-
 export interface Ranking {
   /**
    * 销售排行
