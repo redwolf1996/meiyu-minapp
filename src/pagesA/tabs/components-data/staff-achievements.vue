@@ -10,6 +10,28 @@ function toDetail() {
     url: '/pagesA/tabs/components-data/staff-achievements-detail',
   })
 }
+const staffList = ref([
+  {
+    name: '小美1',
+    amount: 2500,
+    rank: 1,
+  },
+  {
+    name: '小美2',
+    amount: 2500,
+    rank: 2,
+  },
+  {
+    name: '小美3',
+    amount: 2500,
+    rank: 3,
+  },
+  {
+    name: '小美4',
+    amount: 2500,
+    rank: 4,
+  },
+])
 </script>
 
 <template>
@@ -30,13 +52,21 @@ function toDetail() {
       </wd-tabs>
       <view class="h20px" />
       <view>
-        <view flex flex-ac flex-bt style="border-bottom: 1px solid #F0F1F4;" py10px @click="toDetail">
+        <view
+          v-for="(item, index) in staffList" :key="item.name" flex flex-ac flex-bt style="border-bottom: 1px solid #F0F1F4;"
+          py10px
+          @click="toDetail"
+        >
           <view flex flex-ac gap16px>
+            <text v-if="index > 2" fb dib w16px h16px tc lh-16px>
+              {{ index + 1 }}
+            </text>
             <wd-img
+              v-else
               :width="16"
               :height="16"
               mode="aspectFill"
-              :src="`${IMG_BASE}/icon-rank-1.png`"
+              :src="`${IMG_BASE}/icon-rank-${index + 1}.png`"
             />
             <wd-img
               :width="48"
