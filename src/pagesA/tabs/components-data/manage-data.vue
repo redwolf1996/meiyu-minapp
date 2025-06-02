@@ -55,7 +55,7 @@ watch(props.searchParams, () => {
     <view class="ct">
       <view class="item">
         <view flex flex-ac flex-bt>
-          <text>{{ info.totalIncome ?? '--' }}</text>
+          <text>{{ info.totalIncome || 0 }}</text>
           <wd-img
             :width="24"
             :height="24"
@@ -79,7 +79,7 @@ watch(props.searchParams, () => {
       </view>
       <view class="item">
         <view flex flex-ac flex-bt>
-          <text>{{ info.storedUse ?? '--' }}</text>
+          <text>{{ info.storedUse || 0 }}</text>
           <wd-img
             :width="24"
             :height="24"
@@ -103,7 +103,7 @@ watch(props.searchParams, () => {
       </view>
       <view class="item">
         <view flex flex-ac flex-bt>
-          <text>{{ info.storedAdd ?? '--' }}</text>
+          <text>{{ info.storedAdd || 0 }}</text>
           <wd-img
             :width="24"
             :height="24"
@@ -127,7 +127,7 @@ watch(props.searchParams, () => {
       </view>
       <view class="item">
         <view flex flex-ac flex-bt>
-          <text>{{ info.serviceProductIncome ?? '--' }}</text>
+          <text>{{ info.serviceProductIncome || 0 }}</text>
           <wd-img
             :width="24"
             :height="24"
@@ -151,7 +151,7 @@ watch(props.searchParams, () => {
       </view>
       <view class="item">
         <view flex flex-ac flex-bt>
-          <text>{{ info.refundAmount ?? '--' }}</text>
+          <text>{{ info.refundAmount || 0 }}</text>
           <wd-img
             :width="24"
             :height="24"

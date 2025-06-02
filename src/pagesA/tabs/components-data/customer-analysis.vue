@@ -54,7 +54,7 @@ watch(props.searchParams, () => {
     <view class="ct">
       <view class="item">
         <view flex flex-ac flex-bt>
-          <text>{{ info.vipCustomerCount ?? '--' }}</text>
+          <text>{{ info.vipCustomerCount || 0 }}</text>
           <wd-img
             :width="24"
             :height="24"
@@ -78,7 +78,7 @@ watch(props.searchParams, () => {
       </view>
       <view class="item">
         <view flex flex-ac flex-bt>
-          <text>{{ info.customerCount ?? '--' }}</text>
+          <text>{{ info.customerCount || 0 }}</text>
           <wd-img
             :width="24"
             :height="24"
@@ -102,7 +102,7 @@ watch(props.searchParams, () => {
       </view>
       <view class="item">
         <view flex flex-ac flex-bt>
-          <text>{{ info.orderCustomerCount ?? '--' }}</text>
+          <text>{{ info.orderCustomerCount || 0 }}</text>
           <wd-img
             :width="24"
             :height="24"
@@ -126,7 +126,7 @@ watch(props.searchParams, () => {
       </view>
       <view class="item">
         <view flex flex-ac flex-bt>
-          <text>{{ info.cardSaleCount ?? '--' }}</text>
+          <text>{{ info.cardSaleCount || 0 }}</text>
           <wd-img
             :width="24"
             :height="24"
@@ -150,7 +150,7 @@ watch(props.searchParams, () => {
       </view>
       <view class="item">
         <view flex flex-ac flex-bt>
-          <text>{{ info.bookingCount ?? '--' }}</text>
+          <text>{{ info.bookingCount || 0 }}</text>
           <wd-img
             :width="24"
             :height="24"

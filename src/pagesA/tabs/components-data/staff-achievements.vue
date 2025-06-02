@@ -32,7 +32,7 @@ onMounted(() => {
 })
 
 watch(props.searchParams, () => {
-  console.log(props.searchParams)
+  getManageData()
 })
 
 async function getManageData() {
@@ -94,13 +94,16 @@ function changeTab(index: number) {
               :src="`${IMG_BASE}/data-icon.png`"
             />
             <text>
-              {{ item.orgStaffName }}
+              {{ item.orgStaffName || '--' }}
             </text>
           </view>
           <view flex flex-ac gap10px>
             <text>¥{{ item.income }}</text>
             <wd-icon name="arrow-right" size="22px" color="#8D9092" />
           </view>
+        </view>
+        <view v-if="staffList.length === 0" class="empty-data">
+          <wd-status-tip image="content" tip="暂无内容" />
         </view>
       </view>
     </view>
