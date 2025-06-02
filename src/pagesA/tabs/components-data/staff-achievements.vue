@@ -36,8 +36,7 @@ watch(props.searchParams, () => {
 })
 
 async function getManageData() {
-  console.log('xxxxxxx')
-  const res = await request.get<Ranking>('/business/stat-staff', {
+  const res = await request.get<Ranking>('/business/stat-staff-ranking', {
     storeId: storeId.value,
     ...props.searchParams,
   })
