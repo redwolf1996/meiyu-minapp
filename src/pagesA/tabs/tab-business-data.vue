@@ -23,11 +23,18 @@ const tabs = [{
   label: '员工统计',
 }]
 const showSearchParams = ref(false)
-const selectedDateType = ref('今天')
 
+const selectedDateType = ref('今天')
 const searchParams = ref({
   sDate: dayjs().format('YYYY-MM-DD'), // 开始日期 YYYY-MM-DD
   eDate: dayjs().format('YYYY-MM-DD'), // 结束日期 YYYY-MM-DD
+})
+
+// 添加临时变量，用于存储打开弹窗前的状态
+const tempSelectedDateType = ref('')
+const tempSearchParams = ref({
+  sDate: '',
+  eDate: '',
 })
 
 const dateRange = computed(() => {
@@ -41,32 +48,27 @@ const dateRange = computed(() => {
 })
 
 // 日期选择相关
-const showDatePicker = ref(false)
-const showMonthPicker = ref(false)
-const showRangePicker = ref(false)
-const currentDate = ref('')
-const currentMonth = ref('')
-const currentStartDate = ref('')
-const currentEndDate = ref('')
-
 function changeSearchParams() {
+  if (!showSearchParams.value) {
+    // 打开弹窗前，保存当前状态
+    tempSelectedDateType.value = selectedDateType.value
+    tempSearchParams.value = {
+      sDate: searchParams.value.sDate,
+      eDate: searchParams.value.eDate,
+    }
+  }
   showSearchParams.value = !showSearchParams.value
 }
 
 function selectDateType(type: string) {
   selectedDateType.value = type
 
-  // 重置所有选择器
-  showDatePicker.value = false
-  showMonthPicker.value = false
-  showRangePicker.value = false
-
-  // 定义日期变量
+  // // 定义日期变量
   let today: string, yesterday: string, weekStart: string, weekEnd: string
   let lastWeekStart: string, lastWeekEnd: string, monthStart: string, monthEnd: string
   let lastMonthStart: string, lastMonthEnd: string
 
-  // 根据选择的类型设置日期
+  // // 根据选择的类型设置日期
   switch (type) {
     case '今天':
       today = dayjs().format('YYYY-MM-DD')
@@ -102,48 +104,46 @@ function selectDateType(type: string) {
       searchParams.value.sDate = lastMonthStart
       searchParams.value.eDate = lastMonthEnd
       break
-    case '日报':
-      // showDatePicker.value = true
-      currentDate.value = dayjs().format('YYYY-MM-DD')
-      break
-    case '月报':
-      showMonthPicker.value = true
-      currentMonth.value = dayjs().format('YYYY-MM')
-      break
-    case '自定义':
-      showRangePicker.value = true
-      currentStartDate.value = dayjs().subtract(7, 'day').format('YYYY-MM-DD')
-      currentEndDate.value = dayjs().format('YYYY-MM-DD')
-      break
   }
 }
 
-function handleDatePicked() {
+function handleDatePicked({ value }: { value: string }) {
   // 日报日期选择处理
-  searchParams.value.sDate = currentDate.value
-  searchParams.value.eDate = currentDate.value
-  showDatePicker.value = false
+  searchParams.value.sDate = dayjs(Number(value)).format('YYYY-MM-DD')
+  searchParams.value.eDate = dayjs(Number(value)).format('YYYY-MM-DD')
 }
 
-function handleMonthPicked() {
+function handleMonthPicked({ value }: { value: string }) {
   // 月报月份选择处理
-  const monthObj = dayjs(currentMonth.value)
+  const monthObj = dayjs(value)
   searchParams.value.sDate = monthObj.startOf('month').format('YYYY-MM-DD')
   searchParams.value.eDate = monthObj.endOf('month').format('YYYY-MM-DD')
-  showMonthPicker.value = false
 }
 
-function handleRangePicked() {
+function handleRangePicked({ value }: { value: any[] }) {
   // 自定义日期范围选择处理
-  searchParams.value.sDate = currentStartDate.value
-  searchParams.value.eDate = currentEndDate.value
-  showRangePicker.value = false
+  searchParams.value.sDate = dayjs(Number(value[0])).format('YYYY-MM-DD')
+  searchParams.value.eDate = dayjs(Number(value[1])).format('YYYY-MM-DD')
 }
 
 function confirmDateSelection() {
   // 确认选择，关闭弹窗
   showSearchParams.value = false
 }
+
+// 取消选择或关闭弹窗时恢复原状态
+function cancelSelection() {
+  // 恢复到打开弹窗前的状态
+  selectedDateType.value = tempSelectedDateType.value
+  searchParams.value.sDate = tempSearchParams.value.sDate
+  searchParams.value.eDate = tempSearchParams.value.eDate
+  showSearchParams.value = false
+}
+
+const defaultValue = ref<number>(Date.now())
+const tempDate = ref('')
+const tempMonth = ref('')
+const tempRange = ref<any[]>(['', Date.now()])
 </script>
 
 <template>
@@ -180,8 +180,8 @@ function confirmDateSelection() {
     </view>
   </view>
 
-  <wd-popup v-model="showSearchParams" position="bottom" closable :safe-area-inset-bottom="true" custom-style="border-radius:32rpx;">
-    <view style="height: 540px">
+  <wd-popup v-model="showSearchParams" position="bottom" closable :safe-area-inset-bottom="true" custom-style="border-radius:32rpx;" @close="cancelSelection">
+    <view style="height: 500px">
       <view fb tc c-#232220 mt15px>
         选择查询日期
       </view>
@@ -224,71 +224,39 @@ function confirmDateSelection() {
 
           <view class="date-row" flex justify-between mb25px>
             <wd-datetime-picker
-              v-model="searchParams.sDate" label="开始日期" type="date" format="YYYY-MM-DD" value-format="YYYY-MM-DD"
+              v-model="tempDate"
+              :default-value="defaultValue"
+              label="开始日期" type="date" @confirm="handleDatePicked"
             >
               <view class="date-option" :class="{ active: selectedDateType === '日报' }" @click="selectDateType('日报')">
                 日报
               </view>
             </wd-datetime-picker>
 
-            <view class="date-option" :class="{ active: selectedDateType === '月报' }" @click="selectDateType('月报')">
-              月报
-            </view>
-            <view class="date-option" :class="{ active: selectedDateType === '自定义' }" @click="selectDateType('自定义')">
-              自定义
-            </view>
-          </view>
-
-          <!-- 日报日期选择器 -->
-          <view v-if="showDatePicker" class="picker-container" mb20px>
             <wd-datetime-picker
-              v-model="currentDate"
-              label="选择日期"
+              v-model="tempMonth"
+              :default-value="defaultValue"
+              label="开始日期" type="year-month" @confirm="handleMonthPicked"
+            >
+              <view class="date-option" :class="{ active: selectedDateType === '月报' }" @click="selectDateType('月报')">
+                月报
+              </view>
+            </wd-datetime-picker>
+
+            <wd-datetime-picker
+              v-model="tempRange"
               type="date"
-              format="YYYY-MM-DD"
-              value-format="YYYY-MM-DD"
-              @confirm="handleDatePicked"
-            />
-          </view>
-
-          <!-- 月报月份选择器 -->
-          <view v-if="showMonthPicker" class="picker-container" mb20px>
-            <wd-datetime-picker
-              v-model="currentMonth"
-              label="选择月份"
-              type="year-month"
-              format="YYYY-MM"
-              value-format="YYYY-MM"
-              @confirm="handleMonthPicked"
-            />
-          </view>
-
-          <!-- 自定义日期范围选择器 -->
-          <view v-if="showRangePicker" class="picker-container" mb20px>
-            <view mb10px>
-              <wd-datetime-picker
-                v-model="currentStartDate"
-                label="开始日期"
-                type="date"
-                format="YYYY-MM-DD"
-                value-format="YYYY-MM-DD"
-              />
-            </view>
-            <view>
-              <wd-datetime-picker
-                v-model="currentEndDate"
-                label="结束日期"
-                type="date"
-                format="YYYY-MM-DD"
-                value-format="YYYY-MM-DD"
-                @confirm="handleRangePicked"
-              />
-            </view>
+              label="开始日期" @confirm="handleRangePicked"
+            >
+              <view class="date-option" :class="{ active: selectedDateType === '自定义' }" @click="selectDateType('自定义')">
+                自定义
+              </view>
+            </wd-datetime-picker>
           </view>
         </view>
 
         <view class="action-buttons" flex>
-          <view class="cancel-btn" flex-1 @click="showSearchParams = false">
+          <view class="cancel-btn" flex-1 @click="cancelSelection">
             取消
           </view>
           <view class="confirm-btn" flex-1 @click="confirmDateSelection">
@@ -303,6 +271,10 @@ function confirmDateSelection() {
 </template>
 
 <style lang='scss' scoped>
+.date-row {
+  gap: 12px;
+}
+
 .fixed-header {
   position: fixed;
   top: 0;
@@ -336,7 +308,7 @@ function confirmDateSelection() {
   padding: 14px 0;
   border-radius: 4px;
   text-align: center;
-  width: 30%;
+  width: 26vw;
   font-size: 14px;
   border: 1px solid transparent;
 }
