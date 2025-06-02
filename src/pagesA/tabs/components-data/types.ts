@@ -79,3 +79,51 @@ export interface StatStaff {
    */
   serveDeductionCard: number
 }
+
+export interface ApifoxModel {
+  code: number
+  data: Data
+  msg: string
+  [property: string]: any
+}
+
+export interface Ranking {
+  /**
+   * 销售排行
+   */
+  saleRanking: SaleRanking[]
+  /**
+   * 服务排行
+   */
+  serviceRanking: ServiceRanking[]
+}
+
+export interface SaleRanking {
+  /**
+   * 金额
+   */
+  income?: number
+  /**
+   * 员工org_staff_id
+   */
+  orgStaffId?: number
+  /**
+   * 员工姓名
+   */
+  orgStaffName?: string
+}
+
+export interface ServiceRanking {
+  /**
+   * 金额
+   */
+  income?: number
+  /**
+   * 员工org_staff_id
+   */
+  orgStaffId?: number
+  /**
+   * 员工姓名
+   */
+  orgStaffName?: string
+}

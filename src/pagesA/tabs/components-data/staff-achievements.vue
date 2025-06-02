@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Ranking } from './types'
+
 const props = defineProps<{
   searchParams: {
     sDate: string
@@ -12,37 +14,44 @@ const tabs = [{
 }, {
   label: '服务业绩',
 }]
-function toDetail() {
+function toDetail(orgStaffId: number) {
   uni.navigateTo({
-    url: '/pagesA/tabs/components-data/staff-achievements-detail',
+    url: `/pagesA/tabs/components-data/staff-achievements-detail?orgStaffId=${orgStaffId}`,
   })
 }
-const staffList = ref([
-  {
-    name: '小美1',
-    amount: 2500,
-    rank: 1,
-  },
-  {
-    name: '小美2',
-    amount: 2500,
-    rank: 2,
-  },
-  {
-    name: '小美3',
-    amount: 2500,
-    rank: 3,
-  },
-  {
-    name: '小美4',
-    amount: 2500,
-    rank: 4,
-  },
+
+const staffList = ref<Ranking['saleRanking']>([
 ])
+
+const info = ref<Ranking>({
+  saleRanking: [],
+  serviceRanking: [],
+})
+onLoad(() => {
+  getManageData()
+})
 
 watch(props.searchParams, () => {
   console.log(props.searchParams)
 })
+
+async function getManageData() {
+  console.log('xxxxxxx')
+  const res = await request.get<Ranking>('/business/stat-staff', {
+    storeId: storeId.value,
+    ...props.searchParams,
+  })
+  info.value = res.data
+  staffList.value = info.value.saleRanking
+}
+
+watch(props.searchParams, () => {
+  getManageData()
+})
+
+function changeTab(index: number) {
+  staffList.value = index === 0 ? info.value.saleRanking : info.value.serviceRanking
+}
 </script>
 
 <template>
@@ -56,7 +65,7 @@ watch(props.searchParams, () => {
         </text>
       </view>
       <view class="h20px" />
-      <wd-tabs v-model="tab" slidable="always">
+      <wd-tabs v-model="tab" slidable="always" @change="changeTab">
         <block v-for="item in tabs" :key="item.label">
           <wd-tab :title="item.label" />
         </block>
@@ -64,9 +73,9 @@ watch(props.searchParams, () => {
       <view class="h20px" />
       <view>
         <view
-          v-for="(item, index) in staffList" :key="item.name" flex flex-ac flex-bt style="border-bottom: 1px solid #F0F1F4;"
+          v-for="(item, index) in staffList" :key="item.orgStaffId" flex flex-ac flex-bt style="border-bottom: 1px solid #F0F1F4;"
           py10px
-          @click="toDetail"
+          @click="toDetail(item.orgStaffId)"
         >
           <view flex flex-ac gap16px>
             <text v-if="index > 2" fb dib w16px h16px tc lh-16px>
@@ -86,11 +95,11 @@ watch(props.searchParams, () => {
               :src="`${IMG_BASE}/data-icon.png`"
             />
             <text>
-              小美
+              {{ item.orgStaffName }}
             </text>
           </view>
           <view flex flex-ac gap10px>
-            <text>¥2500.00</text>
+            <text>¥{{ item.income }}</text>
             <wd-icon name="arrow-right" size="22px" color="#8D9092" />
           </view>
         </view>
