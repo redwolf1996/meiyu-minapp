@@ -5,8 +5,45 @@ style:
 
 <script setup lang="ts">
 import { useQueue } from 'wot-design-uni'
+import type { StaffAchievementsDetail } from './types'
 
 const { closeOutside } = useQueue()
+
+const orgStaffId = ref<string>()
+const sDate = ref<string>()
+const eDate = ref<string>()
+const info = ref<StaffAchievementsDetail>({
+  orgStaffId: 0,
+  saleCard: 0,
+  saleProduct: 0,
+  saleRecharge: 0,
+  saleService: 0,
+  serviceArtisan: 0,
+  serviceGift: 0,
+  serviceTimesCard: 0,
+  serviceValueCard: 0,
+  salesAmount: 0,
+  serviceAmount: 0,
+  orgStaffName: '',
+  orgStaffRole: '',
+  orgStaffPhone: '',
+})
+onLoad((options) => {
+  sDate.value = options?.sDate
+  eDate.value = options?.eDate
+  orgStaffId.value = options?.orgStaffId
+  getInfo()
+})
+
+async function getInfo() {
+  const res = await request.get<StaffAchievementsDetail>('/business/stat-staff-ranking-info', {
+    storeId: storeId.value,
+    orgStaffId: orgStaffId.value,
+    sDate: sDate.value,
+    eDate: eDate.value,
+  })
+  info.value = res.data
+}
 </script>
 
 <template>
@@ -21,14 +58,14 @@ const { closeOutside } = useQueue()
       <view h48px flex flex-y flex-ac flex-bt>
         <view flex flex-ac gap10px c-white>
           <view style="color: #fff;">
-            小美
+            {{ info.orgStaffName }}
           </view>
           <view class="role">
-            店长
+            {{ info.orgStaffRole }}
           </view>
         </view>
         <view style="font-size: 12px;color: rgba(255, 255, 255, 0.6);">
-          13888888888
+          {{ info.orgStaffPhone }}
         </view>
       </view>
     </view>
@@ -40,7 +77,7 @@ const { closeOutside } = useQueue()
         </view>
         <view class="h5px" />
         <view fs-24px c-white>
-          35000
+          {{ info.salesAmount }}
         </view>
       </view>
       <view>
@@ -49,7 +86,7 @@ const { closeOutside } = useQueue()
         </view>
         <view class="h5px" />
         <view fs-24px c-white>
-          35000
+          {{ info.serviceAmount }}
         </view>
       </view>
     </view>
@@ -66,7 +103,7 @@ const { closeOutside } = useQueue()
       <view class="ct">
         <view class="item">
           <view flex flex-ac flex-bt>
-            <text>5000</text>
+            <text>{{ info.saleService }}</text>
             <wd-img
               :width="24"
               :height="24"
@@ -92,7 +129,7 @@ const { closeOutside } = useQueue()
         </view>
         <view class="item">
           <view flex flex-ac flex-bt>
-            <text>5000</text>
+            <text>{{ info.saleProduct }}</text>
             <wd-img
               :width="24"
               :height="24"
@@ -118,7 +155,7 @@ const { closeOutside } = useQueue()
         </view>
         <view class="item">
           <view flex flex-ac flex-bt>
-            <text>5000</text>
+            <text>{{ info.saleCard }}</text>
             <wd-img
               :width="24"
               :height="24"
@@ -144,7 +181,7 @@ const { closeOutside } = useQueue()
         </view>
         <view class="item">
           <view flex flex-ac flex-bt>
-            <text>5000</text>
+            <text>{{ info.saleRecharge }}</text>
             <wd-img
               :width="24"
               :height="24"
@@ -182,7 +219,7 @@ const { closeOutside } = useQueue()
       <view class="ct">
         <view class="item">
           <view flex flex-ac flex-bt>
-            <text>5000</text>
+            <text>{{ info.serviceArtisan }}</text>
             <wd-img
               :width="24"
               :height="24"
@@ -208,7 +245,7 @@ const { closeOutside } = useQueue()
         </view>
         <view class="item">
           <view flex flex-ac flex-bt>
-            <text>5000</text>
+            <text>{{ info.serviceTimesCard }}</text>
             <wd-img
               :width="24"
               :height="24"
@@ -234,7 +271,7 @@ const { closeOutside } = useQueue()
         </view>
         <view class="item">
           <view flex flex-ac flex-bt>
-            <text>5000</text>
+            <text>{{ info.serviceValueCard }}</text>
             <wd-img
               :width="24"
               :height="24"
@@ -260,7 +297,7 @@ const { closeOutside } = useQueue()
         </view>
         <view class="item">
           <view flex flex-ac flex-bt>
-            <text>5000</text>
+            <text>{{ info.serviceGift }}</text>
             <wd-img
               :width="24"
               :height="24"

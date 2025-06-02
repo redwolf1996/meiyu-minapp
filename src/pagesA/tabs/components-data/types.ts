@@ -120,3 +120,62 @@ export interface ServiceRanking {
    */
   orgStaffName?: string
 }
+
+export interface StaffAchievementsDetail {
+  /**
+   * 员工org_staff_id
+   */
+  orgStaffId: number
+  /**
+   * 销售-卡收入
+   */
+  saleCard: number
+  /**
+   * 销售-产品收入
+   */
+  saleProduct: number
+  /**
+   * 销售-充值
+   */
+  saleRecharge: number
+  /**
+   * 销售-服务收入
+   */
+  saleService: number
+  /**
+   * 服务-劳动收入
+   */
+  serviceArtisan: number
+  /**
+   * 服务-赠送抵扣
+   */
+  serviceGift: number
+  /**
+   * 服务-次卡抵扣
+   */
+  serviceTimesCard: number
+  /**
+   * 服务-充值卡耗（余额支付）
+   */
+  serviceValueCard: number
+  /**
+   * 员工姓名
+   */
+  orgStaffName: string
+  /**
+   * 员工角色
+   */
+  orgStaffRole: string
+  /**
+   * 员工手机号
+   */
+  orgStaffPhone: string
+  /**
+   * 销售业绩
+   */
+  salesAmount: number
+  /**
+   * 服务业绩
+   */
+  serviceAmount: number
+}

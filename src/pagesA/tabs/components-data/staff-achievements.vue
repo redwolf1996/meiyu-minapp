@@ -16,7 +16,7 @@ const tabs = [{
 }]
 function toDetail(orgStaffId: number) {
   uni.navigateTo({
-    url: `/pagesA/tabs/components-data/staff-achievements-detail?orgStaffId=${orgStaffId}`,
+    url: `/pagesA/tabs/components-data/staff-achievements-detail?orgStaffId=${orgStaffId}&sDate=${props.searchParams.sDate}&eDate=${props.searchParams.eDate}`,
   })
 }
 
