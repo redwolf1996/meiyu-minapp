@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useQueue } from 'wot-design-uni'
+import type { StatStaff } from './types'
 
 const props = defineProps<{
   searchParams: {
@@ -7,10 +8,35 @@ const props = defineProps<{
     eDate: string
   }
 }>()
+
 const { closeOutside } = useQueue()
 
+onLoad(() => {
+  getManageData()
+})
+
+const info = ref<StatStaff>({
+  orderCardCustomerCount: 0,
+  orderCustomerCount: 0,
+  orderServeCustomerCount: 0,
+  saleCashAmount: 0,
+  saleCustomerCount: 0,
+  saleDeductionCard: 0,
+  serveCashAmount: 0,
+  serveCustomerCount: 0,
+  serveDeductionCard: 0,
+})
+
+async function getManageData() {
+  const res = await request.get<StatStaff>('/business/stat-staff', {
+    storeId: storeId.value,
+    ...props.searchParams,
+  })
+  info.value = res.data
+}
+
 watch(props.searchParams, () => {
-  console.log(props.searchParams)
+  getManageData()
 })
 </script>
 
@@ -28,7 +54,7 @@ watch(props.searchParams, () => {
       <view class="ct">
         <view class="item">
           <view flex flex-ac flex-bt>
-            <text>5000</text>
+            <text>{{ info.orderCustomerCount ?? '--' }}</text>
             <wd-img
               :width="24"
               :height="24"
@@ -54,7 +80,7 @@ watch(props.searchParams, () => {
         </view>
         <view class="item">
           <view flex flex-ac flex-bt>
-            <text>5000</text>
+            <text>{{ info.orderCardCustomerCount ?? '--' }}</text>
             <wd-img
               :width="24"
               :height="24"
@@ -80,7 +106,7 @@ watch(props.searchParams, () => {
         </view>
         <view class="item">
           <view flex flex-ac flex-bt>
-            <text>5000</text>
+            <text>{{ info.orderServeCustomerCount ?? '--' }}</text>
             <wd-img
               :width="24"
               :height="24"
@@ -118,7 +144,7 @@ watch(props.searchParams, () => {
       <view class="ct">
         <view class="item">
           <view flex flex-ac flex-bt>
-            <text>5000</text>
+            <text>{{ info.serveCashAmount ?? '--' }}</text>
             <wd-img
               :width="24"
               :height="24"
@@ -144,7 +170,7 @@ watch(props.searchParams, () => {
         </view>
         <view class="item">
           <view flex flex-ac flex-bt>
-            <text>5000</text>
+            <text>{{ info.serveDeductionCard ?? '--' }}</text>
             <wd-img
               :width="24"
               :height="24"
@@ -170,7 +196,7 @@ watch(props.searchParams, () => {
         </view>
         <view class="item">
           <view flex flex-ac flex-bt>
-            <text>5000</text>
+            <text>{{ info.serveCustomerCount ?? '--' }}</text>
             <wd-img
               :width="24"
               :height="24"
@@ -208,7 +234,7 @@ watch(props.searchParams, () => {
       <view class="ct">
         <view class="item">
           <view flex flex-ac flex-bt>
-            <text>5000</text>
+            <text>{{ info.saleCashAmount ?? '--' }}</text>
             <wd-img
               :width="24"
               :height="24"
@@ -234,7 +260,7 @@ watch(props.searchParams, () => {
         </view>
         <view class="item">
           <view flex flex-ac flex-bt>
-            <text>5000</text>
+            <text>{{ info.saleDeductionCard ?? '--' }}</text>
             <wd-img
               :width="24"
               :height="24"
@@ -260,7 +286,7 @@ watch(props.searchParams, () => {
         </view>
         <view class="item">
           <view flex flex-ac flex-bt>
-            <text>5000</text>
+            <text>{{ info.saleCustomerCount ?? '--' }}</text>
             <wd-img
               :width="24"
               :height="24"

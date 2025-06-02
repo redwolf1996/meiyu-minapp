@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useQueue } from 'wot-design-uni'
+import type { StatOverview } from './types'
 
 const props = defineProps<{
   searchParams: {
@@ -10,8 +11,33 @@ const props = defineProps<{
 
 const { closeOutside } = useQueue()
 
+onLoad(() => {
+  getManageData()
+})
+
+const info = ref<StatOverview>({
+  bookingCount: 0,
+  cardSaleCount: 0,
+  customerCount: 0,
+  orderCustomerCount: 0,
+  refundAmount: 0,
+  serviceProductIncome: 0,
+  storedAdd: 0,
+  storedUse: 0,
+  totalIncome: 0,
+  vipCustomerCount: 0,
+})
+
+async function getManageData() {
+  const res = await request.get<StatOverview>('/business/stat-overview', {
+    storeId: storeId.value,
+    ...props.searchParams,
+  })
+  info.value = res.data
+}
+
 watch(props.searchParams, () => {
-  console.log(props.searchParams)
+  getManageData()
 })
 </script>
 
@@ -29,7 +55,7 @@ watch(props.searchParams, () => {
     <view class="ct">
       <view class="item">
         <view flex flex-ac flex-bt>
-          <text>5000</text>
+          <text>{{ info.totalIncome ?? '--' }}</text>
           <wd-img
             :width="24"
             :height="24"
@@ -53,7 +79,7 @@ watch(props.searchParams, () => {
       </view>
       <view class="item">
         <view flex flex-ac flex-bt>
-          <text>5000</text>
+          <text>{{ info.storedUse ?? '--' }}</text>
           <wd-img
             :width="24"
             :height="24"
@@ -77,7 +103,7 @@ watch(props.searchParams, () => {
       </view>
       <view class="item">
         <view flex flex-ac flex-bt>
-          <text>5000</text>
+          <text>{{ info.storedAdd ?? '--' }}</text>
           <wd-img
             :width="24"
             :height="24"
@@ -101,7 +127,7 @@ watch(props.searchParams, () => {
       </view>
       <view class="item">
         <view flex flex-ac flex-bt>
-          <text>5000</text>
+          <text>{{ info.serviceProductIncome ?? '--' }}</text>
           <wd-img
             :width="24"
             :height="24"
@@ -125,7 +151,7 @@ watch(props.searchParams, () => {
       </view>
       <view class="item">
         <view flex flex-ac flex-bt>
-          <text>5000</text>
+          <text>{{ info.refundAmount ?? '--' }}</text>
           <wd-img
             :width="24"
             :height="24"
