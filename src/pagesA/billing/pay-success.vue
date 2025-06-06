@@ -65,6 +65,16 @@ function toOrderDetail() {
 
 <template>
   <view p20px>
+    <view class="tc">
+      <wd-img
+        :width="120"
+        :height="120"
+        mode="aspectFit"
+        :src="`${IMG_BASE}/book-success.png`"
+        style="transform: translateX(10px)"
+      />
+    </view>
+    <view class="h20px" />
     <view tc fb fs-14px>
       支付成功
     </view>
