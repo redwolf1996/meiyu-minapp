@@ -73,7 +73,7 @@ function mergeProdsAndServs() {
     })
     form.value.billingGoods = tmp
     form.value.billingGoods.forEach((item: BillingGood) => {
-      const cost = item.goodsPrice2 || item.goodsPrice
+      const cost = item.goodsPrice2 ?? item.goodsPrice
       item.totalAmount = computed(() => {
         return func_mul(cost, item.goodsCount)
       })
@@ -92,7 +92,7 @@ watch(() => curSelectedCardToCash.value, () => {
   form.value.billingGoods.forEach((item: BillingGood, index: number) => {
     if (curIndex.value === index) {
       // 消费价格（有优惠价使用优惠价，没有则使用原价）
-      const cost = item.goodsPrice2 || item.goodsPrice
+      const cost = item.goodsPrice2 ?? item.goodsPrice
       item.customerCardId = curSelectedCardToCash.value?.customerCardId
       item.cardId = curSelectedCardToCash.value?.cardId
       item.equity = curSelectedCardToCash.value?.equity // 可用次数
@@ -137,7 +137,7 @@ watch(() => curSelectedCardToCash.value, () => {
 
 // 改变每一项服务的数量
 function handleChangeGoodsCount(item: Partial<BillingGood>) {
-  const cost = item.goodsPrice2 || item.goodsPrice
+  const cost = item.goodsPrice2 ?? item.goodsPrice
   if (item.cardName) {
     if (item.cardType === 1) {
       if (item.cardSecondType === 2) {
@@ -381,11 +381,11 @@ function delEquity(item: BillingGood) {
             </view>
           </view>
           <view flex flex-xr py10px pr20px flex-ac gap5px>
-            <text v-if="item.goodsPrice2" line-through c-#D4D4D4 f12>
+            <text v-if="isNumber(item.goodsPrice2)" line-through c-#D4D4D4 f12>
               ￥{{ item.goodsPrice }}
             </text>
             <text>
-              ￥{{ item.goodsPrice2 || item.goodsPrice }}
+              ￥{{ item.goodsPrice2 ?? item.goodsPrice }}
             </text>
           </view>
           <view>
