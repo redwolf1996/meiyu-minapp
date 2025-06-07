@@ -52,35 +52,44 @@ onLoad(async (option) => {
 
 function mergeProdsAndServs() {
   if (checkedProds.value.length || checkedServs.value.length) {
+    const oldBillingGoods = [...form.value.billingGoods]
     const arr: any = [...checkedProds.value, ...checkedServs.value]
-    const tmp = arr.map((v) => {
-      return {
-        goodsType: v.prodType, // 1服务 2产品
-        goodsId: v.id,
-        goodsCount: 1, // 商品数量
-        goodsPrice: v.price, // 商品原价
-        goodsPrice2: v.price2, // 商品实际价(优惠价)
-        cardReduceAmount: 0, // 卡优惠金额
-        name: v.name, // 服务或产品名称
-        totalAmount: null, // 商品原价总价
-        amount: null, // 商品优惠后总价
-        customerCardId: null, // 购卡id
-        cardId: null, // 卡id
-        artisanId: null, // 手艺人id
-        artisan: null, // 手艺人
-        cardShowName: null,
+    const newBillingGoods = arr.map((v) => {
+      const existingItem = oldBillingGoods.find(old => old.goodsId === v.id && old.goodsType === v.prodType)
+      if (existingItem) {
+        existingItem.goodsPrice = v.price
+        existingItem.goodsPrice2 = v.price2
+        existingItem.name = v.name
+        return existingItem
+      }
+      else {
+        const newItem: any = {
+          goodsType: v.prodType, // 1服务 2产品
+          goodsId: v.id,
+          goodsCount: 1, // 商品数量
+          goodsPrice: v.price, // 商品原价
+          goodsPrice2: v.price2, // 商品实际价(优惠价)
+          cardReduceAmount: 0, // 卡优惠金额
+          name: v.name, // 服务或产品名称
+          totalAmount: null, // 商品原价总价
+          amount: null, // 商品优惠后总价
+          customerCardId: null, // 购卡id
+          cardId: null, // 卡id
+          artisanId: null, // 手艺人id
+          artisan: null, // 手艺人
+          cardShowName: null,
+        }
+        const cost = newItem.goodsPrice2 ?? newItem.goodsPrice
+        newItem.totalAmount = computed(() => {
+          return func_mul(cost, newItem.goodsCount)
+        })
+        newItem.amount = computed(() => {
+          return func_mul(func_sub(cost, newItem.cardReduceAmount), newItem.goodsCount)
+        })
+        return newItem
       }
     })
-    form.value.billingGoods = tmp
-    form.value.billingGoods.forEach((item: BillingGood) => {
-      const cost = item.goodsPrice2 ?? item.goodsPrice
-      item.totalAmount = computed(() => {
-        return func_mul(cost, item.goodsCount)
-      })
-      item.amount = computed(() => {
-        return func_mul(func_sub(cost, item.cardReduceAmount), item.goodsCount)
-      })
-    })
+    form.value.billingGoods = newBillingGoods
   }
   else {
     form.value.billingGoods = []
@@ -201,13 +210,23 @@ function saveStaff() {
 }
 
 function clickItem(item: ListStaff) {
-  listStaff.value.forEach((val: any) => {
-    val.active = false
-  })
-  item.active = !item.active
-  if (item.active) {
+  const wasActive = item.active
+  // If the clicked item was not active, then we are selecting a new one.
+  if (!wasActive) {
+    // Deselect all others.
+    listStaff.value.forEach((val: any) => {
+      val.active = false
+    })
+    // Select the current one.
+    item.active = true
     form.value.billingGoods[curIndex.value].artisanId = item.storeStaffId
     form.value.billingGoods[curIndex.value].artisan = item.userName
+  }
+  else {
+    // If it was active, we are deselecting it.
+    item.active = false
+    form.value.billingGoods[curIndex.value].artisanId = null
+    form.value.billingGoods[curIndex.value].artisan = null
   }
 }
 
@@ -223,6 +242,10 @@ async function getStaff() {
 
 function toSelectStaff(index: number) {
   curIndex.value = index
+  const currentArtisanId = form.value.billingGoods[index].artisanId
+  listStaff.value.forEach((staff: any) => {
+    staff.active = staff.storeStaffId === currentArtisanId
+  })
   visibleStaff.value = true
 }
 
