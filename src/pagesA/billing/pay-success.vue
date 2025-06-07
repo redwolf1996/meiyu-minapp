@@ -69,13 +69,13 @@ function toOrderDetail() {
       <wd-img
         :width="120"
         :height="120"
+        custom-image="book-success-img"
         mode="aspectFit"
         :src="`${IMG_BASE}/book-success.png`"
-        style="transform: translateX(10px)"
       />
     </view>
-    <view class="h20px" />
-    <view tc fb fs-14px>
+    <view class="h10px" />
+    <view tc fb fs-18px>
       支付成功
     </view>
     <view class="h25px" />
@@ -183,5 +183,8 @@ function toOrderDetail() {
     border-left: 1px solid #a3a4a6;
     border-right: 1px solid #a3a4a6;
   }
+}
+:deep(.book-success-img) {
+  transform: translateX(10px) !important;
 }
 </style>
