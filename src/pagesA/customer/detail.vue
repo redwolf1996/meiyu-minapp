@@ -129,6 +129,11 @@ async function doSign(item: BookListAll) {
 async function getInfo(storeCustomerId: number) {
   const res = await request.get<CustomerDetail>(`/business/store-customer/${storeCustomerId}`)
   detail.value = res.data
+  curCustomer.value = {
+    storeCustomerId,
+    name: res.data.name,
+    phone: res.data.phone,
+  }
 }
 
 function call() {

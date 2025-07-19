@@ -26,9 +26,9 @@ const columns = ref<SelItem[]>([
 ])
 const model = reactive<BookForm>({
   storeId: storeId.value,
-  storeCustomerPhone: computed(() => curCustomer.value?.phone),
-  storeCustomerName: computed(() => curCustomer.value?.name),
-  storeCustomerId: computed(() => curCustomer.value?.storeCustomerId),
+  storeCustomerPhone: null,
+  storeCustomerName: null,
+  storeCustomerId: null,
   storeServiceType: 1,
   customerAddress: null,
   startTime: computed(() => `${bookStime.value}:00`),
@@ -39,6 +39,7 @@ const model = reactive<BookForm>({
   service: [],
   amount: 0,
 })
+console.log(model)
 const artName = ref('')
 const listStaff = ref<ListStaff[]>([])
 const visibleStaff = ref(false)
@@ -66,6 +67,11 @@ onLoad(async (option) => {
     const res = await request.get<CustomerDetail>(`/business/store-customer/${option.customerId}`)
     model.storeCustomerName = res.data.name
     model.storeCustomerPhone = res.data.phone
+    curCustomer.value = {
+      storeCustomerId: option.customerId,
+      name: res.data.name,
+      phone: res.data.phone,
+    }
   }
   getStaff()
 })

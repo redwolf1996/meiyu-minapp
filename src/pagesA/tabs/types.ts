@@ -217,6 +217,9 @@ export interface CusList {
    * 客户id
    */
   customerId: number
+  /**
+   * 性别
+   */
   gender: string
   /**
    * 性别中文
