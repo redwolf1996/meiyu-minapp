@@ -67,11 +67,8 @@ onLoad(async (option) => {
     const res = await request.get<CustomerDetail>(`/business/store-customer/${option.customerId}`)
     model.storeCustomerName = res.data.name
     model.storeCustomerPhone = res.data.phone
-    curCustomer.value = {
-      storeCustomerId: option.customerId,
-      name: res.data.name,
-      phone: res.data.phone,
-    }
+    model.artisanId = res.data.artisanId || null
+    artName.value = res.data.artisanName || null
   }
   getStaff()
 })

@@ -133,6 +133,8 @@ async function getInfo(storeCustomerId: number) {
     storeCustomerId,
     name: res.data.name,
     phone: res.data.phone,
+    artisanId: res.data.artisanId,
+    artisanUserName: res.data.artisanName,
   }
 }
 
