@@ -39,7 +39,6 @@ const model = reactive<BookForm>({
   service: [],
   amount: 0,
 })
-console.log(model)
 const artName = ref('')
 const listStaff = ref<ListStaff[]>([])
 const visibleStaff = ref(false)
@@ -71,6 +70,12 @@ onLoad(async (option) => {
     artName.value = res.data.artisanName || null
   }
   getStaff()
+})
+
+onShow(() => {
+  if (curCustomer.value?.storeCustomerId) {
+    model.storeCustomerId = curCustomer.value?.storeCustomerId
+  }
 })
 
 async function getStaff() {
