@@ -72,9 +72,14 @@ onLoad(async (option) => {
   getStaff()
 })
 
-onShow(() => {
+onShow(async () => {
   if (curCustomer.value?.storeCustomerId) {
     model.storeCustomerId = curCustomer.value?.storeCustomerId
+    const res = await request.get<CustomerDetail>(`/business/store-customer/${model.storeCustomerId}`)
+    model.storeCustomerName = res.data.name
+    model.storeCustomerPhone = res.data.phone
+    model.artisanId = res.data.artisanId || null
+    artName.value = res.data.artisanName || null
   }
 })
 
