@@ -7,6 +7,7 @@ const httpInterceptor = {
     const urls = [
       'https://file-univtskclp-mp-273ffd5c-a76e-4c77-8584-ad265ebe1b0b.oss-cn-zhangjiakou.aliyuncs.com',
       'https://api.next.bspapp.com/client',
+      'https://meiyux.oss-cn-beijing.aliyuncs.com'
     ]
     if (!urls.includes(options.url)) {
       options.url = baseUrl + options.url
