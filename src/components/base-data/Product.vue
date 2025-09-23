@@ -19,7 +19,7 @@ const form = reactive<FormProduct>({
   name: '',
   categoryId: computed(() => curClassify.value.id),
   imgs: computed(() => {
-    return imageValue.value.map((v: any) => v.fileID)
+    return imageValue.value?.map((v: any) => v?.fileID) || []
   }),
   price: null,
   price2: null,

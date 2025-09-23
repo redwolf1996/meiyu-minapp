@@ -20,7 +20,7 @@ const pccValue = ref<string[]>([storeInfo.value.province || '', storeInfo.value.
 const form: any = reactive({
   id: storeId.value,
   storeName: storeInfo.value?.storeName || '',
-  logo: computed(() => imageValue.value[0].url),
+  logo: computed(() => imageValue.value?.[0]?.url || ''),
   phone: storeInfo.value.phone,
   address: storeInfo.value.address,
   desc: storeInfo.value.desc,

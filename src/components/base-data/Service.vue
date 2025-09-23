@@ -20,7 +20,7 @@ const form = reactive<FormService>({
   duration: null,
   durationUnit: 'minute',
   imgs: computed(() => {
-    return imageValue.value.map((v: any) => v.url)
+    return imageValue.value?.map((v: any) => v?.url) || []
   }),
   price: null,
   price2: null,

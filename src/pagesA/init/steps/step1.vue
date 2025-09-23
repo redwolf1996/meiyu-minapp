@@ -9,7 +9,7 @@ const { colPickerData, findChildrenByCode } = useColPickerData()
 const { handleFilePickerUpload2, handleFileDelete, imageValue } = useOss()
 const form: any = reactive({
   storeName: '',
-  logo: computed(() => imageValue.value?.[0]?.url),
+  logo: computed(() => imageValue.value?.[0]?.url || ''),
   phone: '',
   address: '',
   desc: '',

@@ -29,7 +29,7 @@ const { handleFilePickerUpload2, handleFileDelete, imageValue } = useOss()
 const form = reactive<FormStaff>({
   storeId: storeId.value,
   storeStaffId: null,
-  avatar: computed(() => imageValue.value.length ? imageValue.value[0]?.url : ''),
+  avatar: computed(() => imageValue.value?.length ? imageValue.value[0]?.url : ''),
   userName: null,
   phone: null,
   gender: 2,
