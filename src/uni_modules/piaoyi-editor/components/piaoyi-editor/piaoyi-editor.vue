@@ -56,7 +56,7 @@
           <view class="editor-wrapper">
             <editor id="editor" class="editor" placeholder="开始输入..." showImgSize showImgToolbar showImgResize
               @statuschange="onStatusChange" :read-only="readOnly" @ready="onEditorReady"
-              @input="saveContents">
+              @input="saveContents" @select="handleFilePickerUpload2" @delete="handleFileDelete">
             </editor>
           </view>
         </view>
@@ -67,6 +67,97 @@
 
 <script>
   import PickerColor from "./color-picker.vue"
+  import { reactive } from 'vue'
+
+  const ossConfig = reactive({
+    ossBucketDomain: 'https://meiyux.oss-cn-beijing.aliyuncs.com', // 替换为你的OSS Bucket实际域名
+    signatureApiUrl: '/business/upload-oss-generate-signature', // 替换为你的签名接口实际地址
+    policy: '',
+    xOssSecurityToken: '',
+    xOssSignatureVersion: '',
+    xOssCredential: '',
+    xOssDate: '',
+    xOssSignature: ''
+  })
+
+  function getOssSignature(fileName, callback) {
+    // 动态生成OSS存储key（格式：product/时间戳/随机串.后缀，避免文件名重复）
+    const timestamp = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+    const fileExt = fileName.split('.').pop() || 'png';
+    const randomStr = Math.random().toString(36).slice(2, 8);
+    const ossKey = `product/${timestamp}/${randomStr}.${fileExt}`;
+
+    // 调用签名接口获取参数
+    uni.request({
+      url: ossConfig.signatureApiUrl,
+      success: (res) => {
+        const data = res.data.data;
+        // 赋值OSS签名参数
+        ossConfig.policy = data.policy;
+        ossConfig.xOssSecurityToken = data.security_token;
+        ossConfig.xOssSignatureVersion = data.x_oss_signature_version;
+        ossConfig.xOssCredential = data.x_oss_credential;
+        ossConfig.xOssDate = data.x_oss_date;
+        ossConfig.xOssSignature = data.signature;
+        // 回调传递生成的ossKey（用于后续上传）
+        callback(null, ossKey);
+      },
+      fail: (err) => {
+        console.error('获取OSS签名失败:', err);
+        uni.showToast({ title: '获取上传参数失败，请重试!', icon: 'none' });
+        callback(err);
+      }
+    });
+  }
+
+    // 2. 单个文件上传到OSS（对应官方示例的wx.uploadFile逻辑）
+  function uploadSingleToOSS(tempFilePath, fileName, callback) {
+    // 先获取签名
+    getOssSignature(tempFilePath, (err, ossKey) => {
+      if (err || !ossKey) {
+        callback(err);
+        return;
+      }
+      console.log('ossKey:', ossKey);
+
+      // 构造OSS上传的formData
+      const formData = {
+        key: ossKey,
+        policy: ossConfig.policy,
+        'x-oss-signature-version': ossConfig.xOssSignatureVersion,
+        'x-oss-credential': ossConfig.xOssCredential,
+        'x-oss-date': ossConfig.xOssDate,
+        'x-oss-signature': ossConfig.xOssSignature,
+        'x-oss-security-token': ossConfig.xOssSecurityToken,
+        success_action_status: "200"
+      };
+
+      // 执行文件上传
+      uni.uploadFile({
+        url: ossConfig.ossBucketDomain,
+        filePath: tempFilePath,
+        name: 'file', // OSS要求固定为"file"
+        formData: formData,
+        success: (res) => {
+          if (res.statusCode === 200) {
+            // 上传成功，拼接OSS文件完整地址
+            const ossFileUrl = `${ossConfig.ossBucketDomain}/${ossKey}`;
+            console.log('上传成功 data:', ossFileUrl);
+            callback(null, ossFileUrl);
+
+          } else {
+            console.error('OSS上传失败，状态码:', res.statusCode);
+            callback(new Error(`上传失败，状态码: ${res.statusCode}`));
+          }
+        },
+        fail: (err) => {
+          console.error('OSS上传失败:', err);
+          uni.showToast({ title: '文件上传失败，请重试!', icon: 'none' });
+          callback(err);
+        }
+      });
+    });
+  }
 
   // rich-text中的Img添加class 通过class 调整图片样式tag 默认图片宽度最宽为父组件宽度
   function richTextImg(value) {
@@ -270,27 +361,48 @@
               title: '上传中'
             })
             const tempFilePaths = chooseImageRes.tempFiles[0].tempFilePath;
-            uniCloud.uploadFile({
-              filePath: tempFilePaths,
-              cloudPath: this.name + (+new Date()), // aaa.png
-              success: (uploadFileRes) => {
+            uploadSingleToOSS(tempFilePaths, chooseImageRes.tempFiles[0].name, (err, fileUrl) => {
+                if (err) {
+                  uni.hideLoading()
+                  uni.showToast({
+                    title: '上传失败',
+                    icon: 'none'
+                  })
+                  return
+                }
+                console.log('fileUrl:', fileUrl);
                 uni.hideLoading()
-                this.img = uploadFileRes.fileID
+                this.img = fileUrl
                 this.editorCtx.insertImage({
                   src: this.img,
                   alt: '图像',
                   success: function () { }
                 })
-              },
-              fail(err) {
-                console.log(err)
-                uni.hideLoading()
-                uni.showToast({
-                  title: '上传失败',
-                  icon: 'none'
-                })
-              }
             });
+            // uni.uploadFile({
+            //   url: this.photoUrl + this.api,
+            //   name: this.name,
+            //   formData: {},
+            //   filePath: tempFilePaths,
+            //   // cloudPath: this.name + (+new Date()), // aaa.png
+            //   success: (uploadFileRes) => {
+            //     uni.hideLoading()
+            //     this.img = uploadFileRes.fileID
+            //     this.editorCtx.insertImage({
+            //       src: this.img,
+            //       alt: '图像',
+            //       success: function () { }
+            //     })
+            //   },
+            //   fail(err) {
+            //     console.log(err)
+            //     uni.hideLoading()
+            //     uni.showToast({
+            //       title: '上传失败',
+            //       icon: 'none'
+            //     })
+            //   }
+            // });
           }
         })
         // #endif
