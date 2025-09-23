@@ -327,6 +327,7 @@ declare global {
   const useObjectUrl: typeof import('@vueuse/core')['useObjectUrl']
   const useOffsetPagination: typeof import('@vueuse/core')['useOffsetPagination']
   const useOnline: typeof import('@vueuse/core')['useOnline']
+  const useOss: typeof import('./hooks/useOss')['useOss']
   const usePageLeave: typeof import('@vueuse/core')['usePageLeave']
   const useParallax: typeof import('@vueuse/core')['useParallax']
   const useParentElement: typeof import('@vueuse/core')['useParentElement']
@@ -582,6 +583,7 @@ declare module 'vue' {
     readonly useCssModule: UnwrapRef<typeof import('vue')['useCssModule']>
     readonly useCssVars: UnwrapRef<typeof import('vue')['useCssVars']>
     readonly useMerchantStore: UnwrapRef<typeof import('./stores/modules/business')['useMerchantStore']>
+    readonly useOss: UnwrapRef<typeof import('./hooks/useOss')['useOss']>
     readonly usePolling: UnwrapRef<typeof import('./hooks/usePolling')['usePolling']>
     readonly useSlots: UnwrapRef<typeof import('vue')['useSlots']>
     readonly useToast: UnwrapRef<typeof import('wot-design-uni')['useToast']>

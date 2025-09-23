@@ -8,9 +8,14 @@ const { colPickerData, findChildrenByCode } = useColPickerData()
 const storeInfo = computed(() => {
   return useUserStore().userInfo?.storeList?.[0]
 })
-const imageValue = ref<any>([{
+// const imageValue = ref<any>([{
+//   url: storeInfo.value?.logo || '',
+// }])
+const { handleFilePickerUpload2, handleFileDelete, imageValue } = useOss()
+imageValue.value = [{
   url: storeInfo.value?.logo || '',
-}])
+}]
+
 const pccValue = ref<string[]>([storeInfo.value.province || '', storeInfo.value.city || '', storeInfo.value.county || ''])
 const form: any = reactive({
   id: storeId.value,
@@ -80,6 +85,8 @@ async function save() {
     <uni-file-picker
       v-model="imageValue"
       fileMediatype="image"
+      @select="handleFilePickerUpload2"
+      @delete="handleFileDelete"
       mode="grid"
       :limit="1"
     />

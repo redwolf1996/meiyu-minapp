@@ -11,8 +11,8 @@ const props = withDefaults(defineProps<{
 type Mode = 'edit' | 'copy' | null
 const mode = ref<Mode>(null) // 修改还是复制
 
+const { handleFilePickerUpload2, handleFileDelete, imageValue } = useOss()
 const formRef = ref()
-const imageValue = ref<any>([])
 const form = reactive<FormService>({
   storeId: storeId.value,
   name: '',
@@ -276,12 +276,21 @@ function toCats() {
         <text>建议尺寸：800*800像素，最多上传5张</text>
       </view>
       <view flex-ac flex mt-20rpx>
+        <!-- <uni-file-picker
+          v-model="imageValue"
+          fileMediatype="image"
+          return-type="array"
+          mode="grid"
+          :limit="5"
+        /> -->
         <uni-file-picker
           v-model="imageValue"
           fileMediatype="image"
           return-type="array"
           mode="grid"
           :limit="5"
+          @select="handleFilePickerUpload2"
+          @delete="handleFileDelete"
         />
       </view>
     </view>
