@@ -4,6 +4,9 @@
 :deep(.color-black) {
   color: #5a5a5a;
 }
+:deep(.wd-cell__arrow-right) {
+  align-self: center !important;
+}
 .custom-nav {
   background-color: #f6f6fd !important;
 }

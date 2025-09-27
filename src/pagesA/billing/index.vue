@@ -250,10 +250,10 @@ function toSelectStaff(index: number) {
 }
 
 function toSelCard(item, index: number) {
-  if (!form.value.storeCustomerId)
-    return toast.warning('请先选择客户')
+  // if (!form.value.storeCustomerId)
+  //   return toast.warning('请先选择客户')
 
-  const storeCustomerId = form.value.storeCustomerId
+  const storeCustomerId = form.value.storeCustomerId || 0
   const goodsId = item.goodsId
   const goodsType = item.goodsType
   curIndex.value = index
@@ -283,8 +283,8 @@ async function payLater() {
 const debouncePayLater = debounce(payLater, 2000)
 
 function toPay() {
-  if (!form.value.storeCustomerId)
-    return toast.warning('请选择客户')
+  // if (!form.value.storeCustomerId)
+  //   return toast.warning('请选择客户')
   if (!form.value.billingGoods.length)
     return toast.warning('请添加商品')
   form.value.amount = form.value.billingGoods.reduce((prev, cur) => {
@@ -295,7 +295,7 @@ function toPay() {
   if (totalToPay.value === 0)
     submitDirect()
   else
-    uni.navigateTo({ url: `/pagesA/billing/pay?mode=${PayModeEnum.MakeOrder}&storeCustomerId=${form.value.storeCustomerId}` })
+    uni.navigateTo({ url: `/pagesA/billing/pay?mode=${PayModeEnum.MakeOrder}&storeCustomerId=${form.value.storeCustomerId || 0}` })
 }
 
 const debounceToPay = debounce(toPay, 2000)
@@ -366,18 +366,23 @@ function delEquity(item: BillingGood) {
   <wd-form :model="form">
     <wd-cell-group :border="true">
       <wd-calendar v-model="orderTime" required :z-index="12000" label="开单时间" type="datetime" />
-      <wd-cell title="客户" required :is-link="!fromCustomer" @click="toSelCus()">
+      <wd-cell title=" 客户" :is-link="!fromCustomer" center custom-icon-class="customer-cell" custom-class="customer-cell" @click="toSelCus()">
         <view>
-          <text v-if="!cusName" c-#B6BDBD>
-            请选择或添加
-          </text>
+          <div v-if="!cusName" c-#B6BDBD>
+            <div f14>
+              请选择或添加
+            </div>
+            <div f12 c-#B6BDBD>
+              不选时记为散客
+            </div>
+          </div>
           <text v-else>
             {{ cusName }}
           </text>
         </view>
 
         <template #icon>
-          <wd-icon name="user" size="16px" />
+          <wd-icon name="user" size="18px" color="#1A66FF" />
         </template>
       </wd-cell>
     </wd-cell-group>
@@ -529,5 +534,12 @@ function delEquity(item: BillingGood) {
   border: 1px solid #1a66ff;
   border-radius: 4px;
   width: 80%;
+}
+
+// .customer-cell {
+
+// }
+:deep(.wd-cell__arrow-right) {
+  align-self: center !important;
 }
 </style>
