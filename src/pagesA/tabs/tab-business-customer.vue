@@ -17,10 +17,20 @@ const optionsVip = [
   { label: '非会员', value: 1 },
 ]
 const birthday = ref<any>(null)
+const birthdayRange = ref<number[]>([]) // 生日范围选择
+const customerTimeRange = ref<number[]>([]) // 成为客户时间范围选择
 const sources = ref<any>([
   { label: '当天生日', value: 1, isActive: false },
   { label: '当月生日', value: 2, isActive: false },
 ])
+const customerTimeSources = ref<any>([
+  { label: '今天', value: 1, isActive: false },
+  { label: '昨天', value: 2, isActive: false },
+  { label: '本周', value: 3, isActive: false },
+  { label: '本月', value: 4, isActive: false },
+  { label: '上月', value: 5, isActive: false },
+])
+const customerTime = ref<any>(null)
 // const sources2: any = [
 //   { label: '今天', value: 1, isActive: true },
 //   { label: '昨天', value: 2, isActive: false },
@@ -83,21 +93,79 @@ function toDetail(item: CusList) {
 
 function resetSearch() {
   birthday.value = null
+  birthdayRange.value = []
+  customerTime.value = null
+  customerTimeRange.value = []
+}
+
+// 生日范围选择确认
+function handleBirthdayRangeConfirm({ value }) {
+  if (value && value.length === 2) {
+    reqParams.birthdayS = dayjs(value[0]).format('YYYY-MM-DD')
+    reqParams.birthdayE = dayjs(value[1]).format('YYYY-MM-DD')
+    // 清空标签选择
+    birthday.value = null
+  }
+}
+
+// 成为客户时间范围选择确认
+function handleCustomerTimeRangeConfirm({ value }) {
+  if (value && value.length === 2) {
+    reqParams.cDateS = dayjs(value[0]).format('YYYY-MM-DD')
+    reqParams.cDateE = dayjs(value[1]).format('YYYY-MM-DD')
+    // 清空标签选择
+    customerTime.value = null
+  }
 }
 
 function confirmBirthday() { // 搜索当天生日和当月生日
-  if (birthday.value === null) {
+  // 处理生日标签选择
+  if (birthday.value === null && birthdayRange.value.length === 0) {
     reqParams.birthdayS = null
     reqParams.birthdayE = null
   }
   if (birthday.value === 1) { // 1当天生日 2当月生日
     reqParams.birthdayS = dayjs().format('YYYY-MM-DD')
     reqParams.birthdayE = dayjs().format('YYYY-MM-DD')
+    birthdayRange.value = [] // 清空范围选择
   }
   if (birthday.value === 2) {
     reqParams.birthdayS = dayjs().startOf('month').format('YYYY-MM-DD')
     reqParams.birthdayE = dayjs().endOf('month').format('YYYY-MM-DD')
+    birthdayRange.value = [] // 清空范围选择
   }
+
+  // 处理成为客户时间标签选择
+  if (customerTime.value === null && customerTimeRange.value.length === 0) {
+    reqParams.cDateS = null
+    reqParams.cDateE = null
+  }
+  if (customerTime.value === 1) { // 今天
+    reqParams.cDateS = dayjs().format('YYYY-MM-DD')
+    reqParams.cDateE = dayjs().format('YYYY-MM-DD')
+    customerTimeRange.value = []
+  }
+  if (customerTime.value === 2) { // 昨天
+    reqParams.cDateS = dayjs().subtract(1, 'day').format('YYYY-MM-DD')
+    reqParams.cDateE = dayjs().subtract(1, 'day').format('YYYY-MM-DD')
+    customerTimeRange.value = []
+  }
+  if (customerTime.value === 3) { // 本周
+    reqParams.cDateS = dayjs().startOf('week').format('YYYY-MM-DD')
+    reqParams.cDateE = dayjs().endOf('week').format('YYYY-MM-DD')
+    customerTimeRange.value = []
+  }
+  if (customerTime.value === 4) { // 本月
+    reqParams.cDateS = dayjs().startOf('month').format('YYYY-MM-DD')
+    reqParams.cDateE = dayjs().endOf('month').format('YYYY-MM-DD')
+    customerTimeRange.value = []
+  }
+  if (customerTime.value === 5) { // 上月
+    reqParams.cDateS = dayjs().subtract(1, 'month').startOf('month').format('YYYY-MM-DD')
+    reqParams.cDateE = dayjs().subtract(1, 'month').endOf('month').format('YYYY-MM-DD')
+    customerTimeRange.value = []
+  }
+
   filter.value.close()
   paging.value?.reload()
 }
@@ -136,31 +204,34 @@ onShow(() => {
                   生日
                 </view>
                 <GridTagSelect v-model="birthday" :sources="sources" />
-                <!-- <view flex flex-ac gap-32rpx mt-32rpx c-929292>
-              <text>范围</text>
-              <input placeholder-class="cus-input" w-150rpx px-10px bg-F2F3F5 h-32px lh-32px type="text">
-              <text>至</text>
-              <input placeholder-class="cus-input" w-150rpx px-10px bg-F2F3F5 h-32px lh-32px type="text">
-            </view>
-            <view flex flex-ac gap-32rpx mt-32rpx c-929292>
-              <text>最近</text>
-              <input placeholder-class="cus-input" w-150rpx px-10px bg-F2F3F5 h-32px lh-32px type="text">
-              <text>天过生日</text>
-            </view> -->
+                <view mt-32rpx>
+                  <wd-calendar
+                    v-model="birthdayRange"
+                    type="daterange"
+                    label="范围"
+                    placeholder="请选择日期范围"
+                    :show-confirm="false"
+                    @confirm="handleBirthdayRangeConfirm"
+                  />
+                </view>
               </view>
 
-              <!-- <view bg-white rd-10px p-24rpx mt-24rpx>
-            <view f14 mb-16px>
-              成为客户时间
-            </view>
-            <GridTagSelect v-model="value1" :sources="sources2" :columns="3" />
-            <view flex flex-ac gap-32rpx mt-32rpx c-929292>
-              <text>范围</text>
-              <input placeholder-class="cus-input" w-150rpx px-10px bg-F2F3F5 h-32px lh-32px type="text">
-              <text>至</text>
-              <input placeholder-class="cus-input" w-150rpx px-10px bg-F2F3F5 h-32px lh-32px type="text">
-            </view>
-          </view> -->
+              <view bg-white rd-10px p-24rpx mt-24rpx>
+                <view f14 mb-16px>
+                  成为客户时间
+                </view>
+                <GridTagSelect v-model="customerTime" :sources="customerTimeSources" :columns="3" />
+                <view mt-32rpx>
+                  <wd-calendar
+                    v-model="customerTimeRange"
+                    type="daterange"
+                    label="范围"
+                    placeholder="请选择日期范围"
+                    :show-confirm="false"
+                    @confirm="handleCustomerTimeRangeConfirm"
+                  />
+                </view>
+              </view>
 
               <!-- <view bg-white rd-10px p-24rpx mt-24rpx>
             <view f14 mb-32rpx>
