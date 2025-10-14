@@ -49,7 +49,7 @@ onLoad(async (option) => {
       formData.value = curBilling.value
       postUrl.value = '/business/billing'
       const amount = repayAmount.value || curBilling.value.amount
-      getAvailableCashCards(option.storeCustomerId, amount)
+      getAvailableCashCards(option.storeCustomerId || 0, amount)
     }
 
     if (mode.value === PayModeEnum.MakeCard) {
@@ -84,7 +84,7 @@ onLoad(async (option) => {
     }
 
     if (mode.value === PayModeEnum.Booking) {
-      getAvailableCashCards(bookInfo.value.storeCustomerId, bookInfo.value.amount)
+      getAvailableCashCards(bookInfo.value.storeCustomerId || 0, bookInfo.value.amount)
       formData.value = bookInfo.value
       postUrl.value = '/business/booking'
     }
