@@ -81,7 +81,7 @@ function toProtocol(type: 1 | 2) {
             :checked="checked"
           />
         </checkbox-group>
-        <text>登录代表同意</text>
+        <text>我已阅读并同意</text>
         <text theme-color @click="toProtocol(1)">
           《用户协议》
         </text>
@@ -89,9 +89,6 @@ function toProtocol(type: 1 | 2) {
         <text theme-color @click="toProtocol(2)">
           《隐私政策》
         </text>
-      </view>
-      <view pt-10rpx>
-        登录前请阅读
       </view>
     </view>
   </view>
