@@ -32,6 +32,7 @@ interface NavigateToOptions {
        "/pagesA/card/select-card-common" |
        "/pagesA/customer/add" |
        "/pagesA/customer/detail" |
+       "/pagesA/customer/list-filter" |
        "/pagesA/customer/list" |
        "/pagesA/customer/points" |
        "/pagesA/dashboard/cash-apply" |

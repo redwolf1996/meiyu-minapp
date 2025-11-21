@@ -231,6 +231,14 @@
           }
         },
         {
+          "path": "customer/list-filter",
+          "type": "page",
+          "layout": "common",
+          "style": {
+            "navigationBarTitleText": "筛选客户"
+          }
+        },
+        {
           "path": "customer/list",
           "type": "page",
           "layout": "common",
