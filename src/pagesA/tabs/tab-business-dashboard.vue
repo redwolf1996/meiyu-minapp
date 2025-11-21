@@ -18,6 +18,41 @@ const userInfo = ref<Partial<UserInfo>>(null)
 const info = ref<DashBoardData>()
 const isOvertime = ref(false)
 const showCardRecharge = ref(false) // 显示开卡充值弹窗
+const loading = ref(true) // 加载状态，控制骨架屏显示
+
+// 骨架屏配置 - 根据实际页面布局设计
+const skeletonRowCol = ref([
+  // 第一行：顶部统计卡片区域（带背景图，包含标题、大数字和3个小统计）
+  { height: '280rpx' },
+  // 第二行：统计数据区域（4列，白色卡片）
+  [
+    { width: '23%', height: '100rpx' },
+    { width: '23%', height: '100rpx', marginLeft: '2%' },
+    { width: '23%', height: '100rpx', marginLeft: '2%' },
+    { width: '23%', height: '100rpx', marginLeft: '2%' },
+  ],
+  // 第三行：今日待服务标题
+  { width: '40%', height: '50rpx' },
+  // 第四行：今日待服务内容区域（横向滚动卡片）
+  { height: '220rpx' },
+  // 第五行：常用工具标题
+  { width: '30%', height: '50rpx' },
+  // 第六-七行：常用工具宫格区域（2行4列，共8个工具）
+  [
+    [
+      { width: '22%', height: '140rpx' },
+      { width: '22%', height: '140rpx', marginLeft: '4%' },
+      { width: '22%', height: '140rpx', marginLeft: '4%' },
+      { width: '22%', height: '140rpx', marginLeft: '4%' },
+    ],
+    [
+      { width: '22%', height: '140rpx' },
+      { width: '22%', height: '140rpx', marginLeft: '4%' },
+      { width: '22%', height: '140rpx', marginLeft: '4%' },
+      { width: '22%', height: '140rpx', marginLeft: '4%' },
+    ],
+  ],
+] as any)
 uni.showShareMenu({
   withShareTicket: true,
   menus: ['shareAppMessage', 'shareTimeline'],
@@ -51,6 +86,8 @@ onShareTimeline(() => {
 onShow(() => {
   if (storeId.value)
     setStaffList()
+  // 每次显示页面时重置加载状态
+  loading.value = true
   initStore()
   const menuButtonInfo = getMenuButtonInfo()
   menuButtonWidth.value = menuButtonInfo?.barWidth
@@ -80,14 +117,22 @@ async function initStore() {
 
 // 获取工作台信息
 async function getDashboardInfo() {
-  const res = await request.get<DashBoardData>(`/business/workbench/${storeId.value}`)
-  info.value = res.data
+  try {
+    const res = await request.get<DashBoardData>(`/business/workbench/${storeId.value}`)
+    info.value = res.data
 
-  // 判断是否过期
-  const today = dayjs()
-  const expTime = dayjs(info.value.orgExpiresTime)
-  if (today.isAfter(expTime))
-    isOvertime.value = true
+    // 判断是否过期
+    const today = dayjs()
+    const expTime = dayjs(info.value.orgExpiresTime)
+    if (today.isAfter(expTime))
+      isOvertime.value = true
+  }
+  finally {
+    // 确保图片有时间加载，稍微延迟一下再隐藏骨架屏
+    setTimeout(() => {
+      loading.value = false
+    }, 300)
+  }
 }
 
 function toWallet() {
@@ -182,182 +227,188 @@ function toCardRecharge(type: 1 | 2 | 3 | 4 | 5 | 6) {
       </template>
     </wd-navbar>
 
-    <view class="conitaner" pr>
-      <view
-        p-40rpx color-white pr
-        style="background-size: cover;"
-        :style="{ backgroundImage: `url(${IMG_BASE}/bg-dashboard.png)` }"
-      >
-        <view f14>
-          本月实收(元)
-        </view>
-        <view fb font-size-64rpx mt-12px>
-          {{ info?.currentMonthIncome }}
-        </view>
-        <view flex mt-20px gap-40px>
-          <view wp-33.3333>
-            <view f12 style="opacity: .6;">
-              今日实收
-            </view>
-            <view f16 mt-12rpx>
-              {{ info?.currentDayIncome }}
-            </view>
-          </view>
-          <view wp-33.3333>
-            <view f12 style="opacity: .6;">
-              本月消耗金额
-            </view>
-            <view f16 mt-12rpx>
-              {{ info?.currentMonthUse }}
-            </view>
-          </view>
-          <view wp-33.3333>
-            <view f12 style="opacity: .6;">
-              本月开卡充值
-            </view>
-            <view f16 mt-12rpx>
-              {{ info?.currentMonthCardIncome }}
-            </view>
-          </view>
-        </view>
+    <wd-skeleton
+      :loading="loading"
+      animation="gradient"
+      :row-col="skeletonRowCol"
+    >
+      <view class="conitaner" pr>
         <view
-          class="wallet"
-          px-16px
-          py-8px color-white pa flex flex-ac right-0 top-20px style="background-color: rgba(255,255,255,0.2);border-radius: 31px 0px 0px 31px;"
-          @click="toWallet()"
+          p-40rpx color-white pr
+          style="background-size: cover;"
+          :style="{ backgroundImage: `url(${IMG_BASE}/bg-dashboard.png)` }"
         >
+          <view f14>
+            本月实收(元)
+          </view>
+          <view fb font-size-64rpx mt-12px>
+            {{ info?.currentMonthIncome }}
+          </view>
+          <view flex mt-20px gap-40px>
+            <view wp-33.3333>
+              <view f12 style="opacity: .6;">
+                今日实收
+              </view>
+              <view f16 mt-12rpx>
+                {{ info?.currentDayIncome }}
+              </view>
+            </view>
+            <view wp-33.3333>
+              <view f12 style="opacity: .6;">
+                本月消耗金额
+              </view>
+              <view f16 mt-12rpx>
+                {{ info?.currentMonthUse }}
+              </view>
+            </view>
+            <view wp-33.3333>
+              <view f12 style="opacity: .6;">
+                本月开卡充值
+              </view>
+              <view f16 mt-12rpx>
+                {{ info?.currentMonthCardIncome }}
+              </view>
+            </view>
+          </view>
+          <view
+            class="wallet"
+            px-16px
+            py-8px color-white pa flex flex-ac right-0 top-20px style="background-color: rgba(255,255,255,0.2);border-radius: 31px 0px 0px 31px;"
+            @click="toWallet()"
+          >
+            <wd-img
+              :width="16"
+              :height="16"
+              :src="`${IMG_BASE}/icon-wallet.png`"
+            />
+            <text f14 pl-8px>
+              我的钱包
+            </text>
+          </view>
+        </view>
+
+        <view pr mt-20px bg-white flex flex-ac tc flex-bt py-22rpx style="box-shadow: 0px 4px 8px 0px rgba(48, 48, 48, 0.1005);">
+          <view pa abs-cc flex class="total">
+            <view class="bd-r" />
+            <view class="bd-r" />
+            <view class="bd-r" />
+            <view />
+          </view>
+          <view wp-25>
+            <view fb f18>
+              {{ info?.customerCount }}
+            </view>
+            <view f12 color-646466 mt-2px>
+              普通客户
+            </view>
+          </view>
+          <view wp-25>
+            <view fb f18>
+              {{ info?.vipCustomerCount }}
+            </view>
+            <view f12 color-646466 mt-2px>
+              VIP
+            </view>
+          </view>
+          <view wp-25>
+            <view fb f18>
+              {{ info?.currentMonthBooking }}
+            </view>
+            <view f12 color-646466 mt-2px>
+              本月预约
+            </view>
+          </view>
+          <view wp-25>
+            <view fb f18>
+              {{ info?.waitCount }}
+            </view>
+            <view f12 color-646466 mt-2px>
+              待服务
+            </view>
+          </view>
+        </view>
+
+        <view mt-30px>
+          <view class="title">
+            今日待服务({{ info?.todayBookingList?.length ?? 0 }})
+          </view>
+          <view>
+            <scroll-view v-if="info?.todayBookingList?.length" :scrollX="true" style="white-space: nowrap;">
+              <DashboardCard v-for="(item, index) in info?.todayBookingList" :key="`sdk-${index}`" :data="item" @myclick="toBookDetail(item)" />
+            </scroll-view>
+            <view v-else tc c-#A7A8AC py20rpx>
+              暂无预约
+            </view>
+          </view>
+        </view>
+
+        <view v-if="isOvertime && storeRole !== 2 && storeRole !== 3 " mt-30px class="renew" flex flex-bt flex-ac gap-24rpx p-20px>
           <wd-img
-            :width="16"
-            :height="16"
-            :src="`${IMG_BASE}/icon-wallet.png`"
+            :width="23"
+            :height="23"
+            :src="`${IMG_BASE}/icon-expire.png`"
           />
-          <text f14 pl-8px>
-            我的钱包
-          </text>
+          <view w-320rpx>
+            <view fb f14>
+              服务已到期
+            </view>
+            <view f10>
+              您的服务已于{{ dayjs(info?.orgExpiresTime).format('YYYY年MM月DD日') }}到期，历史数据仍可正常查询，请尽快续费以享受完整服务。
+            </view>
+          </view>
+          <view class="renew-btn" @click="toRenew()">
+            立即续费
+          </view>
         </view>
-      </view>
 
-      <view pr mt-20px bg-white flex flex-ac tc flex-bt py-22rpx style="box-shadow: 0px 4px 8px 0px rgba(48, 48, 48, 0.1005);">
-        <view pa abs-cc flex class="total">
-          <view class="bd-r" />
-          <view class="bd-r" />
-          <view class="bd-r" />
-          <view />
+        <view mt-30px>
+          <view class="title">
+            常用工具
+          </view>
+          <view h-20px />
+          <view class="grid">
+            <view v-if="storeRole !== 2" @click="toScanCode()">
+              <i i-ant-design-scan-outlined fs-64 c-1563ff />
+              <text>扫码核销</text>
+            </view>
+            <view @click="toAddCustomer()">
+              <i i-ant-design-user-add-outlined fs-64 c-1563ff />
+              <text>添加客户</text>
+            </view>
+            <view @click="toAddBooking()">
+              <i i-material-symbols-add-notes-outline fs-64 c-1563ff />
+              <text>新增预约</text>
+            </view>
+            <view @click="toCashing()">
+              <i i-mdi-credit-card-check-outline fs-64 c-1563ff />
+              <text>开单收银</text>
+            </view>
+            <view @click="toMakeCard()">
+              <i i-material-symbols-add-card-outline fs-64 c-1563ff />
+              <text>开卡充值</text>
+            </view>
+            <view @click="toOrderList()">
+              <i i-mdi-order-bool-ascending fs-64 c-1563ff />
+              <text>订单列表</text>
+            </view>
+            <view @click="toBookingList()">
+              <i i-tabler-address-book fs-64 c-1563ff />
+              <text>预约列表</text>
+            </view>
+            <view v-if="storeRole !== 2 && storeRole !== 3" @click="toStoreManage()">
+              <i i-mingcute-shop-line fs-64 c-1563ff />
+              <text>店务管理</text>
+            </view>
+            <view @click="toCusCard()">
+              <i i-heroicons-outline-credit-card fs-64 c-1563ff />
+              <text>会员卡项</text>
+            </view>
+          </view>
         </view>
-        <view wp-25>
-          <view fb f18>
-            {{ info?.customerCount }}
-          </view>
-          <view f12 color-646466 mt-2px>
-            普通客户
-          </view>
-        </view>
-        <view wp-25>
-          <view fb f18>
-            {{ info?.vipCustomerCount }}
-          </view>
-          <view f12 color-646466 mt-2px>
-            VIP
-          </view>
-        </view>
-        <view wp-25>
-          <view fb f18>
-            {{ info?.currentMonthBooking }}
-          </view>
-          <view f12 color-646466 mt-2px>
-            本月预约
-          </view>
-        </view>
-        <view wp-25>
-          <view fb f18>
-            {{ info?.waitCount }}
-          </view>
-          <view f12 color-646466 mt-2px>
-            待服务
-          </view>
-        </view>
-      </view>
 
-      <view mt-30px>
-        <view class="title">
-          今日待服务({{ info?.todayBookingList?.length ?? 0 }})
-        </view>
-        <view>
-          <scroll-view v-if="info?.todayBookingList?.length" :scrollX="true" style="white-space: nowrap;">
-            <DashboardCard v-for="(item, index) in info?.todayBookingList" :key="`sdk-${index}`" :data="item" @myclick="toBookDetail(item)" />
-          </scroll-view>
-          <view v-else tc c-#A7A8AC py20rpx>
-            暂无预约
-          </view>
-        </view>
+        <view h-50px />
       </view>
-
-      <view v-if="isOvertime && storeRole !== 2 && storeRole !== 3 " mt-30px class="renew" flex flex-bt flex-ac gap-24rpx p-20px>
-        <wd-img
-          :width="23"
-          :height="23"
-          :src="`${IMG_BASE}/icon-expire.png`"
-        />
-        <view w-320rpx>
-          <view fb f14>
-            服务已到期
-          </view>
-          <view f10>
-            您的服务已于{{ dayjs(info?.orgExpiresTime).format('YYYY年MM月DD日') }}到期，历史数据仍可正常查询，请尽快续费以享受完整服务。
-          </view>
-        </view>
-        <view class="renew-btn" @click="toRenew()">
-          立即续费
-        </view>
-      </view>
-
-      <view mt-30px>
-        <view class="title">
-          常用工具
-        </view>
-        <view h-20px />
-        <view class="grid">
-          <view v-if="storeRole !== 2" @click="toScanCode()">
-            <i i-ant-design-scan-outlined fs-64 c-1563ff />
-            <text>扫码核销</text>
-          </view>
-          <view @click="toAddCustomer()">
-            <i i-ant-design-user-add-outlined fs-64 c-1563ff />
-            <text>添加客户</text>
-          </view>
-          <view @click="toAddBooking()">
-            <i i-material-symbols-add-notes-outline fs-64 c-1563ff />
-            <text>新增预约</text>
-          </view>
-          <view @click="toCashing()">
-            <i i-mdi-credit-card-check-outline fs-64 c-1563ff />
-            <text>开单收银</text>
-          </view>
-          <view @click="toMakeCard()">
-            <i i-material-symbols-add-card-outline fs-64 c-1563ff />
-            <text>开卡充值</text>
-          </view>
-          <view @click="toOrderList()">
-            <i i-mdi-order-bool-ascending fs-64 c-1563ff />
-            <text>订单列表</text>
-          </view>
-          <view @click="toBookingList()">
-            <i i-tabler-address-book fs-64 c-1563ff />
-            <text>预约列表</text>
-          </view>
-          <view v-if="storeRole !== 2 && storeRole !== 3" @click="toStoreManage()">
-            <i i-mingcute-shop-line fs-64 c-1563ff />
-            <text>店务管理</text>
-          </view>
-          <view @click="toCusCard()">
-            <i i-heroicons-outline-credit-card fs-64 c-1563ff />
-            <text>会员卡项</text>
-          </view>
-        </view>
-      </view>
-
-      <view h-50px />
-    </view>
+    </wd-skeleton>
   </view>
 
   <wd-popup v-model="showCardRecharge" position="bottom" closable :safe-area-inset-bottom="true" custom-style="border-radius:32rpx;">
