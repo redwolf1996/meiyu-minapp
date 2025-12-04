@@ -10,43 +10,11 @@ import type { CusList, CusModel, CusReqModel } from './types'
 import dayjs from 'dayjs'
 import MyTabBar from './MyTabBar.vue'
 
-const filter = ref()
 const optionsVip = [
   { label: '全部', value: null },
   { label: '会员', value: 2 },
   { label: '非会员', value: 1 },
 ]
-const birthday = ref<any>(null)
-const birthdayRange = ref<number[]>([]) // 生日范围选择
-const customerTimeRange = ref<number[]>([]) // 成为客户时间范围选择
-const sources = ref<any>([
-  { label: '当天生日', value: 1, isActive: false },
-  { label: '当月生日', value: 2, isActive: false },
-])
-const customerTimeSources = ref<any>([
-  { label: '今天', value: 1, isActive: false },
-  { label: '昨天', value: 2, isActive: false },
-  { label: '本周', value: 3, isActive: false },
-  { label: '本月', value: 4, isActive: false },
-  { label: '上月', value: 5, isActive: false },
-])
-const customerTime = ref<any>(null)
-// const sources2: any = [
-//   { label: '今天', value: 1, isActive: true },
-//   { label: '昨天', value: 2, isActive: false },
-//   { label: '本周', value: 3, isActive: true },
-//   { label: '本月', value: 4, isActive: false },
-//   { label: '上月', value: 5, isActive: true },
-// ]
-const sources3: any = [
-  { label: '折扣卡', value: 1, isActive: true },
-  { label: '充值卡', value: 2, isActive: false },
-  { label: '通卡', value: 3, isActive: true },
-  { label: '有限次卡', value: 4, isActive: false },
-  { label: '不限次卡', value: 5, isActive: true },
-]
-const show = ref(false)
-const show2 = ref(false)
 const reqParams = reactive<CusReqModel>({
   storeId: storeId.value,
   pageNum: 1,
@@ -87,91 +55,46 @@ function clear() {
 function handleChangeVip() { // 会员 非会员筛选
   paging.value?.reload()
 }
+
 function toDetail(item: CusList) {
   uni.navigateTo({ url: `/pagesA/customer/detail?id=${item.storeCustomerId}` })
 }
 
-function resetSearch() {
-  birthday.value = null
-  birthdayRange.value = []
-  customerTime.value = null
-  customerTimeRange.value = []
+// 跳转到筛选页面
+function toFilterPage() {
+  // 保存当前筛选条件到本地存储，以便筛选页面可以读取
+  const currentFilter = {
+    birthdayS: reqParams.birthdayS || '',
+    birthdayE: reqParams.birthdayE || '',
+    cDateS: reqParams.cDateS || '',
+    cDateE: reqParams.cDateE || '',
+  }
+  uni.setStorageSync('customer_filter_params', currentFilter)
+  uni.navigateTo({ url: '/pagesA/customer/list-filter' })
 }
 
-// 生日范围选择确认
-function handleBirthdayRangeConfirm({ value }) {
-  if (value && value.length === 2) {
-    reqParams.birthdayS = dayjs(value[0]).format('YYYY-MM-DD')
-    reqParams.birthdayE = dayjs(value[1]).format('YYYY-MM-DD')
-    // 清空标签选择
-    birthday.value = null
+// 应用筛选条件
+function applyFilter(filterParams: any) {
+  if (filterParams) {
+    reqParams.birthdayS = filterParams.birthdayS || ''
+    reqParams.birthdayE = filterParams.birthdayE || ''
+    reqParams.cDateS = filterParams.cDateS || ''
+    reqParams.cDateE = filterParams.cDateE || ''
+    paging.value?.reload()
   }
-}
-
-// 成为客户时间范围选择确认
-function handleCustomerTimeRangeConfirm({ value }) {
-  if (value && value.length === 2) {
-    reqParams.cDateS = dayjs(value[0]).format('YYYY-MM-DD')
-    reqParams.cDateE = dayjs(value[1]).format('YYYY-MM-DD')
-    // 清空标签选择
-    customerTime.value = null
-  }
-}
-
-function confirmBirthday() { // 搜索当天生日和当月生日
-  // 处理生日标签选择
-  if (birthday.value === null && birthdayRange.value.length === 0) {
-    reqParams.birthdayS = null
-    reqParams.birthdayE = null
-  }
-  if (birthday.value === 1) { // 1当天生日 2当月生日
-    reqParams.birthdayS = dayjs().format('YYYY-MM-DD')
-    reqParams.birthdayE = dayjs().format('YYYY-MM-DD')
-    birthdayRange.value = [] // 清空范围选择
-  }
-  if (birthday.value === 2) {
-    reqParams.birthdayS = dayjs().startOf('month').format('YYYY-MM-DD')
-    reqParams.birthdayE = dayjs().endOf('month').format('YYYY-MM-DD')
-    birthdayRange.value = [] // 清空范围选择
-  }
-
-  // 处理成为客户时间标签选择
-  if (customerTime.value === null && customerTimeRange.value.length === 0) {
-    reqParams.cDateS = null
-    reqParams.cDateE = null
-  }
-  if (customerTime.value === 1) { // 今天
-    reqParams.cDateS = dayjs().format('YYYY-MM-DD')
-    reqParams.cDateE = dayjs().format('YYYY-MM-DD')
-    customerTimeRange.value = []
-  }
-  if (customerTime.value === 2) { // 昨天
-    reqParams.cDateS = dayjs().subtract(1, 'day').format('YYYY-MM-DD')
-    reqParams.cDateE = dayjs().subtract(1, 'day').format('YYYY-MM-DD')
-    customerTimeRange.value = []
-  }
-  if (customerTime.value === 3) { // 本周
-    reqParams.cDateS = dayjs().startOf('week').format('YYYY-MM-DD')
-    reqParams.cDateE = dayjs().endOf('week').format('YYYY-MM-DD')
-    customerTimeRange.value = []
-  }
-  if (customerTime.value === 4) { // 本月
-    reqParams.cDateS = dayjs().startOf('month').format('YYYY-MM-DD')
-    reqParams.cDateE = dayjs().endOf('month').format('YYYY-MM-DD')
-    customerTimeRange.value = []
-  }
-  if (customerTime.value === 5) { // 上月
-    reqParams.cDateS = dayjs().subtract(1, 'month').startOf('month').format('YYYY-MM-DD')
-    reqParams.cDateE = dayjs().subtract(1, 'month').endOf('month').format('YYYY-MM-DD')
-    customerTimeRange.value = []
-  }
-
-  filter.value.close()
-  paging.value?.reload()
 }
 
 onShow(() => {
-  paging.value?.reload()
+  // 检查是否有筛选条件返回
+  const filterParams = uni.getStorageSync('customer_filter_params')
+  if (filterParams) {
+    applyFilter(filterParams)
+    // 清除存储的筛选条件，避免重复应用
+    uni.removeStorageSync('customer_filter_params')
+  }
+  else {
+    paging.value?.reload()
+  }
 })
 </script>
 
@@ -195,154 +118,16 @@ onShow(() => {
           </view>
         </view>
 
-        <wd-drop-menu>
-          <wd-drop-menu-item v-model="reqParams.level" :options="optionsVip" @change="handleChangeVip" />
-          <wd-drop-menu-item ref="filter" title="筛选">
-            <view p-24rpx bg-F9F9F9>
-              <view bg-white rd-10px p-24rpx>
-                <view f14 mb-16px>
-                  生日
-                </view>
-                <GridTagSelect v-model="birthday" :sources="sources" />
-                <view mt-32rpx>
-                  <wd-calendar
-                    v-model="birthdayRange"
-                    type="daterange"
-                    label="范围"
-                    placeholder="请选择日期范围"
-                    :show-confirm="false"
-                    @confirm="handleBirthdayRangeConfirm"
-                  />
-                </view>
-              </view>
-
-              <view bg-white rd-10px p-24rpx mt-24rpx>
-                <view f14 mb-16px>
-                  成为客户时间
-                </view>
-                <GridTagSelect v-model="customerTime" :sources="customerTimeSources" :columns="3" />
-                <view mt-32rpx>
-                  <wd-calendar
-                    v-model="customerTimeRange"
-                    type="daterange"
-                    label="范围"
-                    placeholder="请选择日期范围"
-                    :show-confirm="false"
-                    @confirm="handleCustomerTimeRangeConfirm"
-                  />
-                </view>
-              </view>
-
-              <!-- <view bg-white rd-10px p-24rpx mt-24rpx>
-            <view f14 mb-32rpx>
-              持有卡项
-            </view>
-            <radio-group mb12rpx flex gap-20rpx transform-translate-x--5px>
-              <label f12><radio style="transform:scale(0.7)" value="1" color="#1a66ff" :checked="true" />任意卡项</label>
-              <label f12><radio style="transform:scale(0.7)" value="2" color="#1a66ff" />指定卡项</label>
-              <label f12><radio style="transform:scale(0.7)" value="3" color="#1a66ff" />指定类型卡</label>
-            </radio-group>
-            <MyCell label="请选择" noBorder @click="show2 = true">
-              <text f14 c-3B3D3D>09:00-21:00</text>
-            </MyCell>
-            <view flex flex-wrap gap-20rpx>
-              <view class="tag">
-                充值卡
-              </view>
-              <view class="tag">
-                折扣卡
-              </view>
-            </view>
-          </view> -->
-
-              <!-- TODO 查询过于复杂先不做 -->
-              <wd-action-sheet v-model="show" title="选择卡类型" @close="show = false">
-                <view p-40rpx>
-                  <GridTagSelect :sources="sources3" :columns="3" />
-                  <button class="theme my-btn" wp100 mt-30px>
-                    确定
-                  </button>
-                </view>
-              </wd-action-sheet>
-
-              <!-- TODO 查询过于复杂先不做 -->
-              <wd-action-sheet v-model="show2" title="选择卡项" @close="show = false">
-                <view p-40rpx>
-                  <view class="my-item">
-                    <wd-img
-                      :width="86"
-                      :height="75"
-                      mode="aspectFill"
-                      :src="`${IMG_BASE}/img-cika.png`"
-                    />
-                    <view flex flex-y flex-bt gap-12rpx flex-1>
-                      <view flex flex-ac>
-                        <wd-img
-                          :width="16"
-                          :height="16"
-                          :src="`${IMG_BASE}/icon-star2.png`"
-                        />
-                        <text f12 pl-10rpx>
-                          30次
-                        </text>
-                      </view>
-                      <view flex flex-ac flex-bt>
-                        <text f16 fb>
-                          7980面部精雕30次
-                        </text>
-                        <radio style="transform:scale(0.7)" value="3" color="#1a66ff" />
-                      </view>
-                      <view f12 c-9A9FA5>
-                        永久有效
-                      </view>
-                    </view>
-                  </view>
-                  <view class="my-item">
-                    <wd-img
-                      :width="86"
-                      :height="75"
-                      :src="`${IMG_BASE}/img-cika.png`"
-                    />
-                    <view flex flex-y flex-bt gap-12rpx flex-1>
-                      <view flex flex-ac>
-                        <wd-img
-                          :width="16"
-                          :height="16"
-                          :src="`${IMG_BASE}/icon-star2.png`"
-                        />
-                        <text f12 pl-10rpx>
-                          30次
-                        </text>
-                      </view>
-                      <view flex flex-ac flex-bt>
-                        <text f16 fb>
-                          7980面部精雕30次
-                        </text>
-                        <radio style="transform:scale(0.7)" value="3" color="#1a66ff" />
-                      </view>
-                      <view f12 c-9A9FA5>
-                        永久有效
-                      </view>
-                    </view>
-                  </view>
-                  <button class="my-btn theme" wp100 mt-30px>
-                    确定
-                  </button>
-                </view>
-              </wd-action-sheet>
-
-              <view flex tc flex-cc mt-24rpx px-112rpx gap-20rpx>
-                <button class="my-btn normal" w-220rpx @click="resetSearch()">
-                  重置
-                </button>
-                <button class="my-btn theme" w-220rpx @click="confirmBirthday()">
-                  <!-- 查看50个用户 -->
-                  确定
-                </button>
-              </view>
-            </view>
-          </wd-drop-menu-item>
-        </wd-drop-menu>
+        <view flex flex-ac gap-0>
+          <view flex-1>
+            <wd-drop-menu>
+              <wd-drop-menu-item v-model="reqParams.level" :options="optionsVip" @change="handleChangeVip" />
+            </wd-drop-menu>
+          </view>
+          <view class="filter-btn" @click="toFilterPage">
+            <text>筛选</text>
+          </view>
+        </view>
       </view>
     </template>
     <view py-12rpx px-32rpx>
@@ -439,6 +224,23 @@ label {
 :deep(.cus-input) {
   color: #c9cdd4;
   font-size: 14px;
+}
+.filter-btn {
+  height: 88rpx;
+  line-height: 88rpx;
+  padding: 0 32rpx;
+  text-align: center;
+  font-size: 28rpx;
+  color: #303030;
+  background-color: #fff;
+  border-left: 1px solid #ebedf0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &:active {
+    background-color: #f7f8fa;
+  }
 }
 .tag {
   color: #1a66ff;

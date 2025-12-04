@@ -112,7 +112,7 @@ onLoad(async (options) => {
     </view>
   </view>
   <view class="h30px" />
-  <view px20px>
+  <view v-if="itm?.type !== 3" px20px>
     <view c-#807D7D fs-16px mb22px>
       赠送权益
     </view>
