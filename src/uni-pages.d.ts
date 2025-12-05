@@ -30,6 +30,7 @@ interface NavigateToOptions {
        "/pagesA/card/list" |
        "/pagesA/card/make" |
        "/pagesA/card/select-card-common" |
+       "/pagesA/card/select-card-multiple" |
        "/pagesA/customer/add" |
        "/pagesA/customer/detail" |
        "/pagesA/customer/list-filter" |

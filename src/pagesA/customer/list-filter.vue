@@ -285,6 +285,10 @@ function confirmFilter() {
   uni.navigateBack()
 }
 
+function toCard() {
+  uni.navigateTo({ url: '/pagesA/card/select-card-multiple' })
+}
+
 function toCardType() {
   showCardType.value = true
 }
@@ -353,6 +357,16 @@ function toCardType() {
             指定卡类型
           </wd-radio>
         </wd-radio-group>
+        <template v-if="cardMode === 1">
+          <div class="h20px" />
+          <SelectCell :has-value="selectedCardTypeLabels.length > 0" @click="toCard">
+            <view flex flex-ac flex-wrap gap-10rpx>
+              <view v-for="label in selectedCardTypeLabels" :key="label" class="mini-tag">
+                {{ label }}
+              </view>
+            </view>
+          </SelectCell>
+        </template>
         <template v-if="cardMode === 2">
           <div class="h20px" />
           <SelectCell :has-value="selectedCardTypeLabels.length > 0" @click="toCardType">

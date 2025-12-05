@@ -216,6 +216,13 @@
           }
         },
         {
+          "path": "card/select-card-multiple",
+          "type": "page",
+          "style": {
+            "navigationBarTitleText": "选择卡项"
+          }
+        },
+        {
           "path": "customer/add",
           "type": "page",
           "layout": "common",
