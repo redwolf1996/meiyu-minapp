@@ -10,6 +10,7 @@ import dayjs from 'dayjs'
 // 生日相关
 const birthday = ref<any>(null)
 const birthdayRange = ref<number[]>([]) // 生日范围选择
+const birthdayDays = ref<any>(null) // 最新X天过生日
 const sources = ref<any>([
   { label: '当天生日', value: 1, isActive: false },
   { label: '当月生日', value: 2, isActive: false },
@@ -42,6 +43,21 @@ onLoad(() => {
     filterParams.birthdayE = savedFilter.birthdayE || ''
     filterParams.cDateS = savedFilter.cDateS || ''
     filterParams.cDateE = savedFilter.cDateE || ''
+
+    // 恢复最新X天过生日的设置
+    if (filterParams.birthdayS && filterParams.birthdayE) {
+      const start = dayjs(filterParams.birthdayS)
+      const end = dayjs(filterParams.birthdayE)
+      const today = dayjs()
+
+      // 如果开始日期是今天，计算天数差
+      if (start.isSame(today, 'day')) {
+        const daysDiff = end.diff(today.startOf('day'), 'day')
+        if (daysDiff > 0) {
+          birthdayDays.value = daysDiff
+        }
+      }
+    }
 
     // 根据日期恢复标签选择状态
     if (filterParams.birthdayS && filterParams.birthdayE) {
@@ -124,6 +140,7 @@ function handleCustomerTimeRangeConfirm({ value }) {
 function resetSearch() {
   birthday.value = null
   birthdayRange.value = []
+  birthdayDays.value = null
   customerTime.value = null
   customerTimeRange.value = []
   filterParams.birthdayS = ''
@@ -132,22 +149,80 @@ function resetSearch() {
   filterParams.cDateE = ''
 }
 
+// 监听生日标签选择变化
+watch(birthday, (newVal) => {
+  if (newVal !== null) {
+    birthdayRange.value = []
+    birthdayDays.value = null
+  }
+})
+
+// 监听生日范围选择变化
+watch(birthdayRange, (newVal) => {
+  if (newVal && newVal.length === 2) {
+    birthday.value = null
+    birthdayDays.value = null
+  }
+})
+
+// 监听最新X天过生日变化
+watch(birthdayDays, (newVal) => {
+  if (newVal !== null && newVal > 0) {
+    birthday.value = null
+    birthdayRange.value = []
+  }
+})
+
+// 监听成为客户时间标签选择变化
+watch(customerTime, (newVal) => {
+  if (newVal !== null) {
+    customerTimeRange.value = []
+  }
+})
+
+// 监听成为客户时间范围选择变化
+watch(customerTimeRange, (newVal) => {
+  if (newVal && newVal.length === 2) {
+    customerTime.value = null
+  }
+})
+
 // 确认筛选
 function confirmFilter() {
-  // 处理生日标签选择
-  if (birthday.value === null && birthdayRange.value.length === 0) {
-    filterParams.birthdayS = ''
-    filterParams.birthdayE = ''
-  }
-  if (birthday.value === 1) { // 1当天生日 2当月生日
+  // 处理生日筛选：三种方式互相排斥，只能有一个存在
+
+  // 1. 处理标签选择（当天生日、当月生日）
+  if (birthday.value === 1) { // 当天生日
     filterParams.birthdayS = dayjs().format('YYYY-MM-DD')
     filterParams.birthdayE = dayjs().format('YYYY-MM-DD')
     birthdayRange.value = [] // 清空范围选择
+    birthdayDays.value = null // 清空天数输入
   }
-  if (birthday.value === 2) {
+  else if (birthday.value === 2) { // 当月生日
     filterParams.birthdayS = dayjs().startOf('month').format('YYYY-MM-DD')
     filterParams.birthdayE = dayjs().endOf('month').format('YYYY-MM-DD')
     birthdayRange.value = [] // 清空范围选择
+    birthdayDays.value = null // 清空天数输入
+  }
+  // 2. 处理日期范围选择
+  else if (birthdayRange.value.length === 2) {
+    filterParams.birthdayS = dayjs(birthdayRange.value[0]).format('YYYY-MM-DD')
+    filterParams.birthdayE = dayjs(birthdayRange.value[1]).format('YYYY-MM-DD')
+    birthday.value = null // 清空标签选择
+    birthdayDays.value = null // 清空天数输入
+  }
+  // 3. 处理最新X天过生日
+  else if (birthdayDays.value !== null && birthdayDays.value > 0) {
+    const today = dayjs().startOf('day')
+    filterParams.birthdayS = today.format('YYYY-MM-DD')
+    filterParams.birthdayE = today.add(birthdayDays.value, 'day').format('YYYY-MM-DD')
+    birthday.value = null // 清空标签选择
+    birthdayRange.value = [] // 清空范围选择
+  }
+  // 4. 都没有选择，清空所有生日筛选
+  else {
+    filterParams.birthdayS = ''
+    filterParams.birthdayE = ''
   }
 
   // 处理成为客户时间标签选择
@@ -212,6 +287,17 @@ function confirmFilter() {
             @confirm="handleBirthdayRangeConfirm"
           />
         </view>
+        <view flex flex-ac f13 style="color: #929292;gap: 32rpx;padding:0 20px;">
+          <text>最新</text>
+          <input
+            v-model="birthdayDays"
+            type="number"
+            style="width: 190rpx;height: 64rpx;
+            height: 64rpx;text-align: center;
+            background-color: #F6F6FB;"
+          >
+          <text>天过生日</text>
+        </view>
       </view>
 
       <view bg-white rd-10px p-24rpx mt-24rpx>
@@ -231,12 +317,12 @@ function confirmFilter() {
         </view>
       </view>
 
-      <view flex tc flex-cc mt-24rpx px-112rpx gap-20rpx>
+      <view flex tc flex-cc mt-24rpx px-112rpx gap-40rpx py-20rpx>
         <button class="my-btn normal" w-220rpx @click="resetSearch()">
           重置
         </button>
-        <button class="my-btn theme" w-220rpx @click="confirmFilter()">
-          确定
+        <button class="my-btn theme" w-280rpx @click="confirmFilter()">
+          查看50个客户
         </button>
       </view>
     </view>
@@ -247,5 +333,16 @@ function confirmFilter() {
 .filter-container {
   min-height: 100vh;
   background-color: #f9f9f9;
+}
+
+.my-btn {
+  padding: 32rpx 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+:deep(.wd-calendar__label) {
+  color: #929292 !important;
 }
 </style>

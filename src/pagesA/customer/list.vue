@@ -11,7 +11,7 @@ import { cloneDeep } from 'lodash-es'
 const reqParams = reactive({
   storeId: storeId.value,
   pageNum: 1,
-  pageSize: 10000,
+  pageSize: 100000,
 })
 const list = ref<CusList[]>([])
 const tmpList = ref<CusList[]>([])
@@ -33,8 +33,14 @@ function save() {
   uni.navigateBack()
 }
 
+onLoad(() => {
+  uni.removeStorageSync('customer_filter_params')
+})
+
 onShow(async () => {
-  const res = await request.get<ListRes<CusList>>('/business/store-customer', reqParams)
+  const savedFilter = uni.getStorageSync('customer_filter_params')
+  const finalReqParams = { ...reqParams, ...savedFilter }
+  const res = await request.get<ListRes<CusList>>('/business/store-customer', finalReqParams)
   list.value = res.data.list.map((v) => {
     return {
       ...v,
