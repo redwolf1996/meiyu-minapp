@@ -16,8 +16,25 @@ const sources = ref<any>([
   { label: '当月生日', value: 2, isActive: false },
 ])
 
+const showCardType = ref(false)
+const cardMode = ref<number>(0) // 0任意卡项，1指定卡项，2指定类型卡
+const cardType = ref<any>([])
+const cardTypeSources = ref<any>([
+  { label: '折扣卡', value: 0, isActive: false },
+  { label: '充值卡', value: 1, isActive: false },
+  { label: '通卡', value: 2, isActive: false },
+  { label: '有限次卡', value: 3, isActive: false },
+  { label: '不限次卡', value: 4, isActive: false },
+])
+
 // 成为客户时间相关
 const customerTimeRange = ref<number[]>([]) // 成为客户时间范围选择
+const selectedCardTypeLabels = computed(() => {
+  return cardTypeSources.value
+    .filter(source => cardType.value.includes(source.value))
+    .map(source => source.label)
+})
+
 const customerTimeSources = ref<any>([
   { label: '今天', value: 1, isActive: false },
   { label: '昨天', value: 2, isActive: false },
@@ -267,6 +284,10 @@ function confirmFilter() {
   // 返回上一页
   uni.navigateBack()
 }
+
+function toCardType() {
+  showCardType.value = true
+}
 </script>
 
 <template>
@@ -317,6 +338,33 @@ function confirmFilter() {
         </view>
       </view>
 
+      <view bg-white rd-10px p-24rpx mt-24rpx>
+        <view f14 mb-16px>
+          持有卡项
+        </view>
+        <wd-radio-group v-model="cardMode" shape="dot" inline>
+          <wd-radio :value="0">
+            任意卡项
+          </wd-radio>
+          <wd-radio :value="1">
+            指定卡项
+          </wd-radio>
+          <wd-radio :value="2">
+            指定卡类型
+          </wd-radio>
+        </wd-radio-group>
+        <template v-if="cardMode === 2">
+          <div class="h20px" />
+          <SelectCell :has-value="selectedCardTypeLabels.length > 0" @click="toCardType">
+            <view flex flex-ac flex-wrap gap-10rpx>
+              <view v-for="label in selectedCardTypeLabels" :key="label" class="mini-tag">
+                {{ label }}
+              </view>
+            </view>
+          </SelectCell>
+        </template>
+      </view>
+
       <view flex tc flex-cc mt-24rpx px-112rpx gap-40rpx py-20rpx>
         <button class="my-btn normal" w-220rpx @click="resetSearch()">
           重置
@@ -327,6 +375,24 @@ function confirmFilter() {
       </view>
     </view>
   </view>
+
+  <wd-popup v-model="showCardType" position="bottom" closable :safe-area-inset-bottom="true" custom-style="border-radius:32rpx;">
+    <view>
+      <view fb tc c-#232220 mt42px>
+        选择卡类型
+      </view>
+      <view class="h20px" />
+      <view px20px py12px>
+        <GridTagSelect v-model="cardType" :sources="cardTypeSources" :columns="3" mode="multiple" />
+      </view>
+      <view class="h20px" />
+      <view px-20px pb-20px>
+        <button class="confirm-btn" @click="showCardType = false">
+          确定
+        </button>
+      </view>
+    </view>
+  </wd-popup>
 </template>
 
 <style lang='scss' scoped>
@@ -344,5 +410,27 @@ function confirmFilter() {
 
 :deep(.wd-calendar__label) {
   color: #929292 !important;
+}
+
+:deep(.wd-radio.is-inline) {
+  margin-right: 30px !important;
+}
+
+.mini-tag {
+  background-color: #eff2ff;
+  color: #1a66ff;
+  padding: 4rpx 12rpx;
+  border-radius: 4rpx;
+  font-size: 24rpx;
+}
+
+.confirm-btn {
+  width: 100%;
+  height: 80rpx;
+  line-height: 80rpx;
+  background-color: #fff;
+  color: #1a66ff;
+  border: 1px solid #1a66ff;
+  font-size: 16px;
 }
 </style>
