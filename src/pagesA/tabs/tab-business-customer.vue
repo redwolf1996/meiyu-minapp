@@ -6,6 +6,7 @@ style:
 </route>
 
 <script lang="ts" setup>
+import { computed } from 'vue'
 import type { CusList, CusModel, CusReqModel } from './types'
 import dayjs from 'dayjs'
 import MyTabBar from './MyTabBar.vue'
@@ -32,6 +33,15 @@ const reqParams = reactive<CusReqModel>({
 })
 const paging = ref<ZPagingInstance<CusList> | null>(null)
 const dataList = ref<CusList[]>([])
+const showVipAction = ref(false)
+
+const vipLabel = computed(() => {
+  return optionsVip.find(item => item.value === reqParams.level)?.label || '全部'
+})
+
+const vipActions = computed(() => {
+  return optionsVip.map(item => ({ ...item, name: item.label }))
+})
 
 async function queryList(page: number, pageSize: number) {
   reqParams.pageNum = page
@@ -52,7 +62,8 @@ function clear() {
   reqParams.keyword = ''
   paging.value?.reload()
 }
-function handleChangeVip() { // 会员 非会员筛选
+function handleChangeVip(action: any) { // 会员 非会员筛选
+  reqParams.level = action.item.value
   paging.value?.reload()
 }
 
@@ -119,16 +130,18 @@ onShow(() => {
         </view>
 
         <view flex flex-ac gap-0>
-          <view flex-1>
-            <wd-drop-menu>
-              <wd-drop-menu-item v-model="reqParams.level" :options="optionsVip" @change="handleChangeVip" />
-            </wd-drop-menu>
+          <view flex-1 class="filter-btn vip-filter-btn" style="justify-content: center;" @click="showVipAction = true">
+            <text>{{ vipLabel }}</text>
+            <wd-icon name="arrow-down" size="12px" />
           </view>
-          <view class="filter-btn" @click="toFilterPage">
+          <view flex-1 class="filter-btn" @click="toFilterPage">
             <text>筛选</text>
+            <wd-icon name="arrow-down" size="12px" />
           </view>
         </view>
+        <!-- https://wot-ui.cn/component/action-sheet.html -->
       </view>
+      <wd-action-sheet v-model="showVipAction" :actions="vipActions" title="选择会员类型" custom-style="padding-bottom: 50px" @select="handleChangeVip" />
     </template>
     <view py-12rpx px-32rpx>
       <view py-8rpx>
@@ -225,6 +238,9 @@ label {
   color: #c9cdd4;
   font-size: 14px;
 }
+.vip-filter-btn {
+  border-left: 0 !important;
+}
 .filter-btn {
   height: 88rpx;
   line-height: 88rpx;
@@ -233,11 +249,11 @@ label {
   font-size: 28rpx;
   color: #303030;
   background-color: #fff;
-  border-left: 1px solid #ebedf0;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 10rpx;
   &:active {
     background-color: #f7f8fa;
   }
