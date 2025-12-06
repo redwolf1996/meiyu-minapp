@@ -28,13 +28,14 @@ async function queryList() {
   })
 }
 
-function toggleCardSelection(cardId: number) {
-  if (selectedCardIds.value.has(cardId)) {
-    selectedCardIds.value.delete(cardId)
-  }
-  else {
+function toggleCardSelection(cardId: number, val: boolean) {
+  if (val) {
     selectedCardIds.value.add(cardId)
   }
+  else {
+    selectedCardIds.value.delete(cardId)
+  }
+  selectedCardIds.value = new Set(selectedCardIds.value)
 }
 
 function confirmSelection() {
@@ -57,7 +58,7 @@ onShow(() => {
 </script>
 
 <template>
-  <view mx-14px p-16px bg-white rd-b-8px>
+  <view mx-14px p-16px bg-white rd-b-8px pb-120px>
     <view
       v-for="(item, index) in dataList" :key="`card-${index}`"
       mt-12px flex flex-bt flex-ac gap-40rpx
@@ -119,12 +120,15 @@ onShow(() => {
         </view>
       </view>
       <wd-checkbox
-        :checked="selectedCardIds.has(item.id)"
-        @change="toggleCardSelection(item.id)"
+        :modelValue="selectedCardIds.has(item.id)"
+        @update:model-value="toggleCardSelection(item.id, $event)"
       />
     </view>
   </view>
-  <view px-14px py-16px bg-white>
+  <view class="button-container">
+    <view class="selected-count">
+      已选 ({{ selectedCardIds.size }}) 个卡项
+    </view>
     <button class="confirm-btn" @click="confirmSelection">
       确定
     </button>
@@ -156,14 +160,33 @@ onShow(() => {
     -1px -1px 16px rgba(0, 0, 0, 0.08),
     2px 1px 4px rgba(0, 0, 0, 0.08);
 }
+.button-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 14px;
+  background-color: #fff;
+  z-index: 100;
+  box-sizing: border-box;
+}
+.selected-count {
+  font-size: 14px;
+  color: #333;
+  white-space: nowrap;
+}
 .confirm-btn {
-  width: 100%;
-  height: 80rpx;
-  line-height: 80rpx;
+  width: 262rpx;
+  height: 72rpx;
+  line-height: 72rpx;
   background-color: #1a66ff;
   color: #fff;
   border: none;
   font-size: 16px;
-  border-radius: 8px;
+  padding: 0;
+  margin: 0;
 }
 </style>
