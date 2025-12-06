@@ -78,14 +78,14 @@ function toDetail(item: CusList) {
 function toFilterPage() {
   // 保存当前筛选条件到全局 store，以便筛选页面可以读取
   customerFilterParamsStore.value = {
+    ...customerFilterParamsStore.value, // 保留已有的值，比如 selectedCardNames
     birthdayS: reqParams.birthdayS || '',
     birthdayE: reqParams.birthdayE || '',
     cDateS: reqParams.cDateS || '',
     cDateE: reqParams.cDateE || '',
     cardIds: reqParams.cardIds || '',
-    selectedCardNames: [],
     cardAll: reqParams.cardAll,
-    cardTypes: customerFilterParamsStore.value.cardTypes || null,
+    cardTypes: reqParams.cardTypes || null,
   }
   uni.navigateTo({ url: '/pagesA/customer/list-filter' })
 }
@@ -105,38 +105,41 @@ function applyFilter(filterParams: any) {
 }
 
 onShow(() => {
-  // 第一次进入页面时清空所有查询条件
-  if (isFirstLoad.value) {
-    isFirstLoad.value = false
-    // 重置所有查询条件
-    reqParams.keyword = ''
-    reqParams.phone = ''
-    reqParams.birthdayS = ''
-    reqParams.birthdayE = ''
-    reqParams.cDateS = ''
-    reqParams.cDateE = ''
-    reqParams.cardAll = null
-    reqParams.cardIds = ''
-    reqParams.cardTypes = null
-    reqParams.cardCIds = ''
-    reqParams.level = null
-    // 清空全局 store
-    customerFilterParamsStore.value = {
-      birthdayS: '',
-      birthdayE: '',
-      cDateS: '',
-      cDateE: '',
-      cardIds: '',
-      selectedCardNames: [],
-      cardAll: null,
-      cardTypes: null,
-    }
-    paging.value?.reload()
-  }
-  else {
+  // 从其他页面返回时，isFirstLoad.value 已经是 false
+  if (!isFirstLoad.value) {
     // 从筛选页面返回，总是应用筛选条件（包括清空条件）
     applyFilter(customerFilterParamsStore.value)
   }
+  // 首次进入页面时，isFirstLoad.value 为 true，不执行任何操作，等待页面加载完成
+})
+
+onLoad(() => {
+  // 页面首次加载时，清空所有历史筛选条件
+  isFirstLoad.value = false // 确保 onShow 不会再次执行 applyFilter
+  // 重置所有查询条件
+  reqParams.keyword = ''
+  reqParams.phone = ''
+  reqParams.birthdayS = ''
+  reqParams.birthdayE = ''
+  reqParams.cDateS = ''
+  reqParams.cDateE = ''
+  reqParams.cardAll = null
+  reqParams.cardIds = ''
+  reqParams.cardTypes = null
+  reqParams.cardCIds = ''
+  reqParams.level = null
+  // 清空全局 store
+  customerFilterParamsStore.value = {
+    birthdayS: '',
+    birthdayE: '',
+    cDateS: '',
+    cDateE: '',
+    cardIds: '',
+    selectedCardNames: [],
+    cardAll: null,
+    cardTypes: null,
+  }
+  paging.value?.reload()
 })
 </script>
 

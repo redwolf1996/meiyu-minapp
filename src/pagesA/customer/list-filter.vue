@@ -60,7 +60,7 @@ const filterParams = reactive({
 // 初始化筛选条件（从全局 store 读取）
 onLoad(() => {
   // 从全局 store 恢复筛选参数
-  if (customerFilterParamsStore.value.birthdayS || customerFilterParamsStore.value.cDateS || customerFilterParamsStore.value.cardIds || customerFilterParamsStore.value.cardAll !== null || customerFilterParamsStore.value.cardTypes) {
+  if (customerFilterParamsStore.value.birthdayS || customerFilterParamsStore.value.birthdayE || customerFilterParamsStore.value.cDateS || customerFilterParamsStore.value.cDateE || customerFilterParamsStore.value.cardIds || customerFilterParamsStore.value.cardAll !== null || customerFilterParamsStore.value.cardTypes) {
     filterParams.birthdayS = customerFilterParamsStore.value.birthdayS
     filterParams.birthdayE = customerFilterParamsStore.value.birthdayE
     filterParams.cDateS = customerFilterParamsStore.value.cDateS
@@ -86,98 +86,88 @@ onLoad(() => {
   if (selectedCardsStore.value.ids) {
     filterParams.cardIds = selectedCardsStore.value.ids
     selectedCardNames.value = selectedCardsStore.value.names
+  }
 
-    // 恢复最新X天过生日的设置
-    if (filterParams.birthdayS && filterParams.birthdayE) {
-      const start = dayjs(filterParams.birthdayS)
-      const end = dayjs(filterParams.birthdayE)
-      const today = dayjs()
+  // 恢复最新X天过生日的设置
+  if (filterParams.birthdayS && filterParams.birthdayE) {
+    const start = dayjs(filterParams.birthdayS)
+    const end = dayjs(filterParams.birthdayE)
+    const today = dayjs()
 
-      // 如果开始日期是今天，计算天数差
-      if (start.isSame(today, 'day')) {
-        const daysDiff = end.diff(today.startOf('day'), 'day')
-        if (daysDiff > 0) {
-          birthdayDays.value = daysDiff
-        }
+    // 如果开始日期是今天，计算天数差
+    if (start.isSame(today, 'day')) {
+      const daysDiff = end.diff(today.startOf('day'), 'day')
+      if (daysDiff > 0) {
+        birthdayDays.value = daysDiff
       }
     }
+  }
 
-    // 根据日期恢复标签选择状态
-    if (filterParams.birthdayS && filterParams.birthdayE) {
-      const start = dayjs(filterParams.birthdayS)
-      const end = dayjs(filterParams.birthdayE)
-      const today = dayjs()
+  // 根据日期恢复标签选择状态
+  if (filterParams.birthdayS && filterParams.birthdayE) {
+    const start = dayjs(filterParams.birthdayS)
+    const end = dayjs(filterParams.birthdayE)
+    const today = dayjs()
 
-      // 判断是否是当天生日
-      if (start.isSame(today, 'day') && end.isSame(today, 'day')) {
-        birthday.value = 1
-      }
-      // 判断是否是当月生日
-      else if (start.isSame(today.startOf('month'), 'day') && end.isSame(today.endOf('month'), 'day')) {
-        birthday.value = 2
-      }
-      else {
-        // 恢复日期范围
-        birthdayRange.value = [start.valueOf(), end.valueOf()]
-      }
+    // 判断是否是当天生日
+    if (start.isSame(today, 'day') && end.isSame(today, 'day')) {
+      birthday.value = 1
     }
+    // 判断是否是当月生日
+    else if (start.isSame(today.startOf('month'), 'day') && end.isSame(today.endOf('month'), 'day')) {
+      birthday.value = 2
+    }
+    else {
+      // 日期范围已经在 filterParams 中，picker 组件会自动显示
+      // 这里不需要额外处理
+    }
+  }
 
-    // 根据日期恢复成为客户时间标签选择状态
-    if (filterParams.cDateS && filterParams.cDateE) {
-      const start = dayjs(filterParams.cDateS)
-      const end = dayjs(filterParams.cDateE)
-      const today = dayjs()
-      const yesterday = today.subtract(1, 'day')
-      const thisWeekStart = today.startOf('week')
-      const thisWeekEnd = today.endOf('week')
-      const thisMonthStart = today.startOf('month')
-      const thisMonthEnd = today.endOf('month')
-      const lastMonthStart = today.subtract(1, 'month').startOf('month')
-      const lastMonthEnd = today.subtract(1, 'month').endOf('month')
+  // 根据日期恢复成为客户时间标签选择状态
+  if (filterParams.cDateS && filterParams.cDateE) {
+    const start = dayjs(filterParams.cDateS)
+    const end = dayjs(filterParams.cDateE)
+    const today = dayjs()
+    const yesterday = today.subtract(1, 'day')
+    const thisWeekStart = today.startOf('week')
+    const thisWeekEnd = today.endOf('week')
+    const thisMonthStart = today.startOf('month')
+    const thisMonthEnd = today.endOf('month')
+    const lastMonthStart = today.subtract(1, 'month').startOf('month')
+    const lastMonthEnd = today.subtract(1, 'month').endOf('month')
 
-      // 判断是哪个标签
-      if (start.isSame(today, 'day') && end.isSame(today, 'day')) {
-        customerTime.value = 1 // 今天
-      }
-      else if (start.isSame(yesterday, 'day') && end.isSame(yesterday, 'day')) {
-        customerTime.value = 2 // 昨天
-      }
-      else if (start.isSame(thisWeekStart, 'day') && end.isSame(thisWeekEnd, 'day')) {
-        customerTime.value = 3 // 本周
-      }
-      else if (start.isSame(thisMonthStart, 'day') && end.isSame(thisMonthEnd, 'day')) {
-        customerTime.value = 4 // 本月
-      }
-      else if (start.isSame(lastMonthStart, 'day') && end.isSame(lastMonthEnd, 'day')) {
-        customerTime.value = 5 // 上月
-      }
-      else {
-        // 恢复日期范围
-        customerTimeRange.value = [start.valueOf(), end.valueOf()]
-      }
+    // 判断是哪个标签
+    if (start.isSame(today, 'day') && end.isSame(today, 'day')) {
+      customerTime.value = 1 // 今天
+    }
+    else if (start.isSame(yesterday, 'day') && end.isSame(yesterday, 'day')) {
+      customerTime.value = 2 // 昨天
+    }
+    else if (start.isSame(thisWeekStart, 'day') && end.isSame(thisWeekEnd, 'day')) {
+      customerTime.value = 3 // 本周
+    }
+    else if (start.isSame(thisMonthStart, 'day') && end.isSame(thisMonthEnd, 'day')) {
+      customerTime.value = 4 // 本月
+    }
+    else if (start.isSame(lastMonthStart, 'day') && end.isSame(lastMonthEnd, 'day')) {
+      customerTime.value = 5 // 上月
+    }
+    else {
+      // 日期范围已经在 filterParams 中，picker 组件会自动显示
+      // 这里不需要额外处理
     }
   }
 })
 
 // 生日范围选择确认
-function handleBirthdayRangeConfirm({ value }) {
-  if (value && value.length === 2) {
-    filterParams.birthdayS = dayjs(value[0]).format('YYYY-MM-DD')
-    filterParams.birthdayE = dayjs(value[1]).format('YYYY-MM-DD')
-    // 清空标签选择
-    birthday.value = null
-  }
-}
-
-// 成为客户时间范围选择确认
-function handleCustomerTimeRangeConfirm({ value }) {
-  if (value && value.length === 2) {
-    filterParams.cDateS = dayjs(value[0]).format('YYYY-MM-DD')
-    filterParams.cDateE = dayjs(value[1]).format('YYYY-MM-DD')
-    // 清空标签选择
-    customerTime.value = null
-  }
-}
+// function handleBirthdayRangeConfirm({ value }) {
+//   if (value && value.length === 2) {
+//     filterParams.birthdayS = dayjs(value[0]).format('YYYY-MM-DD')
+//     filterParams.birthdayE = dayjs(value[1]).format('YYYY-MM-DD')
+//     // 清空标签选择
+//     birthday.value = null
+//   }
+// }
 
 // 重置筛选条件
 function resetSearch() {
@@ -222,6 +212,9 @@ watch(birthday, (newVal) => {
   if (newVal !== null) {
     birthdayRange.value = []
     birthdayDays.value = null
+    // 清空日期范围
+    filterParams.birthdayS = ''
+    filterParams.birthdayE = ''
   }
 })
 
@@ -238,6 +231,9 @@ watch(birthdayDays, (newVal) => {
   if (newVal !== null && newVal > 0) {
     birthday.value = null
     birthdayRange.value = []
+    // 清空日期范围
+    filterParams.birthdayS = ''
+    filterParams.birthdayE = ''
   }
 })
 
@@ -245,13 +241,9 @@ watch(birthdayDays, (newVal) => {
 watch(customerTime, (newVal) => {
   if (newVal !== null) {
     customerTimeRange.value = []
-  }
-})
-
-// 监听成为客户时间范围选择变化
-watch(customerTimeRange, (newVal) => {
-  if (newVal && newVal.length === 2) {
-    customerTime.value = null
+    // 清空日期范围
+    filterParams.cDateS = ''
+    filterParams.cDateE = ''
   }
 })
 
@@ -288,10 +280,9 @@ function confirmFilter() {
     birthdayRange.value = [] // 清空范围选择
     birthdayDays.value = null // 清空天数输入
   }
-  // 2. 处理日期范围选择
-  else if (birthdayRange.value.length === 2) {
-    filterParams.birthdayS = dayjs(birthdayRange.value[0]).format('YYYY-MM-DD')
-    filterParams.birthdayE = dayjs(birthdayRange.value[1]).format('YYYY-MM-DD')
+  // 2. 处理日期范围选择（通过 picker 选择）
+  else if (filterParams.birthdayS || filterParams.birthdayE) {
+    // 日期已经在 picker 的 change 事件中更新到 filterParams，这里不需要再处理
     birthday.value = null // 清空标签选择
     birthdayDays.value = null // 清空天数输入
   }
@@ -309,35 +300,40 @@ function confirmFilter() {
     filterParams.birthdayE = ''
   }
 
-  // 处理成为客户时间标签选择
-  if (customerTime.value === null && customerTimeRange.value.length === 0) {
-    filterParams.cDateS = ''
-    filterParams.cDateE = ''
-  }
+  // 处理成为客户时间
   if (customerTime.value === 1) { // 今天
     filterParams.cDateS = dayjs().format('YYYY-MM-DD')
     filterParams.cDateE = dayjs().format('YYYY-MM-DD')
     customerTimeRange.value = []
   }
-  if (customerTime.value === 2) { // 昨天
+  else if (customerTime.value === 2) { // 昨天
     filterParams.cDateS = dayjs().subtract(1, 'day').format('YYYY-MM-DD')
     filterParams.cDateE = dayjs().subtract(1, 'day').format('YYYY-MM-DD')
     customerTimeRange.value = []
   }
-  if (customerTime.value === 3) { // 本周
+  else if (customerTime.value === 3) { // 本周
     filterParams.cDateS = dayjs().startOf('week').format('YYYY-MM-DD')
     filterParams.cDateE = dayjs().endOf('week').format('YYYY-MM-DD')
     customerTimeRange.value = []
   }
-  if (customerTime.value === 4) { // 本月
+  else if (customerTime.value === 4) { // 本月
     filterParams.cDateS = dayjs().startOf('month').format('YYYY-MM-DD')
     filterParams.cDateE = dayjs().endOf('month').format('YYYY-MM-DD')
     customerTimeRange.value = []
   }
-  if (customerTime.value === 5) { // 上月
+  else if (customerTime.value === 5) { // 上月
     filterParams.cDateS = dayjs().subtract(1, 'month').startOf('month').format('YYYY-MM-DD')
     filterParams.cDateE = dayjs().subtract(1, 'month').endOf('month').format('YYYY-MM-DD')
     customerTimeRange.value = []
+  }
+  // 处理日期范围选择（通过 picker 选择）
+  else if (filterParams.cDateS || filterParams.cDateE) {
+    // 日期已经在 picker 的 change 事件中更新到 filterParams，这里不需要再处理
+  }
+  // 都没有选择，清空所有成为客户时间筛选
+  else {
+    filterParams.cDateS = ''
+    filterParams.cDateE = ''
   }
 
   // 保存筛选条件到全局 store
@@ -369,8 +365,9 @@ function toCardType() {
   showCardType.value = true
 }
 
-// 监听页面显示，检查是否有返回的卡片数据
+// 监听页面显示，检查是否有返回的卡片数据或恢复筛选状态
 onShow(() => {
+  // 恢复卡片选择
   if (selectedCardsStore.value.ids) {
     filterParams.cardIds = selectedCardsStore.value.ids
     selectedCardNames.value = selectedCardsStore.value.names || []
@@ -380,7 +377,158 @@ onShow(() => {
     filterParams.cardIds = ''
     selectedCardNames.value = []
   }
+
+  // 恢复生日筛选状态
+  if (filterParams.birthdayS && filterParams.birthdayE) {
+    const start = dayjs(filterParams.birthdayS)
+    const end = dayjs(filterParams.birthdayE)
+    const today = dayjs()
+    // 判断是否是当天生日
+    if (start.isSame(today, 'day') && end.isSame(today, 'day')) {
+      birthday.value = 1
+    }
+    // 判断是否是当月生日
+    else if (start.isSame(today.startOf('month'), 'day') && end.isSame(today.endOf('month'), 'day')) {
+      birthday.value = 2
+    }
+  }
+  else if (filterParams.birthdayS || filterParams.birthdayE) {
+    // 如果只选择了一个日期，则清空标签选择，确保日期输入框显示
+    birthday.value = null
+    birthdayDays.value = null
+  }
+
+  // 恢复成为客户时间筛选状态
+  if (filterParams.cDateS && filterParams.cDateE) {
+    const start = dayjs(filterParams.cDateS)
+    const end = dayjs(filterParams.cDateE)
+    const today = dayjs()
+    const yesterday = today.subtract(1, 'day')
+    const thisWeekStart = today.startOf('week')
+    const thisWeekEnd = today.endOf('week')
+    const thisMonthStart = today.startOf('month')
+    const thisMonthEnd = today.endOf('month')
+    const lastMonthStart = today.subtract(1, 'month').startOf('month')
+    const lastMonthEnd = today.subtract(1, 'month').endOf('month')
+
+    // 判断是哪个标签
+    if (start.isSame(today, 'day') && end.isSame(today, 'day')) {
+      customerTime.value = 1 // 今天
+    }
+    else if (start.isSame(yesterday, 'day') && end.isSame(yesterday, 'day')) {
+      customerTime.value = 2 // 昨天
+    }
+    else if (start.isSame(thisWeekStart, 'day') && end.isSame(thisWeekEnd, 'day')) {
+      customerTime.value = 3 // 本周
+    }
+    else if (start.isSame(thisMonthStart, 'day') && end.isSame(thisMonthEnd, 'day')) {
+      customerTime.value = 4 // 本月
+    }
+    else if (start.isSame(lastMonthStart, 'day') && end.isSame(lastMonthEnd, 'day')) {
+      customerTime.value = 5 // 上月
+    }
+  }
+  else if (filterParams.cDateS || filterParams.cDateE) {
+    // 如果只选择了一个日期，则清空标签选择，确保日期输入框显示
+    customerTime.value = null
+  }
+
+  // 恢复卡项模式和卡类型
+  if (filterParams.cardAll === 1) {
+    cardMode.value = 0 // 任意卡项
+  }
+  else if (filterParams.cardAll === 0 && filterParams.cardIds) {
+    cardMode.value = 1 // 指定卡项
+  }
+  else if (filterParams.cardAll === 0 && cardType.value.length > 0) {
+    cardMode.value = 2 // 指定卡类型
+  }
 })
+
+// 生日日期范围
+const birthdayStartDate = '1900-01-01'
+const birthdayEndDate = dayjs().format('YYYY-MM-DD')
+
+// 成为客户时间日期范围
+const customerTimeStartDate = '1900-01-01'
+const customerTimeEndDate = dayjs().format('YYYY-MM-DD')
+
+function handleBirthdayDateConfirm1(value: any) {
+  const selectedDate = value.detail.value
+  const today = dayjs().format('YYYY-MM-DD')
+
+  if (selectedDate === today && filterParams.birthdayE === today) {
+    uni.showToast({
+      title: '开始和结束日期不能同时为今天',
+      icon: 'none',
+    })
+    return
+  }
+
+  filterParams.birthdayS = selectedDate
+  // 如果开始日期大于结束日期，清空结束日期，强制用户重新选择
+  if (filterParams.birthdayE && dayjs(selectedDate).isAfter(dayjs(filterParams.birthdayE))) {
+    filterParams.birthdayE = ''
+    uni.showToast({ title: '开始日期不能晚于结束日期，已清空结束日期', icon: 'none' })
+  }
+  // 当选择了日期范围，清空标签和天数选择
+  birthday.value = null
+  birthdayDays.value = null
+}
+function handleBirthdayDateConfirm2(value: any) {
+  const selectedDate = value.detail.value
+  const today = dayjs().format('YYYY-MM-DD')
+
+  if (selectedDate === today && filterParams.birthdayS === today) {
+    uni.showToast({
+      title: '开始和结束日期不能同时为今天',
+      icon: 'none',
+    })
+    return
+  }
+
+  filterParams.birthdayE = selectedDate
+  // 当选择了日期范围，清空标签和天数选择
+  birthday.value = null
+  birthdayDays.value = null
+}
+function handleCustomerTimeDateConfirm1(value: any) {
+  const selectedDate = value.detail.value
+  const today = dayjs().format('YYYY-MM-DD')
+
+  if (selectedDate === today && filterParams.cDateE === today) {
+    uni.showToast({
+      title: '开始和结束日期不能同时为今天',
+      icon: 'none',
+    })
+    return
+  }
+
+  filterParams.cDateS = selectedDate
+  // 如果开始日期大于结束日期，清空结束日期，强制用户重新选择
+  if (filterParams.cDateE && dayjs(selectedDate).isAfter(dayjs(filterParams.cDateE))) {
+    filterParams.cDateE = ''
+    uni.showToast({ title: '开始日期不能晚于结束日期，已清空结束日期', icon: 'none' })
+  }
+  // 当选择了日期范围，清空标签选择
+  customerTime.value = null
+}
+function handleCustomerTimeDateConfirm2(value: any) {
+  const selectedDate = value.detail.value
+  const today = dayjs().format('YYYY-MM-DD')
+
+  if (selectedDate === today && filterParams.cDateS === today) {
+    uni.showToast({
+      title: '开始和结束日期不能同时为今天',
+      icon: 'none',
+    })
+    return
+  }
+
+  filterParams.cDateE = selectedDate
+  // 当选择了日期范围，清空标签选择
+  customerTime.value = null
+}
 </script>
 
 <template>
@@ -391,17 +539,36 @@ onShow(() => {
           生日
         </view>
         <GridTagSelect v-model="birthday" :sources="sources" />
-        <view mt-32rpx>
-          <wd-calendar
+        <view mb-20rpx mt-32rpx flex flex-ac fs-14px style="color: #929292;gap: 32rpx;padding:0;">
+          <!-- <wd-calendar
             v-model="birthdayRange"
             type="daterange"
             label="范围"
             placeholder="请选择日期范围"
             :show-confirm="false"
             @confirm="handleBirthdayRangeConfirm"
-          />
+          /> -->
+
+          <text>范围</text>
+          <picker mode="date" :value="filterParams.birthdayS" :start="birthdayStartDate" :end="birthdayEndDate" @change="handleBirthdayDateConfirm1">
+            <input
+              v-model="filterParams.birthdayS"
+              style="width: 190rpx;height: 64rpx;
+              height: 64rpx;text-align: center;
+              background-color: #F6F6FB;"
+            >
+          </picker>
+          <text>至</text>
+          <picker mode="date" :value="filterParams.birthdayE" :start="filterParams.birthdayS || birthdayStartDate" :end="birthdayEndDate" @change="handleBirthdayDateConfirm2">
+            <input
+              v-model="filterParams.birthdayE"
+              style="width: 190rpx;height: 64rpx;
+              height: 64rpx;text-align: center;
+              background-color: #F6F6FB;"
+            >
+          </picker>
         </view>
-        <view flex flex-ac fs-14px style="color: #929292;gap: 32rpx;padding:0 20px;">
+        <view flex flex-ac fs-14px style="color: #929292;gap: 32rpx;padding:0;">
           <text>最新</text>
           <input
             v-model="birthdayDays"
@@ -419,15 +586,25 @@ onShow(() => {
           成为客户时间
         </view>
         <GridTagSelect v-model="customerTime" :sources="customerTimeSources" :columns="3" />
-        <view mt-32rpx>
-          <wd-calendar
-            v-model="customerTimeRange"
-            type="daterange"
-            label="范围"
-            placeholder="请选择日期范围"
-            :show-confirm="false"
-            @confirm="handleCustomerTimeRangeConfirm"
-          />
+        <view mb-20rpx mt-32rpx flex flex-ac fs-14px style="color: #929292;gap: 32rpx;padding:0;">
+          <text>范围</text>
+          <picker mode="date" :value="filterParams.cDateS" :start="customerTimeStartDate" :end="customerTimeEndDate" @change="handleCustomerTimeDateConfirm1">
+            <input
+              v-model="filterParams.cDateS"
+              style="width: 190rpx;height: 64rpx;
+              height: 64rpx;text-align: center;
+              background-color: #F6F6FB;"
+            >
+          </picker>
+          <text>至</text>
+          <picker mode="date" :value="filterParams.cDateE" :start="filterParams.cDateS || customerTimeStartDate" :end="customerTimeEndDate" @change="handleCustomerTimeDateConfirm2">
+            <input
+              v-model="filterParams.cDateE"
+              style="width: 190rpx;height: 64rpx;
+              height: 64rpx;text-align: center;
+              background-color: #F6F6FB;"
+            >
+          </picker>
         </view>
       </view>
 
