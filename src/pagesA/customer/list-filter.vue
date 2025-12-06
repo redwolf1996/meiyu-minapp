@@ -247,15 +247,35 @@ watch(customerTime, (newVal) => {
   }
 })
 
-// 监听卡项模式变化，更新 cardAll
+// 监听卡项模式变化，更新 cardAll 并清空其他模式数据
+// 监听卡项模式变化，更新 cardAll 并清空其他模式数据
 watch(cardMode, (newVal) => {
+  // 切换模式时，清空卡类型的视觉选中状态
+  if (newVal !== 2) {
+    cardTypeSources.value.forEach(item => (item.isActive = false))
+  }
+
   if (newVal === 0) {
     // 任意卡项
     filterParams.cardAll = 1
+    filterParams.cardIds = ''
+    selectedCardNames.value = []
+    cardType.value = []
+    filterParams.cardTypes = null
+    selectedCardsStore.value = { ids: '', names: [] } // 清空卡项选择
   }
-  else if (newVal === 1 || newVal === 2) {
-    // 指定卡项或指定卡类型
+  else if (newVal === 1) {
+    // 指定卡项
     filterParams.cardAll = 0
+    cardType.value = []
+    filterParams.cardTypes = null
+  }
+  else if (newVal === 2) {
+    // 指定卡类型
+    filterParams.cardAll = 0
+    filterParams.cardIds = ''
+    selectedCardNames.value = []
+    selectedCardsStore.value = { ids: '', names: [] } // 清空卡项选择
   }
   else {
     // 未选择
