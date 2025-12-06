@@ -27,7 +27,7 @@ const reqParams = reactive<CusReqModel>({
   birthdayE: '',
   cDateS: '',
   cDateE: '',
-  cardAll: '',
+  cardAll: null, // 1 任意卡项；指定卡id或者卡类型是传值0
   cardIds: '',
   cardCIds: '',
   level: null,
@@ -35,6 +35,7 @@ const reqParams = reactive<CusReqModel>({
 const paging = ref<ZPagingInstance<CusList> | null>(null)
 const dataList = ref<CusList[]>([])
 const showVipAction = ref(false)
+const isFirstLoad = ref(true) // 标记是否是第一次进入页面
 
 const vipLabel = computed(() => {
   return optionsVip.find(item => item.value === reqParams.level)?.label || '全部'
@@ -82,6 +83,8 @@ function toFilterPage() {
     cDateE: reqParams.cDateE || '',
     cardIds: reqParams.cardIds || '',
     selectedCardNames: [],
+    cardAll: reqParams.cardAll,
+    cardType: customerFilterParamsStore.value.cardType || [],
   }
   uni.navigateTo({ url: '/pagesA/customer/list-filter' })
 }
@@ -94,17 +97,42 @@ function applyFilter(filterParams: any) {
     reqParams.cDateS = filterParams.cDateS || ''
     reqParams.cDateE = filterParams.cDateE || ''
     reqParams.cardIds = filterParams.cardIds || ''
+    reqParams.cardAll = filterParams.cardAll ?? null
     paging.value?.reload()
   }
 }
 
 onShow(() => {
-  // 检查是否有筛选条件返回
-  if (customerFilterParamsStore.value.birthdayS || customerFilterParamsStore.value.cDateS || customerFilterParamsStore.value.cardIds) {
-    applyFilter(customerFilterParamsStore.value)
+  // 第一次进入页面时清空所有查询条件
+  if (isFirstLoad.value) {
+    isFirstLoad.value = false
+    // 重置所有查询条件
+    reqParams.keyword = ''
+    reqParams.phone = ''
+    reqParams.birthdayS = ''
+    reqParams.birthdayE = ''
+    reqParams.cDateS = ''
+    reqParams.cDateE = ''
+    reqParams.cardAll = null
+    reqParams.cardIds = ''
+    reqParams.cardCIds = ''
+    reqParams.level = null
+    // 清空全局 store
+    customerFilterParamsStore.value = {
+      birthdayS: '',
+      birthdayE: '',
+      cDateS: '',
+      cDateE: '',
+      cardIds: '',
+      selectedCardNames: [],
+      cardAll: null,
+      cardType: [],
+    }
+    paging.value?.reload()
   }
   else {
-    paging.value?.reload()
+    // 从筛选页面返回，总是应用筛选条件（包括清空条件）
+    applyFilter(customerFilterParamsStore.value)
   }
 })
 </script>

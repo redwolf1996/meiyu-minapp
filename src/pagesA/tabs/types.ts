@@ -137,9 +137,9 @@ export interface CusReqModel {
    */
   birthdayS?: string
   /**
-   * =1 任意卡项；指定卡id或者卡类型是传值0
+   * =1 任意卡项；指定卡id或者卡类型是传值0；null表示未选择
    */
-  cardAll?: number | string
+  cardAll?: number | null
   /**
    * 知道卡类型，id逗号分隔（指定类型时，类型id）
    */
