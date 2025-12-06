@@ -6,6 +6,7 @@ style:
 
 <script lang="ts" setup>
 import dayjs from 'dayjs'
+import { customerFilterParamsStore, selectedCardsStore } from '@/stores/common'
 
 // 生日相关
 const birthday = ref<any>(null)
@@ -55,16 +56,22 @@ const filterParams = reactive({
   cardIds: '', // 指定卡，id逗号分隔（指定卡项时，卡id）
 })
 
-// 初始化筛选条件（从本地存储读取）
+// 初始化筛选条件（从全局 store 读取）
 onLoad(() => {
-  const savedFilter = uni.getStorageSync('customer_filter_params')
-  if (savedFilter) {
-    filterParams.birthdayS = savedFilter.birthdayS || ''
-    filterParams.birthdayE = savedFilter.birthdayE || ''
-    filterParams.cDateS = savedFilter.cDateS || ''
-    filterParams.cDateE = savedFilter.cDateE || ''
-    filterParams.cardIds = savedFilter.cardIds || ''
-    selectedCardNames.value = savedFilter.selectedCardNames || []
+  // 从全局 store 恢复筛选参数
+  if (customerFilterParamsStore.value.birthdayS) {
+    filterParams.birthdayS = customerFilterParamsStore.value.birthdayS
+    filterParams.birthdayE = customerFilterParamsStore.value.birthdayE
+    filterParams.cDateS = customerFilterParamsStore.value.cDateS
+    filterParams.cDateE = customerFilterParamsStore.value.cDateE
+    filterParams.cardIds = customerFilterParamsStore.value.cardIds
+    selectedCardNames.value = customerFilterParamsStore.value.selectedCardNames
+  }
+
+  // 从全局 store 恢复卡项选择
+  if (selectedCardsStore.value.ids) {
+    filterParams.cardIds = selectedCardsStore.value.ids
+    selectedCardNames.value = selectedCardsStore.value.names
 
     // 恢复最新X天过生日的设置
     if (filterParams.birthdayS && filterParams.birthdayE) {
@@ -171,6 +178,19 @@ function resetSearch() {
   filterParams.cDateE = ''
   filterParams.cardIds = ''
   selectedCardNames.value = []
+  // 重置全局 store
+  selectedCardsStore.value = {
+    ids: '',
+    names: [],
+  }
+  customerFilterParamsStore.value = {
+    birthdayS: '',
+    birthdayE: '',
+    cDateS: '',
+    cDateE: '',
+    cardIds: '',
+    selectedCardNames: [],
+  }
 }
 
 // 监听生日标签选择变化
@@ -280,21 +300,26 @@ function confirmFilter() {
     customerTimeRange.value = []
   }
 
-  // 保存筛选条件到本地存储
-  uni.setStorageSync('customer_filter_params', {
+  // 保存筛选条件到全局 store
+  customerFilterParamsStore.value = {
     birthdayS: filterParams.birthdayS,
     birthdayE: filterParams.birthdayE,
     cDateS: filterParams.cDateS,
     cDateE: filterParams.cDateE,
     cardIds: filterParams.cardIds,
     selectedCardNames: selectedCardNames.value,
-  })
+  }
 
   // 返回上一页
   uni.navigateBack()
 }
 
 function toCard() {
+  // 在跳转前保存当前的选中状态到全局 store
+  selectedCardsStore.value = {
+    ids: filterParams.cardIds,
+    names: selectedCardNames.value,
+  }
   uni.navigateTo({ url: '/pagesA/card/select-card-multiple' })
 }
 
@@ -304,12 +329,14 @@ function toCardType() {
 
 // 监听页面显示，检查是否有返回的卡片数据
 onShow(() => {
-  const selectedCards = uni.getStorageSync('selected_cards')
-  if (selectedCards && selectedCards.ids) {
-    filterParams.cardIds = selectedCards.ids
-    selectedCardNames.value = selectedCards.names || []
-    // 清除存储的数据
-    uni.removeStorageSync('selected_cards')
+  if (selectedCardsStore.value.ids) {
+    filterParams.cardIds = selectedCardsStore.value.ids
+    selectedCardNames.value = selectedCardsStore.value.names || []
+  }
+  else {
+    // 如果 store 中没有选中的卡项，清空本地数据
+    filterParams.cardIds = ''
+    selectedCardNames.value = []
   }
 })
 </script>

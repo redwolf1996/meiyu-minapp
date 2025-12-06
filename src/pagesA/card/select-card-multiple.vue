@@ -6,6 +6,7 @@ style:
 <script lang="ts" setup>
 import type { List, ReqModel } from './types'
 import { sumBy } from 'lodash-es'
+import { selectedCardsStore } from '@/stores/common'
 
 const reqParams = reactive<ReqModel>({
   storeId: storeId.value,
@@ -26,6 +27,15 @@ async function queryList() {
       avaTimes: sumBy(v.info, v1 => v1.equity),
     }
   })
+  // 恢复选中状态
+  restoreSelectedCards()
+}
+
+function restoreSelectedCards() {
+  if (selectedCardsStore.value.ids) {
+    const ids = selectedCardsStore.value.ids.split(',').map(id => Number(id))
+    selectedCardIds.value = new Set(ids)
+  }
 }
 
 function toggleCardSelection(cardId: number, val: boolean) {
@@ -44,13 +54,18 @@ function confirmSelection() {
     .filter(item => selectedCardIds.value.has(item.id))
     .map(item => item.name)
 
-  // 通过事件或全局状态传递选中的卡片
-  uni.setStorageSync('selected_cards', {
+  // 保存到全局 store，如果没有选中任何卡项则清空
+  selectedCardsStore.value = {
     ids: selectedIds,
-    names: selectedNames,
-  })
+    names: selectedIds ? selectedNames : [],
+  }
   uni.navigateBack()
 }
+
+onLoad(() => {
+  // 在页面加载时恢复选中状态
+  restoreSelectedCards()
+})
 
 onShow(() => {
   queryList()

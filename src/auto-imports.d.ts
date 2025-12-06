@@ -65,6 +65,7 @@ declare global {
   const cusOriCardEquity: typeof import('./stores/common')['cusOriCardEquity']
   const cusPointsParams: typeof import('./stores/common')['cusPointsParams']
   const customRef: typeof import('vue')['customRef']
+  const customerFilterParamsStore: typeof import('./stores/common')['customerFilterParamsStore']
   const debounce: typeof import('./utils/debounce')['debounce']
   const debouncedRef: typeof import('@vueuse/core')['debouncedRef']
   const debouncedWatch: typeof import('@vueuse/core')['debouncedWatch']
@@ -184,8 +185,10 @@ declare global {
   const resetCard: typeof import('./stores/common')['resetCard']
   const resetCards: typeof import('./stores/common')['resetCards']
   const resetCurClassify: typeof import('./stores/classify')['resetCurClassify']
+  const resetCustomerFilterParams: typeof import('./stores/common')['resetCustomerFilterParams']
   const resetGoods: typeof import('./stores/common')['resetGoods']
   const resetRichData: typeof import('./stores/rich-edit-data')['resetRichData']
+  const resetSelectedCards: typeof import('./stores/common')['resetSelectedCards']
   const resolveComponent: typeof import('vue')['resolveComponent']
   const resolveRef: typeof import('@vueuse/core')['resolveRef']
   const resolveUnref: typeof import('@vueuse/core')['resolveUnref']
@@ -195,6 +198,7 @@ declare global {
   const salesListStore: typeof import('./stores/common')['salesListStore']
   const selBaseProduct: typeof import('./stores/sel-base-item')['selBaseProduct']
   const selBaseService: typeof import('./stores/sel-base-item')['selBaseService']
+  const selectedCardsStore: typeof import('./stores/common')['selectedCardsStore']
   const setStaffList: typeof import('./utils/index')['setStaffList']
   const setUserBaseInfo: typeof import('./utils/index')['setUserBaseInfo']
   const shallowReactive: typeof import('vue')['shallowReactive']
@@ -467,6 +471,7 @@ declare module 'vue' {
     readonly cusOriCardEquity: UnwrapRef<typeof import('./stores/common')['cusOriCardEquity']>
     readonly cusPointsParams: UnwrapRef<typeof import('./stores/common')['cusPointsParams']>
     readonly customRef: UnwrapRef<typeof import('vue')['customRef']>
+    readonly customerFilterParamsStore: UnwrapRef<typeof import('./stores/common')['customerFilterParamsStore']>
     readonly debounce: UnwrapRef<typeof import('./utils/debounce')['debounce']>
     readonly defineAsyncComponent: UnwrapRef<typeof import('vue')['defineAsyncComponent']>
     readonly defineComponent: UnwrapRef<typeof import('vue')['defineComponent']>
@@ -550,12 +555,15 @@ declare module 'vue' {
     readonly request: UnwrapRef<typeof import('./utils/request')['default']>
     readonly resetCards: UnwrapRef<typeof import('./stores/common')['resetCards']>
     readonly resetCurClassify: UnwrapRef<typeof import('./stores/classify')['resetCurClassify']>
+    readonly resetCustomerFilterParams: UnwrapRef<typeof import('./stores/common')['resetCustomerFilterParams']>
     readonly resetGoods: UnwrapRef<typeof import('./stores/common')['resetGoods']>
     readonly resetRichData: UnwrapRef<typeof import('./stores/rich-edit-data')['resetRichData']>
+    readonly resetSelectedCards: UnwrapRef<typeof import('./stores/common')['resetSelectedCards']>
     readonly resolveComponent: UnwrapRef<typeof import('vue')['resolveComponent']>
     readonly richData: UnwrapRef<typeof import('./stores/rich-edit-data')['richData']>
     readonly safeBottom: UnwrapRef<typeof import('./utils/index')['safeBottom']>
     readonly salesListStore: UnwrapRef<typeof import('./stores/common')['salesListStore']>
+    readonly selectedCardsStore: UnwrapRef<typeof import('./stores/common')['selectedCardsStore']>
     readonly setStaffList: UnwrapRef<typeof import('./utils/index')['setStaffList']>
     readonly setUserBaseInfo: UnwrapRef<typeof import('./utils/index')['setUserBaseInfo']>
     readonly shallowReactive: UnwrapRef<typeof import('vue')['shallowReactive']>

@@ -10,6 +10,7 @@ import { computed } from 'vue'
 import type { CusList, CusModel, CusReqModel } from './types'
 import dayjs from 'dayjs'
 import MyTabBar from './MyTabBar.vue'
+import { customerFilterParamsStore } from '@/stores/common'
 
 const optionsVip = [
   { label: '全部', value: null },
@@ -73,15 +74,15 @@ function toDetail(item: CusList) {
 
 // 跳转到筛选页面
 function toFilterPage() {
-  // 保存当前筛选条件到本地存储，以便筛选页面可以读取
-  const currentFilter = {
+  // 保存当前筛选条件到全局 store，以便筛选页面可以读取
+  customerFilterParamsStore.value = {
     birthdayS: reqParams.birthdayS || '',
     birthdayE: reqParams.birthdayE || '',
     cDateS: reqParams.cDateS || '',
     cDateE: reqParams.cDateE || '',
     cardIds: reqParams.cardIds || '',
+    selectedCardNames: [],
   }
-  uni.setStorageSync('customer_filter_params', currentFilter)
   uni.navigateTo({ url: '/pagesA/customer/list-filter' })
 }
 
@@ -99,11 +100,8 @@ function applyFilter(filterParams: any) {
 
 onShow(() => {
   // 检查是否有筛选条件返回
-  const filterParams = uni.getStorageSync('customer_filter_params')
-  if (filterParams) {
-    applyFilter(filterParams)
-    // 清除存储的筛选条件，避免重复应用
-    uni.removeStorageSync('customer_filter_params')
+  if (customerFilterParamsStore.value.birthdayS || customerFilterParamsStore.value.cDateS || customerFilterParamsStore.value.cardIds) {
+    applyFilter(customerFilterParamsStore.value)
   }
   else {
     paging.value?.reload()
