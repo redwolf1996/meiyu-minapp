@@ -11,22 +11,25 @@ const props = withDefaults(defineProps<{
   columns: 2,
 })
 const model: any = defineModel<any>()
-const sources = ref<GrigSelectItem[]>(props.sources)
+const sources = computed(() => props.sources)
 const columns = ref(props.columns)
 const mode = ref<Mode>(props.mode)
 
 watch(() => model.value, (val) => {
   if (mode.value === 'single') {
     sources.value.forEach((e: GrigSelectItem) => {
-      if (e.value !== val) {
-        e.isActive = false
-      }
-      else {
-        e.isActive = true
-      }
+      e.isActive = e.value === val
     })
   }
-})
+  else if (mode.value === 'multiple') {
+    // val 应该是一个数组
+    if (Array.isArray(val)) {
+      sources.value.forEach((e: GrigSelectItem) => {
+        e.isActive = val.includes(e.value)
+      })
+    }
+  }
+}, { immediate: true })
 
 function onClickTag(item: GrigSelectItem, index: number) {
   item.isActive = !item.isActive
