@@ -553,18 +553,20 @@ function handleCustomerTimeDateConfirm2(value: any) {
           <picker mode="date" :value="filterParams.birthdayS" :start="birthdayStartDate" :end="birthdayEndDate" @change="handleBirthdayDateConfirm1">
             <input
               v-model="filterParams.birthdayS"
+              disabled
               style="width: 190rpx;height: 64rpx;
               height: 64rpx;text-align: center;
-              background-color: #F6F6FB;"
+              background-color: #F6F6FB;pointer-events: none;"
             >
           </picker>
           <text>至</text>
           <picker mode="date" :value="filterParams.birthdayE" :start="filterParams.birthdayS || birthdayStartDate" :end="birthdayEndDate" @change="handleBirthdayDateConfirm2">
             <input
               v-model="filterParams.birthdayE"
+              disabled
               style="width: 190rpx;height: 64rpx;
               height: 64rpx;text-align: center;
-              background-color: #F6F6FB;"
+              background-color: #F6F6FB;pointer-events: none;"
             >
           </picker>
         </view>
@@ -591,18 +593,20 @@ function handleCustomerTimeDateConfirm2(value: any) {
           <picker mode="date" :value="filterParams.cDateS" :start="customerTimeStartDate" :end="customerTimeEndDate" @change="handleCustomerTimeDateConfirm1">
             <input
               v-model="filterParams.cDateS"
+              disabled
               style="width: 190rpx;height: 64rpx;
               height: 64rpx;text-align: center;
-              background-color: #F6F6FB;"
+              background-color: #F6F6FB;pointer-events: none;"
             >
           </picker>
           <text>至</text>
           <picker mode="date" :value="filterParams.cDateE" :start="filterParams.cDateS || customerTimeStartDate" :end="customerTimeEndDate" @change="handleCustomerTimeDateConfirm2">
             <input
               v-model="filterParams.cDateE"
+              disabled
               style="width: 190rpx;height: 64rpx;
               height: 64rpx;text-align: center;
-              background-color: #F6F6FB;"
+              background-color: #F6F6FB;pointer-events: none;"
             >
           </picker>
         </view>
