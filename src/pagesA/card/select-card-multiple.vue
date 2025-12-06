@@ -78,6 +78,7 @@ onShow(() => {
       v-for="(item, index) in dataList" :key="`card-${index}`"
       mt-12px flex flex-bt flex-ac gap-40rpx
       pb-10px style="border-bottom: 1px solid #EFEFEF;"
+      @click="toggleCardSelection(item.id, !selectedCardIds.has(item.id))"
     >
       <wd-img
         :width="100"
