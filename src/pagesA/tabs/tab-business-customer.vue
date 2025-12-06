@@ -79,6 +79,7 @@ function toFilterPage() {
     birthdayE: reqParams.birthdayE || '',
     cDateS: reqParams.cDateS || '',
     cDateE: reqParams.cDateE || '',
+    cardIds: reqParams.cardIds || '',
   }
   uni.setStorageSync('customer_filter_params', currentFilter)
   uni.navigateTo({ url: '/pagesA/customer/list-filter' })
@@ -91,6 +92,7 @@ function applyFilter(filterParams: any) {
     reqParams.birthdayE = filterParams.birthdayE || ''
     reqParams.cDateS = filterParams.cDateS || ''
     reqParams.cDateE = filterParams.cDateE || ''
+    reqParams.cardIds = filterParams.cardIds || ''
     paging.value?.reload()
   }
 }

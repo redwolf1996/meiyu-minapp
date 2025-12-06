@@ -29,6 +29,7 @@ const cardTypeSources = ref<any>([
 
 // 成为客户时间相关
 const customerTimeRange = ref<number[]>([]) // 成为客户时间范围选择
+const selectedCardNames = ref<string[]>([]) // 选中的卡片名称
 const selectedCardTypeLabels = computed(() => {
   return cardTypeSources.value
     .filter(source => cardType.value.includes(source.value))
@@ -50,6 +51,8 @@ const filterParams = reactive({
   birthdayE: '',
   cDateS: '',
   cDateE: '',
+  cardAll: 1, // 1 任意卡项；指定卡id或者卡类型是传值0
+  cardIds: '', // 指定卡，id逗号分隔（指定卡项时，卡id）
 })
 
 // 初始化筛选条件（从本地存储读取）
@@ -60,6 +63,8 @@ onLoad(() => {
     filterParams.birthdayE = savedFilter.birthdayE || ''
     filterParams.cDateS = savedFilter.cDateS || ''
     filterParams.cDateE = savedFilter.cDateE || ''
+    filterParams.cardIds = savedFilter.cardIds || ''
+    selectedCardNames.value = savedFilter.selectedCardNames || []
 
     // 恢复最新X天过生日的设置
     if (filterParams.birthdayS && filterParams.birthdayE) {
@@ -164,6 +169,8 @@ function resetSearch() {
   filterParams.birthdayE = ''
   filterParams.cDateS = ''
   filterParams.cDateE = ''
+  filterParams.cardIds = ''
+  selectedCardNames.value = []
 }
 
 // 监听生日标签选择变化
@@ -279,6 +286,8 @@ function confirmFilter() {
     birthdayE: filterParams.birthdayE,
     cDateS: filterParams.cDateS,
     cDateE: filterParams.cDateE,
+    cardIds: filterParams.cardIds,
+    selectedCardNames: selectedCardNames.value,
   })
 
   // 返回上一页
@@ -292,6 +301,17 @@ function toCard() {
 function toCardType() {
   showCardType.value = true
 }
+
+// 监听页面显示，检查是否有返回的卡片数据
+onShow(() => {
+  const selectedCards = uni.getStorageSync('selected_cards')
+  if (selectedCards && selectedCards.ids) {
+    filterParams.cardIds = selectedCards.ids
+    selectedCardNames.value = selectedCards.names || []
+    // 清除存储的数据
+    uni.removeStorageSync('selected_cards')
+  }
+})
 </script>
 
 <template>
@@ -359,10 +379,10 @@ function toCardType() {
         </wd-radio-group>
         <template v-if="cardMode === 1">
           <div class="h20px" />
-          <SelectCell :has-value="selectedCardTypeLabels.length > 0" @click="toCard">
+          <SelectCell :has-value="selectedCardNames.length > 0" @click="toCard">
             <view flex flex-ac flex-wrap gap-10rpx>
-              <view v-for="label in selectedCardTypeLabels" :key="label" class="mini-tag">
-                {{ label }}
+              <view v-for="name in selectedCardNames" :key="name" class="mini-tag">
+                {{ name }}
               </view>
             </view>
           </SelectCell>
