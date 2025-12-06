@@ -17,18 +17,37 @@ const reqParams = reactive<ReqModel>({
 const dataList = ref<List[]>([])
 const total = ref(0)
 const selectedCardIds = ref<Set<number>>(new Set())
+const loading = ref(true) // 加载状态，控制骨架屏显示
+
+// 骨架屏配置 - 卡项列表
+const skeletonRowCol = ref([
+  // 每个卡项占用的高度
+  { height: '140rpx' },
+  { height: '140rpx' },
+  { height: '140rpx' },
+  { height: '140rpx' },
+  { height: '140rpx' },
+] as any)
 
 async function queryList() {
-  const res = await request.get<ListRes<List>>('/business/card', reqParams)
-  total.value = res.data.total
-  dataList.value = res.data.list.map((v) => {
-    return {
-      ...v,
-      avaTimes: sumBy(v.info, v1 => v1.equity),
-    }
-  })
-  // 恢复选中状态
-  restoreSelectedCards()
+  try {
+    const res = await request.get<ListRes<List>>('/business/card', reqParams)
+    total.value = res.data.total
+    dataList.value = res.data.list.map((v) => {
+      return {
+        ...v,
+        avaTimes: sumBy(v.info, v1 => v1.equity),
+      }
+    })
+    // 恢复选中状态
+    restoreSelectedCards()
+  }
+  finally {
+    // 确保图片有时间加载，稍微延迟一下再隐藏骨架屏
+    setTimeout(() => {
+      loading.value = false
+    }, 300)
+  }
 }
 
 function restoreSelectedCards() {
@@ -68,79 +87,86 @@ onLoad(() => {
 })
 
 onShow(() => {
+  loading.value = true
   queryList()
 })
 </script>
 
 <template>
-  <view mx-14px p-16px bg-white rd-b-8px pb-120px>
-    <view
-      v-for="(item, index) in dataList" :key="`card-${index}`"
-      mt-12px flex flex-bt flex-ac gap-40rpx
-      pb-10px style="border-bottom: 1px solid #EFEFEF;"
-      @click="toggleCardSelection(item.id, !selectedCardIds.has(item.id))"
-    >
-      <wd-img
-        :width="100"
-        :height="100"
-        mode="aspectFill"
-        :radius="12"
-        :src="`${IMG_BASE}/detail/${cardImgMap[item.type]}.png`"
-      />
-      <view flex flex-y flex-bt flex-1 h-108px>
-        <view flex flex-bt>
-          <view flex flex-ac gap-5px>
-            <wd-img
-              :width="16"
-              :height="16"
-              :src="`${IMG_BASE}/icon-star.png`"
-            />
-            <template v-if="item.type === 1">
-              <text v-if="item.secondType === 1" f12>
-                {{ item.countLimit }}次
-              </text>
-              <text v-if="item.secondType === 2" f12>
-                不限次
-              </text>
-              <text v-if="item.secondType === 3" f12>
-                {{ item.countLimit }}次
-              </text>
-            </template>
-            <template v-if="item.type === 2">
-              <text f12>
-                赠送{{ item.gift }}
-              </text>
-            </template>
-            <template v-if="item.type === 3">
-              <text f12>
-                {{ item?.discountDesc }}
-              </text>
-            </template>
+  <wd-skeleton
+    :loading="loading"
+    animation="gradient"
+    :row-col="skeletonRowCol"
+  >
+    <view mx-14px p-16px bg-white rd-b-8px pb-120px>
+      <view
+        v-for="(item, index) in dataList" :key="`card-${index}`"
+        mt-12px flex flex-bt flex-ac gap-40rpx
+        pb-10px style="border-bottom: 1px solid #EFEFEF;"
+        @click="toggleCardSelection(item.id, !selectedCardIds.has(item.id))"
+      >
+        <wd-img
+          :width="100"
+          :height="100"
+          mode="aspectFill"
+          :radius="12"
+          :src="`${IMG_BASE}/detail/${cardImgMap[item.type]}.png`"
+        />
+        <view flex flex-y flex-bt flex-1 h-108px>
+          <view flex flex-bt>
+            <view flex flex-ac gap-5px>
+              <wd-img
+                :width="16"
+                :height="16"
+                :src="`${IMG_BASE}/icon-star.png`"
+              />
+              <template v-if="item.type === 1">
+                <text v-if="item.secondType === 1" f12>
+                  {{ item.countLimit }}次
+                </text>
+                <text v-if="item.secondType === 2" f12>
+                  不限次
+                </text>
+                <text v-if="item.secondType === 3" f12>
+                  {{ item.countLimit }}次
+                </text>
+              </template>
+              <template v-if="item.type === 2">
+                <text f12>
+                  赠送{{ item.gift }}
+                </text>
+              </template>
+              <template v-if="item.type === 3">
+                <text f12>
+                  {{ item?.discountDesc }}
+                </text>
+              </template>
+            </view>
+          </view>
+          <view fb f16>
+            {{ item.name }}
+          </view>
+          <view f12 color-9A9FA5>
+            <text v-if="item.expires === 0">
+              永久有效
+            </text>
+            <text v-if="item.expires">
+              购买后{{ item.expires }}天内有效
+            </text>
+          </view>
+          <view>
+            <text fb f12 px-12rpx py-7rpx bg-B5E4CA rd-12rpx>
+              ￥{{ item.price }}
+            </text>
           </view>
         </view>
-        <view fb f16>
-          {{ item.name }}
-        </view>
-        <view f12 color-9A9FA5>
-          <text v-if="item.expires === 0">
-            永久有效
-          </text>
-          <text v-if="item.expires">
-            购买后{{ item.expires }}天内有效
-          </text>
-        </view>
-        <view>
-          <text fb f12 px-12rpx py-7rpx bg-B5E4CA rd-12rpx>
-            ￥{{ item.price }}
-          </text>
-        </view>
+        <wd-checkbox
+          :modelValue="selectedCardIds.has(item.id)"
+          style="pointer-events: none;"
+        />
       </view>
-      <wd-checkbox
-        :modelValue="selectedCardIds.has(item.id)"
-        @update:model-value="toggleCardSelection(item.id, $event)"
-      />
     </view>
-  </view>
+  </wd-skeleton>
   <view class="button-container">
     <view class="selected-count">
       已选 ({{ selectedCardIds.size }}) 个卡项

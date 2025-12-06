@@ -397,7 +397,7 @@ onShow(() => {
             @confirm="handleBirthdayRangeConfirm"
           />
         </view>
-        <view flex flex-ac f13 style="color: #929292;gap: 32rpx;padding:0 20px;">
+        <view flex flex-ac fs-14px style="color: #929292;gap: 32rpx;padding:0 20px;">
           <text>最新</text>
           <input
             v-model="birthdayDays"
@@ -511,8 +511,8 @@ onShow(() => {
   color: #929292 !important;
 }
 
-:deep(.wd-radio.is-inline) {
-  margin-right: 30px !important;
+:deep(.wd-radio.is-inline:not(:last-child)) {
+  margin-right: 30rpx !important;
 }
 
 .mini-tag {
