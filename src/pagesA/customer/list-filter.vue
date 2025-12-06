@@ -387,7 +387,7 @@ onShow(() => {
   <view class="filter-container">
     <view p-24rpx bg-F9F9F9>
       <view bg-white rd-10px p-24rpx>
-        <view fs-14px mb-16px>
+        <view fb fs-14px mb-16px>
           生日
         </view>
         <GridTagSelect v-model="birthday" :sources="sources" />
@@ -415,7 +415,7 @@ onShow(() => {
       </view>
 
       <view bg-white rd-10px p-24rpx mt-24rpx>
-        <view fs-14px mb-16px>
+        <view fb fs-14px mb-16px>
           成为客户时间
         </view>
         <GridTagSelect v-model="customerTime" :sources="customerTimeSources" :columns="3" />
@@ -432,7 +432,7 @@ onShow(() => {
       </view>
 
       <view bg-white rd-10px p-24rpx mt-24rpx>
-        <view fs-14px mb-16px>
+        <view fb fs-14px mb-16px>
           持有卡项
         </view>
         <wd-radio-group v-model="cardMode" shape="dot" inline>
