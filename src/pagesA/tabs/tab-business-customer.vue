@@ -29,6 +29,7 @@ const reqParams = reactive<CusReqModel>({
   cDateE: '',
   cardAll: null, // 1 任意卡项；指定卡id或者卡类型是传值0
   cardIds: '',
+  cardTypes: null,
   cardCIds: '',
   level: null,
 })
@@ -84,7 +85,7 @@ function toFilterPage() {
     cardIds: reqParams.cardIds || '',
     selectedCardNames: [],
     cardAll: reqParams.cardAll,
-    cardType: customerFilterParamsStore.value.cardType || [],
+    cardTypes: customerFilterParamsStore.value.cardTypes || null,
   }
   uni.navigateTo({ url: '/pagesA/customer/list-filter' })
 }
@@ -97,6 +98,7 @@ function applyFilter(filterParams: any) {
     reqParams.cDateS = filterParams.cDateS || ''
     reqParams.cDateE = filterParams.cDateE || ''
     reqParams.cardIds = filterParams.cardIds || ''
+    reqParams.cardTypes = filterParams.cardTypes || null
     reqParams.cardAll = filterParams.cardAll ?? null
     paging.value?.reload()
   }
@@ -115,6 +117,7 @@ onShow(() => {
     reqParams.cDateE = ''
     reqParams.cardAll = null
     reqParams.cardIds = ''
+    reqParams.cardTypes = null
     reqParams.cardCIds = ''
     reqParams.level = null
     // 清空全局 store
@@ -126,7 +129,7 @@ onShow(() => {
       cardIds: '',
       selectedCardNames: [],
       cardAll: null,
-      cardType: [],
+      cardTypes: null,
     }
     paging.value?.reload()
   }

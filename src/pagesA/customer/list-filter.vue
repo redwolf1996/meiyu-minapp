@@ -21,11 +21,11 @@ const showCardType = ref(false)
 const cardMode = ref<number | null>(null) // 0任意卡项，1指定卡项，2指定类型卡
 const cardType = ref<any>([])
 const cardTypeSources = ref<any>([
-  { label: '折扣卡', value: 0, isActive: false },
-  { label: '充值卡', value: 1, isActive: false },
-  { label: '通卡', value: 2, isActive: false },
-  { label: '有限次卡', value: 3, isActive: false },
-  { label: '不限次卡', value: 4, isActive: false },
+  { label: '折扣卡', value: 3, isActive: false },
+  { label: '充值卡', value: 2, isActive: false },
+  { label: '通卡', value: 4, isActive: false },
+  { label: '有限次卡', value: 5, isActive: false },
+  { label: '不限次卡', value: 6, isActive: false },
 ])
 
 // 成为客户时间相关
@@ -54,12 +54,13 @@ const filterParams = reactive({
   cDateE: '',
   cardAll: null, // 1 任意卡项；指定卡id或者卡类型是传值0；null表示未选择
   cardIds: '', // 指定卡，id逗号分隔（指定卡项时，卡id）
+  cardTypes: '', // 指定卡类型，id逗号分隔（指定类型时，类型id）
 })
 
 // 初始化筛选条件（从全局 store 读取）
 onLoad(() => {
   // 从全局 store 恢复筛选参数
-  if (customerFilterParamsStore.value.birthdayS || customerFilterParamsStore.value.cDateS || customerFilterParamsStore.value.cardIds || customerFilterParamsStore.value.cardAll !== null || customerFilterParamsStore.value.cardType?.length) {
+  if (customerFilterParamsStore.value.birthdayS || customerFilterParamsStore.value.cDateS || customerFilterParamsStore.value.cardIds || customerFilterParamsStore.value.cardAll !== null || customerFilterParamsStore.value.cardTypes) {
     filterParams.birthdayS = customerFilterParamsStore.value.birthdayS
     filterParams.birthdayE = customerFilterParamsStore.value.birthdayE
     filterParams.cDateS = customerFilterParamsStore.value.cDateS
@@ -67,7 +68,7 @@ onLoad(() => {
     filterParams.cardIds = customerFilterParamsStore.value.cardIds
     filterParams.cardAll = customerFilterParamsStore.value.cardAll
     selectedCardNames.value = customerFilterParamsStore.value.selectedCardNames
-    cardType.value = customerFilterParamsStore.value.cardType || []
+    cardType.value = customerFilterParamsStore.value.cardTypes ? customerFilterParamsStore.value.cardTypes.split(',').map(Number) : []
 
     // 根据 cardAll 恢复 cardMode
     if (filterParams.cardAll === 1) {
@@ -193,6 +194,7 @@ function resetSearch() {
   filterParams.cDateE = ''
   filterParams.cardIds = ''
   filterParams.cardAll = null
+  filterParams.cardTypes = null
   selectedCardNames.value = []
   // 重置全局 store
   selectedCardsStore.value = {
@@ -207,7 +209,7 @@ function resetSearch() {
     cardIds: '',
     selectedCardNames: [],
     cardAll: null,
-    cardType: [],
+    cardTypes: null,
   }
 }
 
@@ -343,7 +345,7 @@ function confirmFilter() {
     cardIds: filterParams.cardIds,
     selectedCardNames: selectedCardNames.value,
     cardAll: filterParams.cardAll,
-    cardType: cardType.value,
+    cardTypes: cardType.value.length > 0 ? cardType.value.join(',') : null,
   }
 
   // 返回上一页

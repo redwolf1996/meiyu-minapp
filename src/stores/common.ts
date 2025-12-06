@@ -129,7 +129,7 @@ export const customerFilterParamsStore = ref<{
   cardIds: string
   selectedCardNames: string[]
   cardAll?: number | null
-  cardType?: number[]
+  cardTypes?: string | null
 }>({
   birthdayS: '',
   birthdayE: '',
@@ -138,7 +138,7 @@ export const customerFilterParamsStore = ref<{
   cardIds: '',
   selectedCardNames: [],
   cardAll: null,
-  cardType: [],
+  cardTypes: null,
 })
 
 /** 重置客户筛选参数 */
@@ -151,6 +151,6 @@ export function resetCustomerFilterParams() {
     cardIds: '',
     selectedCardNames: [],
     cardAll: null,
-    cardType: [],
+    cardTypes: null,
   }
 }

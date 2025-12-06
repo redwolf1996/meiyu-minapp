@@ -140,14 +140,15 @@ export interface CusReqModel {
    * =1 任意卡项；指定卡id或者卡类型是传值0；null表示未选择
    */
   cardAll?: number | null
-  /**
-   * 知道卡类型，id逗号分隔（指定类型时，类型id）
-   */
   cardCIds?: string
   /**
-   * 指定卡，id逗号分隔（指定卡项时，卡id）
+   * 指定卡，id逗号分隔（指定卡项时，卡id的拼接）
    */
   cardIds?: string
+  /**
+   * 卡类型，id逗号分隔（指定类型时，类型值的拼接）
+   */
+  cardTypes?: string
   /**
    * 成为客户结束
    */
