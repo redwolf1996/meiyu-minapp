@@ -78,3 +78,9 @@ text {
 .wd-sidebar-item {
   display: block !important;
 }
+
+// 强制 wd-picker 在 flex 容器中占满宽度
+.wd-picker {
+  flex: 1 !important;
+  width: 100% !important;
+}

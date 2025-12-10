@@ -38,7 +38,7 @@ async function getManageData() {
 
 watch(props.searchParams, () => {
   getManageData()
-})
+}, { deep: true })
 </script>
 
 <template>

@@ -46,7 +46,7 @@ async function getManageData() {
 
 watch(props.searchParams, () => {
   getManageData()
-})
+}, { deep: true })
 
 function changeTab(index: number) {
   staffList.value = index === 0 ? info.value.saleRanking : info.value.serviceRanking

@@ -63,12 +63,12 @@ function changeSearchParams() {
 function selectDateType(type: string) {
   selectedDateType.value = type
 
-  // // 定义日期变量
+  // 定义日期变量
   let today: string, yesterday: string, weekStart: string, weekEnd: string
   let lastWeekStart: string, lastWeekEnd: string, monthStart: string, monthEnd: string
   let lastMonthStart: string, lastMonthEnd: string
 
-  // // 根据选择的类型设置日期
+  // 根据选择的类型设置日期
   switch (type) {
     case '今天':
       today = dayjs().format('YYYY-MM-DD')
@@ -129,6 +129,12 @@ function handleRangePicked({ value }: { value: any[] }) {
 function confirmDateSelection() {
   // 确认选择，关闭弹窗
   showSearchParams.value = false
+
+  // 根据当前 tab 触发不同接口的数据请求
+  // 由于各个子组件都通过 watch(props.searchParams) 监听日期变化
+  // 我们通过强制更新 searchParams 来触发数据刷新
+  const currentParams = { ...searchParams.value }
+  searchParams.value = currentParams
 }
 
 // 取消选择或关闭弹窗时恢复原状态
@@ -143,7 +149,7 @@ function cancelSelection() {
 const defaultValue = ref<number>(Date.now())
 const tempDate = ref('')
 const tempMonth = ref('')
-const tempRange = ref<any[]>(['', Date.now()])
+const tempRange = ref([])
 </script>
 
 <template>
@@ -221,45 +227,57 @@ const tempRange = ref<any[]>(['', Date.now()])
             其他时间
           </view>
 
-          <view class="date-row" flex justify-between mb25px>
-            <wd-datetime-picker
-              v-model="tempDate"
-              :default-value="defaultValue"
-              label="开始日期" type="date" @confirm="handleDatePicked"
-            >
-              <view class="date-option" :class="{ active: selectedDateType === '日报' }" @click="selectDateType('日报')">
-                日报
-              </view>
-            </wd-datetime-picker>
-
-            <wd-datetime-picker
-              v-model="tempMonth"
-              :default-value="defaultValue"
-              label="开始日期" type="year-month" @confirm="handleMonthPicked"
-            >
-              <view class="date-option" :class="{ active: selectedDateType === '月报' }" @click="selectDateType('月报')">
-                月报
-              </view>
-            </wd-datetime-picker>
-
-            <wd-datetime-picker
-              v-model="tempRange"
-              type="date"
-              label="开始日期" @confirm="handleRangePicked"
-            >
-              <view class="date-option" :class="{ active: selectedDateType === '自定义' }" @click="selectDateType('自定义')">
-                自定义
-              </view>
-            </wd-datetime-picker>
+          <view class="date-row" mb25px>
+            <view class="picker-wrapper">
+              <wd-datetime-picker
+                v-model="tempDate"
+                class="layout-picker"
+                :default-value="defaultValue"
+                type="date"
+                use-default-slot
+                @confirm="handleDatePicked"
+              >
+                <view class="date-option" :class="{ active: selectedDateType === '日报' }" @click="selectDateType('日报')">
+                  日报
+                </view>
+              </wd-datetime-picker>
+            </view>
+            <view class="picker-wrapper">
+              <wd-datetime-picker
+                v-model="tempMonth"
+                class="layout-picker"
+                :default-value="defaultValue"
+                type="year-month"
+                use-default-slot
+                @confirm="handleMonthPicked"
+              >
+                <view class="date-option" :class="{ active: selectedDateType === '月报' }" @click="selectDateType('月报')">
+                  月报
+                </view>
+              </wd-datetime-picker>
+            </view>
+            <view class="picker-wrapper">
+              <wd-datetime-picker
+                v-model="tempRange"
+                class="layout-picker"
+                type="date"
+                use-default-slot
+                @confirm="handleRangePicked"
+              >
+                <view class="date-option" :class="{ active: selectedDateType === '自定义' }" @click="selectDateType('自定义')">
+                  自定义
+                </view>
+              </wd-datetime-picker>
+            </view>
           </view>
-        </view>
 
-        <view class="action-buttons" flex>
-          <view class="cancel-btn" flex-1 @click="cancelSelection">
-            取消
-          </view>
-          <view class="confirm-btn" flex-1 @click="confirmDateSelection">
-            确定
+          <view class="action-buttons" flex>
+            <view class="cancel-btn" flex-1 @click="cancelSelection">
+              取消
+            </view>
+            <view class="confirm-btn" flex-1 @click="confirmDateSelection">
+              确定
+            </view>
           </view>
         </view>
       </view>
@@ -271,7 +289,13 @@ const tempRange = ref<any[]>(['', Date.now()])
 
 <style lang='scss' scoped>
 .date-row {
-  gap: 12px;
+  display: flex !important;
+  gap: 12px !important;
+  width: 100% !important;
+  .picker-wrapper {
+    flex: 1 !important;
+    min-width: 0 !important;
+  }
 }
 
 .fixed-header {
@@ -302,20 +326,23 @@ const tempRange = ref<any[]>(['', Date.now()])
 }
 
 .date-option {
-  background-color: #f5f5f5;
-  color: #333;
-  padding: 14px 0;
+  padding: 10px 12px;
   border-radius: 4px;
-  text-align: center;
-  width: 26vw;
+  background-color: #f4f4f5;
+  color: #606266;
   font-size: 14px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: 1px solid transparent;
-}
-
-.date-option.active {
-  background-color: #ede9fe;
-  color: #6949ff;
-  border: 1px solid #6949ff;
+  width: 100%;
+  box-sizing: border-box;
+  &.active {
+    background-color: #eaeafb;
+    color: #4d49de;
+    border-color: #4d49de;
+  }
 }
 
 .other-time {
