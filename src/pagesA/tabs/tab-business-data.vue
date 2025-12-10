@@ -37,12 +37,21 @@ const tempSearchParams = ref({
   eDate: '',
 })
 
+// 添加临时变量，用于存储用户在弹窗中的选择
+const tempNewSelectedDateType = ref('')
+const tempNewSearchParams = ref({
+  sDate: '',
+  eDate: '',
+})
+
 const dateRange = computed(() => {
-  if (searchParams.value.sDate && searchParams.value.eDate) {
-    if (searchParams.value.sDate === searchParams.value.eDate) {
-      return searchParams.value.sDate
+  // 如果弹窗打开，显示临时选择的日期；否则显示实际的日期
+  const displayParams = showSearchParams.value ? tempNewSearchParams.value : searchParams.value
+  if (displayParams.sDate && displayParams.eDate) {
+    if (displayParams.sDate === displayParams.eDate) {
+      return displayParams.sDate
     }
-    return `${searchParams.value.sDate} 至 ${searchParams.value.eDate}`
+    return `${displayParams.sDate} 至 ${displayParams.eDate}`
   }
   return ''
 })
@@ -56,93 +65,105 @@ function changeSearchParams() {
       sDate: searchParams.value.sDate,
       eDate: searchParams.value.eDate,
     }
+    // 初始化临时选择变量
+    tempNewSelectedDateType.value = selectedDateType.value
+    tempNewSearchParams.value = {
+      sDate: searchParams.value.sDate,
+      eDate: searchParams.value.eDate,
+    }
   }
   showSearchParams.value = !showSearchParams.value
 }
 
 function selectDateType(type: string) {
-  selectedDateType.value = type
+  tempNewSelectedDateType.value = type
 
   // 定义日期变量
   let today: string, yesterday: string, weekStart: string, weekEnd: string
   let lastWeekStart: string, lastWeekEnd: string, monthStart: string, monthEnd: string
   let lastMonthStart: string, lastMonthEnd: string
 
-  // 根据选择的类型设置日期
+  // 根据选择的类型设置日期（只更新临时变量）
   switch (type) {
     case '今天':
       today = dayjs().format('YYYY-MM-DD')
-      searchParams.value.sDate = today
-      searchParams.value.eDate = today
+      tempNewSearchParams.value.sDate = today
+      tempNewSearchParams.value.eDate = today
       break
     case '昨天':
       yesterday = dayjs().subtract(1, 'day').format('YYYY-MM-DD')
-      searchParams.value.sDate = yesterday
-      searchParams.value.eDate = yesterday
+      tempNewSearchParams.value.sDate = yesterday
+      tempNewSearchParams.value.eDate = yesterday
       break
     case '本周':
       weekStart = dayjs().startOf('week').format('YYYY-MM-DD')
       weekEnd = dayjs().endOf('week').format('YYYY-MM-DD')
-      searchParams.value.sDate = weekStart
-      searchParams.value.eDate = weekEnd
+      tempNewSearchParams.value.sDate = weekStart
+      tempNewSearchParams.value.eDate = weekEnd
       break
     case '上周':
       lastWeekStart = dayjs().subtract(1, 'week').startOf('week').format('YYYY-MM-DD')
       lastWeekEnd = dayjs().subtract(1, 'week').endOf('week').format('YYYY-MM-DD')
-      searchParams.value.sDate = lastWeekStart
-      searchParams.value.eDate = lastWeekEnd
+      tempNewSearchParams.value.sDate = lastWeekStart
+      tempNewSearchParams.value.eDate = lastWeekEnd
       break
     case '本月':
       monthStart = dayjs().startOf('month').format('YYYY-MM-DD')
       monthEnd = dayjs().endOf('month').format('YYYY-MM-DD')
-      searchParams.value.sDate = monthStart
-      searchParams.value.eDate = monthEnd
+      tempNewSearchParams.value.sDate = monthStart
+      tempNewSearchParams.value.eDate = monthEnd
       break
     case '上月':
       lastMonthStart = dayjs().subtract(1, 'month').startOf('month').format('YYYY-MM-DD')
       lastMonthEnd = dayjs().subtract(1, 'month').endOf('month').format('YYYY-MM-DD')
-      searchParams.value.sDate = lastMonthStart
-      searchParams.value.eDate = lastMonthEnd
+      tempNewSearchParams.value.sDate = lastMonthStart
+      tempNewSearchParams.value.eDate = lastMonthEnd
       break
   }
 }
 
 function handleDatePicked({ value }: { value: string }) {
-  // 日报日期选择处理
-  searchParams.value.sDate = dayjs(Number(value)).format('YYYY-MM-DD')
-  searchParams.value.eDate = dayjs(Number(value)).format('YYYY-MM-DD')
+  // 日报日期选择处理（只更新临时变量）
+  tempNewSelectedDateType.value = '日报'
+  tempNewSearchParams.value.sDate = dayjs(Number(value)).format('YYYY-MM-DD')
+  tempNewSearchParams.value.eDate = dayjs(Number(value)).format('YYYY-MM-DD')
 }
 
 function handleMonthPicked({ value }: { value: string }) {
-  // 月报月份选择处理
+  // 月报月份选择处理（只更新临时变量）
+  tempNewSelectedDateType.value = '月报'
   const monthObj = dayjs(value)
-  searchParams.value.sDate = monthObj.startOf('month').format('YYYY-MM-DD')
-  searchParams.value.eDate = monthObj.endOf('month').format('YYYY-MM-DD')
+  tempNewSearchParams.value.sDate = monthObj.startOf('month').format('YYYY-MM-DD')
+  tempNewSearchParams.value.eDate = monthObj.endOf('month').format('YYYY-MM-DD')
 }
 
 function handleRangePicked({ value }: { value: any[] }) {
-  // 自定义日期范围选择处理
-  searchParams.value.sDate = dayjs(Number(value[0])).format('YYYY-MM-DD')
-  searchParams.value.eDate = dayjs(Number(value[1])).format('YYYY-MM-DD')
+  // 自定义日期范围选择处理（只更新临时变量）
+  tempNewSelectedDateType.value = '自定义'
+  tempNewSearchParams.value.sDate = dayjs(Number(value[0])).format('YYYY-MM-DD')
+  tempNewSearchParams.value.eDate = dayjs(Number(value[1])).format('YYYY-MM-DD')
 }
 
 function confirmDateSelection() {
   // 确认选择，关闭弹窗
   showSearchParams.value = false
 
-  // 根据当前 tab 触发不同接口的数据请求
-  // 由于各个子组件都通过 watch(props.searchParams) 监听日期变化
-  // 我们通过强制更新 searchParams 来触发数据刷新
-  const currentParams = { ...searchParams.value }
-  searchParams.value = currentParams
+  // 将临时选择应用到实际的 searchParams，触发子组件的数据请求
+  selectedDateType.value = tempNewSelectedDateType.value
+
+  // 先更新一个属性，再更新另一个属性，确保 watch 能检测到变化
+  searchParams.value.sDate = tempNewSearchParams.value.sDate
+  searchParams.value.eDate = tempNewSearchParams.value.eDate
 }
 
 // 取消选择或关闭弹窗时恢复原状态
 function cancelSelection() {
   // 恢复到打开弹窗前的状态
-  selectedDateType.value = tempSelectedDateType.value
-  searchParams.value.sDate = tempSearchParams.value.sDate
-  searchParams.value.eDate = tempSearchParams.value.eDate
+  tempNewSelectedDateType.value = tempSelectedDateType.value
+  tempNewSearchParams.value = {
+    sDate: tempSearchParams.value.sDate,
+    eDate: tempSearchParams.value.eDate,
+  }
   showSearchParams.value = false
 }
 
@@ -199,25 +220,25 @@ const tempRange = ref([])
 
           <view class="date-options" mb20px>
             <view class="date-row" flex justify-between mb15px>
-              <view class="date-option" :class="{ active: selectedDateType === '今天' }" @click="selectDateType('今天')">
+              <view class="date-option" :class="{ active: tempNewSelectedDateType === '今天' }" @click="selectDateType('今天')">
                 今天
               </view>
-              <view class="date-option" :class="{ active: selectedDateType === '昨天' }" @click="selectDateType('昨天')">
+              <view class="date-option" :class="{ active: tempNewSelectedDateType === '昨天' }" @click="selectDateType('昨天')">
                 昨天
               </view>
-              <view class="date-option" :class="{ active: selectedDateType === '本周' }" @click="selectDateType('本周')">
+              <view class="date-option" :class="{ active: tempNewSelectedDateType === '本周' }" @click="selectDateType('本周')">
                 本周
               </view>
             </view>
 
             <view class="date-row" flex justify-between mb25px>
-              <view class="date-option" :class="{ active: selectedDateType === '上周' }" @click="selectDateType('上周')">
+              <view class="date-option" :class="{ active: tempNewSelectedDateType === '上周' }" @click="selectDateType('上周')">
                 上周
               </view>
-              <view class="date-option" :class="{ active: selectedDateType === '本月' }" @click="selectDateType('本月')">
+              <view class="date-option" :class="{ active: tempNewSelectedDateType === '本月' }" @click="selectDateType('本月')">
                 本月
               </view>
-              <view class="date-option" :class="{ active: selectedDateType === '上月' }" @click="selectDateType('上月')">
+              <view class="date-option" :class="{ active: tempNewSelectedDateType === '上月' }" @click="selectDateType('上月')">
                 上月
               </view>
             </view>
@@ -237,7 +258,7 @@ const tempRange = ref([])
                 use-default-slot
                 @confirm="handleDatePicked"
               >
-                <view class="date-option" :class="{ active: selectedDateType === '日报' }" @click="selectDateType('日报')">
+                <view class="date-option" :class="{ active: tempNewSelectedDateType === '日报' }" @click="selectDateType('日报')">
                   日报
                 </view>
               </wd-datetime-picker>
@@ -251,7 +272,7 @@ const tempRange = ref([])
                 use-default-slot
                 @confirm="handleMonthPicked"
               >
-                <view class="date-option" :class="{ active: selectedDateType === '月报' }" @click="selectDateType('月报')">
+                <view class="date-option" :class="{ active: tempNewSelectedDateType === '月报' }" @click="selectDateType('月报')">
                   月报
                 </view>
               </wd-datetime-picker>
@@ -264,7 +285,7 @@ const tempRange = ref([])
                 use-default-slot
                 @confirm="handleRangePicked"
               >
-                <view class="date-option" :class="{ active: selectedDateType === '自定义' }" @click="selectDateType('自定义')">
+                <view class="date-option" :class="{ active: tempNewSelectedDateType === '自定义' }" @click="selectDateType('自定义')">
                   自定义
                 </view>
               </wd-datetime-picker>
