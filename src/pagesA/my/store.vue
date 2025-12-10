@@ -5,28 +5,20 @@ style:
 
 <script lang="ts" setup>
 const { colPickerData, findChildrenByCode } = useColPickerData()
-const storeInfo = computed(() => {
-  return useUserStore().userInfo?.storeList?.[0]
-})
-// const imageValue = ref<any>([{
-//   url: storeInfo.value?.logo || '',
-// }])
-const { handleFilePickerUpload2, handleFileDelete, imageValue } = useOss()
-imageValue.value = [{
-  url: storeInfo.value?.logo || '',
-}]
 
-const pccValue = ref<string[]>([storeInfo.value.province || '', storeInfo.value.city || '', storeInfo.value.county || ''])
+const { handleFilePickerUpload2, handleFileDelete, imageValue } = useOss()
+
+const pccValue = ref<string[]>([])
 const form: any = reactive({
-  id: storeId.value,
-  storeName: storeInfo.value?.storeName || '',
+  id: '',
+  storeName: '',
   logo: computed(() => imageValue.value?.[0]?.url || ''),
-  phone: storeInfo.value.phone,
-  address: storeInfo.value.address,
-  desc: storeInfo.value.desc,
-  province: storeInfo.value.province,
-  city: storeInfo.value.city,
-  county: storeInfo.value.county,
+  phone: '',
+  address: '',
+  desc: '',
+  province: '',
+  city: '',
+  county: '',
 })
 const area = ref<any[]>([
   // colPickerData.map((item) => {
@@ -70,6 +62,34 @@ async function save() {
   useUserStore().setUserInfo(res.data)
   uni.navigateBack()
 }
+
+async function getStoreInfo() {
+  const res = await request.get<any>('/business/info')
+  useUserStore().setUserInfo(res.data)
+  initializeFormData()
+}
+
+function initializeFormData() {
+  const currentStore = useUserStore().userInfo?.storeList?.[0]
+  if (currentStore) {
+    form.id = currentStore.id || ''
+    form.storeName = currentStore.storeName || ''
+    form.phone = currentStore.phone || ''
+    form.address = currentStore.address || ''
+    form.desc = currentStore.desc || ''
+    form.province = currentStore.province || ''
+    form.city = currentStore.city || ''
+    form.county = currentStore.county || ''
+    pccValue.value = [currentStore.province || '', currentStore.city || '', currentStore.county || '']
+    imageValue.value = [{
+      url: currentStore.logo || '',
+    }]
+  }
+}
+
+onShow(() => {
+  getStoreInfo()
+})
 </script>
 
 <template>
@@ -85,10 +105,10 @@ async function save() {
     <uni-file-picker
       v-model="imageValue"
       fileMediatype="image"
-      @select="handleFilePickerUpload2"
-      @delete="handleFileDelete"
       mode="grid"
       :limit="1"
+      @select="handleFilePickerUpload2"
+      @delete="handleFileDelete"
     />
   </view>
 
