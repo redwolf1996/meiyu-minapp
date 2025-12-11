@@ -21,12 +21,12 @@ const form: any = reactive({
   county: '',
 })
 const area = ref<any[]>([
-  // colPickerData.map((item) => {
-  //   return {
-  //     value: item.value,
-  //     label: item.text,
-  //   }
-  // }),
+  colPickerData.map((item) => {
+    return {
+      value: item.value,
+      label: item.text,
+    }
+  }),
 ])
 
 async function columnChange({ selectedItem, resolve, finish }) {
@@ -80,10 +80,22 @@ function initializeFormData() {
     form.province = currentStore.province || ''
     form.city = currentStore.city || ''
     form.county = currentStore.county || ''
-    pccValue.value = [currentStore.province || '', currentStore.city || '', currentStore.county || '']
     imageValue.value = [{
       url: currentStore.logo || '',
     }]
+
+    // -- cascade: start
+    const provinceList = colPickerData.map(p => ({ value: p.value, label: p.text }))
+    const cityList = findChildrenByCode(colPickerData, currentStore.province).map(c => ({ value: c.value, label: c.text }))
+    const countyList = findChildrenByCode(colPickerData, currentStore.city).map(d => ({ value: d.value, label: d.text }))
+    area.value = [provinceList, cityList, countyList]
+
+    const newPccValue = [currentStore.province || '', currentStore.city || '', currentStore.county || '']
+    pccValue.value = []
+    nextTick(() => {
+      pccValue.value = newPccValue
+    })
+    // -- cascade: end
   }
 }
 

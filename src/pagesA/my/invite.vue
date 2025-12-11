@@ -111,13 +111,6 @@ function toMyInvite() {
       </view>
       <view h40px />
       <view tc flex flex-cc>
-        <!-- <ikun-qrcode
-          width="296"
-          height="296"
-          unit="rpx"
-          color="#000000"
-          data="字符串变量"
-        /> -->
         <wd-img
           :width="148"
           :height="148"
@@ -134,10 +127,6 @@ function toMyInvite() {
           保存图片
         </view>
         <view w32rpx />
-        <!-- <view class="btn b2">
-          分享邀请
-        </view> -->
-
         <button class="btn b2" open-type="share" style="background-color: #ffffff;">
           分享邀请
         </button>
@@ -170,7 +159,7 @@ button {
   margin-right: 0 !important;
 }
 .btn {
-  width: 295rpx;
+  width: 270rpx;
   height: 80rpx;
   font-size: 34rpx;
   line-height: 34rpx;

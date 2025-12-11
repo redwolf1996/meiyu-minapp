@@ -191,6 +191,10 @@ export interface StoreList {
    */
   address?: string
   /**
+   * 省
+   */
+  province?: string
+  /**
    * 市
    */
   city?: string
@@ -225,10 +229,6 @@ export interface StoreList {
    * 可提现余额
    */
   platformAmount?: number
-  /**
-   * 省
-   */
-  province?: string
   /**
    * 角色 1店长，2销售，3手艺人
    */
