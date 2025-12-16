@@ -72,7 +72,7 @@ async function getStoreInfo() {
 function initializeFormData() {
   const currentStore = useUserStore().userInfo?.storeList?.[0]
   if (currentStore) {
-    form.id = currentStore.id || ''
+    form.id = currentStore.storeId || ''
     form.storeName = currentStore.storeName || ''
     form.phone = currentStore.phone || ''
     form.address = currentStore.address || ''
