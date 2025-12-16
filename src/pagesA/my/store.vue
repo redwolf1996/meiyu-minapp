@@ -60,7 +60,9 @@ async function save() {
   })
   const res = await request.get<any>('/business/info')
   useUserStore().setUserInfo(res.data)
-  uni.navigateBack()
+  setTimeout(() => {
+    uni.navigateBack()
+  }, 1000)
 }
 
 async function getStoreInfo() {
