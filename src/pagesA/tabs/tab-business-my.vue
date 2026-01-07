@@ -15,7 +15,8 @@ function toRenew() {
   uni.navigateTo({ url: '/pagesA/my/renew' })
 }
 function toMyStore() {
-  uni.navigateTo({ url: '/pagesA/my/store' })
+  // uni.navigateTo({ url: '/pagesA/my/store' })
+  uni.navigateTo({ url: '/pagesA/store/list' })
 }
 // function toAddNewStore() {
 //   uni.navigateTo({ url: '/pagesA/my/new-store' })

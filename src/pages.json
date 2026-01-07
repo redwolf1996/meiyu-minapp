@@ -517,6 +517,13 @@
           }
         },
         {
+          "path": "store/list",
+          "type": "page",
+          "style": {
+            "navigationBarTitleText": "我的门店"
+          }
+        },
+        {
           "path": "tabs/MyTabBar",
           "type": "page"
         },
