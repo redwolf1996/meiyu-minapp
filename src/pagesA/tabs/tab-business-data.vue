@@ -44,6 +44,11 @@ const tempNewSearchParams = ref({
   eDate: '',
 })
 
+// 显示的日期类型，弹窗打开时显示临时选择，否则显示实际选择
+const displaySelectedDateType = computed(() => {
+  return showSearchParams.value ? tempNewSelectedDateType.value : selectedDateType.value
+})
+
 const dateRange = computed(() => {
   // 如果弹窗打开，显示临时选择的日期；否则显示实际的日期
   const displayParams = showSearchParams.value ? tempNewSearchParams.value : searchParams.value
@@ -182,7 +187,7 @@ const tempRange = ref([])
       </block>
     </wd-tabs>
     <view fs-14px flex flex-ac gap-10px h48px bg-white py14px px16px @click="changeSearchParams">
-      <text>{{ selectedDateType }}</text>
+      <text>{{ displaySelectedDateType }}</text>
       <text>|</text>
       <text>{{ dateRange || '请选择日期' }}</text>
       <wd-icon v-if="!showSearchParams" name="arrow-down" color="#3B3D3D" size="16px" />
