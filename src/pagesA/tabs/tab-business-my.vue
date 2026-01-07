@@ -9,6 +9,7 @@ import MyTabBar from './MyTabBar.vue'
 
 const userInfo = computed(() => useUserStore()?.userInfo)
 const storeInfo = computed(() => userInfo.value?.lastStore || userInfo.value?.storeList?.[0])
+console.log(userInfo.value)
 
 function toRenew() {
   uni.navigateTo({ url: '/pagesA/my/renew' })
@@ -47,7 +48,7 @@ function toFeedBack() {
 
 <template>
   <MyNavBar title="我的" :capsule="false" />
-  <view p20px bg-white>
+  <view p20px>
     <view flex flex-ac gap12px>
       <wd-img
         :round="true"
@@ -79,6 +80,18 @@ function toFeedBack() {
           </view>
         </view>
       </view>
+    </view>
+    <view class="h14px" />
+    <view px16px py12px flex flex-ac flex-bt bg-white rd-8px style="color:#292D32">
+      <view flex flex-ac gap-8px>
+        <wd-img
+          :width="16"
+          :height="16"
+          :src="`${IMG_BASE}/icon-shop.png`"
+        />
+        <text>{{ storeInfo?.storeName }}</text>
+      </view>
+      <wd-icon name="swap" size="16px" color="#292D32" custom-style="transform: rotate(270deg) !important;" />
     </view>
     <view
       v-if="storeRole !== 2 && storeRole !== 3"
@@ -120,7 +133,7 @@ function toFeedBack() {
         <wd-icon name="home" size="18px" />
       </template>
       <text f14 c-3B3D3D>
-        {{ storeInfo?.storeName }}
+        {{ userInfo?.storeList?.length }}
       </text>
     </MyCell>
     <MyCell label="联系客服" noBorder @myclick="toServ()">

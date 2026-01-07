@@ -104,6 +104,19 @@ function initializeFormData() {
 onShow(() => {
   getStoreInfo()
 })
+
+function deleteStore() {
+  uni.showModal({
+    title: `确认删除"${form.storeName}"？`,
+    content: '删除后无法恢复，请谨慎操作',
+    success: (res) => {
+      if (res.confirm) {
+        // TODO: 调用删除门店接口
+        console.log('用户确认删除门店')
+      }
+    },
+  })
+}
 </script>
 
 <template>
@@ -207,8 +220,11 @@ onShow(() => {
       </view>
     </wd-button>
   </view>
+  <view tc mt-12px underline style="color: #F2613C;" @click="deleteStore">
+    删除
+  </view>
 
-  <view h-60rpx />
+  <view h-60px />
 </template>
 
 <style>
