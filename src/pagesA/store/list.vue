@@ -4,13 +4,13 @@ style:
 </route>
 
 <script lang="ts" setup>
-import type { ListStaff } from './types'
+import type { StoreInfo } from './types'
+import dayjs from 'dayjs'
+import { useColPickerData } from '@/hooks/useColPickerData'
 
-const reqParams = reactive({
-  storeId: storeId.value,
-})
-const dataList = ref<ListStaff[]>([])
+const dataList = ref<any[]>([])
 const total = ref(0)
+const { getAreaTextByCodes } = useColPickerData()
 
 onShow(() => {
   getList()
@@ -20,14 +20,15 @@ function toAdd() {
   uni.navigateTo({ url: '/pagesA/staff/add' })
 }
 
-function toStaffDetail(id: number) {
+function toStoreEdit(id: number) {
   uni.navigateTo({ url: `/pagesA/staff/detail?id=${id}` })
 }
 
 async function getList() {
-  const res = await request.get<ListRes<ListStaff>>('/business/staff', reqParams)
-  dataList.value = res.data.list
-  total.value = res.data.total
+  const res = await request.get<StoreInfo>('/business/info')
+  console.log(res.data)
+  total.value = res.data.storeList.length
+  dataList.value = res.data.storeList
 }
 </script>
 
@@ -46,9 +47,9 @@ async function getList() {
   </view>
   <view px-20rpx py-10rpx>
     <view
-      v-for="(item, index) in dataList" :key="`ss-${index}`"
+      v-for="(item, index) in dataList" :key="`store-${index}`"
       py-30rpx pl-30rpx pr-40rpx flex flex-ac flex-bt mb20px class="border-gray"
-      @click="toStaffDetail(item.storeStaffId)"
+      @click="toStoreEdit(item.storeId)"
     >
       <view flex flex-ac flex-bt gap-40rpx>
         <wd-img
@@ -56,21 +57,23 @@ async function getList() {
           :height="75"
           mode="aspectFill"
           :radius="12"
-          :src="item?.avatar || DEFAULT_AVATAR"
+          :src="item?.logo || DEFAULT_AVATAR"
         />
-        <view flex flex-y flex-bt py-14rpx h-75px>
+        <view flex flex-y flex-bt py-14rpx h-90px>
           <view f12>
-            {{ item?.userName || '--' }}
+            {{ getAreaTextByCodes({ city: item?.city, county: item?.county }, 'partial') || '--' }}
           </view>
           <view f12>
-            {{ item?.phone || '--' }}
+            {{ item?.storeName || '--' }}
+          </view>
+          <view f12>
+            {{ item?.address || '--' }}
           </view>
           <view f10 flex flex-ac gap-10rpx>
             <wd-icon name="star-filled" size="10px" color="#FFC960" />
-            <text>{{ item?.jobDesc || '--' }}</text>
-            <view w-6rpx h-6rpx round style="background-color: #91919F;" />
+            <text>{{ dayjs(item?.storeExpiresTime).format('YYYY-MM-DD') || '--' }}</text>
             <text c-91919F>
-              {{ item?.roleDesc || '--' }}
+              到期
             </text>
           </view>
         </view>
