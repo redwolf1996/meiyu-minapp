@@ -36,10 +36,6 @@ function search() {
   paging.value?.reload()
 }
 
-onShow(() => {
-  search()
-})
-
 function toAdd() {
   resetCurClassify()
   resetRichData()

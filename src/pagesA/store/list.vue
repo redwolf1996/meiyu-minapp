@@ -17,11 +17,11 @@ onShow(() => {
 })
 
 function toAdd() {
-  uni.navigateTo({ url: '/pagesA/staff/add' })
+  uni.navigateTo({ url: '/pagesA/my/store' })
 }
 
 function toStoreEdit(id: number) {
-  uni.navigateTo({ url: `/pagesA/staff/detail?id=${id}` })
+  uni.navigateTo({ url: `/pagesA/my/store?id=${id}` })
 }
 
 async function getList() {
@@ -53,25 +53,34 @@ async function getList() {
     >
       <view flex flex-ac flex-bt gap-40rpx>
         <wd-img
-          :width="75"
-          :height="75"
+          :width="85"
+          :height="85"
           mode="aspectFill"
           :radius="12"
           :src="item?.logo || DEFAULT_AVATAR"
         />
-        <view flex flex-y flex-bt py-14rpx h-90px>
+        <view flex flex-y flex-bt py-14rpx h-94px>
           <view f12>
             {{ getAreaTextByCodes({ city: item?.city, county: item?.county }, 'partial') || '--' }}
           </view>
-          <view f12>
+          <view f12 fb>
             {{ item?.storeName || '--' }}
           </view>
-          <view f12>
-            {{ item?.address || '--' }}
+          <view f12 flex flex-ac gap-10rpx>
+            <wd-icon name="location" size="14px" color="#FFC960" />
+            <text c-91919F>
+              {{ item?.address || '--' }}
+            </text>
           </view>
-          <view f10 flex flex-ac gap-10rpx>
-            <wd-icon name="star-filled" size="10px" color="#FFC960" />
-            <text>{{ dayjs(item?.storeExpiresTime).format('YYYY-MM-DD') || '--' }}</text>
+          <view f12 flex flex-ac gap-10rpx>
+            <wd-img
+              :width="14"
+              :height="14"
+              :src="`${IMG_BASE}/icon-v.png`"
+            />
+            <text c-91919F>
+              {{ dayjs(item?.storeExpiresTime).format('YYYY.MM.DD') || '--' }}
+            </text>
             <text c-91919F>
               到期
             </text>

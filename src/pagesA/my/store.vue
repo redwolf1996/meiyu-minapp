@@ -71,6 +71,27 @@ async function getStoreInfo() {
   initializeFormData()
 }
 
+function clearFormData() {
+  form.id = ''
+  form.storeName = ''
+  form.phone = ''
+  form.address = ''
+  form.desc = ''
+  form.province = ''
+  form.city = ''
+  form.county = ''
+  imageValue.value = []
+  pccValue.value = []
+  area.value = [
+    colPickerData.map((item) => {
+      return {
+        value: item.value,
+        label: item.text,
+      }
+    }),
+  ]
+}
+
 function initializeFormData() {
   const currentStore = useUserStore().userInfo?.storeList?.[0]
   if (currentStore) {
@@ -102,7 +123,16 @@ function initializeFormData() {
 }
 
 onShow(() => {
-  getStoreInfo()
+  const pages = getCurrentPages()
+  const currentPage: any = pages[pages.length - 1]
+  const options = currentPage.options
+  if (options.id) {
+    form.id = options.id
+    getStoreInfo()
+  }
+  else {
+    clearFormData()
+  }
 })
 
 function deleteStore() {
