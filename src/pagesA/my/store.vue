@@ -53,11 +53,20 @@ function handleConfirm({ value }) {
 }
 
 async function save() {
-  await request.put<any>('/business/store', form)
-  uni.showToast({
-    title: '修改成功',
-    icon: 'none',
-  })
+  if (form.id) {
+    await request.put<any>('/business/store', form)
+    uni.showToast({
+      title: '修改成功',
+      icon: 'none',
+    })
+  }
+  else {
+    await request.post<any>('/business/store', form)
+    uni.showToast({
+      title: '添加成功',
+      icon: 'none',
+    })
+  }
   const res = await request.get<any>('/business/info')
   useUserStore().setUserInfo(res.data)
   setTimeout(() => {
@@ -93,9 +102,9 @@ function clearFormData() {
 }
 
 function initializeFormData() {
-  const currentStore = useUserStore().userInfo?.storeList?.[0]
+  const storeList = useUserStore().userInfo?.storeList || []
+  const currentStore = storeList.find(store => store.storeId === form.id)
   if (currentStore) {
-    form.id = currentStore.storeId || ''
     form.storeName = currentStore.storeName || ''
     form.phone = currentStore.phone || ''
     form.address = currentStore.address || ''
@@ -250,7 +259,7 @@ function deleteStore() {
       </view>
     </wd-button>
   </view>
-  <view tc mt-12px underline style="color: #F2613C;" @click="deleteStore">
+  <view v-if="form.id" tc mt-12px underline style="color: #F2613C;" @click="deleteStore">
     删除
   </view>
 
