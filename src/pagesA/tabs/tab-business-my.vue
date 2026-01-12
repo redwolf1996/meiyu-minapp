@@ -63,6 +63,10 @@ watch(
   },
   { immediate: true },
 )
+
+function toPc() {
+  uni.navigateTo({ url: '/pagesA/my/pc' })
+}
 </script>
 
 <template>
@@ -162,6 +166,11 @@ watch(
     <MyCell label="联系客服" noBorder @myclick="toServ()">
       <template #icon>
         <wd-icon name="user-talk" size="18px" />
+      </template>
+    </MyCell>
+    <MyCell label="电脑端登录" noBorder @myclick="toPc()">
+      <template #icon>
+        <wd-icon name="computer" size="18px" />
       </template>
     </MyCell>
     <MyCell label="意见反馈" noBorder @myclick="toFeedBack()">

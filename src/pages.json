@@ -389,6 +389,13 @@
           }
         },
         {
+          "path": "my/pc",
+          "type": "page",
+          "style": {
+            "navigationBarTitleText": "电脑端登录"
+          }
+        },
+        {
           "path": "my/protocal",
           "type": "page",
           "style": {

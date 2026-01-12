@@ -54,6 +54,7 @@ interface NavigateToOptions {
        "/pagesA/my/invite" |
        "/pagesA/my/my-invite" |
        "/pagesA/my/new-store" |
+       "/pagesA/my/pc" |
        "/pagesA/my/protocal" |
        "/pagesA/my/qiwei" |
        "/pagesA/my/renew" |
