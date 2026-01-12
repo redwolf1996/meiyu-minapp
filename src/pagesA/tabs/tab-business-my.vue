@@ -10,6 +10,8 @@ import MyTabBar from './MyTabBar.vue'
 const userInfo = computed(() => useUserStore()?.userInfo)
 const storeInfo = computed(() => userInfo.value?.lastStore || userInfo.value?.storeList?.[0])
 
+const storeValue = ref<any>(storeInfo.value?.storeId || null)
+
 function toRenew() {
   uni.navigateTo({ url: '/pagesA/my/renew' })
 }
@@ -44,6 +46,23 @@ function toFeedBack() {
   // })
   uni.navigateTo({ url: '/pagesA/my/feedback' })
 }
+
+watch(
+  () => storeValue.value,
+  async (val) => {
+    if (val) {
+      console.log(val)
+      // 从 storeList 中找到选中的门店
+      const selectedStore = userInfo.value?.storeList?.find(store => store.storeId === val)
+      if (selectedStore) {
+        // 更新 lastStore
+        useUserStore().setUserInfo({ lastStore: selectedStore })
+        await request.put('/business/current-store-id', { storeId: val })
+      }
+    }
+  },
+  { immediate: true },
+)
 </script>
 
 <template>
@@ -82,17 +101,21 @@ function toFeedBack() {
       </view>
     </view>
     <view class="h14px" />
-    <view px16px py12px flex flex-ac flex-bt bg-white rd-8px style="color:#292D32">
-      <view flex flex-ac gap-8px>
-        <wd-img
-          :width="16"
-          :height="16"
-          :src="`${IMG_BASE}/icon-shop.png`"
-        />
-        <text>{{ storeInfo?.storeName }}</text>
+
+    <wd-picker v-model="storeValue" value-key="storeId" label-key="storeName" :columns="userInfo.storeList" use-default-slot>
+      <view px16px py12px flex flex-ac flex-bt bg-white rd-8px style="color:#292D32">
+        <view flex flex-ac gap-8px>
+          <wd-img
+            :width="16"
+            :height="16"
+            :src="`${IMG_BASE}/icon-shop.png`"
+          />
+          <text>{{ storeInfo?.storeName }}</text>
+        </view>
+        <wd-icon name="swap" size="16px" color="#292D32" custom-style="transform: rotate(270deg) !important;" />
       </view>
-      <wd-icon name="swap" size="16px" color="#292D32" custom-style="transform: rotate(270deg) !important;" />
-    </view>
+    </wd-picker>
+
     <view
       v-if="storeRole !== 2 && storeRole !== 3"
       :style="{

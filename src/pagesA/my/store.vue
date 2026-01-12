@@ -103,7 +103,9 @@ function clearFormData() {
 
 function initializeFormData() {
   const storeList = useUserStore().userInfo?.storeList || []
-  const currentStore = storeList.find(store => store.storeId === form.id)
+  console.log(storeList)
+  const currentStore = storeList.find(store => store.storeId === Number(form.id))
+  console.log(currentStore)
   if (currentStore) {
     form.storeName = currentStore.storeName || ''
     form.phone = currentStore.phone || ''
@@ -150,7 +152,7 @@ function deleteStore() {
     content: '删除后无法恢复，请谨慎操作',
     success: async (res) => {
       if (res.confirm) {
-        await request.get<any>(`/business/store/${form.id}`)
+        await request.delete<any>(`/business/store/${form.id}`)
         uni.showToast({
           title: '删除成功',
           icon: 'success',

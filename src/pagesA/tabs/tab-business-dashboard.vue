@@ -15,6 +15,7 @@ import MyTabBar from './MyTabBar.vue'
 const toast = useToast()
 const menuButtonWidth = ref(0)
 const userInfo = ref<Partial<UserInfo>>(null)
+const storeValue = ref<any>(null) // 门店选择器的值
 const info = ref<DashBoardData>()
 const isOvertime = ref(false)
 const showCardRecharge = ref(false) // 显示开卡充值弹窗
@@ -93,12 +94,33 @@ onShow(() => {
   menuButtonWidth.value = menuButtonInfo?.barWidth
 })
 
+// 监听门店切换
+watch(
+  () => storeValue.value,
+  async (val) => {
+    if (val) {
+      // 从 storeList 中找到选中的门店
+      const selectedStore = userInfo.value?.storeList?.find(store => store.storeId === val)
+      if (selectedStore) {
+        // 更新 lastStore
+        useUserStore().setUserInfo({ lastStore: selectedStore })
+        // 重新获取工作台数据
+        await request.put('/business/current-store-id', { storeId: val })
+        getDashboardInfo()
+      }
+    }
+  },
+)
+
 // 店铺初始化
 async function initStore() {
   // const res = await request.get<UserInfo>('/business/info')
   // useUserStore().setUserInfo(res.data)
 
   userInfo.value = useUserStore().userInfo
+
+  // 初始化门店选择器的值
+  storeValue.value = userInfo.value.lastStore?.storeId || userInfo.value.storeList?.[0]?.storeId
 
   const isOwner = userInfo.value.lastStore?.isOwner
 
@@ -205,9 +227,12 @@ function toCardRecharge(type: 1 | 2 | 3 | 4 | 5 | 6) {
     <wd-navbar :fixed="true" :placeholder="true" :safeAreaInsetTop="true" :bordered="false">
       <template #title>
         <view flex flex-ac flex-bt :style="{ width: `calc(100% - ${menuButtonWidth}px)` }">
-          <view px-24rpx>
-            {{ userInfo?.lastStore?.storeName || userInfo?.storeList?.[0]?.storeName || '--' }}
-          </view>
+          <wd-picker v-model="storeValue" value-key="storeId" label-key="storeName" :columns="userInfo?.storeList" use-default-slot>
+            <view flex flex-ac gap-8px px-24rpx>
+              <text>{{ userInfo?.lastStore?.storeName || userInfo?.storeList?.[0]?.storeName || '--' }}</text>
+              <wd-icon name="fill-arrow-down" size="16px" />
+            </view>
+          </wd-picker>
           <view flex flex-y flex-cc pr-24rpx pr @click="toMsg()">
             <wd-img
               :width="28"
