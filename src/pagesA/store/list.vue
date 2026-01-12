@@ -26,7 +26,6 @@ function toStoreEdit(id: number) {
 
 async function getList() {
   const res = await request.get<StoreInfo>('/business/info')
-  console.log(res.data)
   total.value = res.data.storeList.length
   dataList.value = res.data.storeList
 }
