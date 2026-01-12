@@ -148,10 +148,14 @@ function deleteStore() {
   uni.showModal({
     title: `确认删除"${form.storeName}"？`,
     content: '删除后无法恢复，请谨慎操作',
-    success: (res) => {
+    success: async (res) => {
       if (res.confirm) {
-        // TODO: 调用删除门店接口
-        console.log('用户确认删除门店')
+        await request.get<any>(`/business/store/${form.id}`)
+        uni.showToast({
+          title: '删除成功',
+          icon: 'success',
+        })
+        uni.navigateBack()
       }
     },
   })
