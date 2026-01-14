@@ -12,6 +12,19 @@ const storeInfo = computed(() => userInfo.value?.lastStore || userInfo.value?.st
 
 const storeValue = ref<any>(storeInfo.value?.storeId || null)
 
+// 页面显示时同步 storeValue，确保删除店铺后 picker 数据正确
+onShow(() => {
+  const currentStoreId = storeInfo.value?.storeId
+  // 如果当前选中的店铺已不在列表中，重置为第一个店铺
+  const storeExists = userInfo.value?.storeList?.some(s => s.storeId === storeValue.value)
+  if (!storeExists && userInfo.value?.storeList?.length) {
+    storeValue.value = userInfo.value.storeList[0].storeId
+  }
+  else if (currentStoreId && currentStoreId !== storeValue.value) {
+    storeValue.value = currentStoreId
+  }
+})
+
 function toRenew() {
   uni.navigateTo({ url: '/pagesA/my/renew' })
 }
@@ -135,7 +148,7 @@ function toPc() {
             :src="`${IMG_BASE}/icon-v.png`"
           />
           <text color-white opacity-50 f12>
-            {{ userInfo.orgInfo?.expiresTime }} 到期
+            {{ storeInfo?.storeExpiresTime }} 到期
           </text>
         </view>
         <view f12 color-white>

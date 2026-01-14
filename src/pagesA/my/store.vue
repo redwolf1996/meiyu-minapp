@@ -103,9 +103,7 @@ function clearFormData() {
 
 function initializeFormData() {
   const storeList = useUserStore().userInfo?.storeList || []
-  console.log(storeList)
   const currentStore = storeList.find(store => store.storeId === Number(form.id))
-  console.log(currentStore)
   if (currentStore) {
     form.storeName = currentStore.storeName || ''
     form.phone = currentStore.phone || ''
@@ -153,6 +151,8 @@ function deleteStore() {
     success: async (res) => {
       if (res.confirm) {
         await request.delete<any>(`/business/store/${form.id}`)
+        const res = await request.get<any>('/business/info')
+        useUserStore().setUserInfo(res.data)
         uni.showToast({
           title: '删除成功',
           icon: 'success',

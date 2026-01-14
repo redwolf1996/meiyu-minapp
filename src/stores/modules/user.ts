@@ -7,7 +7,16 @@ export const useUserStore = defineStore(
     const userInfo = ref<Partial<UserInfo>>({})
 
     function setUserInfo(val: Partial<UserInfo>) {
-      merge(userInfo.value, val)
+      // storeList 需要直接替换而非合并，否则删除店铺后数量不会减少
+      if (val.storeList !== undefined) {
+        userInfo.value.storeList = val.storeList
+        const rest = { ...val }
+        delete rest.storeList
+        merge(userInfo.value, rest)
+      }
+      else {
+        merge(userInfo.value, val)
+      }
     }
     function clearUserInfo() {
       userInfo.value = {}
