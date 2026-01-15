@@ -80,6 +80,10 @@ watch(
 function toPc() {
   uni.navigateTo({ url: '/pagesA/my/pc' })
 }
+
+function toOfficialAccounts() {
+  uni.navigateTo({ url: '/pagesA/my/official-account' })
+}
 </script>
 
 <template>
@@ -198,6 +202,14 @@ function toPc() {
       <template #icon>
         <wd-icon name="warning" size="18px" />
       </template>
+    </MyCell>
+    <MyCell label="关注公众号" noBorder @myclick="toOfficialAccounts()">
+      <template #icon>
+        <wd-icon name="star" size="18px" />
+      </template>
+      <text f14 c-B6BDBD>
+        接收预约提醒、消费通知等
+      </text>
     </MyCell>
   </MyCellGroup>
   <view h16px />
