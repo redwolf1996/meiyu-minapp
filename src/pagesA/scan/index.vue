@@ -94,9 +94,11 @@ function toggleFlash() {
         <view class="back-btn" @click="goBack">
           <wd-icon name="fill-arrow-left" size="24px" color="#fff" />
         </view>
-        <text class="navbar-title">
-          扫码核销
-        </text>
+        <view class="navbar-title-wrapper">
+          <text class="navbar-title">
+            扫码核销
+          </text>
+        </view>
       </view>
     </view>
 
@@ -201,6 +203,7 @@ function toggleFlash() {
     display: flex;
     align-items: center;
     padding: 0 16rpx;
+    position: relative;
   }
 
   .back-btn {
@@ -209,13 +212,26 @@ function toggleFlash() {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: 16rpx;
+    z-index: 2;
+  }
+
+  .navbar-title-wrapper {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
   }
 
   .navbar-title {
     color: #fff;
     font-size: 34rpx;
     font-weight: 500;
+    line-height: 1;
   }
 }
 
@@ -227,7 +243,7 @@ function toggleFlash() {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 120rpx;
+  margin-top: 160rpx;
   margin-bottom: 40rpx;
   margin-left: 40rpx;
   margin-right: 40rpx;
@@ -412,7 +428,7 @@ function toggleFlash() {
     :deep(.verify-input) {
       background: #f5f5f5;
       border-radius: 8rpx;
-
+      padding-left: 15px;
       .wd-input__inner {
         height: 80rpx;
       }
