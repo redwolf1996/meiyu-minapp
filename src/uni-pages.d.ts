@@ -68,6 +68,7 @@ interface NavigateToOptions {
        "/pagesA/order/refund" |
        "/pagesA/product/add" |
        "/pagesA/product/list" |
+       "/pagesA/scan/index" |
        "/pagesA/service/add" |
        "/pagesA/service/index" |
        "/pagesA/staff/add" |

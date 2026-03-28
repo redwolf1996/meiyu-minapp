@@ -488,6 +488,14 @@
           }
         },
         {
+          "path": "scan/index",
+          "type": "page",
+          "style": {
+            "navigationBarTitleText": "扫码核销",
+            "navigationStyle": "custom"
+          }
+        },
+        {
           "path": "service/add",
           "type": "page",
           "style": {

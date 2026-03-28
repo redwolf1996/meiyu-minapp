@@ -19,6 +19,11 @@ export default defineManifestConfig({
     optimization: {
       subPackages: true,
     },
+    permission: {
+      'scope.camera': {
+        desc: '需要使用您的摄像头进行扫码',
+      },
+    },
   },
   'uniStatistics': {
     enable: false,

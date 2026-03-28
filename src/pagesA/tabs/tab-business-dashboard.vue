@@ -166,7 +166,7 @@ function toRenew() {
   uni.navigateTo({ url: '/pagesA/my/renew' })
 }
 function toScanCode() {
-  toast.warning('开发中')
+  uni.navigateTo({ url: '/pagesA/scan/index' })
 }
 function toCusCard() {
   uni.navigateTo({ url: '/pagesA/card/cus-list' })
