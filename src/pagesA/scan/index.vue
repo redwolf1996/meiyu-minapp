@@ -1,30 +1,11 @@
 <route lang="yaml">
 style:
   navigationBarTitleText: 扫码核销
-  navigationStyle: custom
 </route>
 
 <script lang="ts" setup>
-import { getMenuButtonInfo } from '@/utils/index'
-
 const toast = useToast()
-const verifyCode = ref('') // 核销码
-const menuButtonWidth = ref(0)
-const menuButtonHeight = ref(0)
-const menuButtonTop = ref(0)
 const isScanning = ref(false) // 防抖标记
-
-onLoad(() => {
-  const menuButtonInfo = getMenuButtonInfo()
-  menuButtonWidth.value = menuButtonInfo?.barWidth
-  menuButtonHeight.value = menuButtonInfo?.barHeight
-  menuButtonTop.value = menuButtonInfo?.barTop
-})
-
-// 返回上一页
-function goBack() {
-  uni.navigateBack()
-}
 
 // 扫码成功回调
 function onScanSuccess(e: any) {
@@ -56,6 +37,7 @@ function onScanError(e: any) {
 
 // 处理扫描结果
 function handleScanResult(result: string) {
+  // TODO: 调用核销接口，根据结果提示用户
   // 测试阶段：使用弹窗显示扫描结果
   uni.showModal({
     title: '扫码成功',
@@ -64,43 +46,16 @@ function handleScanResult(result: string) {
     confirmText: '确定',
     success: () => {
       console.log('用户点击确定')
+      // 返回上一页
+      uni.navigateBack()
     },
   })
-}
-
-// 手动输入核销码
-function onVerify() {
-  if (!verifyCode.value.trim()) {
-    toast.warning('请输入核销码')
-    return
-  }
-  handleScanResult(verifyCode.value.trim())
-}
-
-// 开启手电筒
-function toggleFlash() {
-  // 微信小程序 camera 组件暂不支持直接控制闪光灯
-  // 可以通过提示用户使用系统手电筒
-  toast.info('请使用系统手电筒')
 }
 </script>
 
 <template>
   <view class="scan-container">
     <wd-toast />
-    <!-- 自定义导航栏 -->
-    <view class="custom-navbar" :style="{ paddingTop: `${menuButtonTop}px`, height: `${menuButtonHeight}px` }">
-      <view class="navbar-content" :style="{ width: `calc(100% - ${menuButtonWidth}px)` }">
-        <view class="back-btn" @click="goBack">
-          <wd-icon name="fill-arrow-left" size="24px" color="#fff" />
-        </view>
-        <view class="navbar-title-wrapper">
-          <text class="navbar-title">
-            扫码核销
-          </text>
-        </view>
-      </view>
-    </view>
 
     <!-- 扫码区域 -->
     <view class="scan-wrapper">
@@ -151,30 +106,6 @@ function toggleFlash() {
       <view class="scan-tip">
         <text>将二维码放入框内，自动识别</text>
       </view>
-
-      <!-- 手电筒按钮 -->
-      <view class="flash-btn" @click="toggleFlash">
-        <wd-icon name="flashlight" size="24px" color="#fff" />
-        <text>手电筒</text>
-      </view>
-    </view>
-
-    <!-- 底部输入区域 -->
-    <view class="bottom-section">
-      <view class="input-area">
-        <view class="input-wrapper">
-          <wd-input
-            v-model="verifyCode"
-            placeholder="填写核销码"
-            :border="false"
-            clearable
-            custom-class="verify-input"
-          />
-        </view>
-        <wd-button type="primary" custom-class="verify-btn" @click="onVerify">
-          核销
-        </wd-button>
-      </view>
     </view>
   </view>
 </template>
@@ -183,59 +114,12 @@ function toggleFlash() {
 .scan-container {
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(149deg, #697fe0 7%, #6e52a1 100%);
   display: flex;
   flex-direction: column;
 }
 
-// 自定义导航栏
-.custom-navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  background: transparent;
-
-  .navbar-content {
-    display: flex;
-    align-items: center;
-    padding: 0 16rpx;
-    position: relative;
-  }
-
-  .back-btn {
-    width: 64rpx;
-    height: 64rpx;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 2;
-  }
-
-  .navbar-title-wrapper {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    pointer-events: none;
-  }
-
-  .navbar-title {
-    color: #fff;
-    font-size: 34rpx;
-    font-weight: 500;
-    line-height: 1;
-  }
-}
-
-// 扫码区域
+// 遮罩层
 .scan-wrapper {
   flex: 1;
   position: relative;
@@ -243,7 +127,7 @@ function toggleFlash() {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 160rpx;
+  margin-top: 40rpx;
   margin-bottom: 40rpx;
   margin-left: 40rpx;
   margin-right: 40rpx;
@@ -388,58 +272,6 @@ function toggleFlash() {
     color: #fff;
     font-size: 28rpx;
     text-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.3);
-  }
-}
-
-// 手电筒按钮
-.flash-btn {
-  position: absolute;
-  bottom: 200rpx;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8rpx;
-
-  text {
-    color: #fff;
-    font-size: 24rpx;
-  }
-}
-
-// 底部区域
-.bottom-section {
-  padding: 40rpx;
-  padding-bottom: calc(40rpx + env(safe-area-inset-bottom));
-
-  .input-area {
-    display: flex;
-    align-items: center;
-    gap: 20rpx;
-    background: #fff;
-    border-radius: 16rpx;
-    padding: 20rpx;
-
-    .input-wrapper {
-      flex: 1;
-    }
-
-    :deep(.verify-input) {
-      background: #f5f5f5;
-      border-radius: 8rpx;
-      padding-left: 15px;
-      .wd-input__inner {
-        height: 80rpx;
-      }
-    }
-
-    :deep(.verify-btn) {
-      width: 140rpx;
-      height: 80rpx;
-      border-radius: 8rpx;
-      font-size: 28rpx;
-    }
   }
 }
 </style>

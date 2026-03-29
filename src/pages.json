@@ -491,8 +491,7 @@
           "path": "scan/index",
           "type": "page",
           "style": {
-            "navigationBarTitleText": "扫码核销",
-            "navigationStyle": "custom"
+            "navigationBarTitleText": "扫码核销"
           }
         },
         {
