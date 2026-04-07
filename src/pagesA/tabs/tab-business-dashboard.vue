@@ -19,7 +19,22 @@ const storeValue = ref<any>(null) // 门店选择器的值
 const info = ref<DashBoardData>()
 const isOvertime = ref(false)
 const showCardRecharge = ref(false) // 显示开卡充值弹窗
+const showVerifyPopup = ref(false) // 显示核销确认弹窗
+const showScanSuccessPopup = ref(false) // 显示扫码核销成功弹窗
 const loading = ref(true) // 加载状态，控制骨架屏显示
+
+// 核销弹窗示例数据
+const verifyData = ref({
+  date: '2023.11.22 8:00-10:00',
+  artisanName: '张硕',
+  serviceType: '上门服务',
+  status: '待服务',
+  serviceName: '面部清洁补水',
+  serviceDuration: '1小时',
+  serviceImage: `${IMG_BASE}/icon-cus.png`, // 使用项目中的默认图片
+  customerName: '王乐乐',
+  customerPhone: '13800138000',
+})
 
 // 骨架屏配置 - 根据实际页面布局设计
 const skeletonRowCol = ref([
@@ -166,7 +181,15 @@ function toRenew() {
   uni.navigateTo({ url: '/pagesA/my/renew' })
 }
 function toScanCode() {
-  uni.navigateTo({ url: '/pagesA/scan/index' })
+  // 显示核销成功弹窗
+  showScanSuccessPopup.value = true
+}
+function toScanCode2() {
+  // uni.navigateTo({ url: '/pagesA/scan/index' })
+  // 显示核销确认弹窗
+  console.log('toScanCode clicked, showVerifyPopup before:', showVerifyPopup.value)
+  showVerifyPopup.value = true
+  console.log('toScanCode clicked, showVerifyPopup after:', showVerifyPopup.value)
 }
 function toCusCard() {
   uni.navigateTo({ url: '/pagesA/card/cus-list' })
@@ -218,6 +241,32 @@ function toCardRecharge(type: 1 | 2 | 3 | 4 | 5 | 6) {
   curCardRechargeFormData.value = null
   curCustomer.value = null
   uni.navigateTo({ url: '/pagesA/card/make' })
+}
+
+// 确认核销
+function confirmVerify() {
+  showVerifyPopup.value = false
+  uni.showToast({
+    title: '核销成功',
+    icon: 'success',
+  })
+}
+
+// 关闭扫码核销成功弹窗
+function closeScanSuccessPopup() {
+  showScanSuccessPopup.value = false
+}
+
+// 结束服务
+function finishService() {
+  showScanSuccessPopup.value = false
+  uni.showToast({ title: '已结束服务', icon: 'success' })
+}
+
+// 查看预约
+function viewAppointment() {
+  showScanSuccessPopup.value = false
+  uni.navigateTo({ url: '/pagesA/book/index' })
 }
 </script>
 
@@ -479,6 +528,140 @@ function toCardRecharge(type: 1 | 2 | 3 | 4 | 5 | 6) {
     </view>
   </wd-popup>
 
+  <!-- 扫码核销成功弹窗 -->
+  <wd-popup v-model="showScanSuccessPopup" position="center" :closable="false" custom-style="border-radius:32rpx;width:90%;max-width:600rpx;background:transparent;" @close="closeScanSuccessPopup">
+    <view class="scan-success-popup">
+      <!-- 关闭按钮 -->
+      <view class="close-btn" @click="closeScanSuccessPopup">
+        <wd-icon name="close" size="24px" color="#fff" />
+      </view>
+
+      <!-- 庆祝图标 -->
+      <view class="celebration-icon">
+        🎉
+      </view>
+
+      <!-- 标题 -->
+      <view class="success-title">
+        核销成功
+      </view>
+
+      <!-- 签到信息 -->
+      <view class="checkin-info">
+        <text>张美丽 已签到</text>
+      </view>
+
+      <!-- 签到时间 -->
+      <view class="checkin-time">
+        <text>签到时间：21:41</text>
+      </view>
+
+      <!-- 分隔线 -->
+      <view class="divider" />
+
+      <!-- 操作按钮 -->
+      <view class="action-buttons">
+        <view class="action-btn" @click="finishService">
+          <text>结束服务</text>
+        </view>
+        <view class="action-btn" @click="viewAppointment">
+          <text>查看预约</text>
+        </view>
+      </view>
+
+      <!-- 返回扫码按钮 -->
+      <view class="back-scan-btn" @click="closeScanSuccessPopup">
+        <text>返回扫码</text>
+      </view>
+    </view>
+  </wd-popup>
+  <wd-popup v-model="showVerifyPopup" position="center" :closable="true" custom-style="border-radius:32rpx;width:90%;max-width:600rpx;">
+    <view style="padding: 40rpx 32rpx 32rpx;">
+      <!-- 标题 -->
+      <view flex flex-ac gap-16rpx mb-32rpx>
+        <wd-icon name="search" size="24px" color="#303030" />
+        <text fb f18 c-303030>
+          核销确认
+        </text>
+      </view>
+
+      <!-- 预约时间 -->
+      <view f16 c-303030 mb-20rpx>
+        {{ verifyData.date }}
+      </view>
+
+      <!-- 手艺人和服务类型 -->
+      <view flex flex-ac gap-16rpx mb-32rpx>
+        <view flex flex-ac gap-8rpx>
+          <text f14 c-303030>
+            {{ verifyData.artisanName }}
+          </text>
+          <text f14 c-303030>
+            ·
+          </text>
+          <view px-16rpx py-4rpx lh-28rpx bg-FF6619 color-white f12 style="border-radius: 4rpx;">
+            {{ verifyData.serviceType }}
+          </view>
+        </view>
+        <view px-20rpx py-8rpx lh-32rpx style="background: #FFEDED;border-radius: 26rpx;">
+          <text f13 c-DC312D fb>
+            {{ verifyData.status }}
+          </text>
+        </view>
+      </view>
+
+      <!-- 服务项目 -->
+      <view flex gap-24rpx mb-32rpx>
+        <wd-img
+          :width="72"
+          :height="72"
+          radius="10"
+          mode="aspectFill"
+          :src="verifyData.serviceImage"
+        />
+        <view flex-1>
+          <view f14 c-303030 mb-8rpx>
+            {{ verifyData.serviceName }}
+          </view>
+          <view f12 c-7C7C7C>
+            {{ verifyData.serviceDuration }}
+          </view>
+        </view>
+        <view f14 c-303030 style="align-self: flex-end;">
+          x1
+        </view>
+      </view>
+
+      <!-- 客户信息 -->
+      <view flex flex-ac gap-16rpx mb-40rpx>
+        <wd-icon name="user" size="20px" color="#FFA500" />
+        <text f14 c-303030 fb>
+          {{ verifyData.customerName }}
+        </text>
+        <text f14 c-303030>
+          ·
+        </text>
+        <text f14 c-303030>
+          {{ verifyData.customerPhone }}
+        </text>
+      </view>
+
+      <!-- 底部按钮 -->
+      <view flex gap-24rpx>
+        <view flex-1>
+          <button class="verify-btn cancel-btn" @click="cancelVerify()">
+            取消
+          </button>
+        </view>
+        <view flex-1>
+          <button class="verify-btn confirm-btn" @click="confirmVerify()">
+            确认核销
+          </button>
+        </view>
+      </view>
+    </view>
+  </wd-popup>
+
   <!--  #ifdef  MP-WEIXIN -->
   <view wp-100 pf bottom-0 h-48px @click="toInvite()">
     <wd-img
@@ -502,6 +685,116 @@ function toCardRecharge(type: 1 | 2 | 3 | 4 | 5 | 6) {
 </template>
 
 <style lang="scss" scoped>
+.scan-success-popup {
+  background: linear-gradient(320deg, #70bd3f 0%, #579e32 98%);
+  border-radius: 32rpx;
+  padding: 60rpx 40rpx 40rpx;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .close-btn {
+    position: absolute;
+    top: 24rpx;
+    right: 24rpx;
+    width: 48rpx;
+    height: 48rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .celebration-icon {
+    font-size: 80rpx;
+    margin-bottom: 24rpx;
+  }
+
+  .success-title {
+    font-size: 48rpx;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 32rpx;
+  }
+
+  .checkin-info {
+    font-size: 32rpx;
+    color: #fff;
+    margin-bottom: 16rpx;
+  }
+
+  .checkin-time {
+    font-size: 28rpx;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 48rpx;
+  }
+
+  .divider {
+    width: 100%;
+    height: 2rpx;
+    background: rgba(255, 255, 255, 0.3);
+    margin-bottom: 48rpx;
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 24rpx;
+    width: 100%;
+    margin-bottom: 32rpx;
+
+    .action-btn {
+      flex: 1;
+      height: 88rpx;
+      background: #85c161;
+      border-radius: 12rpx;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      text {
+        color: #fff;
+        font-size: 28rpx;
+        font-weight: 500;
+      }
+    }
+  }
+
+  .back-scan-btn {
+    height: 88rpx;
+    background: #fff;
+    border-radius: 12rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+
+    text {
+      color: #1a66ff;
+      font-size: 28rpx;
+      font-weight: 500;
+    }
+  }
+}
+
+.verify-btn {
+  width: 100%;
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+  font-size: 28rpx;
+  border-radius: 8rpx;
+  border: none;
+  padding: 0;
+  margin: 0;
+  &.cancel-btn {
+    background-color: #f5f5f5;
+    color: #303030;
+  }
+  &.confirm-btn {
+    background-color: #1a66ff;
+    color: #ffffff;
+  }
+}
 .card-item {
   height: 32px;
   line-height: 32px;
