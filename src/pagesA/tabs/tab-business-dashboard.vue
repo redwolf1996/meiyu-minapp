@@ -187,9 +187,7 @@ function toScanCode() {
 function toScanCode2() {
   // uni.navigateTo({ url: '/pagesA/scan/index' })
   // 显示核销确认弹窗
-  console.log('toScanCode clicked, showVerifyPopup before:', showVerifyPopup.value)
   showVerifyPopup.value = true
-  console.log('toScanCode clicked, showVerifyPopup after:', showVerifyPopup.value)
 }
 function toCusCard() {
   uni.navigateTo({ url: '/pagesA/card/cus-list' })
@@ -267,6 +265,10 @@ function finishService() {
 function viewAppointment() {
   showScanSuccessPopup.value = false
   uni.navigateTo({ url: '/pagesA/book/index' })
+}
+
+function cancelVerify() {
+  showVerifyPopup.value = false
 }
 </script>
 
@@ -441,7 +443,7 @@ function viewAppointment() {
           </view>
           <view h-20px />
           <view class="grid">
-            <view v-if="storeRole !== 2" @click="toScanCode()">
+            <view v-if="storeRole !== 2" @click="toScanCode2()">
               <i i-ant-design-scan-outlined fs-64 c-1563ff />
               <text>扫码核销</text>
             </view>
@@ -575,35 +577,40 @@ function viewAppointment() {
       </view>
     </view>
   </wd-popup>
-  <wd-popup v-model="showVerifyPopup" position="center" :closable="true" custom-style="border-radius:32rpx;width:90%;max-width:600rpx;">
-    <view style="padding: 40rpx 32rpx 32rpx;">
+  <wd-popup v-model="showVerifyPopup" position="center" :closable="false" custom-style="border-radius:32rpx;width:90%;">
+    <view style="padding: 40rpx 48rpx">
       <!-- 标题 -->
       <view flex flex-ac gap-16rpx mb-32rpx>
-        <wd-icon name="search" size="24px" color="#303030" />
+        <wd-icon name="search" size="18px" color="#303030" />
         <text fb f18 c-303030>
           核销确认
         </text>
       </view>
 
-      <!-- 预约时间 -->
-      <view f16 c-303030 mb-20rpx>
-        {{ verifyData.date }}
-      </view>
+      <view flex flex-ac flex-bt>
+        <view>
+          <!-- 预约时间 -->
+          <view f16 c-303030 mb-20rpx>
+            {{ verifyData.date }}
+          </view>
 
-      <!-- 手艺人和服务类型 -->
-      <view flex flex-ac gap-16rpx mb-32rpx>
-        <view flex flex-ac gap-8rpx>
-          <text f14 c-303030>
-            {{ verifyData.artisanName }}
-          </text>
-          <text f14 c-303030>
-            ·
-          </text>
-          <view px-16rpx py-4rpx lh-28rpx bg-FF6619 color-white f12 style="border-radius: 4rpx;">
-            {{ verifyData.serviceType }}
+          <!-- 手艺人和服务类型 -->
+          <view flex flex-ac gap-16rpx mb-32rpx>
+            <view flex flex-ac gap-8rpx>
+              <text f14 fb c-161719>
+                {{ verifyData.artisanName }}
+              </text>
+              <text f14 c-303030>
+                ·
+              </text>
+              <view px-16rpx py-4rpx lh-28rpx bg-FF6619 color-white f12 style="border-radius: 4rpx;">
+                {{ verifyData.serviceType }}
+              </view>
+            </view>
           </view>
         </view>
-        <view px-20rpx py-8rpx lh-32rpx style="background: #FFEDED;border-radius: 26rpx;">
+
+        <view px-40rpx py-16rpx style="background: #FFEDED;border-radius: 52rpx;">
           <text f13 c-DC312D fb>
             {{ verifyData.status }}
           </text>
@@ -613,28 +620,30 @@ function viewAppointment() {
       <!-- 服务项目 -->
       <view flex gap-24rpx mb-32rpx>
         <wd-img
-          :width="72"
-          :height="72"
-          radius="10"
           mode="aspectFill"
-          :src="verifyData.serviceImage"
+          :width="60"
+          :height="60"
+          :radius="8"
+          :src="`${IMG_BASE}/icon-people.png`"
         />
         <view flex-1>
-          <view f14 c-303030 mb-8rpx>
-            {{ verifyData.serviceName }}
+          <view f14 c-0D0D26 fb mb-8rpx flex flex-bt flex-ac>
+            <text>{{ verifyData.serviceName }}</text>
+            <text>x1</text>
           </view>
-          <view f12 c-7C7C7C>
+          <view f12 c-161719>
             {{ verifyData.serviceDuration }}
           </view>
         </view>
-        <view f14 c-303030 style="align-self: flex-end;">
-          x1
-        </view>
       </view>
 
-      <!-- 客户信息 -->
-      <view flex flex-ac gap-16rpx mb-40rpx>
-        <wd-icon name="user" size="20px" color="#FFA500" />
+      <!-- customer info -->
+      <view flex flex-ac gap-16rpx mb-40rpx w-full style="justify-content: flex-end;">
+        <wd-img
+          :width="14"
+          :height="14"
+          :src="`${IMG_BASE}/icon-people.png`"
+        />
         <text f14 c-303030 fb>
           {{ verifyData.customerName }}
         </text>
