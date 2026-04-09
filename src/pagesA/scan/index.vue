@@ -37,19 +37,10 @@ function onScanError(e: any) {
 
 // 处理扫描结果
 function handleScanResult(result: string) {
-  // TODO: 调用核销接口，根据结果提示用户
-  // 测试阶段：使用弹窗显示扫描结果
-  uni.showModal({
-    title: '扫码成功',
-    content: `扫描结果: ${result}`,
-    showCancel: false,
-    confirmText: '确定',
-    success: () => {
-      console.log('用户点击确定')
-      // 返回上一页
-      uni.navigateBack()
-    },
-  })
+  // 保存扫码结果到本地存储
+  uni.setStorageSync('scanCode', result)
+  // 返回上一页
+  uni.navigateBack()
 }
 </script>
 

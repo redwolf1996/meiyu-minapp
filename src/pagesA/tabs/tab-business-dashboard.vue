@@ -34,6 +34,8 @@ const verifyData = ref({
   serviceImage: `${IMG_BASE}/icon-cus.png`, // 使用项目中的默认图片
   customerName: '王乐乐',
   customerPhone: '13800138000',
+  count: 1,
+  orderId: null,
 })
 
 // 骨架屏配置 - 根据实际页面布局设计
@@ -107,6 +109,17 @@ onShow(() => {
   initStore()
   const menuButtonInfo = getMenuButtonInfo()
   menuButtonWidth.value = menuButtonInfo?.barWidth
+
+  // 检查是否有扫码结果
+  const scanCode = uni.getStorageSync('scanCode')
+  if (scanCode) {
+    // 清除扫码结果
+    uni.removeStorageSync('scanCode')
+    // 获取订单信息并显示核销弹窗
+    getVerifyOrderInfo(scanCode).then(() => {
+      showVerifyPopupFunc()
+    })
+  }
 })
 
 // 监听门店切换
@@ -180,15 +193,7 @@ function toRenew() {
     return toast.warning('您没有权限操作续费，请联系店长或店铺拥有者')
   uni.navigateTo({ url: '/pagesA/my/renew' })
 }
-function toScanCode() {
-  // 显示核销成功弹窗
-  showScanSuccessPopup.value = true
-}
-function toScanCode2() {
-  // uni.navigateTo({ url: '/pagesA/scan/index' })
-  // 显示核销确认弹窗
-  showVerifyPopup.value = true
-}
+
 function toCusCard() {
   uni.navigateTo({ url: '/pagesA/card/cus-list' })
 }
@@ -241,15 +246,6 @@ function toCardRecharge(type: 1 | 2 | 3 | 4 | 5 | 6) {
   uni.navigateTo({ url: '/pagesA/card/make' })
 }
 
-// 确认核销
-function confirmVerify() {
-  showVerifyPopup.value = false
-  uni.showToast({
-    title: '核销成功',
-    icon: 'success',
-  })
-}
-
 // 关闭扫码核销成功弹窗
 function closeScanSuccessPopup() {
   showScanSuccessPopup.value = false
@@ -258,17 +254,61 @@ function closeScanSuccessPopup() {
 // 结束服务
 function finishService() {
   showScanSuccessPopup.value = false
-  uni.showToast({ title: '已结束服务', icon: 'success' })
 }
 
 // 查看预约
 function viewAppointment() {
   showScanSuccessPopup.value = false
-  uni.navigateTo({ url: '/pagesA/book/index' })
+  const bookingId = verifyData.value.orderId
+  uni.navigateTo({ url: `/pagesA/book/detail?id=${bookingId}` })
 }
 
+// 关闭核销弹窗
 function cancelVerify() {
   showVerifyPopup.value = false
+}
+
+function toScanCode() {
+  uni.navigateTo({ url: '/pagesA/scan/index' })
+}
+function showVerifyPopupFunc() {
+  // 显示核销确认弹窗
+  showVerifyPopup.value = true
+}
+function showScanSuccessPopupFunc() {
+  // 显示核销成功弹窗
+  showScanSuccessPopup.value = true
+}
+
+// 获取核销订单信息
+async function getVerifyOrderInfo(code?: any) {
+  const redeemCode = code || '861830488064'
+  const res = await request.get<any>(`/business/order-redeem/${redeemCode}`)
+  const bookInfo = res.data.bookingInfo
+  verifyData.value = {
+    date: `${bookInfo.startTime.slice(0, 10)} ${bookInfo.startTime.slice(11, 16)}-${bookInfo.endTime.slice(11, 16)}`,
+    artisanName: bookInfo.artisanName,
+    serviceType: bookInfo.storeServiceTypeDesc,
+    status: bookInfo.bookingStatusDesc,
+    serviceName: bookInfo.bookingService[0].serviceName,
+    serviceDuration: `${bookInfo.bookingService[0].duration}分钟`,
+    serviceImage: bookInfo.bookingService[0].serviceCoverImg,
+    customerName: bookInfo.storeCustomerName,
+    customerPhone: bookInfo.storeCustomerPhone,
+    count: bookInfo.bookingService[0].count,
+    orderId: bookInfo.orderId,
+  }
+}
+
+// 确认核销
+async function confirmVerify() {
+  await request.put<any>(`/business/booking/status`, {
+    id: verifyData.value.orderId,
+    status: 3,
+  })
+  showVerifyPopup.value = false
+  // 显示核销成功弹窗
+  showScanSuccessPopupFunc()
 }
 </script>
 
@@ -443,7 +483,7 @@ function cancelVerify() {
           </view>
           <view h-20px />
           <view class="grid">
-            <view v-if="storeRole !== 2" @click="toScanCode2()">
+            <view v-if="storeRole !== 2" @click="toScanCode()">
               <i i-ant-design-scan-outlined fs-64 c-1563ff />
               <text>扫码核销</text>
             </view>
@@ -577,6 +617,7 @@ function cancelVerify() {
       </view>
     </view>
   </wd-popup>
+
   <wd-popup v-model="showVerifyPopup" position="center" :closable="false" custom-style="border-radius:32rpx;width:90%;">
     <view style="padding: 40rpx 48rpx">
       <!-- 标题 -->
@@ -624,12 +665,12 @@ function cancelVerify() {
           :width="60"
           :height="60"
           :radius="8"
-          :src="`${IMG_BASE}/icon-people.png`"
+          :src="verifyData.serviceImage"
         />
         <view flex-1>
           <view f14 c-0D0D26 fb mb-8rpx flex flex-bt flex-ac>
             <text>{{ verifyData.serviceName }}</text>
-            <text>x1</text>
+            <text>x{{ verifyData.count }}</text>
           </view>
           <view f12 c-161719>
             {{ verifyData.serviceDuration }}
