@@ -16,6 +16,12 @@ const curStaff = ref<ListStaff>(null)
 const activeIndex = ref(0)
 
 onLoad((options) => {
+  // print current route and params
+  const pages = getCurrentPages()
+  const currentPage = pages[pages.length - 1]
+  console.log('current route: ', `/${currentPage.route}`)
+  console.log('route params: ', options)
+
   bookingId.value = Number(options?.id)
   getStaff()
 })

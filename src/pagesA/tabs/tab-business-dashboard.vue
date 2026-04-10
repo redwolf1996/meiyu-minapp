@@ -37,6 +37,7 @@ const verifyData = ref({
   customerPhone: '13800138000',
   count: 1,
   orderId: null,
+  bookId: null,
 })
 
 // 骨架屏配置 - 根据实际页面布局设计
@@ -260,7 +261,7 @@ function finishService() {
 // 查看预约
 function viewAppointment() {
   showScanSuccessPopup.value = false
-  const bookingId = verifyData.value.orderId
+  const bookingId = verifyData.value.bookId
   uni.navigateTo({ url: `/pagesA/book/detail?id=${bookingId}` })
 }
 
@@ -300,6 +301,7 @@ async function getVerifyOrderInfo(code?: any) {
     customerPhone: bookInfo.storeCustomerPhone,
     count: bookInfo.bookingService[0].count,
     orderId: bookInfo.orderId,
+    bookId: bookInfo.bookingId,
   }
 }
 
