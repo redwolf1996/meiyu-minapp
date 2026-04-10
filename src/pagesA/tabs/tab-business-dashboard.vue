@@ -614,7 +614,7 @@ async function confirmVerify() {
       </view>
 
       <!-- 返回扫码按钮 -->
-      <view class="back-scan-btn" @click="closeScanSuccessPopup">
+      <view class="back-scan-btn" @click="toScanCode">
         <text>返回扫码</text>
       </view>
     </view>
@@ -640,10 +640,10 @@ async function confirmVerify() {
           <!-- 手艺人和服务类型 -->
           <view flex flex-ac gap-16rpx mb-32rpx>
             <view flex flex-ac gap-8rpx>
-              <text f14 fb c-161719>
+              <text v-if="verifyData.artisanName" f14 fb c-161719>
                 {{ verifyData.artisanName }}
               </text>
-              <text f14 c-303030>
+              <text v-if="verifyData.artisanName" f14 c-303030>
                 ·
               </text>
               <view px-16rpx py-4rpx lh-28rpx bg-FF6619 color-white f12 style="border-radius: 4rpx;">
