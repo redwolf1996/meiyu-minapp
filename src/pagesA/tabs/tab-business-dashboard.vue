@@ -22,6 +22,7 @@ const showCardRecharge = ref(false) // 显示开卡充值弹窗
 const showVerifyPopup = ref(false) // 显示核销确认弹窗
 const showScanSuccessPopup = ref(false) // 显示扫码核销成功弹窗
 const loading = ref(true) // 加载状态，控制骨架屏显示
+const checkinTime = ref('') // 签到时间
 
 // 核销弹窗示例数据
 const verifyData = ref({
@@ -276,6 +277,8 @@ function showVerifyPopupFunc() {
   showVerifyPopup.value = true
 }
 function showScanSuccessPopupFunc() {
+  // 动态计算签到时间
+  checkinTime.value = dayjs().format('HH:mm')
   // 显示核销成功弹窗
   showScanSuccessPopup.value = true
 }
@@ -587,12 +590,12 @@ async function confirmVerify() {
 
       <!-- 签到信息 -->
       <view class="checkin-info">
-        <text>张美丽 已签到</text>
+        <text>{{ verifyData.customerName }} 已签到</text>
       </view>
 
       <!-- 签到时间 -->
       <view class="checkin-time">
-        <text>签到时间：21:41</text>
+        <text>签到时间：{{ checkinTime }}</text>
       </view>
 
       <!-- 分隔线 -->
