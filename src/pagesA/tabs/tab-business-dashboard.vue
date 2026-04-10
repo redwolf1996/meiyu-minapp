@@ -302,10 +302,7 @@ async function getVerifyOrderInfo(code?: any) {
 
 // 确认核销
 async function confirmVerify() {
-  await request.put<any>(`/business/booking/status`, {
-    id: verifyData.value.orderId,
-    status: 3,
-  })
+  await request.put<any>(`/business/order-booking-redeem/${verifyData.value.orderId}`)
   showVerifyPopup.value = false
   // 显示核销成功弹窗
   showScanSuccessPopupFunc()
