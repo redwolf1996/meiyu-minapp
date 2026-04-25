@@ -16,6 +16,11 @@ function onScanSuccess(e: any) {
   console.log('扫码事件触发：', e)
   const result = e.detail?.result || e.detail?.scanResult
   if (result) {
+    // 校验是否为12位数字，不符合则跳过继续扫描
+    if (!/^\d{12}$/.test(result)) {
+      console.log('扫描结果非12位数字，继续扫描：', result)
+      return
+    }
     isScanning.value = true
     console.log('扫描结果：', result)
     handleScanResult(result)
