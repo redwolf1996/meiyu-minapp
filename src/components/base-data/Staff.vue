@@ -25,11 +25,11 @@ const columnsGender: GeneralColumn[] = [{ label: '未知', value: 0 }, { label: 
 const columnsJob: GeneralColumn[] = [{ label: '店长', value: 1 }, { label: '手艺人', value: 2 }, { label: '营销顾问', value: 3 }]
 const columnsRole: GeneralColumn[] = [{ label: '店长', value: 1 }, { label: '销售', value: 2 }, { label: '手艺人', value: 3 }]
 const formRef = ref()
-const imageValue = ref<any>([])
+const { handleFilePickerUpload2, handleFileDelete, imageValue } = useOss()
 const form = reactive<FormStaff>({
   storeId: storeId.value,
   storeStaffId: null,
-  avatar: computed(() => imageValue.value.length ? imageValue.value[0]?.url : ''),
+  avatar: computed(() => imageValue.value?.length ? imageValue.value[0]?.url : ''),
   userName: null,
   phone: null,
   gender: 2,
@@ -138,6 +138,8 @@ function toWorkTimes() {
         fileMediatype="image"
         mode="grid"
         :limit="1"
+        @select="handleFilePickerUpload2"
+        @delete="handleFileDelete"
       />
     </view>
 

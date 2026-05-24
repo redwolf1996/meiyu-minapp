@@ -11,8 +11,8 @@ const props = withDefaults(defineProps<{
 type Mode = 'edit' | 'copy' | null
 const mode = ref<Mode>(null) // 修改还是复制
 
+const { handleFilePickerUpload2, handleFileDelete, imageValue } = useOss()
 const formRef = ref()
-const imageValue = ref<any>([])
 const form = reactive<FormService>({
   storeId: storeId.value,
   name: '',
@@ -20,7 +20,7 @@ const form = reactive<FormService>({
   duration: null,
   durationUnit: 'minute',
   imgs: computed(() => {
-    return imageValue.value.map((v: any) => v.url)
+    return imageValue.value?.map((v: any) => v?.url) || []
   }),
   price: null,
   price2: null,
@@ -257,7 +257,7 @@ function toCats() {
         prop="duration"
         placeholder="请输入"
         :use-suffix-slot="true"
-        type="number"
+        type="digit"
         :rules="[{ required: true, message: '填写服务时长' }]"
       >
         <template #suffix>
@@ -276,12 +276,21 @@ function toCats() {
         <text>建议尺寸：800*800像素，最多上传5张</text>
       </view>
       <view flex-ac flex mt-20rpx>
+        <!-- <uni-file-picker
+          v-model="imageValue"
+          fileMediatype="image"
+          return-type="array"
+          mode="grid"
+          :limit="5"
+        /> -->
         <uni-file-picker
           v-model="imageValue"
           fileMediatype="image"
           return-type="array"
           mode="grid"
           :limit="5"
+          @select="handleFilePickerUpload2"
+          @delete="handleFileDelete"
         />
       </view>
     </view>
@@ -290,7 +299,7 @@ function toCats() {
     <wd-cell-group :border="true">
       <wd-input
         v-model="form.price"
-        type="number"
+        type="digit"
         label="原价"
         placeholder="请输入"
         suffix-icon="arrow-right"
@@ -298,7 +307,7 @@ function toCats() {
       />
       <wd-input
         v-model="form.price2"
-        type="number"
+        type="digit"
         label="优惠价"
         placeholder="若不填，则客户按原价购买"
         suffix-icon="arrow-right"

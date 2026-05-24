@@ -264,7 +264,7 @@ export function isTimeExceeding(startTime, endTime, durationMinutes, mode = 1) {
   }
   else {
     // 正常情况，直接比较
-    return totalMinutes >= end
+    return totalMinutes >= (end - 15)
   }
 }
 
@@ -304,4 +304,13 @@ export function generateArray(start, end) {
     result.push(i)
   }
   return result
+}
+
+/**
+ * 判断一个变量是否是数字
+ * @param variable 需要判断的变量
+ * @returns boolean
+ */
+export function isNumber(variable: any): boolean {
+  return typeof variable === 'number'
 }

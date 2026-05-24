@@ -215,7 +215,7 @@ function delEquity(info: Info) {
       <wd-input
         v-model="form.price"
         label="售价"
-        type="number"
+        type="digit"
         placeholder="请输入"
         suffix-icon="arrow-right"
         :rules="[{ required: true, message: '请填写售价' }]"
@@ -223,7 +223,7 @@ function delEquity(info: Info) {
       <wd-input
         v-model="form.gift"
         label="赠送金额"
-        type="number"
+        type="digit"
         placeholder="请输入"
         suffix-icon="arrow-right"
         :rules="[{ required: true, message: '请填写赠送金额' }]"
@@ -243,9 +243,9 @@ function delEquity(info: Info) {
           <view>
             <text>{{ item.name }}</text>
             <text theme-red pl5px>
-              ¥{{ item.price2 || item.price }}
+              ¥{{ item.price2 ?? item.price }}
             </text>
-            <text v-if="item.price2" c-#CBCBD4 line-through>
+            <text v-if="isNumber(item.price2)" c-#CBCBD4 line-through>
               ￥{{ item.price }}
             </text>
           </view>

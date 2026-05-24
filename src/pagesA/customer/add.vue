@@ -202,7 +202,7 @@ function openCalendar() {
   <view h-50px />
 </template>
 
-  <style>
+<style>
   :root {
   --wot-upload-size: 80rpx;
 }

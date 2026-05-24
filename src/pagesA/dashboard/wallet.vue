@@ -24,6 +24,10 @@ function toDetail() {
 function toRecords() {
   uni.navigateTo({ url: '/pagesA/dashboard/cashing-records' })
 }
+
+function toCashApply() {
+  uni.navigateTo({ url: `/pagesA/dashboard/cash-apply?platformAmount=${info.value?.platformAmount}` })
+}
 </script>
 
 <template>
@@ -39,7 +43,7 @@ function toRecords() {
     <view flex flex-cc c-fff>
       <view v-if="show" tc>
         <text fs-64>
-          {{ info?.platformAmount ?? '--' }}
+          {{ info?.platformAmount + info?.frozenAmount }}
         </text>
       </view>
       <view v-else tc style="transform: translateY(10rpx);">
@@ -52,9 +56,8 @@ function toRecords() {
       <wd-icon v-else name="view" color="white" size="24px" @click="show = true" />
     </view>
     <view h-40px />
-    <view class="btn">
-      <view>全部提现到</view>
-      <view>微信零钱</view>
+    <view class="btn" @click="toCashApply()">
+      <view>提现到微信零钱</view>
     </view>
     <view h-44px />
     <view class="cash" c-fff flex flex-cc tc p-10px>
@@ -71,7 +74,7 @@ function toRecords() {
           可提现余额(元)
         </view>
         <view f14 mt10rpx>
-          {{ info?.frozenAmount ?? '--' }}
+          {{ info?.platformAmount ?? '--' }}
         </view>
       </view>
       <view wp-33.3333>

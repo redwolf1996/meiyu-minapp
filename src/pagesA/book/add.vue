@@ -26,9 +26,9 @@ const columns = ref<SelItem[]>([
 ])
 const model = reactive<BookForm>({
   storeId: storeId.value,
-  storeCustomerPhone: computed(() => curCustomer.value?.phone),
-  storeCustomerName: computed(() => curCustomer.value?.name),
-  storeCustomerId: computed(() => curCustomer.value?.storeCustomerId),
+  storeCustomerPhone: null,
+  storeCustomerName: null,
+  storeCustomerId: null,
   storeServiceType: 1,
   customerAddress: null,
   startTime: computed(() => `${bookStime.value}:00`),
@@ -66,8 +66,21 @@ onLoad(async (option) => {
     const res = await request.get<CustomerDetail>(`/business/store-customer/${option.customerId}`)
     model.storeCustomerName = res.data.name
     model.storeCustomerPhone = res.data.phone
+    model.artisanId = res.data.artisanId || null
+    artName.value = res.data.artisanName || null
   }
   getStaff()
+})
+
+onShow(async () => {
+  if (curCustomer.value?.storeCustomerId) {
+    model.storeCustomerId = curCustomer.value?.storeCustomerId
+    const res = await request.get<CustomerDetail>(`/business/store-customer/${model.storeCustomerId}`)
+    model.storeCustomerName = res.data.name
+    model.storeCustomerPhone = res.data.phone
+    model.artisanId = res.data.artisanId || null
+    artName.value = res.data.artisanName || null
+  }
 })
 
 async function getStaff() {
@@ -191,7 +204,7 @@ watch(() => checkedServs.value, () => {
         const curSelectedCardToCash = avas[0]
 
         // 消费价格（有优惠价使用优惠价，没有则使用原价）
-        const cost = item.price2 || item.price
+        const cost = item.price2 ?? item.price
         item.customerCardId = curSelectedCardToCash?.customerCardId
         item.cardId = curSelectedCardToCash?.cardId
         item.equity = curSelectedCardToCash?.infoList?.[0]?.equity // 可用次数
@@ -235,7 +248,7 @@ watch(() => checkedServs.value, () => {
   }
   else {
     model.service.forEach((item: Partial<Service>) => {
-      const cost = item.price2 || item.price
+      const cost = item.price2 ?? item.price
       item.totalAmount = computed(() => {
         return func_mul(cost, item.goodsCount)
       })
@@ -251,7 +264,7 @@ watch(() => curSelectedCardToCash.value, () => {
   model.service.forEach((item: Partial<Service>, index: number) => {
     if (curIndex.value === index) {
       // 消费价格（有优惠价使用优惠价，没有则使用原价）
-      const cost = item.price2 || item.price
+      const cost = item.price2 ?? item.price
       item.customerCardId = curSelectedCardToCash.value?.customerCardId
       item.cardId = curSelectedCardToCash.value?.cardId
       item.equity = curSelectedCardToCash.value?.equity // 可用次数
@@ -296,7 +309,7 @@ watch(() => curSelectedCardToCash.value, () => {
 
 // 改变每一项服务的数量
 function handleChangeGoodsCount(item: Partial<Service>) {
-  const cost = item.price2 || item.price
+  const cost = item.price2 ?? item.price
   if (item.cardName) {
     if (item.cardType === 1) {
       if (item.cardSecondType === 2) {
@@ -444,9 +457,9 @@ function handleChangeGoodsCount(item: Partial<Service>) {
             </view>
             <view fs-12px flex flex-ac gap-6px style="max-width: 60%">
               <text c-#FF1919>
-                ￥{{ item.price2 || item.price }}
+                ￥{{ item.price2 ?? item.price }}
               </text>
-              <text v-if="item.price2" line-through c-848486>
+              <text v-if="isNumber(item.price2)" line-through c-848486>
                 ￥{{ item.price }}
               </text>
             </view>

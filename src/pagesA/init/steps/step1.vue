@@ -6,10 +6,10 @@ style:
 
 <script lang="ts" setup>
 const { colPickerData, findChildrenByCode } = useColPickerData()
-const imageValue = ref<any>([])
+const { handleFilePickerUpload2, handleFileDelete, imageValue } = useOss()
 const form: any = reactive({
   storeName: '',
-  logo: computed(() => imageValue.value?.[0]?.url),
+  logo: computed(() => imageValue.value?.[0]?.url || ''),
   phone: '',
   address: '',
   desc: '',
@@ -81,6 +81,8 @@ async function save() {
       v-model="imageValue"
       fileMediatype="image"
       mode="grid"
+      @select="handleFilePickerUpload2"
+      @delete="handleFileDelete"
       :limit="1"
     />
   </view>

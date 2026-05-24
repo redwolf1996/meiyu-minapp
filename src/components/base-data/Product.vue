@@ -3,22 +3,23 @@ import type { GrigSelectItem } from '@/types'
 import type { FormProduct } from './types'
 import { CatType } from '@/stores/classify'
 
+
 const props = withDefaults(defineProps<{
   showSkip?: boolean // 是否展示跳过按钮（引导页需要）
 }>(), {
   showSkip: false,
 })
 
+const { handleFilePickerUpload2, handleFileDelete, imageValue } = useOss()
 type Mode = 'edit' | 'copy' | null
 const mode = ref<Mode>(null) // 修改还是复制
 const formRef = ref()
-const imageValue = ref<any>([])
 const form = reactive<FormProduct>({
   storeId: storeId.value,
   name: '',
   categoryId: computed(() => curClassify.value.id),
   imgs: computed(() => {
-    return imageValue.value.map((v: any) => v.fileID)
+    return imageValue.value?.map((v: any) => v?.fileID) || []
   }),
   price: null,
   price2: null,
@@ -179,12 +180,22 @@ function toCats() {
         <text>建议尺寸：800*800像素，最多上传5张</text>
       </view>
       <view flex-ac flex mt-20rpx>
+        <!-- <uni-file-picker
+          v-model="imageValue"
+          fileMediatype="image"
+          mode="grid"
+          :limit="5"
+        /> -->
+
         <uni-file-picker
           v-model="imageValue"
           fileMediatype="image"
           mode="grid"
           :limit="5"
+          @select="handleFilePickerUpload2"
+          @delete="handleFileDelete"
         />
+
       </view>
     </view>
 
@@ -192,7 +203,7 @@ function toCats() {
     <wd-cell-group :border="true">
       <wd-input
         v-model="form.price"
-        type="number"
+        type="digit"
         label="原价"
         placeholder="请输入"
         suffix-icon="arrow-right"
@@ -200,7 +211,7 @@ function toCats() {
       />
       <wd-input
         v-model="form.price2"
-        type="number"
+        type="digit"
         label="优惠价"
         placeholder="若不填，则客户按原价购买"
         suffix-icon="arrow-right"

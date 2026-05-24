@@ -216,6 +216,13 @@
           }
         },
         {
+          "path": "card/select-card-multiple",
+          "type": "page",
+          "style": {
+            "navigationBarTitleText": "选择卡项"
+          }
+        },
+        {
           "path": "customer/add",
           "type": "page",
           "layout": "common",
@@ -228,6 +235,14 @@
           "type": "page",
           "style": {
             "navigationBarTitleText": "客户详情"
+          }
+        },
+        {
+          "path": "customer/list-filter",
+          "type": "page",
+          "layout": "common",
+          "style": {
+            "navigationBarTitleText": "筛选客户"
           }
         },
         {
@@ -247,6 +262,13 @@
         },
         {
           "path": "dashboard/cash-apply",
+          "type": "page",
+          "style": {
+            "navigationBarTitleText": "提现申请"
+          }
+        },
+        {
+          "path": "dashboard/cash-results",
           "type": "page",
           "style": {
             "navigationBarTitleText": "提现申请"
@@ -367,6 +389,20 @@
           }
         },
         {
+          "path": "my/official-account",
+          "type": "page",
+          "style": {
+            "navigationBarTitleText": "关注公众号"
+          }
+        },
+        {
+          "path": "my/pc",
+          "type": "page",
+          "style": {
+            "navigationBarTitleText": "电脑端登录"
+          }
+        },
+        {
           "path": "my/protocal",
           "type": "page",
           "style": {
@@ -452,6 +488,13 @@
           }
         },
         {
+          "path": "scan/index",
+          "type": "page",
+          "style": {
+            "navigationBarTitleText": "扫码核销"
+          }
+        },
+        {
           "path": "service/add",
           "type": "page",
           "style": {
@@ -495,6 +538,13 @@
           }
         },
         {
+          "path": "store/list",
+          "type": "page",
+          "style": {
+            "navigationBarTitleText": "我的门店"
+          }
+        },
+        {
           "path": "tabs/MyTabBar",
           "type": "page"
         },
@@ -522,6 +572,14 @@
           "type": "page",
           "style": {
             "navigationBarTitleText": "工作台",
+            "navigationStyle": "custom"
+          }
+        },
+        {
+          "path": "tabs/tab-business-data",
+          "type": "page",
+          "style": {
+            "navigationBarTitleText": "数据",
             "navigationStyle": "custom"
           }
         },
@@ -609,6 +667,29 @@
             "navigationBarTitleText": "添加员工",
             "navigationStyle": "custom"
           }
+        },
+        {
+          "path": "tabs/components-data/customer-analysis",
+          "type": "page"
+        },
+        {
+          "path": "tabs/components-data/manage-data",
+          "type": "page"
+        },
+        {
+          "path": "tabs/components-data/staff-achievements-detail",
+          "type": "page",
+          "style": {
+            "navigationBarTitleText": "业绩"
+          }
+        },
+        {
+          "path": "tabs/components-data/staff-achievements",
+          "type": "page"
+        },
+        {
+          "path": "tabs/components-data/staff-statistics",
+          "type": "page"
         }
       ]
     },

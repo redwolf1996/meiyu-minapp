@@ -41,7 +41,7 @@ onShareTimeline(() => {
     <wd-img
       :width="72"
       :height="72"
-      :src="`${IMG_BASE}/logo@3x.png`"
+      :src="`${IMG_BASE}/logo.png`"
     />
     <view c-666666 tc fs-40 mt10px>
       美预

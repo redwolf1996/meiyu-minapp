@@ -5,31 +5,28 @@ style:
 
 <script lang="ts" setup>
 const { colPickerData, findChildrenByCode } = useColPickerData()
-const storeInfo = computed(() => {
-  return useUserStore().userInfo?.storeList?.[0]
-})
-const imageValue = ref<any>([{
-  url: storeInfo.value?.logo || '',
-}])
-const pccValue = ref<string[]>([storeInfo.value.province || '', storeInfo.value.city || '', storeInfo.value.county || ''])
+
+const { handleFilePickerUpload2, handleFileDelete, imageValue } = useOss()
+
+const pccValue = ref<string[]>([])
 const form: any = reactive({
-  id: storeId.value,
-  storeName: storeInfo.value?.storeName || '',
-  logo: computed(() => imageValue.value[0].url),
-  phone: storeInfo.value.phone,
-  address: storeInfo.value.address,
-  desc: storeInfo.value.desc,
-  province: storeInfo.value.province,
-  city: storeInfo.value.city,
-  county: storeInfo.value.county,
+  id: '',
+  storeName: '',
+  logo: computed(() => imageValue.value?.[0]?.url || ''),
+  phone: '',
+  address: '',
+  desc: '',
+  province: '',
+  city: '',
+  county: '',
 })
 const area = ref<any[]>([
-  // colPickerData.map((item) => {
-  //   return {
-  //     value: item.value,
-  //     label: item.text,
-  //   }
-  // }),
+  colPickerData.map((item) => {
+    return {
+      value: item.value,
+      label: item.text,
+    }
+  }),
 ])
 
 async function columnChange({ selectedItem, resolve, finish }) {
@@ -56,14 +53,114 @@ function handleConfirm({ value }) {
 }
 
 async function save() {
-  await request.put<any>('/business/store', form)
-  uni.showToast({
-    title: '修改成功',
-    icon: 'none',
-  })
+  if (form.id) {
+    await request.put<any>('/business/store', form)
+    uni.showToast({
+      title: '修改成功',
+      icon: 'none',
+    })
+  }
+  else {
+    await request.post<any>('/business/store', form)
+    uni.showToast({
+      title: '添加成功',
+      icon: 'none',
+    })
+  }
   const res = await request.get<any>('/business/info')
   useUserStore().setUserInfo(res.data)
-  uni.navigateBack()
+  setTimeout(() => {
+    uni.navigateBack()
+  }, 1000)
+}
+
+async function getStoreInfo() {
+  const res = await request.get<any>('/business/info')
+  useUserStore().setUserInfo(res.data)
+  initializeFormData()
+}
+
+function clearFormData() {
+  form.id = ''
+  form.storeName = ''
+  form.phone = ''
+  form.address = ''
+  form.desc = ''
+  form.province = ''
+  form.city = ''
+  form.county = ''
+  imageValue.value = []
+  pccValue.value = []
+  area.value = [
+    colPickerData.map((item) => {
+      return {
+        value: item.value,
+        label: item.text,
+      }
+    }),
+  ]
+}
+
+function initializeFormData() {
+  const storeList = useUserStore().userInfo?.storeList || []
+  const currentStore = storeList.find(store => store.storeId === Number(form.id))
+  if (currentStore) {
+    form.storeName = currentStore.storeName || ''
+    form.phone = currentStore.phone || ''
+    form.address = currentStore.address || ''
+    form.desc = currentStore.desc || ''
+    form.province = currentStore.province || ''
+    form.city = currentStore.city || ''
+    form.county = currentStore.county || ''
+    imageValue.value = [{
+      url: currentStore.logo || '',
+    }]
+
+    // -- cascade: start
+    const provinceList = colPickerData.map(p => ({ value: p.value, label: p.text }))
+    const cityList = findChildrenByCode(colPickerData, currentStore.province).map(c => ({ value: c.value, label: c.text }))
+    const countyList = findChildrenByCode(colPickerData, currentStore.city).map(d => ({ value: d.value, label: d.text }))
+    area.value = [provinceList, cityList, countyList]
+
+    const newPccValue = [currentStore.province || '', currentStore.city || '', currentStore.county || '']
+    pccValue.value = []
+    nextTick(() => {
+      pccValue.value = newPccValue
+    })
+    // -- cascade: end
+  }
+}
+
+onShow(() => {
+  const pages = getCurrentPages()
+  const currentPage: any = pages[pages.length - 1]
+  const options = currentPage.options
+  if (options.id) {
+    form.id = options.id
+    getStoreInfo()
+  }
+  else {
+    clearFormData()
+  }
+})
+
+function deleteStore() {
+  uni.showModal({
+    title: `确认删除"${form.storeName}"？`,
+    content: '删除后无法恢复，请谨慎操作',
+    success: async (res) => {
+      if (res.confirm) {
+        await request.delete<any>(`/business/store/${form.id}`)
+        const res = await request.get<any>('/business/info')
+        useUserStore().setUserInfo(res.data)
+        uni.showToast({
+          title: '删除成功',
+          icon: 'success',
+        })
+        uni.navigateBack()
+      }
+    },
+  })
 }
 </script>
 
@@ -82,6 +179,8 @@ async function save() {
       fileMediatype="image"
       mode="grid"
       :limit="1"
+      @select="handleFilePickerUpload2"
+      @delete="handleFileDelete"
     />
   </view>
 
@@ -166,8 +265,11 @@ async function save() {
       </view>
     </wd-button>
   </view>
+  <view v-if="form.id" tc mt-12px underline style="color: #F2613C;" @click="deleteStore">
+    删除
+  </view>
 
-  <view h-60rpx />
+  <view h-60px />
 </template>
 
 <style>

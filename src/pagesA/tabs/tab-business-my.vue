@@ -10,11 +10,27 @@ import MyTabBar from './MyTabBar.vue'
 const userInfo = computed(() => useUserStore()?.userInfo)
 const storeInfo = computed(() => userInfo.value?.lastStore || userInfo.value?.storeList?.[0])
 
+const storeValue = ref<any>(storeInfo.value?.storeId || null)
+
+// 页面显示时同步 storeValue，确保删除店铺后 picker 数据正确
+onShow(() => {
+  const currentStoreId = storeInfo.value?.storeId
+  // 如果当前选中的店铺已不在列表中，重置为第一个店铺
+  const storeExists = userInfo.value?.storeList?.some(s => s.storeId === storeValue.value)
+  if (!storeExists && userInfo.value?.storeList?.length) {
+    storeValue.value = userInfo.value.storeList[0].storeId
+  }
+  else if (currentStoreId && currentStoreId !== storeValue.value) {
+    storeValue.value = currentStoreId
+  }
+})
+
 function toRenew() {
   uni.navigateTo({ url: '/pagesA/my/renew' })
 }
 function toMyStore() {
-  uni.navigateTo({ url: '/pagesA/my/store' })
+  // uni.navigateTo({ url: '/pagesA/my/store' })
+  uni.navigateTo({ url: '/pagesA/store/list' })
 }
 // function toAddNewStore() {
 //   uni.navigateTo({ url: '/pagesA/my/new-store' })
@@ -43,11 +59,36 @@ function toFeedBack() {
   // })
   uni.navigateTo({ url: '/pagesA/my/feedback' })
 }
+
+watch(
+  () => storeValue.value,
+  async (val) => {
+    if (val) {
+      console.log(val)
+      // 从 storeList 中找到选中的门店
+      const selectedStore = userInfo.value?.storeList?.find(store => store.storeId === val)
+      if (selectedStore) {
+        // 更新 lastStore
+        useUserStore().setUserInfo({ lastStore: selectedStore })
+        await request.put('/business/current-store-id', { storeId: val })
+      }
+    }
+  },
+  { immediate: true },
+)
+
+function toPc() {
+  uni.navigateTo({ url: '/pagesA/my/pc' })
+}
+
+function toOfficialAccounts() {
+  uni.navigateTo({ url: '/pagesA/my/official-account' })
+}
 </script>
 
 <template>
   <MyNavBar title="我的" :capsule="false" />
-  <view p20px bg-white>
+  <view p20px>
     <view flex flex-ac gap12px>
       <wd-img
         :round="true"
@@ -80,6 +121,22 @@ function toFeedBack() {
         </view>
       </view>
     </view>
+    <view class="h14px" />
+
+    <wd-picker v-model="storeValue" value-key="storeId" label-key="storeName" :columns="userInfo.storeList" use-default-slot>
+      <view px16px py12px flex flex-ac flex-bt bg-white rd-8px style="color:#292D32">
+        <view flex flex-ac gap-8px>
+          <wd-img
+            :width="16"
+            :height="16"
+            :src="`${IMG_BASE}/icon-shop.png`"
+          />
+          <text>{{ storeInfo?.storeName }}</text>
+        </view>
+        <wd-icon name="swap" size="16px" color="#292D32" custom-style="transform: rotate(270deg) !important;" />
+      </view>
+    </wd-picker>
+
     <view
       v-if="storeRole !== 2 && storeRole !== 3"
       :style="{
@@ -95,7 +152,7 @@ function toFeedBack() {
             :src="`${IMG_BASE}/icon-v.png`"
           />
           <text color-white opacity-50 f12>
-            {{ userInfo.orgInfo?.expiresTime }} 到期
+            {{ storeInfo?.storeExpiresTime }} 到期
           </text>
         </view>
         <view f12 color-white>
@@ -120,12 +177,17 @@ function toFeedBack() {
         <wd-icon name="home" size="18px" />
       </template>
       <text f14 c-3B3D3D>
-        {{ storeInfo?.storeName }}
+        {{ userInfo?.storeList?.length }}
       </text>
     </MyCell>
     <MyCell label="联系客服" noBorder @myclick="toServ()">
       <template #icon>
         <wd-icon name="user-talk" size="18px" />
+      </template>
+    </MyCell>
+    <MyCell label="电脑端登录" noBorder @myclick="toPc()">
+      <template #icon>
+        <wd-icon name="computer" size="18px" />
       </template>
     </MyCell>
     <MyCell label="意见反馈" noBorder @myclick="toFeedBack()">
@@ -140,6 +202,14 @@ function toFeedBack() {
       <template #icon>
         <wd-icon name="warning" size="18px" />
       </template>
+    </MyCell>
+    <MyCell label="关注公众号" noBorder @myclick="toOfficialAccounts()">
+      <template #icon>
+        <wd-icon name="star" size="18px" />
+      </template>
+      <text f14 c-B6BDBD>
+        接收预约提醒、消费通知等
+      </text>
     </MyCell>
   </MyCellGroup>
   <view h16px />
@@ -156,7 +226,7 @@ function toFeedBack() {
     </text>
   </view> -->
   <view h100px />
-  <MyTabBar :tab-index="3" />
+  <MyTabBar :tab-index="4" />
 </template>
 
 <style lang='scss' scoped>

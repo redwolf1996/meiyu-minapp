@@ -143,7 +143,7 @@ function toRefundDetail() {
           />
           <view flex flex-y flex-bt flex-1 gap-20rpx>
             <view f16>
-              {{ detail?.customerName }}
+              {{ detail?.customerName || '散客' }}
             </view>
             <view flex flex-ac flex-bt>
               <view flex flex-ac gap-16rpx>

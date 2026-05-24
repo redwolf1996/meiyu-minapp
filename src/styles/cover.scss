@@ -10,6 +10,7 @@ page {
   --wot-search-input-radius: 4px;
   --wot-steps-dot-size: 16px;
   --wot-steps-line-color: #e5e5e5;
+  --wot-input-cell-label-width: auto;
 }
 view,
 text {
@@ -39,6 +40,9 @@ text {
 }
 .wd-calendar__value{
   text-align: right;
+}
+.wd-tabs__nav-item.is-active {
+  color: #1A66FF !important;
 }
 .wd-form {
   .wd-input__inner {
@@ -73,4 +77,10 @@ text {
 
 .wd-sidebar-item {
   display: block !important;
+}
+
+// 强制 wd-picker 在 flex 容器中占满宽度
+.wd-picker {
+  flex: 1 !important;
+  width: 100% !important;
 }

@@ -102,3 +102,55 @@ export const payTypesStore = ref<PayRefundType['payType']>([])
 
 /** 退款方式列表 */
 export const refundTypesStore = ref<PayRefundType['refundType']>([])
+
+/** 卡项筛选选中的卡片ID和名称 */
+export const selectedCardsStore = ref<{
+  ids: string
+  names: string[]
+}>({
+  ids: '',
+  names: [],
+})
+
+/** 重置卡项筛选选择 */
+export function resetSelectedCards() {
+  selectedCardsStore.value = {
+    ids: '',
+    names: [],
+  }
+}
+
+/** 客户筛选参数 */
+export const customerFilterParamsStore = ref<{
+  birthdayS: string
+  birthdayE: string
+  cDateS: string
+  cDateE: string
+  cardIds: string
+  selectedCardNames: string[]
+  cardAll?: number | null
+  cardTypes?: string | null
+}>({
+  birthdayS: '',
+  birthdayE: '',
+  cDateS: '',
+  cDateE: '',
+  cardIds: '',
+  selectedCardNames: [],
+  cardAll: null,
+  cardTypes: null,
+})
+
+/** 重置客户筛选参数 */
+export function resetCustomerFilterParams() {
+  customerFilterParamsStore.value = {
+    birthdayS: '',
+    birthdayE: '',
+    cDateS: '',
+    cDateE: '',
+    cardIds: '',
+    selectedCardNames: [],
+    cardAll: null,
+    cardTypes: null,
+  }
+}

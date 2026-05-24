@@ -6,37 +6,17 @@ style:
 </route>
 
 <script lang="ts" setup>
+import { computed } from 'vue'
 import type { CusList, CusModel, CusReqModel } from './types'
 import dayjs from 'dayjs'
 import MyTabBar from './MyTabBar.vue'
+import { customerFilterParamsStore } from '@/stores/common'
 
-const filter = ref()
 const optionsVip = [
   { label: '全部', value: null },
   { label: '会员', value: 2 },
   { label: '非会员', value: 1 },
 ]
-const birthday = ref<any>(null)
-const sources = ref<any>([
-  { label: '当天生日', value: 1, isActive: false },
-  { label: '当月生日', value: 2, isActive: false },
-])
-// const sources2: any = [
-//   { label: '今天', value: 1, isActive: true },
-//   { label: '昨天', value: 2, isActive: false },
-//   { label: '本周', value: 3, isActive: true },
-//   { label: '本月', value: 4, isActive: false },
-//   { label: '上月', value: 5, isActive: true },
-// ]
-const sources3: any = [
-  { label: '折扣卡', value: 1, isActive: true },
-  { label: '充值卡', value: 2, isActive: false },
-  { label: '通卡', value: 3, isActive: true },
-  { label: '有限次卡', value: 4, isActive: false },
-  { label: '不限次卡', value: 5, isActive: true },
-]
-const show = ref(false)
-const show2 = ref(false)
 const reqParams = reactive<CusReqModel>({
   storeId: storeId.value,
   pageNum: 1,
@@ -47,13 +27,24 @@ const reqParams = reactive<CusReqModel>({
   birthdayE: '',
   cDateS: '',
   cDateE: '',
-  cardAll: '',
+  cardAll: null, // 1 任意卡项；指定卡id或者卡类型是传值0
   cardIds: '',
+  cardTypes: null,
   cardCIds: '',
   level: null,
 })
 const paging = ref<ZPagingInstance<CusList> | null>(null)
 const dataList = ref<CusList[]>([])
+const showVipAction = ref(false)
+const isFirstLoad = ref(true) // 标记是否是第一次进入页面
+
+const vipLabel = computed(() => {
+  return optionsVip.find(item => item.value === reqParams.level)?.label || '全部'
+})
+
+const vipActions = computed(() => {
+  return optionsVip.map(item => ({ ...item, name: item.label }))
+})
 
 async function queryList(page: number, pageSize: number) {
   reqParams.pageNum = page
@@ -74,35 +65,80 @@ function clear() {
   reqParams.keyword = ''
   paging.value?.reload()
 }
-function handleChangeVip() { // 会员 非会员筛选
+function handleChangeVip(action: any) { // 会员 非会员筛选
+  reqParams.level = action.item.value
   paging.value?.reload()
 }
+
 function toDetail(item: CusList) {
   uni.navigateTo({ url: `/pagesA/customer/detail?id=${item.storeCustomerId}` })
 }
 
-function resetSearch() {
-  birthday.value = null
+// 跳转到筛选页面
+function toFilterPage() {
+  // 保存当前筛选条件到全局 store，以便筛选页面可以读取
+  customerFilterParamsStore.value = {
+    ...customerFilterParamsStore.value, // 保留已有的值，比如 selectedCardNames
+    birthdayS: reqParams.birthdayS || '',
+    birthdayE: reqParams.birthdayE || '',
+    cDateS: reqParams.cDateS || '',
+    cDateE: reqParams.cDateE || '',
+    cardIds: reqParams.cardIds || '',
+    cardAll: reqParams.cardAll,
+    cardTypes: reqParams.cardTypes || null,
+  }
+  uni.navigateTo({ url: '/pagesA/customer/list-filter' })
 }
 
-function confirmBirthday() { // 搜索当天生日和当月生日
-  if (birthday.value === null) {
-    reqParams.birthdayS = null
-    reqParams.birthdayE = null
+// 应用筛选条件
+function applyFilter(filterParams: any) {
+  if (filterParams) {
+    reqParams.birthdayS = filterParams.birthdayS || ''
+    reqParams.birthdayE = filterParams.birthdayE || ''
+    reqParams.cDateS = filterParams.cDateS || ''
+    reqParams.cDateE = filterParams.cDateE || ''
+    reqParams.cardIds = filterParams.cardIds || ''
+    reqParams.cardTypes = filterParams.cardTypes || null
+    reqParams.cardAll = filterParams.cardAll ?? null
+    paging.value?.reload()
   }
-  if (birthday.value === 1) { // 1当天生日 2当月生日
-    reqParams.birthdayS = dayjs().format('YYYY-MM-DD')
-    reqParams.birthdayE = dayjs().format('YYYY-MM-DD')
-  }
-  if (birthday.value === 2) {
-    reqParams.birthdayS = dayjs().startOf('month').format('YYYY-MM-DD')
-    reqParams.birthdayE = dayjs().endOf('month').format('YYYY-MM-DD')
-  }
-  filter.value.close()
-  paging.value?.reload()
 }
 
 onShow(() => {
+  // 从其他页面返回时，isFirstLoad.value 已经是 false
+  if (!isFirstLoad.value) {
+    // 从筛选页面返回，总是应用筛选条件（包括清空条件）
+    applyFilter(customerFilterParamsStore.value)
+  }
+  // 首次进入页面时，isFirstLoad.value 为 true，不执行任何操作，等待页面加载完成
+})
+
+onLoad(() => {
+  // 页面首次加载时，清空所有历史筛选条件
+  isFirstLoad.value = false // 确保 onShow 不会再次执行 applyFilter
+  // 重置所有查询条件
+  reqParams.keyword = ''
+  reqParams.phone = ''
+  reqParams.birthdayS = ''
+  reqParams.birthdayE = ''
+  reqParams.cDateS = ''
+  reqParams.cDateE = ''
+  reqParams.cardAll = null
+  reqParams.cardIds = ''
+  reqParams.cardTypes = null
+  reqParams.cardCIds = ''
+  reqParams.level = null
+  // 清空全局 store
+  customerFilterParamsStore.value = {
+    birthdayS: '',
+    birthdayE: '',
+    cDateS: '',
+    cDateE: '',
+    cardIds: '',
+    selectedCardNames: [],
+    cardAll: null,
+    cardTypes: null,
+  }
   paging.value?.reload()
 })
 </script>
@@ -127,152 +163,19 @@ onShow(() => {
           </view>
         </view>
 
-        <wd-drop-menu>
-          <wd-drop-menu-item v-model="reqParams.level" :options="optionsVip" @change="handleChangeVip" />
-          <wd-drop-menu-item ref="filter" title="筛选">
-            <view p-24rpx bg-F9F9F9>
-              <view bg-white rd-10px p-24rpx>
-                <view f14 mb-16px>
-                  生日
-                </view>
-                <GridTagSelect v-model="birthday" :sources="sources" />
-                <!-- <view flex flex-ac gap-32rpx mt-32rpx c-929292>
-              <text>范围</text>
-              <input placeholder-class="cus-input" w-150rpx px-10px bg-F2F3F5 h-32px lh-32px type="text">
-              <text>至</text>
-              <input placeholder-class="cus-input" w-150rpx px-10px bg-F2F3F5 h-32px lh-32px type="text">
-            </view>
-            <view flex flex-ac gap-32rpx mt-32rpx c-929292>
-              <text>最近</text>
-              <input placeholder-class="cus-input" w-150rpx px-10px bg-F2F3F5 h-32px lh-32px type="text">
-              <text>天过生日</text>
-            </view> -->
-              </view>
-
-              <!-- <view bg-white rd-10px p-24rpx mt-24rpx>
-            <view f14 mb-16px>
-              成为客户时间
-            </view>
-            <GridTagSelect v-model="value1" :sources="sources2" :columns="3" />
-            <view flex flex-ac gap-32rpx mt-32rpx c-929292>
-              <text>范围</text>
-              <input placeholder-class="cus-input" w-150rpx px-10px bg-F2F3F5 h-32px lh-32px type="text">
-              <text>至</text>
-              <input placeholder-class="cus-input" w-150rpx px-10px bg-F2F3F5 h-32px lh-32px type="text">
-            </view>
-          </view> -->
-
-              <!-- <view bg-white rd-10px p-24rpx mt-24rpx>
-            <view f14 mb-32rpx>
-              持有卡项
-            </view>
-            <radio-group mb12rpx flex gap-20rpx transform-translate-x--5px>
-              <label f12><radio style="transform:scale(0.7)" value="1" color="#1a66ff" :checked="true" />任意卡项</label>
-              <label f12><radio style="transform:scale(0.7)" value="2" color="#1a66ff" />指定卡项</label>
-              <label f12><radio style="transform:scale(0.7)" value="3" color="#1a66ff" />指定类型卡</label>
-            </radio-group>
-            <MyCell label="请选择" noBorder @click="show2 = true">
-              <text f14 c-3B3D3D>09:00-21:00</text>
-            </MyCell>
-            <view flex flex-wrap gap-20rpx>
-              <view class="tag">
-                充值卡
-              </view>
-              <view class="tag">
-                折扣卡
-              </view>
-            </view>
-          </view> -->
-
-              <!-- TODO 查询过于复杂先不做 -->
-              <wd-action-sheet v-model="show" title="选择卡类型" @close="show = false">
-                <view p-40rpx>
-                  <GridTagSelect :sources="sources3" :columns="3" />
-                  <button class="theme my-btn" wp100 mt-30px>
-                    确定
-                  </button>
-                </view>
-              </wd-action-sheet>
-
-              <!-- TODO 查询过于复杂先不做 -->
-              <wd-action-sheet v-model="show2" title="选择卡项" @close="show = false">
-                <view p-40rpx>
-                  <view class="my-item">
-                    <wd-img
-                      :width="86"
-                      :height="75"
-                      mode="aspectFill"
-                      :src="`${IMG_BASE}/img-cika.png`"
-                    />
-                    <view flex flex-y flex-bt gap-12rpx flex-1>
-                      <view flex flex-ac>
-                        <wd-img
-                          :width="16"
-                          :height="16"
-                          :src="`${IMG_BASE}/icon-star2.png`"
-                        />
-                        <text f12 pl-10rpx>
-                          30次
-                        </text>
-                      </view>
-                      <view flex flex-ac flex-bt>
-                        <text f16 fb>
-                          7980面部精雕30次
-                        </text>
-                        <radio style="transform:scale(0.7)" value="3" color="#1a66ff" />
-                      </view>
-                      <view f12 c-9A9FA5>
-                        永久有效
-                      </view>
-                    </view>
-                  </view>
-                  <view class="my-item">
-                    <wd-img
-                      :width="86"
-                      :height="75"
-                      :src="`${IMG_BASE}/img-cika.png`"
-                    />
-                    <view flex flex-y flex-bt gap-12rpx flex-1>
-                      <view flex flex-ac>
-                        <wd-img
-                          :width="16"
-                          :height="16"
-                          :src="`${IMG_BASE}/icon-star2.png`"
-                        />
-                        <text f12 pl-10rpx>
-                          30次
-                        </text>
-                      </view>
-                      <view flex flex-ac flex-bt>
-                        <text f16 fb>
-                          7980面部精雕30次
-                        </text>
-                        <radio style="transform:scale(0.7)" value="3" color="#1a66ff" />
-                      </view>
-                      <view f12 c-9A9FA5>
-                        永久有效
-                      </view>
-                    </view>
-                  </view>
-                  <button class="my-btn theme" wp100 mt-30px>
-                    确定
-                  </button>
-                </view>
-              </wd-action-sheet>
-
-              <view flex tc flex-cc mt-24rpx px-112rpx gap-20rpx>
-                <button class="my-btn normal" w-220rpx @click="resetSearch()">
-                  重置
-                </button>
-                <button class="my-btn theme" w-220rpx @click="confirmBirthday()">
-                  <!-- 查看50个用户 -->
-                  确定
-                </button>
-              </view>
-            </view>
-          </wd-drop-menu-item>
-        </wd-drop-menu>
+        <view flex flex-ac gap-0>
+          <view flex-1 class="filter-btn vip-filter-btn" style="justify-content: center;" @click="showVipAction = true">
+            <text>{{ vipLabel }}</text>
+            <wd-icon name="arrow-down" size="12px" />
+          </view>
+          <view flex-1 class="filter-btn" @click="toFilterPage">
+            <text>筛选</text>
+            <wd-icon name="arrow-down" size="12px" />
+          </view>
+        </view>
+        <!-- https://wot-ui.cn/component/action-sheet.html -->
       </view>
+      <wd-action-sheet v-model="showVipAction" :actions="vipActions" title="选择会员类型" custom-style="padding-bottom: 50px" @select="handleChangeVip" />
     </template>
     <view py-12rpx px-32rpx>
       <view py-8rpx>
@@ -368,6 +271,26 @@ label {
 :deep(.cus-input) {
   color: #c9cdd4;
   font-size: 14px;
+}
+.vip-filter-btn {
+  border-left: 0 !important;
+}
+.filter-btn {
+  height: 88rpx;
+  line-height: 88rpx;
+  padding: 0 32rpx;
+  text-align: center;
+  font-size: 28rpx;
+  color: #303030;
+  background-color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10rpx;
+  &:active {
+    background-color: #f7f8fa;
+  }
 }
 .tag {
   color: #1a66ff;

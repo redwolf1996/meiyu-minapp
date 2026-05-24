@@ -52,35 +52,44 @@ onLoad(async (option) => {
 
 function mergeProdsAndServs() {
   if (checkedProds.value.length || checkedServs.value.length) {
+    const oldBillingGoods = [...form.value.billingGoods]
     const arr: any = [...checkedProds.value, ...checkedServs.value]
-    const tmp = arr.map((v) => {
-      return {
-        goodsType: v.prodType, // 1服务 2产品
-        goodsId: v.id,
-        goodsCount: 1, // 商品数量
-        goodsPrice: v.price, // 商品原价
-        goodsPrice2: v.price2, // 商品实际价(优惠价)
-        cardReduceAmount: 0, // 卡优惠金额
-        name: v.name, // 服务或产品名称
-        totalAmount: null, // 商品原价总价
-        amount: null, // 商品优惠后总价
-        customerCardId: null, // 购卡id
-        cardId: null, // 卡id
-        artisanId: null, // 手艺人id
-        artisan: null, // 手艺人
-        cardShowName: null,
+    const newBillingGoods = arr.map((v) => {
+      const existingItem = oldBillingGoods.find(old => old.goodsId === v.id && old.goodsType === v.prodType)
+      if (existingItem) {
+        existingItem.goodsPrice = v.price
+        existingItem.goodsPrice2 = v.price2
+        existingItem.name = v.name
+        return existingItem
+      }
+      else {
+        const newItem: any = {
+          goodsType: v.prodType, // 1服务 2产品
+          goodsId: v.id,
+          goodsCount: 1, // 商品数量
+          goodsPrice: v.price, // 商品原价
+          goodsPrice2: v.price2, // 商品实际价(优惠价)
+          cardReduceAmount: 0, // 卡优惠金额
+          name: v.name, // 服务或产品名称
+          totalAmount: null, // 商品原价总价
+          amount: null, // 商品优惠后总价
+          customerCardId: null, // 购卡id
+          cardId: null, // 卡id
+          artisanId: null, // 手艺人id
+          artisan: null, // 手艺人
+          cardShowName: null,
+        }
+        const cost = newItem.goodsPrice2 ?? newItem.goodsPrice
+        newItem.totalAmount = computed(() => {
+          return func_mul(cost, newItem.goodsCount)
+        })
+        newItem.amount = computed(() => {
+          return func_mul(func_sub(cost, newItem.cardReduceAmount), newItem.goodsCount)
+        })
+        return newItem
       }
     })
-    form.value.billingGoods = tmp
-    form.value.billingGoods.forEach((item: BillingGood) => {
-      const cost = item.goodsPrice2 || item.goodsPrice
-      item.totalAmount = computed(() => {
-        return func_mul(cost, item.goodsCount)
-      })
-      item.amount = computed(() => {
-        return func_mul(func_sub(cost, item.cardReduceAmount), item.goodsCount)
-      })
-    })
+    form.value.billingGoods = newBillingGoods
   }
   else {
     form.value.billingGoods = []
@@ -92,7 +101,7 @@ watch(() => curSelectedCardToCash.value, () => {
   form.value.billingGoods.forEach((item: BillingGood, index: number) => {
     if (curIndex.value === index) {
       // 消费价格（有优惠价使用优惠价，没有则使用原价）
-      const cost = item.goodsPrice2 || item.goodsPrice
+      const cost = item.goodsPrice2 ?? item.goodsPrice
       item.customerCardId = curSelectedCardToCash.value?.customerCardId
       item.cardId = curSelectedCardToCash.value?.cardId
       item.equity = curSelectedCardToCash.value?.equity // 可用次数
@@ -137,7 +146,7 @@ watch(() => curSelectedCardToCash.value, () => {
 
 // 改变每一项服务的数量
 function handleChangeGoodsCount(item: Partial<BillingGood>) {
-  const cost = item.goodsPrice2 || item.goodsPrice
+  const cost = item.goodsPrice2 ?? item.goodsPrice
   if (item.cardName) {
     if (item.cardType === 1) {
       if (item.cardSecondType === 2) {
@@ -201,13 +210,23 @@ function saveStaff() {
 }
 
 function clickItem(item: ListStaff) {
-  listStaff.value.forEach((val: any) => {
-    val.active = false
-  })
-  item.active = !item.active
-  if (item.active) {
+  const wasActive = item.active
+  // If the clicked item was not active, then we are selecting a new one.
+  if (!wasActive) {
+    // Deselect all others.
+    listStaff.value.forEach((val: any) => {
+      val.active = false
+    })
+    // Select the current one.
+    item.active = true
     form.value.billingGoods[curIndex.value].artisanId = item.storeStaffId
     form.value.billingGoods[curIndex.value].artisan = item.userName
+  }
+  else {
+    // If it was active, we are deselecting it.
+    item.active = false
+    form.value.billingGoods[curIndex.value].artisanId = null
+    form.value.billingGoods[curIndex.value].artisan = null
   }
 }
 
@@ -223,14 +242,18 @@ async function getStaff() {
 
 function toSelectStaff(index: number) {
   curIndex.value = index
+  const currentArtisanId = form.value.billingGoods[index].artisanId
+  listStaff.value.forEach((staff: any) => {
+    staff.active = staff.storeStaffId === currentArtisanId
+  })
   visibleStaff.value = true
 }
 
 function toSelCard(item, index: number) {
-  if (!form.value.storeCustomerId)
-    return toast.warning('请先选择客户')
+  // if (!form.value.storeCustomerId)
+  //   return toast.warning('请先选择客户')
 
-  const storeCustomerId = form.value.storeCustomerId
+  const storeCustomerId = form.value.storeCustomerId || 0
   const goodsId = item.goodsId
   const goodsType = item.goodsType
   curIndex.value = index
@@ -260,8 +283,8 @@ async function payLater() {
 const debouncePayLater = debounce(payLater, 2000)
 
 function toPay() {
-  if (!form.value.storeCustomerId)
-    return toast.warning('请选择客户')
+  // if (!form.value.storeCustomerId)
+  //   return toast.warning('请选择客户')
   if (!form.value.billingGoods.length)
     return toast.warning('请添加商品')
   form.value.amount = form.value.billingGoods.reduce((prev, cur) => {
@@ -272,7 +295,7 @@ function toPay() {
   if (totalToPay.value === 0)
     submitDirect()
   else
-    uni.navigateTo({ url: `/pagesA/billing/pay?mode=${PayModeEnum.MakeOrder}&storeCustomerId=${form.value.storeCustomerId}` })
+    uni.navigateTo({ url: `/pagesA/billing/pay?mode=${PayModeEnum.MakeOrder}&storeCustomerId=${form.value.storeCustomerId || 0}` })
 }
 
 const debounceToPay = debounce(toPay, 2000)
@@ -343,18 +366,23 @@ function delEquity(item: BillingGood) {
   <wd-form :model="form">
     <wd-cell-group :border="true">
       <wd-calendar v-model="orderTime" required :z-index="12000" label="开单时间" type="datetime" />
-      <wd-cell title="客户" required :is-link="!fromCustomer" @click="toSelCus()">
+      <wd-cell title=" 客户" :is-link="!fromCustomer" center custom-icon-class="customer-cell" custom-class="customer-cell" @click="toSelCus()">
         <view>
-          <text v-if="!cusName" c-#B6BDBD>
-            请选择或添加
-          </text>
+          <div v-if="!cusName" c-#B6BDBD>
+            <div f14>
+              请选择或添加
+            </div>
+            <div f12 c-#B6BDBD>
+              不选时记为散客
+            </div>
+          </div>
           <text v-else>
             {{ cusName }}
           </text>
         </view>
 
         <template #icon>
-          <wd-icon name="user" size="16px" />
+          <wd-icon name="user" size="18px" color="#1A66FF" />
         </template>
       </wd-cell>
     </wd-cell-group>
@@ -381,11 +409,11 @@ function delEquity(item: BillingGood) {
             </view>
           </view>
           <view flex flex-xr py10px pr20px flex-ac gap5px>
-            <text v-if="item.goodsPrice2" line-through c-#D4D4D4 f12>
+            <text v-if="isNumber(item.goodsPrice2)" line-through c-#D4D4D4 f12>
               ￥{{ item.goodsPrice }}
             </text>
             <text>
-              ￥{{ item.goodsPrice2 || item.goodsPrice }}
+              ￥{{ item.goodsPrice2 ?? item.goodsPrice }}
             </text>
           </view>
           <view>
@@ -506,5 +534,12 @@ function delEquity(item: BillingGood) {
   border: 1px solid #1a66ff;
   border-radius: 4px;
   width: 80%;
+}
+
+// .customer-cell {
+
+// }
+:deep(.wd-cell__arrow-right) {
+  align-self: center !important;
 }
 </style>

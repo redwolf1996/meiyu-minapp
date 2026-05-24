@@ -10,6 +10,7 @@ const data = props.data
 
 async function toDetail() {
   storeMsgDetail.value = data
+  console.log('data', data)
   await request.put(`/business/notice/${data.id}`)
   if (data.noticeType === 1) {
     uni.navigateTo({

@@ -10,7 +10,8 @@ import type { TimeOccupy } from './types'
 import { flatten } from 'lodash-es'
 import type { Data } from '../booking/types'
 
-const curWeek = ref(+new Date().getDay() + 1)
+const tw = +new Date().getDay()
+const curWeek = ref(tw === 0 ? 7 : tw)
 const today = fd(+new Date())
 const day = ref(fd(+new Date()))
 const stime = ref('')
@@ -86,11 +87,12 @@ async function init() {
       }
     }
   }
+  disabledIndexedFront.shift()
 
   times.value = times.value.map((v, i) => {
     return {
       selected: v.selected,
-      disabled: !workWeeks.value.includes(curWeek.value) || (i >= lastSelectableIndex || disabledIndexedFront?.includes(i))
+      disabled: !workWeeks.value.includes(curWeek.value) || (i > lastSelectableIndex || disabledIndexedFront?.includes(i))
         ? true
         : (!!employIndexes.includes(i)),
       value: v.value,

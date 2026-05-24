@@ -4,7 +4,7 @@ style:
 </route>
 
 <script lang="ts" setup>
-const imageValue = ref<any>([])
+const { handleFilePickerUpload2, handleFileDelete, imageValue } = useOss()
 const form = reactive<any>({
   version: 1.0,
   categoryId: null,
@@ -114,6 +114,8 @@ async function save() {
       fileMediatype="image"
       mode="grid"
       :limit="4"
+      @select="handleFilePickerUpload2"
+      @delete="handleFileDelete"
     />
   </view>
   <view h150px />

@@ -57,12 +57,11 @@ function changeCheck() {
   servs = flatten(toRaw(servs))
   tmpCheckedServs.value = servs.filter(v => v.checked)
 }
-
 function confirm() {
   checkedServs.value = tmpCheckedServs.value.map((v) => {
     return {
       ...v,
-      prodType: 2,
+      prodType: 1,
     }
   })
   uni.navigateBack()
@@ -104,9 +103,9 @@ function confirm() {
                   {{ itm.name }}
                 </view>
                 <view f12 c-#FF1919 mt6px>
-                  ￥{{ itm.price2 || itm.price }}
+                  ￥{{ itm.price2 ?? itm.price }}
                 </view>
-                <view v-if="itm.price2" f10 c-#D4D4D4 mt6px>
+                <view v-if="isNumber(itm.price2)" f10 c-#D4D4D4 mt6px>
                   <text line-through>
                     ￥{{ itm.price }}
                   </text>

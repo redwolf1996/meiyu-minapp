@@ -46,10 +46,13 @@ onLoad(async (option) => {
   }
   if (mode.value) {
     if (mode.value === PayModeEnum.MakeOrder) {
-      formData.value = curBilling.value
+      formData.value = {
+        ...curBilling.value,
+        storeCustomerId: curBilling.value.storeCustomerId || 0,
+      }
       postUrl.value = '/business/billing'
       const amount = repayAmount.value || curBilling.value.amount
-      getAvailableCashCards(option.storeCustomerId, amount)
+      getAvailableCashCards(option.storeCustomerId || 0, amount)
     }
 
     if (mode.value === PayModeEnum.MakeCard) {
@@ -64,7 +67,10 @@ onLoad(async (option) => {
         'gift',
         'payType',
       ])
-      formData.value = data
+      formData.value = {
+        ...data,
+        storeCustomerId: data.storeCustomerId || 0,
+      }
       postUrl.value = '/business/store-customer-card'
     }
 
@@ -79,13 +85,19 @@ onLoad(async (option) => {
         'gift',
         'payType',
       ])
-      formData.value = data
+      formData.value = {
+        ...data,
+        storeCustomerId: data.storeCustomerId || 0,
+      }
       postUrl.value = '/business/value-card-recharge'
     }
 
     if (mode.value === PayModeEnum.Booking) {
-      getAvailableCashCards(bookInfo.value.storeCustomerId, bookInfo.value.amount)
-      formData.value = bookInfo.value
+      getAvailableCashCards(bookInfo.value.storeCustomerId || 0, bookInfo.value.amount)
+      formData.value = {
+        ...bookInfo.value,
+        storeCustomerId: bookInfo.value.storeCustomerId || 0,
+      }
       postUrl.value = '/business/booking'
     }
   }

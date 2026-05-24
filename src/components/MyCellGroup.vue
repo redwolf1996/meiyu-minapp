@@ -1,13 +1,15 @@
 <script lang="ts" setup>
 const props = withDefaults(defineProps<{
-  py?: number // 是否展示tabs
+  py?: number
+  color?: string
 }>(), {
   py: 20,
+  color: '#333333',
 })
 </script>
 
 <template>
-  <view bg-white :style="{ padding: `${props.py}rpx 20px` }">
+  <view bg-white :style="{ padding: `${props.py}rpx 20px`, color: props.color }">
     <slot />
   </view>
 </template>

@@ -33,55 +33,56 @@ onLoad(async (options) => {
 
 <template>
   <view h132px mb12px pr>
-    <view pr>
-      <view tc mx20px>
-        <image
-          v-if="cardImgName[itm?.type]"
-          style="height: 102px;"
-          mode="aspectFill"
-          :src="`${IMG_BASE}/cards/${cardImgName[itm?.type]}.png`"
-        />
-      </view>
-
-      <view h102px px30px pa wp100 flex flex-y flex-bt class="txt">
-        <view p12px flex-grow-1>
-          <view flex flex-bt flex-ac>
-            <view fs-14px>
-              {{ itm?.name }}
-            </view>
-            <view
-              text-20rpx w-88rpx h-40rpx lh-40rpx tc flex flex-cc
-              style="background: transparent;border-radius: 32rpx;border: 1px solid #fff;color: #fff"
-            >
-              {{ CardTypeMap[itm?.type] }}
-            </view>
-          </view>
-          <view fs-14px mt-10px>
-            <template v-if="itm?.type === 1">
-              <text>￥{{ itm?.price }}&#12288;</text>
-              <text>
-                权益次数：{{ itm?.countLimit }}次
-              </text>
-            </template>
-            <template v-if="itm?.type === 2">
-              <text>本金￥{{ itm?.price }}&#12288;</text>
-              <text>赠金￥{{ itm?.gift }}</text>
-            </template>
-            <template v-if="itm?.type === 3">
-              <text>￥{{ itm?.price }}&#12288;</text>
-              <text>{{ getDiscounts(itm) }}折</text>
-            </template>
-          </view>
-          <view fs-12px mt-10px>
-            <text>有效期：</text>
-            <text v-if="itm?.expires === 0">
-              永久有效
-            </text>
-            <text v-else>
-              购买后{{ itm?.expires }}天内有效
-            </text>
-          </view>
+    <view
+      v-if="itm?.type"
+      h102px
+      mx20px
+      p12px
+      box-border
+      class="txt"
+      flex
+      flex-col
+      flex-bt
+      :style="{
+        'background': `url(${IMG_BASE}/cards/${cardImgName[itm?.type]}.png) no-repeat`,
+        'background-size': '100% 100%',
+      }"
+    >
+      <view flex flex-bt flex-ac>
+        <view fs-14px>
+          {{ itm?.name }}
         </view>
+        <view
+          text-20rpx w-88rpx h-40rpx lh-40rpx tc flex flex-cc
+          style="background: transparent;border-radius: 32rpx;border: 1px solid #fff;color: #fff"
+        >
+          {{ CardTypeMap[itm?.type] }}
+        </view>
+      </view>
+      <view fs-14px>
+        <template v-if="itm?.type === 1">
+          <text>￥{{ itm?.price }}&#12288;</text>
+          <text>
+            权益次数：{{ itm?.countLimit }}次
+          </text>
+        </template>
+        <template v-if="itm?.type === 2">
+          <text>本金￥{{ itm?.price }}&#12288;</text>
+          <text>赠金￥{{ itm?.gift }}</text>
+        </template>
+        <template v-if="itm?.type === 3">
+          <text>￥{{ itm?.price }}&#12288;</text>
+          <text>{{ getDiscounts(itm) }}折</text>
+        </template>
+      </view>
+      <view fs-12px>
+        <text>有效期：</text>
+        <text v-if="itm?.expires === 0">
+          永久有效
+        </text>
+        <text v-else>
+          购买后{{ itm?.expires }}天内有效
+        </text>
       </view>
     </view>
   </view>
@@ -112,7 +113,7 @@ onLoad(async (options) => {
     </view>
   </view>
   <view class="h30px" />
-  <view px20px>
+  <view v-if="itm?.type !== 3" px20px>
     <view c-#807D7D fs-16px mb22px>
       赠送权益
     </view>
@@ -136,11 +137,5 @@ onLoad(async (options) => {
 }
 .txt {
   color: #ffffff;
-  position: absolute;
-  height: 102px;
-  width: 100%;
-  z-index: 200;
-  left: 0;
-  top: 0;
 }
 </style>

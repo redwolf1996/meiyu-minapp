@@ -30,11 +30,14 @@ interface NavigateToOptions {
        "/pagesA/card/list" |
        "/pagesA/card/make" |
        "/pagesA/card/select-card-common" |
+       "/pagesA/card/select-card-multiple" |
        "/pagesA/customer/add" |
        "/pagesA/customer/detail" |
+       "/pagesA/customer/list-filter" |
        "/pagesA/customer/list" |
        "/pagesA/customer/points" |
        "/pagesA/dashboard/cash-apply" |
+       "/pagesA/dashboard/cash-results" |
        "/pagesA/dashboard/cashing-records" |
        "/pagesA/dashboard/income-detail" |
        "/pagesA/dashboard/pay-ways" |
@@ -51,6 +54,8 @@ interface NavigateToOptions {
        "/pagesA/my/invite" |
        "/pagesA/my/my-invite" |
        "/pagesA/my/new-store" |
+       "/pagesA/my/official-account" |
+       "/pagesA/my/pc" |
        "/pagesA/my/protocal" |
        "/pagesA/my/qiwei" |
        "/pagesA/my/renew" |
@@ -63,16 +68,19 @@ interface NavigateToOptions {
        "/pagesA/order/refund" |
        "/pagesA/product/add" |
        "/pagesA/product/list" |
+       "/pagesA/scan/index" |
        "/pagesA/service/add" |
        "/pagesA/service/index" |
        "/pagesA/staff/add" |
        "/pagesA/staff/detail" |
        "/pagesA/staff/index" |
        "/pagesA/staff/work-time" |
+       "/pagesA/store/list" |
        "/pagesA/tabs/MyTabBar" |
        "/pagesA/tabs/tab-business-book" |
        "/pagesA/tabs/tab-business-customer" |
        "/pagesA/tabs/tab-business-dashboard" |
+       "/pagesA/tabs/tab-business-data" |
        "/pagesA/tabs/tab-business-my" |
        "/pagesA/init/steps/done" |
        "/pagesA/init/steps/index" |
@@ -84,6 +92,11 @@ interface NavigateToOptions {
        "/pagesA/init/steps/step3" |
        "/pagesA/init/steps/step4" |
        "/pagesA/init/steps/step5" |
+       "/pagesA/tabs/components-data/customer-analysis" |
+       "/pagesA/tabs/components-data/manage-data" |
+       "/pagesA/tabs/components-data/staff-achievements-detail" |
+       "/pagesA/tabs/components-data/staff-achievements" |
+       "/pagesA/tabs/components-data/staff-statistics" |
        "/pagesB/index";
 }
 interface RedirectToOptions extends NavigateToOptions {}

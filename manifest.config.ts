@@ -4,8 +4,8 @@ export default defineManifestConfig({
   'name': 'yau',
   'appid': '__UNI__401176F',
   'description': '',
-  'versionName': '2.0.5',
-  'versionCode': '100',
+  'versionName': '3.0.5',
+  'versionCode': '200',
   'transformPx': false,
   'h5': {
     router: {
@@ -18,6 +18,11 @@ export default defineManifestConfig({
     usingComponents: true,
     optimization: {
       subPackages: true,
+    },
+    permission: {
+      'scope.camera': {
+        desc: '需要使用您的摄像头进行扫码',
+      },
     },
   },
   'uniStatistics': {

@@ -137,17 +137,18 @@ export interface CusReqModel {
    */
   birthdayS?: string
   /**
-   * =1 任意卡项；指定卡id或者卡类型是传值0
+   * =1 任意卡项；指定卡id或者卡类型是传值0；null表示未选择
    */
-  cardAll?: number | string
-  /**
-   * 知道卡类型，id逗号分隔（指定类型时，类型id）
-   */
+  cardAll?: number | null
   cardCIds?: string
   /**
-   * 指定卡，id逗号分隔（指定卡项时，卡id）
+   * 指定卡，id逗号分隔（指定卡项时，卡id的拼接）
    */
   cardIds?: string
+  /**
+   * 卡类型，id逗号分隔（指定类型时，类型值的拼接）
+   */
+  cardTypes?: string
   /**
    * 成为客户结束
    */
@@ -217,6 +218,9 @@ export interface CusList {
    * 客户id
    */
   customerId: number
+  /**
+   * 性别
+   */
   gender: string
   /**
    * 性别中文

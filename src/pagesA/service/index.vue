@@ -36,10 +36,6 @@ function search() {
   paging.value?.reload()
 }
 
-onShow(() => {
-  search()
-})
-
 function toAdd() {
   resetCurClassify()
   resetRichData()
@@ -161,9 +157,9 @@ function showItemMenu(item: List) {
           </view>
           <view flex flex-ac gap10px>
             <text fb f12 px-12rpx py-7rpx bg-B5E4CA rd-12rpx>
-              ￥{{ item.price2 || item.price }}
+              ￥{{ item.price2 ?? item.price }}
             </text>
-            <text v-if="item.price2" fb f12 c-#CBCBD4 line-through>
+            <text v-if="isNumber(item.price2)" fb f12 c-#CBCBD4 line-through>
               ￥{{ item.price }}
             </text>
           </view>

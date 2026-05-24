@@ -6,6 +6,7 @@ const props = withDefaults(defineProps<{
   required?: boolean
   showArrow?: boolean
   labelGap?: string
+  labelColor?: string
 }>(), {
   label: '请输入标题',
   noBorder: false,
@@ -13,6 +14,7 @@ const props = withDefaults(defineProps<{
   required: false,
   showArrow: true,
   labelGap: '8px',
+  labelColor: 'c-3B3D3D',
 })
 
 const emits = defineEmits(['myclick'])
@@ -27,7 +29,9 @@ const emits = defineEmits(['myclick'])
   >
     <view c-3B3D3D fw-500 font-size-14px flex flex-ac :style="{ gap: props.labelGap }">
       <slot name="icon" />
-      <text>{{ props.label }}</text>
+      <text :style="{ color: props.labelColor }">
+        {{ props.label }}
+      </text>
       <text v-if="props.required" class="required">
         *
       </text>

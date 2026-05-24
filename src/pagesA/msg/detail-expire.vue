@@ -23,7 +23,7 @@ style:
         </view>
         <view flex flex-bt tc flex-ac mt-10rpx>
           <view f12 color-999>
-            {{ storeMsgDetail?.ext?.expiresTime ?? '--' }}
+            {{ storeMsgDetail?.createTime ?? '--' }}
           </view>
         </view>
       </view>
@@ -36,7 +36,7 @@ style:
         您好！感谢您一直以来对我们平台的支持与信赖。
       </view>
       <view mb22px>
-        我们温馨提醒您，您的小程序管理服务将在接下来的5天后到期，到期日期为2024-6-6。为了确保您能够继续享受我们平台提供的各项商家特权和服务，我们建议您尽快进行续费操作。
+        我们温馨提醒您，您的小程序管理服务到期日期为{{ storeMsgDetail?.ext?.expiresTime ?? '--' }}。为了确保您能够继续享受我们平台提供的各项商家特权和服务，我们建议您尽快进行续费操作。
       </view>
       <view mb22px>
         会员服务优势：
@@ -86,7 +86,7 @@ style:
       <view>
         <view>勋华科技</view>
         <view>
-          {{ storeMsgDetail?.ext?.today ?? '--' }}
+          {{ storeMsgDetail?.createTime ?? '--' }}
         </view>
       </view>
     </view>
